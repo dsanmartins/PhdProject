@@ -1,0 +1,164 @@
+grammar br.ufscar.sas.xtext.sasdsl.SasDsl with org.eclipse.xtext.common.Terminals
+
+generate sasDsl "http://www.ufscar.br/sas/xtext/sasdsl/SasDsl"
+
+ArchitectureDefinition:
+	'Architecture' name=ID '{' 
+					   managing += DSLManaging+
+					   managed += DSLManaged+ 
+				   '}'  
+	'Rules' '{' rules += DSLRules* '}'  
+;
+	
+DSLRules:
+	
+	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO 
+;
+
+
+DSLRuleController:
+	('controller' controller=[DSLController] access=DSLAccess 'monitor' monitor = [DSLMonitor] ';') |
+	('controller' controller=[DSLController] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') |
+	('controller' controller=[DSLController] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
+	('controller' controller=[DSLController] access=DSLAccess 'executor' executor = [DSLExecutor] ';') 
+;
+
+DSLRuleMonitor:
+	
+	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor = [DSLSensor] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') 
+;
+
+DSLRuleAnalyzer:
+	
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor = [DSLMonitor] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'reference-input' rreference = [DSLReferenceInput] ';') 
+;
+
+DSLRulePlanner:
+	
+	('planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
+	('planner' planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') |
+	('planner' planner=[DSLPlanner] access=DSLAccess 'executor' executor = [DSLExecutor] ';') 
+;
+
+DSLRuleExecutor:
+		
+	('executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector = [DSLEffector] ';') |
+	('executor' executor=[DSLExecutor] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
+	('executor' executor=[DSLExecutor] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') 
+;
+
+DSLRuleMO:
+	
+	('sensor' sensor=[DSLSensor] access=DSLAccess 'measured-output' measured = [DSLMeasuredOutput] ';') 
+;
+
+
+DSLAccess:
+	
+	'can-access' | 'cannot-access'
+;
+
+DSLManaging: 
+	
+	'Managing' name=ID '{' 
+		
+		managerController += DSLManagerController*
+		controller += DSLController+
+	
+	'}'
+;
+
+DSLManaged:
+	
+	'Managed' name=ID '{'
+	
+		sensor += DSLSensor+
+		effector += DSLEffector+
+		measuredOutput +=DSLMeasuredOutput+
+		
+	'}'
+;
+
+DSLManagerController:
+	
+	'ManagerController' name=ID  'typeOf' DSLTypeMC '{'
+		
+		controller += DSLController+
+	
+	'}'
+;
+
+DSLTypeMC:
+	
+	'Synchronized'| 'Coordinated' | 'Independent'
+	
+;
+
+DSLController:
+	
+	'Controller' name=ID '{'
+	
+		monitor += DSLMonitor+
+		analyzer += DSLAnalyzer+
+		planner += DSLPlanner+
+		executor += DSLExecutor+
+		knowledge += DSLKnowledge+
+
+	'}'
+;
+
+DSLMonitor:
+	
+	'Monitor'  name=ID ';'
+;
+
+DSLAnalyzer:
+	
+	'Analyzer' name=ID  ';'
+;
+
+DSLPlanner: 
+	
+	'Planner' name=ID ';'
+;
+
+DSLExecutor: 
+	
+	'Executor' name=ID  ';'
+;
+
+DSLKnowledge: 
+	
+	'Knowledge' name=ID '{'
+	
+		referenceInput += DSLReferenceInput+
+	
+	'}'
+;
+
+DSLSensor: 
+	
+	'Sensor' name=ID ';'
+;
+
+DSLEffector: 
+	
+	'Effector' name=ID ';'
+;
+  
+DSLReferenceInput:
+	
+	'ReferenceInput'  name=ID ';'
+;
+
+DSLMeasuredOutput:
+	
+	'MeasuredOutput' name=ID ';'
+;
+
+

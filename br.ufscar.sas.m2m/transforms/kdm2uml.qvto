@@ -1,0 +1,71 @@
+modeltype kdm "strict" uses kdm('http://www.eclipse.org/MoDisco/kdm/kdm');
+modeltype code "strict" uses code('http://www.eclipse.org/MoDisco/kdm/code');
+modeltype action "strict" uses action('http://www.eclipse.org/MoDisco/kdm/action');
+modeltype source "strict" uses source('http://www.eclipse.org/MoDisco/kdm/source');
+modeltype structure "strict" uses structure('http://www.eclipse.org/MoDisco/kdm/structure');
+modeltype uml "strict" uses uml('http://www.eclipse.org/uml2/5.0.0/UML');
+
+
+transformation ModelCode(in sourceModel :kdm, out targetModel: uml);
+
+
+configuration property modelName: String;  
+
+
+main() {
+
+	 sourceModel.objectsOfType(StructureModel)-> map Model2Model();
+}
+
+mapping StructureModel :: Model2Model():Model when {self.name = modelName}{
+
+	result.name :="UML Component Diagram";
+	self.structureElement -> select(c | c.oclIsKindOf(Subsystem))[Subsystem] -> forEach(p){
+	
+		p->map kdmSubsystem2UmlPackage();
+	};
+	
+	self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] -> forEach(p){
+	
+		p->map kdmComponent2UmlPackage();
+	}
+	
+}
+
+mapping Component:: kdmComponent2UmlPackage(): uml::Package {
+	
+	result.name := self.name;
+	result.nestedPackage += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] ->  map kdm2Pkg1();
+    result.packagedElement += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] -> map kdmComp2UmlComp(result.nestedPackage);
+}
+
+
+
+mapping Subsystem:: kdmSubsystem2UmlPackage(): uml::Package {
+	
+	result.name := self.name;
+	result.nestedPackage += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] ->  map kdm2Pkg1();
+	result.packagedElement += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] -> map kdmComp2UmlComp(result.nestedPackage);
+}
+
+
+mapping Component::kdm2Pkg1() : uml::Package{
+
+	result.name := self.name;
+	result.nestedPackage += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] ->  map kdm2Pkg1();
+}
+
+mapping Component::kdmComp2UmlComp(nestedPackage :Set(uml::Package)) {
+
+		self.aggregated -> forEach(p) {
+	
+					self.resolve(uml::Package)->first().packagedElement +=object uml::Dependency {
+						client += self.resolve(uml::Package)->first();
+						supplier += p.to.resolve(uml::Package)-> select (t | t.name = p.to.name);
+					}
+		}
+}
+
+
+
+

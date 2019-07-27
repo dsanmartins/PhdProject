@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+  
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rMSAS -->
+      <package
+            uri="http://www.example.org/rMSAS/architecturalModel"
+            class="rMSAS.architecturalModel.ArchitecturalModelPackage"
+            genModel="model/rMSAS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rMSAS -->
+      <package
+            uri="http://www.example.org/rMSAS/codeModel"
+            class="rMSAS.codeModel.CodeModelPackage"
+            genModel="model/rMSAS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rMSAS -->
+      <package
+            uri="http://www.example.org/rMSAS/constraintModel"
+            class="rMSAS.constraintModel.ConstraintModelPackage"
+            genModel="model/rMSAS.genmodel"/>
+   </extension>
+</plugin>

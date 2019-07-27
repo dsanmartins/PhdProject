@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Utils
+Bundle-SymbolicName: br.ufscar.sas.utils
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: br.ufscar.sas.utils.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.aspectj.runtime,
+ org.eclipse.emf.ecore
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Import-Package: br.ufscar.sas.database, br.ufscar.sas.view
+Export-Package: br.ufscar.sas.aspects;aspects="UtilsKDM"
+Eclipse-SupplementBundle: br.ufscar.sas.re
+Bundle-ClassPath: lib/BaseX853.jar, lib/javaparser-core-3.6.2.jar, lib/guava-23.0.jar,
+ .

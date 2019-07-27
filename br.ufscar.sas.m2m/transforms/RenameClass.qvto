@@ -1,0 +1,28 @@
+modeltype kdm "strict" uses kdm('http://www.eclipse.org/MoDisco/kdm/kdm');
+modeltype code "strict" uses code('http://www.eclipse.org/MoDisco/kdm/code');
+modeltype action "strict" uses action('http://www.eclipse.org/MoDisco/kdm/action');
+modeltype source "strict" uses source('http://www.eclipse.org/MoDisco/kdm/source');
+
+
+transformation ModelCode(inout sourceModel :kdm);
+
+
+configuration property modelName: String;  
+
+
+main() {
+
+	 sourceModel.objectsOfType(CodeModel)-> map Model2Model();
+}
+
+mapping CodeModel :: Model2Model() when {self.name = modelName}{
+
+	self.codeElement -> select(a | a.oclIsTypeOf(Package))-> forEach(p){
+		p.allSubobjectsOfType(ClassUnit) -> map ChangeName();
+	}
+}
+
+mapping inout ClassUnit :: ChangeName() when {self.name != "Anonymous type"}{
+
+	self.name := self.name + "_REFACTORED";
+}

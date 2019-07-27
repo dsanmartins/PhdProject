@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: br.ufscar.sas.xtext.sasdsl
+Bundle-ManifestVersion: 2
+Bundle-Name: br.ufscar.sas.xtext.sasdsl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: br.ufscar.sas.xtext.sasdsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: br.ufscar.sas.xtext.sasdsl.formatting2,
+ br.ufscar.sas.xtext.sasdsl.validation,
+ br.ufscar.sas.xtext.sasdsl.sasDsl.impl,
+ br.ufscar.sas.xtext.sasdsl.sasDsl,
+ br.ufscar.sas.xtext.sasdsl.generator,
+ br.ufscar.sas.xtext.sasdsl,
+ br.ufscar.sas.xtext.sasdsl.services,
+ br.ufscar.sas.xtext.sasdsl.serializer,
+ br.ufscar.sas.xtext.sasdsl.sasDsl.util,
+ br.ufscar.sas.xtext.sasdsl.parser.antlr,
+ br.ufscar.sas.xtext.sasdsl.scoping,
+ br.ufscar.sas.xtext.sasdsl.parser.antlr.internal
+Import-Package: org.apache.log4j
