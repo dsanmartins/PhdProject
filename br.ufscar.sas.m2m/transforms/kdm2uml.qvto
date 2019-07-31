@@ -53,6 +53,7 @@ mapping Component::kdm2Pkg1() : uml::Package{
 
 	result.name := self.name;
 	result.nestedPackage += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] ->  map kdm2Pkg1();
+	result.packagedElement += self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] -> map kdmComp2UmlComp(result.nestedPackage);
 }
 
 mapping Component::kdmComp2UmlComp(nestedPackage :Set(uml::Package)) {

@@ -25,10 +25,12 @@ class SasDslGenerator extends AbstractGenerator {
 
 	var structureElementPath = new HashMap<String,String>();
 	var outAggregatedPath = new HashMap<String,String>();
+	var inAggregatedPath = new HashMap<String,String>();
 	var aggregatedPath = new HashMap<String,String>();
-	
+
 	var depth = newArrayList(5);
 
+	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		
 		for (e : resource.allContents.toIterable.filter(ArchitectureDefinition))
@@ -59,7 +61,6 @@ class SasDslGenerator extends AbstractGenerator {
 			
 			var mcontroller = man.managerController
 			for (var j=0; j<mcontroller.size ; j++){
-					
 				var level1=depth.get(1)
 				var mcon = mcontroller.get(j)
 				structureElementPath.put(mcon.name,"//@model.1/@structureElement."+ level0 +"/" + "@structureElement."+ level1)
@@ -163,9 +164,6 @@ class SasDslGenerator extends AbstractGenerator {
 				
 			}
 			
-			level0++
-			depth.set(0,level0)
-			
 			
 			var controller= man.controller
 			for (var k=0; k< controller.size ; k++){
@@ -223,7 +221,7 @@ class SasDslGenerator extends AbstractGenerator {
 						depth.set(2,level2)
 					}
 					
-					var knowledge = con.knowledge
+					var knowledge = con.knowledge 
 					for (var l=0; l< knowledge.size; l++){
 						
 						var level2 = depth.get(2)
@@ -257,6 +255,11 @@ class SasDslGenerator extends AbstractGenerator {
 			level0++
 			depth.set(0,level0)
 		}
+		
+		depth.set(1,0)
+		depth.set(2,0)
+		depth.set(3,0)
+		depth.set(4,0)
 		
 		var managed = architecture.managed
 		for (var i=0; i< managed.size; i++){
@@ -308,17 +311,18 @@ class SasDslGenerator extends AbstractGenerator {
 		
 		var rule = architecture.rules
 		var rController = 0
-		var outController = ""
 		var rMonitor =0
-		var outMonitor = ""
 		var rAnalyzer=0
-		var outAnalyzer = ""
 		var rPlanner=0
-		var outPlanner = ""
 		var rExecutor=0
-		var outExecutor = ""
 		var rMO=0
-		var outMO = ""
+		var relation = " relation='//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
+							      "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.1 " +
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.2 " + 
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 " + 
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 " +
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2' " +
+								  "density='6'/> \n"
 		
 		for (var i=0; i< rule.size ; i++){
 			
@@ -327,52 +331,781 @@ class SasDslGenerator extends AbstractGenerator {
 			{
 				if (r instanceof DSLRuleController){
 					
-					var path = outAggregatedPath.get(r.controller.name)
-					if (path !== null)
+					var pathAggregated = outAggregatedPath.get(r.controller.name)
+					if (pathAggregated !== null)
 					{
-							outController = outController + "/@aggregated."+rController
+						pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+						pathAggregated = pathAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '"
+						outAggregatedPath.replace(r.controller.name,pathAggregated)
+						
+						if (r.monitor !== null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.monitor.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+							}
+							else
+							{
+								pathInAggregated = "inAggregated='" + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.put(r.monitor.name,pathInAggregated)
+							}
+						}	
+						if (r.analyzer !== null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+							if (pathInAggregated !== null)
+							{	
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+							}
+							else
+							{
+								pathInAggregated = "inAggregated='" + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.put(r.analyzer.name,pathInAggregated)
+							}
+						}
+						if (r.planner !== null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.planner.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.planner.name, pathInAggregated)
+							}
+							else
+							{
+								pathInAggregated = "inAggregated='" + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.put(r.planner.name,pathInAggregated)
+							}
+						}	
+						if (r.executor !== null)
+						{	
+							var pathInAggregated = inAggregatedPath.get(r.executor.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.executor.name, pathInAggregated)
+							}
+							else
+							{
+								pathInAggregated = "inAggregated='" + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.put(r.executor.name,pathInAggregated)
+							}
+						}
 					}
-				
-					
-									
+					else
+					{
+						pathAggregated = "outAggregated='" + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '"
+						outAggregatedPath.put(r.controller.name,pathAggregated)
+						
+						if (r.monitor !==null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.monitor.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+							}
+							else
+								inAggregatedPath.put(r.monitor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+						}
+						if (r.analyzer !==null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+							}
+							else
+								inAggregatedPath.put(r.analyzer.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+						}					
+						if (r.planner !==null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.planner.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.planner.name, pathInAggregated)
+							}
+							else
+								inAggregatedPath.put(r.planner.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+						}
+						if (r.executor !==null)
+						{
+							var pathInAggregated = inAggregatedPath.get(r.executor.name)
+							if (pathInAggregated !== null)
+							{
+								pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+								pathInAggregated = pathInAggregated + structureElementPath.get(r.controller.name) + "/@aggregated."+rController + " '";
+								inAggregatedPath.replace(r.executor.name, pathInAggregated)
+							}
+							else
+								inAggregatedPath.put(r.executor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+						}
+					}
+					rController++
+					var aggregated = aggregatedPath.get(r.controller.name); 
+					if (aggregated !== null)
+					{
+						if (r.monitor !== null)
+							aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation			
+						else
+							if (r.analyzer !== null)	
+								aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+							else
+								if (r.planner !== null)
+									aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+								else
+									if (r.executor !== null)
+										aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation
+						
+						aggregatedPath.replace(r.controller.name, aggregated)
+					}
+					else
+					{
+						if (r.monitor !== null)
+							aggregated = "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation
+						else
+							if (r.analyzer !== null)	
+								aggregated = "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+							else
+								if (r.planner !== null)
+									aggregated = "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+								else
+									if (r.executor !== null)
+										aggregated = "<aggregated from='" + structureElementPath.get(r.controller.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation
+						
+						aggregatedPath.put(r.controller.name, aggregated)
+					}
 				}
 				else {
 					if (r instanceof DSLRuleMonitor){
-						
-						
 					
+						var pathAggregated = outAggregatedPath.get(r.monitor.name)
+						if (pathAggregated !== null)
+						{
+							pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+							pathAggregated = pathAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '"
+							outAggregatedPath.replace(r.monitor.name,pathAggregated)
+							
+							if (r.analyzer !== null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+								if (pathInAggregated !== null)
+								{	
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+								}
+								else
+								{
+									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.put(r.analyzer.name,pathInAggregated)
+								}
+							}
+							if (r.knowledge !== null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+								}
+								else
+								{
+									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";			
+									inAggregatedPath.put(r.knowledge.name,pathInAggregated)
+								}
+							}	
+							if (r.sensor !== null)
+							{	
+								var pathInAggregated = inAggregatedPath.get(r.sensor.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.sensor.name, pathInAggregated)
+								}
+								else
+								{
+									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.put(r.sensor.name,pathInAggregated)
+								}
+							}
+						}
+						else
+						{
+							pathAggregated = "outAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '"
+							outAggregatedPath.put(r.monitor.name,pathAggregated)
+							
+							if (r.analyzer !==null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+								}
+								else
+									inAggregatedPath.put(r.analyzer.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+							}					
+							if (r.knowledge !==null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+								}
+								else
+									inAggregatedPath.put(r.knowledge.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+							}
+						
+							if (r.sensor !==null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.sensor.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.sensor.name, pathInAggregated)
+								}
+								else
+									inAggregatedPath.put(r.sensor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+							}
+							
+						}
+						rMonitor++
+						
+						var aggregated = aggregatedPath.get(r.monitor.name); 
+						if (aggregated !== null)
+						{
+							if (r.analyzer !== null)	
+								aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+							else
+								if (r.knowledge !== null)
+									aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+								else
+									if (r.sensor !== null)
+										aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.sensor.name) + "'" + relation
+							
+							aggregatedPath.replace(r.monitor.name, aggregated)
+						}
+						else
+						{
+							if (r.analyzer !== null)	
+								aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+							else
+								if (r.knowledge !== null)
+									aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+								else
+									if (r.sensor !== null)
+										aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.sensor.name) + "'" + relation
+							
+							aggregatedPath.put(r.monitor.name, aggregated)
+						}
+					
+						
 						
 					}
 					else {
 						if (r instanceof DSLRuleAnalyzer) {
 							
-							
-							
+								var pathAggregated = outAggregatedPath.get(r.analyzer.name)
+								if (pathAggregated !== null)
+								{
+									pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+									pathAggregated = pathAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '"
+									outAggregatedPath.replace(r.analyzer.name,pathAggregated)
+									
+									if (r.monitor !== null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.monitor.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.monitor.name,pathInAggregated)
+										}
+									}	
+									if (r.knowledge !== null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+										if (pathInAggregated !== null)
+										{	
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.knowledge.name,pathInAggregated)
+										}
+									}
+									if (r.planner !== null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.planner.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.planner.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.planner.name,pathInAggregated)
+										}
+									}	
+									if (r.rreference !== null)
+									{	
+										var pathInAggregated = inAggregatedPath.get(r.rreference.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.rreference.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.rreference.name,pathInAggregated)
+										}
+									}
+									
+								}
+								else
+								{
+									pathAggregated = "outAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '"
+									outAggregatedPath.put(r.analyzer.name,pathAggregated)
+									if (r.monitor !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.monitor.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.monitor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+									}					
+									if (r.knowledge !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.knowledge.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+									}
+									if (r.planner !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.planner.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.planner.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.planner.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+									}
+									if (r.rreference !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.rreference.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.rreference.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.rreference.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+									}
+											
+									
+								}
+								rAnalyzer++
+								
+								var aggregated = aggregatedPath.get(r.analyzer.name); 
+								if (aggregated !== null)
+								{
+									if (r.monitor !== null)	
+										aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation
+									else
+										if (r.knowledge !== null)
+											aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+										else
+											if (r.planner !== null)
+												aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+											else
+												if (r.rreference !== null)
+													aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.rreference.name) + "'" + relation
+									
+									aggregatedPath.replace(r.analyzer.name, aggregated)
+								}
+								else
+								{
+									if (r.monitor !== null)	
+										aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+									else
+										if (r.knowledge !== null)
+											aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+										else
+											if (r.planner !== null)
+												aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+											else
+												if (r.rreference !== null)
+													aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.rreference.name) + "'" + relation
+									
+									aggregatedPath.put(r.analyzer.name, aggregated)
+								}
 							
 						}
 						else {
 							
 							if (r instanceof DSLRulePlanner) {
 								
-									
-								
-								
+										var pathAggregated = outAggregatedPath.get(r.planner.name)
+										if (pathAggregated !== null)
+										{
+											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+											pathAggregated = pathAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '"
+											outAggregatedPath.replace(r.planner.name,pathAggregated)
+											
+											if (r.analyzer !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.put(r.analyzer.name,pathInAggregated)
+												}
+											}	
+											if (r.knowledge !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+												if (pathInAggregated !== null)
+												{	
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.put(r.knowledge.name,pathInAggregated)
+												}
+											}
+											if (r.executor !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.executor.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.executor.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.put(r.executor.name,pathInAggregated)
+												}
+											}	
+											
+										}
+										else
+										{
+											pathAggregated = "outAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '"
+											outAggregatedPath.put(r.planner.name,pathAggregated)
+											
+											if (r.analyzer !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.analyzer.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))												
+											}					
+											if (r.knowledge !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+												}
+												else
+												inAggregatedPath.put(r.knowledge.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+											}
+											if (r.executor !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.executor.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.executor.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.executor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+											}
+											
+										}
+										rPlanner++
+										
+										var aggregated = aggregatedPath.get(r.planner.name); 
+										if (aggregated !== null)
+										{
+											if (r.analyzer !== null)	
+												aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+											else
+												if (r.knowledge !== null)
+													aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+												else
+													if (r.executor !== null)
+														aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation
+												
+											aggregatedPath.replace(r.planner.name, aggregated)
+										}
+										else
+										{
+											if (r.analyzer !== null)	
+												aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
+											else
+												if (r.knowledge !== null)
+													aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+												else
+													if (r.executor !== null)
+														aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation
+											
+											aggregatedPath.put(r.planner.name, aggregated)
+										}
 							}
 							else
 							{
 								if (r instanceof DSLRuleExecutor ) {
 									
-									
-									
+										var pathAggregated = outAggregatedPath.get(r.executor.name)
+										if (pathAggregated !== null)
+										{
+											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+											pathAggregated = pathAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '"
+											outAggregatedPath.replace(r.executor.name,pathAggregated)
+										
+											if (r.planner !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.planner.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.planner.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.put(r.planner.name,pathInAggregated)
+												}
+											}	
+											if (r.knowledge !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+												if (pathInAggregated !== null)
+												{	
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.put(r.knowledge.name,pathInAggregated)
+												}
+											}
+											if (r.effector !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.effector.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.effector.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.put(r.effector.name,pathInAggregated)
+												}
+											}	
+										}
+										else
+										{
+											pathAggregated = "outAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '"
+											outAggregatedPath.put(r.executor.name,pathAggregated)
+											
+											if (r.planner !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.planner.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.planner.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.planner.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))										
+											}					
+											if (r.knowledge !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.knowledge.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.knowledge.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))								
+											}
+											if (r.effector !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.effector.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.effector.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.effector.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))									
+											}							
+										}
+										rExecutor++
+										
+										var aggregated = aggregatedPath.get(r.executor.name); 
+										if (aggregated !== null)
+										{
+											if (r.planner !== null)	
+												aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+											else
+												if (r.knowledge !== null)
+													aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+												else
+													if (r.effector !==null)
+														aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.effector.name) + "'" + relation
+												
+											aggregatedPath.replace(r.executor.name, aggregated)
+										}
+										else
+										{
+											if (r.planner !== null)	
+												aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+											else
+												if (r.knowledge !== null)
+													aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.knowledge.name) + "'" + relation
+												else
+													if (r.effector !== null)
+														aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.effector.name) + "'" + relation
+											aggregatedPath.put(r.executor.name, aggregated)
+										}
 								}
 								else {
 									
 									if (r instanceof DSLRuleMO ) {
 									
+										var pathAggregated = outAggregatedPath.get(r.sensor.name)
+										if (pathAggregated !== null)
+										{
+											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+											pathAggregated = pathAggregated + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '"
+											outAggregatedPath.replace(r.sensor.name,pathAggregated)
+											
+											if (r.measured !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.measured.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '";
+													inAggregatedPath.replace(r.measured.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '";
+													inAggregatedPath.put(r.measured.name,pathInAggregated)
+												}
+											}
+										}
+										else
+										{
+											pathAggregated = "outAggregated='" + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '"
+											outAggregatedPath.put(r.sensor.name,pathAggregated)		
+											if (r.measured !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.measured.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '";
+													inAggregatedPath.replace(r.measured.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.measured.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))												
+											}			
+										}
+										rMO++
 										
+										var aggregated = aggregatedPath.get(r.sensor.name); 
+										if (aggregated !== null)
+										{
+											if (r.sensor !== null)	
+												aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.sensor.name) +"' to='" + structureElementPath.get(r.measured.name) + "'" + relation
 										
+											aggregatedPath.replace(r.sensor.name, aggregated)
+										}
+										else
+										{
+											if (r.sensor !== null)	
+												aggregated = "<aggregated from='" + structureElementPath.get(r.sensor.name) +"' to='" + structureElementPath.get(r.measured.name) + "'" + relation
+											
+											aggregatedPath.put(r.sensor.name, aggregated)
+										}
 									}
-									
 								}
 							}
 						}
@@ -417,35 +1150,36 @@ class SasDslGenerator extends AbstractGenerator {
 			     <stereotype name="Managing Subsystem" type="structure:Subsystem"/>
 			     <stereotype name="Managed Subsystem" type="structure:Subsystem"/>
 			</extension>
-			<model xsi:type="structure:StructureModel" name="Architecture Abstractions">
+			<model xsi:type="structure:StructureModel" name="ArchitecturalView_">
 				«FOR arch : architectureDefinition.managing»
 				<structureElement xsi:type="structure:Subsystem" name="«arch.name»" stereotype="/0/@extension.0/@stereotype.11">
 					«FOR mcontroller: arch.managerController»
 						<structureElement xsi:type="structure:Component" name="«mcontroller.name»" stereotype="/0/@extension.0/@stereotype.7">
 							«FOR controller: mcontroller.controller»
-							<structureElement xsi:type="structure:Component" name="«controller.name»" stereotype="/0/@extension.0/@stereotype.8">
+							<structureElement xsi:type="structure:Component" name="«controller.name»" stereotype="/0/@extension.0/@stereotype.8" «outAggregatedPath.get(controller.name)»>
+								«aggregatedPath.get(controller.name)»
 								«FOR monitor: controller.monitor»
-								<structureElement xsi:type="structure:Component" name="«monitor.name»" stereotype="/0/@extension.0/@stereotype.0">
-													
+								<structureElement xsi:type="structure:Component" name="«monitor.name»" stereotype="/0/@extension.0/@stereotype.0" «outAggregatedPath.get(monitor.name)» «inAggregatedPath.get(monitor.name)»>
+									«aggregatedPath.get(monitor.name)»					
 								</structureElement>
 								«ENDFOR»
 								«FOR analyzer: controller.analyzer»
-								<structureElement xsi:type="structure:Component" name="«analyzer.name»" stereotype="/0/@extension.0/@stereotype.1">
-																			
+								<structureElement xsi:type="structure:Component" name="«analyzer.name»" stereotype="/0/@extension.0/@stereotype.1" «outAggregatedPath.get(analyzer.name)» «inAggregatedPath.get(analyzer.name)»>
+									«aggregatedPath.get(analyzer.name)»											
 								</structureElement>
 								«ENDFOR»
 								«FOR planner: controller.planner»
-								<structureElement xsi:type="structure:Component" name="«planner.name»" stereotype="/0/@extension.0/@stereotype.2">
-																									
+								<structureElement xsi:type="structure:Component" name="«planner.name»" stereotype="/0/@extension.0/@stereotype.2" «outAggregatedPath.get(planner.name)» «inAggregatedPath.get(planner.name)»>
+									«aggregatedPath.get(planner.name)»																	
 								</structureElement>
 								«ENDFOR»
 								«FOR executor: controller.executor»
-								<structureElement xsi:type="structure:Component" name="«executor.name»" stereotype="/0/@extension.0/@stereotype.3">
-																														
+								<structureElement xsi:type="structure:Component" name="«executor.name»" stereotype="/0/@extension.0/@stereotype.3" «outAggregatedPath.get(executor.name)» «inAggregatedPath.get(executor.name)»>
+									«aggregatedPath.get(executor.name)»																						
 								</structureElement>
 								«ENDFOR»
 								«FOR knowledge: controller.knowledge»
-								<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4">
+								<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4" «inAggregatedPath.get(knowledge.name)»>
 									«FOR referenceInput: knowledge.referenceInput»
 									<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5"/>
 									«ENDFOR»																											
@@ -457,31 +1191,32 @@ class SasDslGenerator extends AbstractGenerator {
 					</structureElement>
 					«ENDFOR»
 					«FOR controller: arch.controller»
-					<structureElement xsi:type="structure:Component" name="«controller.name»" stereotype="/0/@extension.0/@stereotype.8">
+					<structureElement xsi:type="structure:Component" name="«controller.name»" stereotype="/0/@extension.0/@stereotype.8"  «outAggregatedPath.get(controller.name)»>
+						«aggregatedPath.get(controller.name)»
 						«FOR monitor: controller.monitor»
-						<structureElement xsi:type="structure:Component" name="«monitor.name»" stereotype="/0/@extension.0/@stereotype.0">
-																		
+						<structureElement xsi:type="structure:Component" name="«monitor.name»" stereotype="/0/@extension.0/@stereotype.0" «outAggregatedPath.get(monitor.name)» «inAggregatedPath.get(monitor.name)»>
+							«aggregatedPath.get(monitor.name)»												
 						</structureElement>
 						«ENDFOR»
 						«FOR analyzer: controller.analyzer»
-						<structureElement xsi:type="structure:Component" name="«analyzer.name»" stereotype="/0/@extension.0/@stereotype.1">
-																								
+						<structureElement xsi:type="structure:Component" name="«analyzer.name»" stereotype="/0/@extension.0/@stereotype.1" «outAggregatedPath.get(analyzer.name)» «inAggregatedPath.get(analyzer.name)»>
+							«aggregatedPath.get(analyzer.name)»																		
 						</structureElement>
 						«ENDFOR»
 						«FOR planner: controller.planner»
-						<structureElement xsi:type="structure:Component" name="«planner.name»" stereotype="/0/@extension.0/@stereotype.2">
-																														
+						<structureElement xsi:type="structure:Component" name="«planner.name»" stereotype="/0/@extension.0/@stereotype.2" «outAggregatedPath.get(planner.name)» «inAggregatedPath.get(planner.name)»>
+							«aggregatedPath.get(planner.name)»																								
 						</structureElement>
 						«ENDFOR»
 						«FOR executor: controller.executor»
-						<structureElement xsi:type="structure:Component" name="«executor.name»" stereotype="/0/@extension.0/@stereotype.3">
-																																			
+						<structureElement xsi:type="structure:Component" name="«executor.name»" stereotype="/0/@extension.0/@stereotype.3" «outAggregatedPath.get(executor.name)» «inAggregatedPath.get(executor.name)»>
+							«aggregatedPath.get(executor.name)»																													
 						</structureElement>
 						«ENDFOR»
 						«FOR knowledge: controller.knowledge»
-						<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4">
+						<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4" «inAggregatedPath.get(knowledge.name)»>
 							«FOR referenceInput: knowledge.referenceInput»
-							<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5"/>
+							<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5" «inAggregatedPath.get(referenceInput.name)» />
 							«ENDFOR»																											
 						</structureElement>
 						«ENDFOR»
@@ -493,17 +1228,17 @@ class SasDslGenerator extends AbstractGenerator {
 				«FOR arch : architectureDefinition.managed»
 				<structureElement xsi:type="structure:Subsystem" name="«arch.name»" stereotype="/0/@extension.0/@stereotype.12">
 					«FOR sensor : arch.sensor»
-					<structureElement xsi:type="structure:Component" name="«sensor.name»" stereotype="/0/@extension.0/@stereotype.9">
-									
+					<structureElement xsi:type="structure:Component" name="«sensor.name»" stereotype="/0/@extension.0/@stereotype.9" «outAggregatedPath.get(sensor.name)» «inAggregatedPath.get(sensor.name)»>
+						«aggregatedPath.get(sensor.name)»				
 					</structureElement>			
 					«ENDFOR»
 					«FOR effector : arch.effector»
-					<structureElement xsi:type="structure:Component" name="«effector.name»" stereotype="/0/@extension.0/@stereotype.10">
+					<structureElement xsi:type="structure:Component" name="«effector.name»" stereotype="/0/@extension.0/@stereotype.10" «inAggregatedPath.get(effector.name)»>
 													
 					</structureElement>			
 					«ENDFOR»
 					«FOR measuredOutput : arch.measuredOutput»
-					<structureElement xsi:type="structure:Component" name="«measuredOutput.name»" stereotype="/0/@extension.0/@stereotype.6">
+					<structureElement xsi:type="structure:Component" name="«measuredOutput.name»" stereotype="/0/@extension.0/@stereotype.6" «inAggregatedPath.get(measuredOutput.name)»>
 																	
 					</structureElement>			
 					«ENDFOR»

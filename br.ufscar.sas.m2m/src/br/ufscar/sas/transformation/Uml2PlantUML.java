@@ -119,7 +119,7 @@ public class Uml2PlantUML {
 		strBuilder.append("@enduml");
 		
 		try {
-			Files.write(Paths.get(path + "/CurrentArchitecture/ComponentDiagram.txt"), strBuilder.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING );
+			Files.write(Paths.get(path + "ComponentDiagram.txt"), strBuilder.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

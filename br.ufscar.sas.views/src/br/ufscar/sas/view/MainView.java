@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -115,8 +116,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 	List<String> rs = null;
 	//Tree
 	Tree tree = null;
-	
-	
+
+
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -509,10 +510,21 @@ public class MainView extends ViewPart implements IPartListener2 {
 		btnFCA.setText("Show");
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
-
-		String kdmFileFolder = folder + "/" + projectName + "/";
+		IWorkspaceRoot root = workspace.getRoot();
+		IProject project  = root.getProject(projectName);
+		IFile kdmCurrent = project.getFile(projectName + "_KDM.xmi");
+		IFile kdmPlanned = project.getFile("PlannedArchitecture/src-gen/PlannedArchitecture.xmi");
 		
+		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
+		String umlCurrent =  folder + "/" + projectName + "/CurrentArchitecture/currentArchitecture.uml";
+		String umlPlanned = folder + "/" + projectName + "/PlannedArchitecture/src-gen/plannedArchitecture.uml" ; 
+		
+		String umlFolderPlannedRelative = "/" + projectName + "/PlannedArchitecture/src-gen/" ;
+		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
+		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
+		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
+	
+
 		btnFCA.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 
@@ -528,7 +540,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								{
 									Kdm2Uml rc = new Kdm2Uml();
 									Uml2PlantUML up = new Uml2PlantUML();
-									up.createPlantComponentDiagram(rc.createComponentDiagram(projectName), kdmFileFolder, projectName);
+									up.createPlantComponentDiagram(rc.createComponentDiagram(kdmCurrent, umlCurrent, projectName), umlFolderCurrentAbsolute, projectName);
 									refreshProjects();
 								} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
 									// TODO Auto-generated catch block
@@ -538,21 +550,42 @@ public class MainView extends ViewPart implements IPartListener2 {
 							}
 						});
 						OpenComponentDiagram od = new OpenComponentDiagram();
-						od.open(kdmFileFolder, projectName);
+						od.open(umlFolderCurrentRelative, projectName);
 					} catch (InvocationTargetException | InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
-					
-					
-				
+
 				}
 				else
 				{
 					if (radios[1].getSelection()) {
 
-
+						try {
+							dialog.run(true, true, new IRunnableWithProgress() {
+								public void run(IProgressMonitor monitor) {
+									// Creates KDM instance
+									int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+									monitor.beginTask("Component Diagram of Planned Architecture....", totalUnitsOfWork);
+									try 
+									{
+										Kdm2Uml rc = new Kdm2Uml();
+										Uml2PlantUML up = new Uml2PlantUML();
+										up.createPlantComponentDiagram(rc.createComponentDiagram(kdmPlanned, umlPlanned, ""), umlFolderPlannedAbsolute, projectName);
+										refreshProjects();
+									} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									monitor.done();
+								}
+							});
+							OpenComponentDiagram od = new OpenComponentDiagram();
+							od.open(umlFolderPlannedRelative, projectName);
+						} catch (InvocationTargetException | InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
 					}
 					else

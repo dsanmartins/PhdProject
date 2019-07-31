@@ -18,9 +18,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -42,13 +39,8 @@ import br.ufscar.sas.m2m.Activator;
 
 public class Kdm2Uml {
 
-	public Resource createComponentDiagram(String javaProjectName) throws ExecutionException
+	public Resource createComponentDiagram(IFile kdm, String uml, String javaProjectName ) throws ExecutionException
 	{
-		//Get the created KDM file
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(javaProjectName);
-		IPath path = project.getLocation();
-		IFile kdmFile = project.getFile(javaProjectName + "_KDM.xmi");
-		String uml = "currentArchitecture.uml";
 
 		// Refer to an existing transformation via URI
 		URI transformationURI = URI.createURI("platform:/plugin/br.ufscar.sas.m2m/transforms/kdm2uml.qvto");
@@ -59,7 +51,7 @@ public class Kdm2Uml {
 		// Remark: we take the objects from a resource, however
 		// a list of arbitrary in-memory EObjects may be passed
 		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource kdmInResource = resourceSet.getResource(URI.createURI(kdmFile.getFullPath().toString()), true);	
+		Resource kdmInResource = resourceSet.getResource(URI.createURI(kdm.getFullPath().toString()), true);	
 		EList<EObject> inObjects = kdmInResource.getContents();
 		// create the input extent with its initial contents
 		ModelExtent input = new BasicModelExtent(inObjects);		
@@ -69,7 +61,7 @@ public class Kdm2Uml {
 		// setup the execution environment details -> 
 		// configuration properties, logger, monitor object etc.
 		ExecutionContextImpl context = new ExecutionContextImpl();
-		context.setConfigProperty("modelName", "ArchitecturalView " + javaProjectName);
+		context.setConfigProperty("modelName", "ArchitecturalView_" + javaProjectName);
 
 		OutputStreamWriter outStream = new OutputStreamWriter(System.out);
 		Log log = new WriterLog(outStream);
@@ -87,7 +79,7 @@ public class Kdm2Uml {
 			List<EObject> outObjects = output.getContents();
 			// let's persist them using a resource 
 			ResourceSet resourceSet2 = new ResourceSetImpl();
-			umlOutResource = resourceSet2.createResource(URI.createFileURI(new File(path + "/CurrentArchitecture/" + uml).getAbsolutePath()));
+			umlOutResource = resourceSet2.createResource(URI.createFileURI(new File(uml).getAbsolutePath()));
 			umlOutResource.getContents().addAll(outObjects);
 			try 
 			{

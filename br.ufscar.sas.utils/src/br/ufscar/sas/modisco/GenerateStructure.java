@@ -435,7 +435,7 @@ public class GenerateStructure {
 
 		try {
 			String attr = "name";
-			String value = "ArchitecturalView " + file.split("\\_")[0];
+			String value = "ArchitecturalView_" + file.split("\\_")[0];
 			baseXManager.createModelAttr(attr, value);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
