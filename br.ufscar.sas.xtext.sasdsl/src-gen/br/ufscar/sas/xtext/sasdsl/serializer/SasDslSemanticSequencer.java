@@ -19,6 +19,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
@@ -98,6 +99,9 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case SasDslPackage.DSL_RULE_EXECUTOR:
 				sequence_DSLRuleExecutor(context, (DSLRuleExecutor) semanticObject); 
+				return; 
+			case SasDslPackage.DSL_RULE_MCONTROLLER:
+				sequence_DSLRuleMController(context, (DSLRuleMController) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_RULE_MO:
 				sequence_DSLRuleMO(context, (DSLRuleMO) semanticObject); 
@@ -242,7 +246,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLManaging returns DSLManaging
 	 *
 	 * Constraint:
-	 *     (name=ID managerController+=DSLManagerController* controller+=DSLController+)
+	 *     (name=ID managerController+=DSLManagerController* controller+=DSLController*)
 	 */
 	protected void sequence_DSLManaging(ISerializationContext context, DSLManaging semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -331,7 +335,8 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess knowledge=[DSLKnowledge|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess monitor=[DSLMonitor|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess planner=[DSLPlanner|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess rreference=[DSLReferenceInput|ID])
+	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess rreference=[DSLReferenceInput|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] access=DSLAccess analyzer2=[DSLAnalyzer|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleAnalyzer(ISerializationContext context, DSLRuleAnalyzer semanticObject) {
@@ -345,15 +350,22 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLRuleController returns DSLRuleController
 	 *
 	 * Constraint:
-	 *     (
-	 *         (controller=[DSLController|ID] access=DSLAccess monitor=[DSLMonitor|ID]) | 
-	 *         (controller=[DSLController|ID] access=DSLAccess analyzer=[DSLAnalyzer|ID]) | 
-	 *         (controller=[DSLController|ID] access=DSLAccess planner=[DSLPlanner|ID]) | 
-	 *         (controller=[DSLController|ID] access=DSLAccess executor=[DSLExecutor|ID])
-	 *     )
+	 *     (controller1=[DSLController|ID] access=DSLAccess controller2=[DSLController|ID])
 	 */
 	protected void sequence_DSLRuleController(ISerializationContext context, DSLRuleController semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER1));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULES__ACCESS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULES__ACCESS));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER2));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDSLRuleControllerAccess().getController1DSLControllerIDTerminalRuleCall_1_0_1(), semanticObject.eGet(SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER1, false));
+		feeder.accept(grammarAccess.getDSLRuleControllerAccess().getAccessDSLAccessParserRuleCall_2_0(), semanticObject.getAccess());
+		feeder.accept(grammarAccess.getDSLRuleControllerAccess().getController2DSLControllerIDTerminalRuleCall_4_0_1(), semanticObject.eGet(SasDslPackage.Literals.DSL_RULE_CONTROLLER__CONTROLLER2, false));
+		feeder.finish();
 	}
 	
 	
@@ -366,11 +378,37 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         (executor=[DSLExecutor|ID] access=DSLAccess effector=[DSLEffector|ID]) | 
 	 *         (executor=[DSLExecutor|ID] access=DSLAccess planner=[DSLPlanner|ID]) | 
-	 *         (executor=[DSLExecutor|ID] access=DSLAccess knowledge=[DSLKnowledge|ID])
+	 *         (executor=[DSLExecutor|ID] access=DSLAccess knowledge=[DSLKnowledge|ID]) | 
+	 *         (executor=[DSLExecutor|ID] access=DSLAccess executor2=[DSLExecutor|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleExecutor(ISerializationContext context, DSLRuleExecutor semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DSLRules returns DSLRuleMController
+	 *     DSLRuleMController returns DSLRuleMController
+	 *
+	 * Constraint:
+	 *     (mcontroller1=[DSLManagerController|ID] access=DSLAccess mcontroller2=[DSLManagerController|ID])
+	 */
+	protected void sequence_DSLRuleMController(ISerializationContext context, DSLRuleMController semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER1));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULES__ACCESS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULES__ACCESS));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER2));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDSLRuleMControllerAccess().getMcontroller1DSLManagerControllerIDTerminalRuleCall_1_0_1(), semanticObject.eGet(SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER1, false));
+		feeder.accept(grammarAccess.getDSLRuleMControllerAccess().getAccessDSLAccessParserRuleCall_2_0(), semanticObject.getAccess());
+		feeder.accept(grammarAccess.getDSLRuleMControllerAccess().getMcontroller2DSLManagerControllerIDTerminalRuleCall_4_0_1(), semanticObject.eGet(SasDslPackage.Literals.DSL_RULE_MCONTROLLER__MCONTROLLER2, false));
+		feeder.finish();
 	}
 	
 	
@@ -408,7 +446,8 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         (monitor=[DSLMonitor|ID] access=DSLAccess sensor=[DSLSensor|ID]) | 
 	 *         (monitor=[DSLMonitor|ID] access=DSLAccess knowledge=[DSLKnowledge|ID]) | 
-	 *         (monitor=[DSLMonitor|ID] access=DSLAccess analyzer=[DSLAnalyzer|ID])
+	 *         (monitor=[DSLMonitor|ID] access=DSLAccess analyzer=[DSLAnalyzer|ID]) | 
+	 *         (monitor=[DSLMonitor|ID] access=DSLAccess monitor2=[DSLMonitor|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleMonitor(ISerializationContext context, DSLRuleMonitor semanticObject) {
@@ -425,7 +464,8 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         (planner=[DSLPlanner|ID] access=DSLAccess knowledge=[DSLKnowledge|ID]) | 
 	 *         (planner=[DSLPlanner|ID] access=DSLAccess analyzer=[DSLAnalyzer|ID]) | 
-	 *         (planner=[DSLPlanner|ID] access=DSLAccess executor=[DSLExecutor|ID])
+	 *         (planner=[DSLPlanner|ID] access=DSLAccess executor=[DSLExecutor|ID]) | 
+	 *         (planner=[DSLPlanner|ID] access=DSLAccess planner2=[DSLPlanner|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRulePlanner(ISerializationContext context, DSLRulePlanner semanticObject) {

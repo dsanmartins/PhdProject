@@ -3,7 +3,34 @@
  */
 package br.ufscar.sas.xtext.sasdsl.validation;
 
+import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 import br.ufscar.sas.xtext.sasdsl.validation.AbstractSasDslValidator;
+import com.google.common.base.Objects;
+import com.google.common.collect.HashMultimap;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.xtext.validation.Check;
 
 /**
  * This class contains custom validation rules.
@@ -12,4 +39,557 @@ import br.ufscar.sas.xtext.sasdsl.validation.AbstractSasDslValidator;
  */
 @SuppressWarnings("all")
 public class SasDslValidator extends AbstractSasDslValidator {
+  protected static final String ISSUE_CODE_PREFIX = "br.ufscar.abstractions.rules.";
+  
+  public static final String DUCPLICATE_MCONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMController");
+  
+  public static final String DUCPLICATE_CONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameController");
+  
+  public static final String DUCPLICATE_MONITOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMonitor");
+  
+  public static final String DUCPLICATE_ANALYZER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameAnalyzer");
+  
+  public static final String DUCPLICATE_PLANNER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSamePlanner");
+  
+  public static final String DUCPLICATE_EXECUTOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameExecutor");
+  
+  public static final String DUCPLICATE_RULES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateRules");
+  
+  @Check
+  public void checkInMControllerRuleNotAccessTheSame(final DSLRuleMController dslRuleMController) {
+    DSLManagerController _mcontroller2 = dslRuleMController.getMcontroller2();
+    boolean _tripleNotEquals = (_mcontroller2 != null);
+    if (_tripleNotEquals) {
+      DSLManagerController _mcontroller1 = dslRuleMController.getMcontroller1();
+      DSLManagerController _mcontroller2_1 = dslRuleMController.getMcontroller2();
+      boolean _equals = Objects.equal(_mcontroller1, _mcontroller2_1);
+      if (_equals) {
+        this.error("Manager controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUCPLICATE_CONTROLLER_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkInControllerRuleNotAccessTheSame(final DSLRuleController dslRuleController) {
+    DSLController _controller2 = dslRuleController.getController2();
+    boolean _tripleNotEquals = (_controller2 != null);
+    if (_tripleNotEquals) {
+      DSLController _controller1 = dslRuleController.getController1();
+      DSLController _controller2_1 = dslRuleController.getController2();
+      boolean _equals = Objects.equal(_controller1, _controller2_1);
+      if (_equals) {
+        this.error("Controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUCPLICATE_CONTROLLER_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkInMonitorRuleNotAccessTheSame(final DSLRuleMonitor dslRuleMonitor) {
+    DSLMonitor _monitor2 = dslRuleMonitor.getMonitor2();
+    boolean _tripleNotEquals = (_monitor2 != null);
+    if (_tripleNotEquals) {
+      DSLMonitor _monitor = dslRuleMonitor.getMonitor();
+      DSLMonitor _monitor2_1 = dslRuleMonitor.getMonitor2();
+      boolean _equals = Objects.equal(_monitor, _monitor2_1);
+      if (_equals) {
+        this.error("Monitors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUCPLICATE_MONITOR_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkInAnalyzerRuleNotAccessTheSame(final DSLRuleAnalyzer dslRuleAnalyzer) {
+    DSLAnalyzer _analyzer2 = dslRuleAnalyzer.getAnalyzer2();
+    boolean _tripleNotEquals = (_analyzer2 != null);
+    if (_tripleNotEquals) {
+      DSLAnalyzer _analyzer = dslRuleAnalyzer.getAnalyzer();
+      DSLAnalyzer _analyzer2_1 = dslRuleAnalyzer.getAnalyzer2();
+      boolean _equals = Objects.equal(_analyzer, _analyzer2_1);
+      if (_equals) {
+        this.error("Analyzers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUCPLICATE_ANALYZER_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkInPlannerRuleNotAccessTheSame(final DSLRulePlanner dslRulePlanner) {
+    DSLPlanner _planner2 = dslRulePlanner.getPlanner2();
+    boolean _tripleNotEquals = (_planner2 != null);
+    if (_tripleNotEquals) {
+      DSLPlanner _planner = dslRulePlanner.getPlanner();
+      DSLPlanner _planner2_1 = dslRulePlanner.getPlanner2();
+      boolean _equals = Objects.equal(_planner, _planner2_1);
+      if (_equals) {
+        this.error("Planners cannot access themselves", SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUCPLICATE_PLANNER_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkInExecutorRuleNotAccessTheSame(final DSLRuleExecutor dslRuleExecutor) {
+    DSLExecutor _executor2 = dslRuleExecutor.getExecutor2();
+    boolean _tripleNotEquals = (_executor2 != null);
+    if (_tripleNotEquals) {
+      DSLExecutor _executor = dslRuleExecutor.getExecutor();
+      DSLExecutor _executor2_1 = dslRuleExecutor.getExecutor2();
+      boolean _equals = Objects.equal(_executor, _executor2_1);
+      if (_equals) {
+        this.error("Executors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUCPLICATE_EXECUTOR_ACCESS);
+      }
+    }
+  }
+  
+  @Check
+  public void checkNoDuplicateControllers(final ArchitectureDefinition r) {
+    this.checkNoDuplicateRules(r.getRules());
+  }
+  
+  private void checkNoDuplicateRules(final EList<DSLRules> rules) {
+    final HashMultimap<String, DSLRuleMController> multiMapRuleMController = HashMultimap.<String, DSLRuleMController>create();
+    final HashMultimap<String, DSLRuleController> multiMapRuleController = HashMultimap.<String, DSLRuleController>create();
+    final HashMultimap<String, DSLRuleMonitor> multiMapRuleMonitor2Monitor = HashMultimap.<String, DSLRuleMonitor>create();
+    final HashMultimap<String, DSLRuleMonitor> multiMapRuleMonitor2Analyzer = HashMultimap.<String, DSLRuleMonitor>create();
+    final HashMultimap<String, DSLRuleMonitor> multiMapRuleMonitor2Sensor = HashMultimap.<String, DSLRuleMonitor>create();
+    final HashMultimap<String, DSLRuleMonitor> multiMapRuleMonitor2Knowledge = HashMultimap.<String, DSLRuleMonitor>create();
+    final HashMultimap<String, DSLRuleAnalyzer> multiMapRuleAnalyzer2Analyzer = HashMultimap.<String, DSLRuleAnalyzer>create();
+    final HashMultimap<String, DSLRuleAnalyzer> multiMapRuleAnalyzer2Monitor = HashMultimap.<String, DSLRuleAnalyzer>create();
+    final HashMultimap<String, DSLRuleAnalyzer> multiMapRuleAnalyzer2Rreference = HashMultimap.<String, DSLRuleAnalyzer>create();
+    final HashMultimap<String, DSLRuleAnalyzer> multiMapRuleAnalyzer2Planner = HashMultimap.<String, DSLRuleAnalyzer>create();
+    final HashMultimap<String, DSLRuleAnalyzer> multiMapRuleAnalyzer2Knowledge = HashMultimap.<String, DSLRuleAnalyzer>create();
+    final HashMultimap<String, DSLRulePlanner> multiMapRulePlanner2Planner = HashMultimap.<String, DSLRulePlanner>create();
+    final HashMultimap<String, DSLRulePlanner> multiMapRulePlanner2Analyzer = HashMultimap.<String, DSLRulePlanner>create();
+    final HashMultimap<String, DSLRulePlanner> multiMapRulePlanner2Executor = HashMultimap.<String, DSLRulePlanner>create();
+    final HashMultimap<String, DSLRulePlanner> multiMapRulePlanner2Knowledge = HashMultimap.<String, DSLRulePlanner>create();
+    final HashMultimap<String, DSLRuleExecutor> multiMapRuleExecutor2Executor = HashMultimap.<String, DSLRuleExecutor>create();
+    final HashMultimap<String, DSLRuleExecutor> multiMapRuleExecutor2Planner = HashMultimap.<String, DSLRuleExecutor>create();
+    final HashMultimap<String, DSLRuleExecutor> multiMapRuleExecutor2Effector = HashMultimap.<String, DSLRuleExecutor>create();
+    final HashMultimap<String, DSLRuleExecutor> multiMapRuleExecutor2Knowledge = HashMultimap.<String, DSLRuleExecutor>create();
+    final HashMultimap<String, DSLRuleMO> multiMapRuleSensor = HashMultimap.<String, DSLRuleMO>create();
+    for (final DSLRules r : rules) {
+      {
+        if ((r instanceof DSLRuleController)) {
+          String _name = ((DSLRuleController)r).getController1().getName();
+          String _name_1 = ((DSLRuleController)r).getController2().getName();
+          String _plus = (_name + _name_1);
+          multiMapRuleController.put(_plus, ((DSLRuleController)r));
+        }
+        if ((r instanceof DSLRuleMController)) {
+          String _name_2 = ((DSLRuleMController)r).getMcontroller1().getName();
+          String _name_3 = ((DSLRuleMController)r).getMcontroller2().getName();
+          String _plus_1 = (_name_2 + _name_3);
+          multiMapRuleMController.put(_plus_1, ((DSLRuleMController)r));
+        }
+        if ((r instanceof DSLRuleMonitor)) {
+          DSLMonitor _monitor2 = ((DSLRuleMonitor)r).getMonitor2();
+          boolean _tripleNotEquals = (_monitor2 != null);
+          if (_tripleNotEquals) {
+            String _name_4 = ((DSLRuleMonitor)r).getMonitor().getName();
+            String _name_5 = ((DSLRuleMonitor)r).getMonitor2().getName();
+            String _plus_2 = (_name_4 + _name_5);
+            multiMapRuleMonitor2Monitor.put(_plus_2, ((DSLRuleMonitor)r));
+          }
+          DSLAnalyzer _analyzer = ((DSLRuleMonitor)r).getAnalyzer();
+          boolean _tripleNotEquals_1 = (_analyzer != null);
+          if (_tripleNotEquals_1) {
+            String _name_6 = ((DSLRuleMonitor)r).getMonitor().getName();
+            String _name_7 = ((DSLRuleMonitor)r).getAnalyzer().getName();
+            String _plus_3 = (_name_6 + _name_7);
+            multiMapRuleMonitor2Analyzer.put(_plus_3, ((DSLRuleMonitor)r));
+          }
+          DSLSensor _sensor = ((DSLRuleMonitor)r).getSensor();
+          boolean _tripleNotEquals_2 = (_sensor != null);
+          if (_tripleNotEquals_2) {
+            String _name_8 = ((DSLRuleMonitor)r).getMonitor().getName();
+            String _name_9 = ((DSLRuleMonitor)r).getSensor().getName();
+            String _plus_4 = (_name_8 + _name_9);
+            multiMapRuleMonitor2Sensor.put(_plus_4, ((DSLRuleMonitor)r));
+          }
+          DSLKnowledge _knowledge = ((DSLRuleMonitor)r).getKnowledge();
+          boolean _tripleNotEquals_3 = (_knowledge != null);
+          if (_tripleNotEquals_3) {
+            String _name_10 = ((DSLRuleMonitor)r).getMonitor().getName();
+            String _name_11 = ((DSLRuleMonitor)r).getKnowledge().getName();
+            String _plus_5 = (_name_10 + _name_11);
+            multiMapRuleMonitor2Knowledge.put(_plus_5, ((DSLRuleMonitor)r));
+          }
+        }
+        if ((r instanceof DSLRuleAnalyzer)) {
+          DSLAnalyzer _analyzer2 = ((DSLRuleAnalyzer)r).getAnalyzer2();
+          boolean _tripleNotEquals_4 = (_analyzer2 != null);
+          if (_tripleNotEquals_4) {
+            String _name_12 = ((DSLRuleAnalyzer)r).getAnalyzer().getName();
+            String _name_13 = ((DSLRuleAnalyzer)r).getAnalyzer2().getName();
+            String _plus_6 = (_name_12 + _name_13);
+            multiMapRuleAnalyzer2Analyzer.put(_plus_6, ((DSLRuleAnalyzer)r));
+          }
+          DSLMonitor _monitor = ((DSLRuleAnalyzer)r).getMonitor();
+          boolean _tripleNotEquals_5 = (_monitor != null);
+          if (_tripleNotEquals_5) {
+            String _name_14 = ((DSLRuleAnalyzer)r).getAnalyzer().getName();
+            String _name_15 = ((DSLRuleAnalyzer)r).getMonitor().getName();
+            String _plus_7 = (_name_14 + _name_15);
+            multiMapRuleAnalyzer2Monitor.put(_plus_7, ((DSLRuleAnalyzer)r));
+          }
+          DSLReferenceInput _rreference = ((DSLRuleAnalyzer)r).getRreference();
+          boolean _tripleNotEquals_6 = (_rreference != null);
+          if (_tripleNotEquals_6) {
+            String _name_16 = ((DSLRuleAnalyzer)r).getAnalyzer().getName();
+            String _name_17 = ((DSLRuleAnalyzer)r).getRreference().getName();
+            String _plus_8 = (_name_16 + _name_17);
+            multiMapRuleAnalyzer2Rreference.put(_plus_8, ((DSLRuleAnalyzer)r));
+          }
+          DSLPlanner _planner = ((DSLRuleAnalyzer)r).getPlanner();
+          boolean _tripleNotEquals_7 = (_planner != null);
+          if (_tripleNotEquals_7) {
+            String _name_18 = ((DSLRuleAnalyzer)r).getAnalyzer().getName();
+            String _name_19 = ((DSLRuleAnalyzer)r).getPlanner().getName();
+            String _plus_9 = (_name_18 + _name_19);
+            multiMapRuleAnalyzer2Planner.put(_plus_9, ((DSLRuleAnalyzer)r));
+          }
+          DSLKnowledge _knowledge_1 = ((DSLRuleAnalyzer)r).getKnowledge();
+          boolean _tripleNotEquals_8 = (_knowledge_1 != null);
+          if (_tripleNotEquals_8) {
+            String _name_20 = ((DSLRuleAnalyzer)r).getAnalyzer().getName();
+            String _name_21 = ((DSLRuleAnalyzer)r).getKnowledge().getName();
+            String _plus_10 = (_name_20 + _name_21);
+            multiMapRuleAnalyzer2Knowledge.put(_plus_10, ((DSLRuleAnalyzer)r));
+          }
+        }
+        if ((r instanceof DSLRulePlanner)) {
+          DSLPlanner _planner2 = ((DSLRulePlanner)r).getPlanner2();
+          boolean _tripleNotEquals_9 = (_planner2 != null);
+          if (_tripleNotEquals_9) {
+            String _name_22 = ((DSLRulePlanner)r).getPlanner().getName();
+            String _name_23 = ((DSLRulePlanner)r).getPlanner2().getName();
+            String _plus_11 = (_name_22 + _name_23);
+            multiMapRulePlanner2Planner.put(_plus_11, ((DSLRulePlanner)r));
+          }
+          DSLAnalyzer _analyzer_1 = ((DSLRulePlanner)r).getAnalyzer();
+          boolean _tripleNotEquals_10 = (_analyzer_1 != null);
+          if (_tripleNotEquals_10) {
+            String _name_24 = ((DSLRulePlanner)r).getPlanner().getName();
+            String _name_25 = ((DSLRulePlanner)r).getAnalyzer().getName();
+            String _plus_12 = (_name_24 + _name_25);
+            multiMapRulePlanner2Analyzer.put(_plus_12, ((DSLRulePlanner)r));
+          }
+          DSLExecutor _executor = ((DSLRulePlanner)r).getExecutor();
+          boolean _tripleNotEquals_11 = (_executor != null);
+          if (_tripleNotEquals_11) {
+            String _name_26 = ((DSLRulePlanner)r).getPlanner().getName();
+            String _name_27 = ((DSLRulePlanner)r).getExecutor().getName();
+            String _plus_13 = (_name_26 + _name_27);
+            multiMapRulePlanner2Executor.put(_plus_13, ((DSLRulePlanner)r));
+          }
+          DSLKnowledge _knowledge_2 = ((DSLRulePlanner)r).getKnowledge();
+          boolean _tripleNotEquals_12 = (_knowledge_2 != null);
+          if (_tripleNotEquals_12) {
+            String _name_28 = ((DSLRulePlanner)r).getPlanner().getName();
+            String _name_29 = ((DSLRulePlanner)r).getKnowledge().getName();
+            String _plus_14 = (_name_28 + _name_29);
+            multiMapRulePlanner2Knowledge.put(_plus_14, ((DSLRulePlanner)r));
+          }
+        }
+        if ((r instanceof DSLRuleExecutor)) {
+          DSLExecutor _executor2 = ((DSLRuleExecutor)r).getExecutor2();
+          boolean _tripleNotEquals_13 = (_executor2 != null);
+          if (_tripleNotEquals_13) {
+            String _name_30 = ((DSLRuleExecutor)r).getExecutor().getName();
+            String _name_31 = ((DSLRuleExecutor)r).getExecutor2().getName();
+            String _plus_15 = (_name_30 + _name_31);
+            multiMapRuleExecutor2Executor.put(_plus_15, ((DSLRuleExecutor)r));
+          }
+          DSLEffector _effector = ((DSLRuleExecutor)r).getEffector();
+          boolean _tripleNotEquals_14 = (_effector != null);
+          if (_tripleNotEquals_14) {
+            String _name_32 = ((DSLRuleExecutor)r).getExecutor().getName();
+            String _name_33 = ((DSLRuleExecutor)r).getEffector().getName();
+            String _plus_16 = (_name_32 + _name_33);
+            multiMapRuleExecutor2Effector.put(_plus_16, ((DSLRuleExecutor)r));
+          }
+          DSLKnowledge _knowledge_3 = ((DSLRuleExecutor)r).getKnowledge();
+          boolean _tripleNotEquals_15 = (_knowledge_3 != null);
+          if (_tripleNotEquals_15) {
+            String _name_34 = ((DSLRuleExecutor)r).getExecutor().getName();
+            String _name_35 = ((DSLRuleExecutor)r).getKnowledge().getName();
+            String _plus_17 = (_name_34 + _name_35);
+            multiMapRuleExecutor2Knowledge.put(_plus_17, ((DSLRuleExecutor)r));
+          }
+          DSLExecutor _executor2_1 = ((DSLRuleExecutor)r).getExecutor2();
+          boolean _tripleNotEquals_16 = (_executor2_1 != null);
+          if (_tripleNotEquals_16) {
+            String _name_36 = ((DSLRuleExecutor)r).getExecutor().getName();
+            String _name_37 = ((DSLRuleExecutor)r).getExecutor2().getName();
+            String _plus_18 = (_name_36 + _name_37);
+            multiMapRuleExecutor2Planner.put(_plus_18, ((DSLRuleExecutor)r));
+          }
+        }
+        if ((r instanceof DSLRuleMO)) {
+          String _name_38 = ((DSLRuleMO)r).getSensor().getName();
+          String _name_39 = ((DSLRuleMO)r).getMeasured().getName();
+          String _plus_19 = (_name_38 + _name_39);
+          multiMapRuleSensor.put(_plus_19, ((DSLRuleMO)r));
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleController>>> _entrySet = multiMapRuleController.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleController>> entry : _entrySet) {
+      {
+        final Collection<DSLRuleController> duplicates = entry.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleController d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMController>>> _entrySet_1 = multiMapRuleMController.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMController>> entry_1 : _entrySet_1) {
+      {
+        final Collection<DSLRuleMController> duplicates = entry_1.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMController d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMonitor>>> _entrySet_2 = multiMapRuleMonitor2Monitor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMonitor>> entry_2 : _entrySet_2) {
+      {
+        final Collection<DSLRuleMonitor> duplicates = entry_2.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMonitor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMonitor>>> _entrySet_3 = multiMapRuleMonitor2Analyzer.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMonitor>> entry_3 : _entrySet_3) {
+      {
+        final Collection<DSLRuleMonitor> duplicates = entry_3.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMonitor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Analyzer(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMonitor>>> _entrySet_4 = multiMapRuleMonitor2Knowledge.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMonitor>> entry_4 : _entrySet_4) {
+      {
+        final Collection<DSLRuleMonitor> duplicates = entry_4.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMonitor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMonitor>>> _entrySet_5 = multiMapRuleMonitor2Sensor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMonitor>> entry_5 : _entrySet_5) {
+      {
+        final Collection<DSLRuleMonitor> duplicates = entry_5.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMonitor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Sensor(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleAnalyzer>>> _entrySet_6 = multiMapRuleAnalyzer2Analyzer.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleAnalyzer>> entry_6 : _entrySet_6) {
+      {
+        final Collection<DSLRuleAnalyzer> duplicates = entry_6.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleAnalyzer d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleAnalyzer>>> _entrySet_7 = multiMapRuleAnalyzer2Knowledge.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleAnalyzer>> entry_7 : _entrySet_7) {
+      {
+        final Collection<DSLRuleAnalyzer> duplicates = entry_7.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleAnalyzer d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleAnalyzer>>> _entrySet_8 = multiMapRuleAnalyzer2Monitor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleAnalyzer>> entry_8 : _entrySet_8) {
+      {
+        final Collection<DSLRuleAnalyzer> duplicates = entry_8.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleAnalyzer d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Monitor(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleAnalyzer>>> _entrySet_9 = multiMapRuleAnalyzer2Planner.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleAnalyzer>> entry_9 : _entrySet_9) {
+      {
+        final Collection<DSLRuleAnalyzer> duplicates = entry_9.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleAnalyzer d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Planner(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleAnalyzer>>> _entrySet_10 = multiMapRuleAnalyzer2Rreference.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleAnalyzer>> entry_10 : _entrySet_10) {
+      {
+        final Collection<DSLRuleAnalyzer> duplicates = entry_10.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleAnalyzer d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRulePlanner>>> _entrySet_11 = multiMapRulePlanner2Planner.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRulePlanner>> entry_11 : _entrySet_11) {
+      {
+        final Collection<DSLRulePlanner> duplicates = entry_11.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRulePlanner d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRulePlanner>>> _entrySet_12 = multiMapRulePlanner2Analyzer.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRulePlanner>> entry_12 : _entrySet_12) {
+      {
+        final Collection<DSLRulePlanner> duplicates = entry_12.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRulePlanner d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Analyzer(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRulePlanner>>> _entrySet_13 = multiMapRulePlanner2Knowledge.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRulePlanner>> entry_13 : _entrySet_13) {
+      {
+        final Collection<DSLRulePlanner> duplicates = entry_13.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRulePlanner d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRulePlanner>>> _entrySet_14 = multiMapRulePlanner2Executor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRulePlanner>> entry_14 : _entrySet_14) {
+      {
+        final Collection<DSLRulePlanner> duplicates = entry_14.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRulePlanner d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Executor(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleExecutor>>> _entrySet_15 = multiMapRuleExecutor2Executor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleExecutor>> entry_15 : _entrySet_15) {
+      {
+        final Collection<DSLRuleExecutor> duplicates = entry_15.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleExecutor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleExecutor>>> _entrySet_16 = multiMapRuleExecutor2Effector.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleExecutor>> entry_16 : _entrySet_16) {
+      {
+        final Collection<DSLRuleExecutor> duplicates = entry_16.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleExecutor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Effector(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleExecutor>>> _entrySet_17 = multiMapRuleExecutor2Knowledge.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleExecutor>> entry_17 : _entrySet_17) {
+      {
+        final Collection<DSLRuleExecutor> duplicates = entry_17.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleExecutor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleExecutor>>> _entrySet_18 = multiMapRuleExecutor2Planner.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleExecutor>> entry_18 : _entrySet_18) {
+      {
+        final Collection<DSLRuleExecutor> duplicates = entry_18.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleExecutor d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Planner(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+    Set<Map.Entry<String, Collection<DSLRuleMO>>> _entrySet_19 = multiMapRuleSensor.asMap().entrySet();
+    for (final Map.Entry<String, Collection<DSLRuleMO>> entry_19 : _entrySet_19) {
+      {
+        final Collection<DSLRuleMO> duplicates = entry_19.getValue();
+        int _size = duplicates.size();
+        boolean _greaterThan = (_size > 1);
+        if (_greaterThan) {
+          for (final DSLRuleMO d : duplicates) {
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMO_Measured(), SasDslValidator.DUCPLICATE_RULES);
+          }
+        }
+      }
+    }
+  }
 }

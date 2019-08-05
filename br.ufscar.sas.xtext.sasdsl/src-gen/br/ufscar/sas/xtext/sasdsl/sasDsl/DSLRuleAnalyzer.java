@@ -18,6 +18,7 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getMonitor <em>Monitor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getRreference <em>Rreference</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getAnalyzer2 <em>Analyzer2</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleAnalyzer()
@@ -155,5 +156,31 @@ public interface DSLRuleAnalyzer extends DSLRules
    * @generated
    */
   void setRreference(DSLReferenceInput value);
+
+  /**
+   * Returns the value of the '<em><b>Analyzer2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Analyzer2</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Analyzer2</em>' reference.
+   * @see #setAnalyzer2(DSLAnalyzer)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleAnalyzer_Analyzer2()
+   * @model
+   * @generated
+   */
+  DSLAnalyzer getAnalyzer2();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getAnalyzer2 <em>Analyzer2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Analyzer2</em>' reference.
+   * @see #getAnalyzer2()
+   * @generated
+   */
+  void setAnalyzer2(DSLAnalyzer value);
 
 } // DSLRuleAnalyzer

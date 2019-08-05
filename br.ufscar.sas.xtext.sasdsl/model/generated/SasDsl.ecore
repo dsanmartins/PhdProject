@@ -14,18 +14,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="DSLRules">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DSLRuleMController" eSuperTypes="#//DSLRules">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mcontroller1" eType="#//DSLManagerController"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mcontroller2" eType="#//DSLManagerController"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleController" eSuperTypes="#//DSLRules">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="controller" eType="#//DSLController"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="monitor" eType="#//DSLMonitor"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" eType="#//DSLAnalyzer"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="executor" eType="#//DSLExecutor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="controller1" eType="#//DSLController"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="controller2" eType="#//DSLController"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleMonitor" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="monitor" eType="#//DSLMonitor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" eType="#//DSLSensor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="knowledge" eType="#//DSLKnowledge"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" eType="#//DSLAnalyzer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monitor2" eType="#//DSLMonitor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleAnalyzer" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" eType="#//DSLAnalyzer"/>
@@ -33,18 +35,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="monitor" eType="#//DSLMonitor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rreference" eType="#//DSLReferenceInput"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer2" eType="#//DSLAnalyzer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRulePlanner" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="knowledge" eType="#//DSLKnowledge"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" eType="#//DSLAnalyzer"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="executor" eType="#//DSLExecutor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="planner2" eType="#//DSLPlanner"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleExecutor" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="executor" eType="#//DSLExecutor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effector" eType="#//DSLEffector"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="knowledge" eType="#//DSLKnowledge"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executor2" eType="#//DSLExecutor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleMO" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" eType="#//DSLSensor"/>

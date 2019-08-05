@@ -42,6 +42,15 @@ public interface SasDslFactory extends EFactory
   DSLRules createDSLRules();
 
   /**
+   * Returns a new object of class '<em>DSL Rule MController</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DSL Rule MController</em>'.
+   * @generated
+   */
+  DSLRuleMController createDSLRuleMController();
+
+  /**
    * Returns a new object of class '<em>DSL Rule Controller</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

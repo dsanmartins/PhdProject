@@ -17,6 +17,7 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getKnowledge <em>Knowledge</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getPlanner2 <em>Planner2</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRulePlanner()
@@ -128,5 +129,31 @@ public interface DSLRulePlanner extends DSLRules
    * @generated
    */
   void setExecutor(DSLExecutor value);
+
+  /**
+   * Returns the value of the '<em><b>Planner2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Planner2</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Planner2</em>' reference.
+   * @see #setPlanner2(DSLPlanner)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRulePlanner_Planner2()
+   * @model
+   * @generated
+   */
+  DSLPlanner getPlanner2();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getPlanner2 <em>Planner2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Planner2</em>' reference.
+   * @see #getPlanner2()
+   * @generated
+   */
+  void setPlanner2(DSLPlanner value);
 
 } // DSLRulePlanner

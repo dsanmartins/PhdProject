@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl#getEffector <em>Effector</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl#getKnowledge <em>Knowledge</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl#getExecutor2 <em>Executor2</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,6 +75,16 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
    * @ordered
    */
   protected DSLKnowledge knowledge;
+
+  /**
+   * The cached value of the '{@link #getExecutor2() <em>Executor2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExecutor2()
+   * @generated
+   * @ordered
+   */
+  protected DSLExecutor executor2;
 
   /**
    * <!-- begin-user-doc -->
@@ -282,6 +293,51 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
    * @generated
    */
   @Override
+  public DSLExecutor getExecutor2()
+  {
+    if (executor2 != null && executor2.eIsProxy())
+    {
+      InternalEObject oldExecutor2 = (InternalEObject)executor2;
+      executor2 = (DSLExecutor)eResolveProxy(oldExecutor2);
+      if (executor2 != oldExecutor2)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2, oldExecutor2, executor2));
+      }
+    }
+    return executor2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLExecutor basicGetExecutor2()
+  {
+    return executor2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setExecutor2(DSLExecutor newExecutor2)
+  {
+    DSLExecutor oldExecutor2 = executor2;
+    executor2 = newExecutor2;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2, oldExecutor2, executor2));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -298,6 +354,9 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
       case SasDslPackage.DSL_RULE_EXECUTOR__KNOWLEDGE:
         if (resolve) return getKnowledge();
         return basicGetKnowledge();
+      case SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2:
+        if (resolve) return getExecutor2();
+        return basicGetExecutor2();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -323,6 +382,9 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
         return;
       case SasDslPackage.DSL_RULE_EXECUTOR__KNOWLEDGE:
         setKnowledge((DSLKnowledge)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2:
+        setExecutor2((DSLExecutor)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -350,6 +412,9 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
       case SasDslPackage.DSL_RULE_EXECUTOR__KNOWLEDGE:
         setKnowledge((DSLKnowledge)null);
         return;
+      case SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2:
+        setExecutor2((DSLExecutor)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -372,6 +437,8 @@ public class DSLRuleExecutorImpl extends DSLRulesImpl implements DSLRuleExecutor
         return planner != null;
       case SasDslPackage.DSL_RULE_EXECUTOR__KNOWLEDGE:
         return knowledge != null;
+      case SasDslPackage.DSL_RULE_EXECUTOR__EXECUTOR2:
+        return executor2 != null;
     }
     return super.eIsSet(featureID);
   }

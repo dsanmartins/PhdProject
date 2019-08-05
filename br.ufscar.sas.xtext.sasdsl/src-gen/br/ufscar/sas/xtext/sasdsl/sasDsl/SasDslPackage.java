@@ -141,6 +141,52 @@ public interface SasDslPackage extends EPackage
   int DSL_RULES_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMControllerImpl <em>DSL Rule MController</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMControllerImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleMController()
+   * @generated
+   */
+  int DSL_RULE_MCONTROLLER = 2;
+
+  /**
+   * The feature id for the '<em><b>Access</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_MCONTROLLER__ACCESS = DSL_RULES__ACCESS;
+
+  /**
+   * The feature id for the '<em><b>Mcontroller1</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_MCONTROLLER__MCONTROLLER1 = DSL_RULES_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Mcontroller2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_MCONTROLLER__MCONTROLLER2 = DSL_RULES_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>DSL Rule MController</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_MCONTROLLER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl <em>DSL Rule Controller</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -148,7 +194,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleController()
    * @generated
    */
-  int DSL_RULE_CONTROLLER = 2;
+  int DSL_RULE_CONTROLLER = 3;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -160,49 +206,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_CONTROLLER__ACCESS = DSL_RULES__ACCESS;
 
   /**
-   * The feature id for the '<em><b>Controller</b></em>' reference.
+   * The feature id for the '<em><b>Controller1</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_CONTROLLER__CONTROLLER = DSL_RULES_FEATURE_COUNT + 0;
+  int DSL_RULE_CONTROLLER__CONTROLLER1 = DSL_RULES_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Monitor</b></em>' reference.
+   * The feature id for the '<em><b>Controller2</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_CONTROLLER__MONITOR = DSL_RULES_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Analyzer</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DSL_RULE_CONTROLLER__ANALYZER = DSL_RULES_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Planner</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DSL_RULE_CONTROLLER__PLANNER = DSL_RULES_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Executor</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DSL_RULE_CONTROLLER__EXECUTOR = DSL_RULES_FEATURE_COUNT + 4;
+  int DSL_RULE_CONTROLLER__CONTROLLER2 = DSL_RULES_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>DSL Rule Controller</em>' class.
@@ -211,7 +230,7 @@ public interface SasDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DSL_RULE_CONTROLLER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
+  int DSL_RULE_CONTROLLER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl <em>DSL Rule Monitor</em>}' class.
@@ -221,7 +240,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleMonitor()
    * @generated
    */
-  int DSL_RULE_MONITOR = 3;
+  int DSL_RULE_MONITOR = 4;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -269,13 +288,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_MONITOR__ANALYZER = DSL_RULES_FEATURE_COUNT + 3;
 
   /**
+   * The feature id for the '<em><b>Monitor2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_MONITOR__MONITOR2 = DSL_RULES_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Monitor</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_MONITOR_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 4;
+  int DSL_RULE_MONITOR_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl <em>DSL Rule Analyzer</em>}' class.
@@ -285,7 +313,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleAnalyzer()
    * @generated
    */
-  int DSL_RULE_ANALYZER = 4;
+  int DSL_RULE_ANALYZER = 5;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -342,13 +370,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_ANALYZER__RREFERENCE = DSL_RULES_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Analyzer2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_ANALYZER__ANALYZER2 = DSL_RULES_FEATURE_COUNT + 5;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Analyzer</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_ANALYZER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
+  int DSL_RULE_ANALYZER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl <em>DSL Rule Planner</em>}' class.
@@ -358,7 +395,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRulePlanner()
    * @generated
    */
-  int DSL_RULE_PLANNER = 5;
+  int DSL_RULE_PLANNER = 6;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -406,13 +443,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_PLANNER__EXECUTOR = DSL_RULES_FEATURE_COUNT + 3;
 
   /**
+   * The feature id for the '<em><b>Planner2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_PLANNER__PLANNER2 = DSL_RULES_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Planner</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_PLANNER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 4;
+  int DSL_RULE_PLANNER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl <em>DSL Rule Executor</em>}' class.
@@ -422,7 +468,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleExecutor()
    * @generated
    */
-  int DSL_RULE_EXECUTOR = 6;
+  int DSL_RULE_EXECUTOR = 7;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -470,13 +516,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_EXECUTOR__KNOWLEDGE = DSL_RULES_FEATURE_COUNT + 3;
 
   /**
+   * The feature id for the '<em><b>Executor2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_EXECUTOR__EXECUTOR2 = DSL_RULES_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Executor</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_EXECUTOR_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 4;
+  int DSL_RULE_EXECUTOR_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMOImpl <em>DSL Rule MO</em>}' class.
@@ -486,7 +541,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleMO()
    * @generated
    */
-  int DSL_RULE_MO = 7;
+  int DSL_RULE_MO = 8;
 
   /**
    * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -532,7 +587,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManaging()
    * @generated
    */
-  int DSL_MANAGING = 8;
+  int DSL_MANAGING = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -578,7 +633,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManaged()
    * @generated
    */
-  int DSL_MANAGED = 9;
+  int DSL_MANAGED = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -633,7 +688,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManagerController()
    * @generated
    */
-  int DSL_MANAGER_CONTROLLER = 10;
+  int DSL_MANAGER_CONTROLLER = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -670,7 +725,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLController()
    * @generated
    */
-  int DSL_CONTROLLER = 11;
+  int DSL_CONTROLLER = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -743,7 +798,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLMonitor()
    * @generated
    */
-  int DSL_MONITOR = 12;
+  int DSL_MONITOR = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -771,7 +826,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLAnalyzer()
    * @generated
    */
-  int DSL_ANALYZER = 13;
+  int DSL_ANALYZER = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -799,7 +854,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLPlanner()
    * @generated
    */
-  int DSL_PLANNER = 14;
+  int DSL_PLANNER = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -827,7 +882,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLExecutor()
    * @generated
    */
-  int DSL_EXECUTOR = 15;
+  int DSL_EXECUTOR = 16;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -855,7 +910,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLKnowledge()
    * @generated
    */
-  int DSL_KNOWLEDGE = 16;
+  int DSL_KNOWLEDGE = 17;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -892,7 +947,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLSensor()
    * @generated
    */
-  int DSL_SENSOR = 17;
+  int DSL_SENSOR = 18;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -920,7 +975,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLEffector()
    * @generated
    */
-  int DSL_EFFECTOR = 18;
+  int DSL_EFFECTOR = 19;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -948,7 +1003,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLReferenceInput()
    * @generated
    */
-  int DSL_REFERENCE_INPUT = 19;
+  int DSL_REFERENCE_INPUT = 20;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -976,7 +1031,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLMeasuredOutput()
    * @generated
    */
-  int DSL_MEASURED_OUTPUT = 20;
+  int DSL_MEASURED_OUTPUT = 21;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1073,6 +1128,38 @@ public interface SasDslPackage extends EPackage
   EAttribute getDSLRules_Access();
 
   /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController <em>DSL Rule MController</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DSL Rule MController</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController
+   * @generated
+   */
+  EClass getDSLRuleMController();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController#getMcontroller1 <em>Mcontroller1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Mcontroller1</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController#getMcontroller1()
+   * @see #getDSLRuleMController()
+   * @generated
+   */
+  EReference getDSLRuleMController_Mcontroller1();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController#getMcontroller2 <em>Mcontroller2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Mcontroller2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController#getMcontroller2()
+   * @see #getDSLRuleMController()
+   * @generated
+   */
+  EReference getDSLRuleMController_Mcontroller2();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController <em>DSL Rule Controller</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1083,59 +1170,26 @@ public interface SasDslPackage extends EPackage
   EClass getDSLRuleController();
 
   /**
-   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController <em>Controller</em>}'.
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController1 <em>Controller1</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Controller</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController()
+   * @return the meta object for the reference '<em>Controller1</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController1()
    * @see #getDSLRuleController()
    * @generated
    */
-  EReference getDSLRuleController_Controller();
+  EReference getDSLRuleController_Controller1();
 
   /**
-   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getMonitor <em>Monitor</em>}'.
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController2 <em>Controller2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Monitor</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getMonitor()
+   * @return the meta object for the reference '<em>Controller2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController2()
    * @see #getDSLRuleController()
    * @generated
    */
-  EReference getDSLRuleController_Monitor();
-
-  /**
-   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getAnalyzer <em>Analyzer</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Analyzer</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getAnalyzer()
-   * @see #getDSLRuleController()
-   * @generated
-   */
-  EReference getDSLRuleController_Analyzer();
-
-  /**
-   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getPlanner <em>Planner</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Planner</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getPlanner()
-   * @see #getDSLRuleController()
-   * @generated
-   */
-  EReference getDSLRuleController_Planner();
-
-  /**
-   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getExecutor <em>Executor</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Executor</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getExecutor()
-   * @see #getDSLRuleController()
-   * @generated
-   */
-  EReference getDSLRuleController_Executor();
+  EReference getDSLRuleController_Controller2();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor <em>DSL Rule Monitor</em>}'.
@@ -1190,6 +1244,17 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EReference getDSLRuleMonitor_Analyzer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor2 <em>Monitor2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Monitor2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor2()
+   * @see #getDSLRuleMonitor()
+   * @generated
+   */
+  EReference getDSLRuleMonitor_Monitor2();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer <em>DSL Rule Analyzer</em>}'.
@@ -1257,6 +1322,17 @@ public interface SasDslPackage extends EPackage
   EReference getDSLRuleAnalyzer_Rreference();
 
   /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getAnalyzer2 <em>Analyzer2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Analyzer2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getAnalyzer2()
+   * @see #getDSLRuleAnalyzer()
+   * @generated
+   */
+  EReference getDSLRuleAnalyzer_Analyzer2();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner <em>DSL Rule Planner</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1311,6 +1387,17 @@ public interface SasDslPackage extends EPackage
   EReference getDSLRulePlanner_Executor();
 
   /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getPlanner2 <em>Planner2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Planner2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getPlanner2()
+   * @see #getDSLRulePlanner()
+   * @generated
+   */
+  EReference getDSLRulePlanner_Planner2();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor <em>DSL Rule Executor</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1363,6 +1450,17 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EReference getDSLRuleExecutor_Knowledge();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor2 <em>Executor2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Executor2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor2()
+   * @see #getDSLRuleExecutor()
+   * @generated
+   */
+  EReference getDSLRuleExecutor_Executor2();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO <em>DSL Rule MO</em>}'.
@@ -1885,6 +1983,32 @@ public interface SasDslPackage extends EPackage
     EAttribute DSL_RULES__ACCESS = eINSTANCE.getDSLRules_Access();
 
     /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMControllerImpl <em>DSL Rule MController</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMControllerImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleMController()
+     * @generated
+     */
+    EClass DSL_RULE_MCONTROLLER = eINSTANCE.getDSLRuleMController();
+
+    /**
+     * The meta object literal for the '<em><b>Mcontroller1</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_MCONTROLLER__MCONTROLLER1 = eINSTANCE.getDSLRuleMController_Mcontroller1();
+
+    /**
+     * The meta object literal for the '<em><b>Mcontroller2</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_MCONTROLLER__MCONTROLLER2 = eINSTANCE.getDSLRuleMController_Mcontroller2();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl <em>DSL Rule Controller</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1895,44 +2019,20 @@ public interface SasDslPackage extends EPackage
     EClass DSL_RULE_CONTROLLER = eINSTANCE.getDSLRuleController();
 
     /**
-     * The meta object literal for the '<em><b>Controller</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Controller1</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DSL_RULE_CONTROLLER__CONTROLLER = eINSTANCE.getDSLRuleController_Controller();
+    EReference DSL_RULE_CONTROLLER__CONTROLLER1 = eINSTANCE.getDSLRuleController_Controller1();
 
     /**
-     * The meta object literal for the '<em><b>Monitor</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Controller2</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DSL_RULE_CONTROLLER__MONITOR = eINSTANCE.getDSLRuleController_Monitor();
-
-    /**
-     * The meta object literal for the '<em><b>Analyzer</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DSL_RULE_CONTROLLER__ANALYZER = eINSTANCE.getDSLRuleController_Analyzer();
-
-    /**
-     * The meta object literal for the '<em><b>Planner</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DSL_RULE_CONTROLLER__PLANNER = eINSTANCE.getDSLRuleController_Planner();
-
-    /**
-     * The meta object literal for the '<em><b>Executor</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DSL_RULE_CONTROLLER__EXECUTOR = eINSTANCE.getDSLRuleController_Executor();
+    EReference DSL_RULE_CONTROLLER__CONTROLLER2 = eINSTANCE.getDSLRuleController_Controller2();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl <em>DSL Rule Monitor</em>}' class.
@@ -1975,6 +2075,14 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EReference DSL_RULE_MONITOR__ANALYZER = eINSTANCE.getDSLRuleMonitor_Analyzer();
+
+    /**
+     * The meta object literal for the '<em><b>Monitor2</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_MONITOR__MONITOR2 = eINSTANCE.getDSLRuleMonitor_Monitor2();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl <em>DSL Rule Analyzer</em>}' class.
@@ -2027,6 +2135,14 @@ public interface SasDslPackage extends EPackage
     EReference DSL_RULE_ANALYZER__RREFERENCE = eINSTANCE.getDSLRuleAnalyzer_Rreference();
 
     /**
+     * The meta object literal for the '<em><b>Analyzer2</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_ANALYZER__ANALYZER2 = eINSTANCE.getDSLRuleAnalyzer_Analyzer2();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl <em>DSL Rule Planner</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2069,6 +2185,14 @@ public interface SasDslPackage extends EPackage
     EReference DSL_RULE_PLANNER__EXECUTOR = eINSTANCE.getDSLRulePlanner_Executor();
 
     /**
+     * The meta object literal for the '<em><b>Planner2</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_PLANNER__PLANNER2 = eINSTANCE.getDSLRulePlanner_Planner2();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl <em>DSL Rule Executor</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2109,6 +2233,14 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EReference DSL_RULE_EXECUTOR__KNOWLEDGE = eINSTANCE.getDSLRuleExecutor_Knowledge();
+
+    /**
+     * The meta object literal for the '<em><b>Executor2</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_EXECUTOR__EXECUTOR2 = eINSTANCE.getDSLRuleExecutor_Executor2();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMOImpl <em>DSL Rule MO</em>}' class.

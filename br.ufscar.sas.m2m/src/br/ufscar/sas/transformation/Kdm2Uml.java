@@ -12,7 +12,9 @@
 package br.ufscar.sas.transformation;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,14 +34,13 @@ import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
 import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
-import org.eclipse.m2m.qvt.oml.util.Log;
-import org.eclipse.m2m.qvt.oml.util.WriterLog;
+import org.eclipse.m2m.qvt.oml.util.StringBufferLog;
 
 import br.ufscar.sas.m2m.Activator;
 
 public class Kdm2Uml {
 
-	public Resource createComponentDiagram(IFile kdm, String uml, String javaProjectName ) throws ExecutionException
+	public Resource createComponentDiagram(IFile kdm, String uml, String javaProjectName,String mapping ) throws ExecutionException
 	{
 
 		// Refer to an existing transformation via URI
@@ -58,19 +59,25 @@ public class Kdm2Uml {
 		// create an empty extent to catch the output
 		ModelExtent output = new BasicModelExtent();
 
+		//Log log =  new WriterLog(new OutputStreamWriter(System.out)); 
 		// setup the execution environment details -> 
 		// configuration properties, logger, monitor object etc.
 		ExecutionContextImpl context = new ExecutionContextImpl();
 		context.setConfigProperty("modelName", "ArchitecturalView_" + javaProjectName);
-
-		OutputStreamWriter outStream = new OutputStreamWriter(System.out);
-		Log log = new WriterLog(outStream);
+		StringBufferLog log = new StringBufferLog();
 		context.setLog(log);
-
+		
 		// run the transformation assigned to the executor with the given 
 		// input and output and execution context -> ChangeTheWorld(in, out)
 		// Remark: variable arguments count is supported
 		ExecutionDiagnostic result = executor.execute(context, input, output);
+		try {
+			Files.write(Paths.get(mapping), log.getContents().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING );
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// check the result for success
 		Resource umlOutResource = null;
 		if(result.getSeverity() == Diagnostic.OK) 

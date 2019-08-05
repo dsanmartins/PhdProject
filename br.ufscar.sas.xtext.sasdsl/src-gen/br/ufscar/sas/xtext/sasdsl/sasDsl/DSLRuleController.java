@@ -13,11 +13,8 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController <em>Controller</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getMonitor <em>Monitor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getAnalyzer <em>Analyzer</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getPlanner <em>Planner</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController1 <em>Controller1</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController2 <em>Controller2</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController()
@@ -27,133 +24,55 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
 public interface DSLRuleController extends DSLRules
 {
   /**
-   * Returns the value of the '<em><b>Controller</b></em>' reference.
+   * Returns the value of the '<em><b>Controller1</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Controller</em>' reference isn't clear,
+   * If the meaning of the '<em>Controller1</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Controller</em>' reference.
-   * @see #setController(DSLController)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Controller()
+   * @return the value of the '<em>Controller1</em>' reference.
+   * @see #setController1(DSLController)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Controller1()
    * @model
    * @generated
    */
-  DSLController getController();
+  DSLController getController1();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController <em>Controller</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController1 <em>Controller1</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Controller</em>' reference.
-   * @see #getController()
+   * @param value the new value of the '<em>Controller1</em>' reference.
+   * @see #getController1()
    * @generated
    */
-  void setController(DSLController value);
+  void setController1(DSLController value);
 
   /**
-   * Returns the value of the '<em><b>Monitor</b></em>' reference.
+   * Returns the value of the '<em><b>Controller2</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Monitor</em>' reference isn't clear,
+   * If the meaning of the '<em>Controller2</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Monitor</em>' reference.
-   * @see #setMonitor(DSLMonitor)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Monitor()
+   * @return the value of the '<em>Controller2</em>' reference.
+   * @see #setController2(DSLController)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Controller2()
    * @model
    * @generated
    */
-  DSLMonitor getMonitor();
+  DSLController getController2();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getMonitor <em>Monitor</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getController2 <em>Controller2</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Monitor</em>' reference.
-   * @see #getMonitor()
+   * @param value the new value of the '<em>Controller2</em>' reference.
+   * @see #getController2()
    * @generated
    */
-  void setMonitor(DSLMonitor value);
-
-  /**
-   * Returns the value of the '<em><b>Analyzer</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Analyzer</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Analyzer</em>' reference.
-   * @see #setAnalyzer(DSLAnalyzer)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Analyzer()
-   * @model
-   * @generated
-   */
-  DSLAnalyzer getAnalyzer();
-
-  /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getAnalyzer <em>Analyzer</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Analyzer</em>' reference.
-   * @see #getAnalyzer()
-   * @generated
-   */
-  void setAnalyzer(DSLAnalyzer value);
-
-  /**
-   * Returns the value of the '<em><b>Planner</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Planner</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Planner</em>' reference.
-   * @see #setPlanner(DSLPlanner)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Planner()
-   * @model
-   * @generated
-   */
-  DSLPlanner getPlanner();
-
-  /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getPlanner <em>Planner</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Planner</em>' reference.
-   * @see #getPlanner()
-   * @generated
-   */
-  void setPlanner(DSLPlanner value);
-
-  /**
-   * Returns the value of the '<em><b>Executor</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Executor</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Executor</em>' reference.
-   * @see #setExecutor(DSLExecutor)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleController_Executor()
-   * @model
-   * @generated
-   */
-  DSLExecutor getExecutor();
-
-  /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController#getExecutor <em>Executor</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Executor</em>' reference.
-   * @see #getExecutor()
-   * @generated
-   */
-  void setExecutor(DSLExecutor value);
+  void setController2(DSLController value);
 
 } // DSLRuleController

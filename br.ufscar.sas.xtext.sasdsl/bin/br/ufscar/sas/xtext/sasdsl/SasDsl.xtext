@@ -12,22 +12,25 @@ ArchitectureDefinition:
 	
 DSLRules:
 	
-	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO 
+	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController
 ;
 
+DSLRuleMController:
+	
+	('mcontroller' mcontroller1 = [DSLManagerController] access=DSLAccess 'mcontroller' mcontroller2 = [DSLManagerController] ';') 
+;
 
 DSLRuleController:
-	('controller' controller=[DSLController] access=DSLAccess 'monitor' monitor = [DSLMonitor] ';') |
-	('controller' controller=[DSLController] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') |
-	('controller' controller=[DSLController] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
-	('controller' controller=[DSLController] access=DSLAccess 'executor' executor = [DSLExecutor] ';') 
+	
+	('controller' controller1=[DSLController] access=DSLAccess 'controller' controller2 = [DSLController] ';') 
 ;
 
 DSLRuleMonitor:
 	
 	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor = [DSLSensor] ';') |
 	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
-	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') 
+	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') | 
+	( 'monitor' monitor=[DSLMonitor] access=DSLAccess 'monitor' monitor2 = [DSLMonitor] ';')
 ;
 
 DSLRuleAnalyzer:
@@ -35,21 +38,24 @@ DSLRuleAnalyzer:
 	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor = [DSLMonitor] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'reference-input' rreference = [DSLReferenceInput] ';') 
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'reference-input' rreference = [DSLReferenceInput] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'analyzer' analyzer2 = [DSLAnalyzer] ';') 
 ;
 
 DSLRulePlanner:
 	
 	('planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
 	('planner' planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer = [DSLAnalyzer] ';') |
-	('planner' planner=[DSLPlanner] access=DSLAccess 'executor' executor = [DSLExecutor] ';') 
+	('planner' planner=[DSLPlanner] access=DSLAccess 'executor' executor = [DSLExecutor] ';') |
+	('planner' planner=[DSLPlanner] access=DSLAccess 'planner' planner2 = [DSLPlanner] ';')
 ;
 
 DSLRuleExecutor:
 		
 	('executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector = [DSLEffector] ';') |
 	('executor' executor=[DSLExecutor] access=DSLAccess 'planner' planner = [DSLPlanner] ';') |
-	('executor' executor=[DSLExecutor] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') 
+	('executor' executor=[DSLExecutor] access=DSLAccess 'knowledge' knowledge = [DSLKnowledge] ';') |
+	('executor' executor=[DSLExecutor] access=DSLAccess 'executor' executor2 = [DSLExecutor] ';') 
 ;
 
 DSLRuleMO:
@@ -68,7 +74,7 @@ DSLManaging:
 	'Managing' name=ID '{' 
 		
 		managerController += DSLManagerController*
-		controller += DSLController+
+		controller += DSLController*
 	
 	'}'
 ;

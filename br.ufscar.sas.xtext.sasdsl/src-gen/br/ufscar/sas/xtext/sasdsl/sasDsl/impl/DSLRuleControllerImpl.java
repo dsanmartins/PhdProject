@@ -3,11 +3,7 @@
  */
 package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 
@@ -26,11 +22,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getController <em>Controller</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getMonitor <em>Monitor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getAnalyzer <em>Analyzer</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getPlanner <em>Planner</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getController1 <em>Controller1</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleControllerImpl#getController2 <em>Controller2</em>}</li>
  * </ul>
  *
  * @generated
@@ -38,54 +31,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleController
 {
   /**
-   * The cached value of the '{@link #getController() <em>Controller</em>}' reference.
+   * The cached value of the '{@link #getController1() <em>Controller1</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getController()
+   * @see #getController1()
    * @generated
    * @ordered
    */
-  protected DSLController controller;
+  protected DSLController controller1;
 
   /**
-   * The cached value of the '{@link #getMonitor() <em>Monitor</em>}' reference.
+   * The cached value of the '{@link #getController2() <em>Controller2</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMonitor()
+   * @see #getController2()
    * @generated
    * @ordered
    */
-  protected DSLMonitor monitor;
-
-  /**
-   * The cached value of the '{@link #getAnalyzer() <em>Analyzer</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnalyzer()
-   * @generated
-   * @ordered
-   */
-  protected DSLAnalyzer analyzer;
-
-  /**
-   * The cached value of the '{@link #getPlanner() <em>Planner</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPlanner()
-   * @generated
-   * @ordered
-   */
-  protected DSLPlanner planner;
-
-  /**
-   * The cached value of the '{@link #getExecutor() <em>Executor</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExecutor()
-   * @generated
-   * @ordered
-   */
-  protected DSLExecutor executor;
+  protected DSLController controller2;
 
   /**
    * <!-- begin-user-doc -->
@@ -114,19 +77,19 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * @generated
    */
   @Override
-  public DSLController getController()
+  public DSLController getController1()
   {
-    if (controller != null && controller.eIsProxy())
+    if (controller1 != null && controller1.eIsProxy())
     {
-      InternalEObject oldController = (InternalEObject)controller;
-      controller = (DSLController)eResolveProxy(oldController);
-      if (controller != oldController)
+      InternalEObject oldController1 = (InternalEObject)controller1;
+      controller1 = (DSLController)eResolveProxy(oldController1);
+      if (controller1 != oldController1)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER, oldController, controller));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1, oldController1, controller1));
       }
     }
-    return controller;
+    return controller1;
   }
 
   /**
@@ -134,9 +97,9 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * <!-- end-user-doc -->
    * @generated
    */
-  public DSLController basicGetController()
+  public DSLController basicGetController1()
   {
-    return controller;
+    return controller1;
   }
 
   /**
@@ -145,12 +108,12 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * @generated
    */
   @Override
-  public void setController(DSLController newController)
+  public void setController1(DSLController newController1)
   {
-    DSLController oldController = controller;
-    controller = newController;
+    DSLController oldController1 = controller1;
+    controller1 = newController1;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER, oldController, controller));
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1, oldController1, controller1));
   }
 
   /**
@@ -159,19 +122,19 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * @generated
    */
   @Override
-  public DSLMonitor getMonitor()
+  public DSLController getController2()
   {
-    if (monitor != null && monitor.eIsProxy())
+    if (controller2 != null && controller2.eIsProxy())
     {
-      InternalEObject oldMonitor = (InternalEObject)monitor;
-      monitor = (DSLMonitor)eResolveProxy(oldMonitor);
-      if (monitor != oldMonitor)
+      InternalEObject oldController2 = (InternalEObject)controller2;
+      controller2 = (DSLController)eResolveProxy(oldController2);
+      if (controller2 != oldController2)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__MONITOR, oldMonitor, monitor));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2, oldController2, controller2));
       }
     }
-    return monitor;
+    return controller2;
   }
 
   /**
@@ -179,9 +142,9 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * <!-- end-user-doc -->
    * @generated
    */
-  public DSLMonitor basicGetMonitor()
+  public DSLController basicGetController2()
   {
-    return monitor;
+    return controller2;
   }
 
   /**
@@ -190,147 +153,12 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
    * @generated
    */
   @Override
-  public void setMonitor(DSLMonitor newMonitor)
+  public void setController2(DSLController newController2)
   {
-    DSLMonitor oldMonitor = monitor;
-    monitor = newMonitor;
+    DSLController oldController2 = controller2;
+    controller2 = newController2;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__MONITOR, oldMonitor, monitor));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLAnalyzer getAnalyzer()
-  {
-    if (analyzer != null && analyzer.eIsProxy())
-    {
-      InternalEObject oldAnalyzer = (InternalEObject)analyzer;
-      analyzer = (DSLAnalyzer)eResolveProxy(oldAnalyzer);
-      if (analyzer != oldAnalyzer)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER, oldAnalyzer, analyzer));
-      }
-    }
-    return analyzer;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLAnalyzer basicGetAnalyzer()
-  {
-    return analyzer;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setAnalyzer(DSLAnalyzer newAnalyzer)
-  {
-    DSLAnalyzer oldAnalyzer = analyzer;
-    analyzer = newAnalyzer;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER, oldAnalyzer, analyzer));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLPlanner getPlanner()
-  {
-    if (planner != null && planner.eIsProxy())
-    {
-      InternalEObject oldPlanner = (InternalEObject)planner;
-      planner = (DSLPlanner)eResolveProxy(oldPlanner);
-      if (planner != oldPlanner)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__PLANNER, oldPlanner, planner));
-      }
-    }
-    return planner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLPlanner basicGetPlanner()
-  {
-    return planner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setPlanner(DSLPlanner newPlanner)
-  {
-    DSLPlanner oldPlanner = planner;
-    planner = newPlanner;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__PLANNER, oldPlanner, planner));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLExecutor getExecutor()
-  {
-    if (executor != null && executor.eIsProxy())
-    {
-      InternalEObject oldExecutor = (InternalEObject)executor;
-      executor = (DSLExecutor)eResolveProxy(oldExecutor);
-      if (executor != oldExecutor)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR, oldExecutor, executor));
-      }
-    }
-    return executor;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLExecutor basicGetExecutor()
-  {
-    return executor;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setExecutor(DSLExecutor newExecutor)
-  {
-    DSLExecutor oldExecutor = executor;
-    executor = newExecutor;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR, oldExecutor, executor));
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2, oldController2, controller2));
   }
 
   /**
@@ -343,21 +171,12 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
   {
     switch (featureID)
     {
-      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER:
-        if (resolve) return getController();
-        return basicGetController();
-      case SasDslPackage.DSL_RULE_CONTROLLER__MONITOR:
-        if (resolve) return getMonitor();
-        return basicGetMonitor();
-      case SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER:
-        if (resolve) return getAnalyzer();
-        return basicGetAnalyzer();
-      case SasDslPackage.DSL_RULE_CONTROLLER__PLANNER:
-        if (resolve) return getPlanner();
-        return basicGetPlanner();
-      case SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR:
-        if (resolve) return getExecutor();
-        return basicGetExecutor();
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1:
+        if (resolve) return getController1();
+        return basicGetController1();
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2:
+        if (resolve) return getController2();
+        return basicGetController2();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -372,20 +191,11 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
   {
     switch (featureID)
     {
-      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER:
-        setController((DSLController)newValue);
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1:
+        setController1((DSLController)newValue);
         return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__MONITOR:
-        setMonitor((DSLMonitor)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER:
-        setAnalyzer((DSLAnalyzer)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__PLANNER:
-        setPlanner((DSLPlanner)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR:
-        setExecutor((DSLExecutor)newValue);
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2:
+        setController2((DSLController)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -401,20 +211,11 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
   {
     switch (featureID)
     {
-      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER:
-        setController((DSLController)null);
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1:
+        setController1((DSLController)null);
         return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__MONITOR:
-        setMonitor((DSLMonitor)null);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER:
-        setAnalyzer((DSLAnalyzer)null);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__PLANNER:
-        setPlanner((DSLPlanner)null);
-        return;
-      case SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR:
-        setExecutor((DSLExecutor)null);
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2:
+        setController2((DSLController)null);
         return;
     }
     super.eUnset(featureID);
@@ -430,16 +231,10 @@ public class DSLRuleControllerImpl extends DSLRulesImpl implements DSLRuleContro
   {
     switch (featureID)
     {
-      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER:
-        return controller != null;
-      case SasDslPackage.DSL_RULE_CONTROLLER__MONITOR:
-        return monitor != null;
-      case SasDslPackage.DSL_RULE_CONTROLLER__ANALYZER:
-        return analyzer != null;
-      case SasDslPackage.DSL_RULE_CONTROLLER__PLANNER:
-        return planner != null;
-      case SasDslPackage.DSL_RULE_CONTROLLER__EXECUTOR:
-        return executor != null;
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER1:
+        return controller1 != null;
+      case SasDslPackage.DSL_RULE_CONTROLLER__CONTROLLER2:
+        return controller2 != null;
     }
     return super.eIsSet(featureID);
   }

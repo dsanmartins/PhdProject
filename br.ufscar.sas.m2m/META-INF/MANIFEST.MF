@@ -21,4 +21,8 @@ Import-Package: org.eclipse.core.internal.resources,
  org.eclipse.ui
 Export-Package: br.ufscar.sas.transformation
 Bundle-ClassPath: lib/commons-collections4-4.4.jar,
- .
+ .,
+ lib/structurizr-core-1.3.0.jar,
+ lib/structurizr-plantuml-1.3.0.jar,
+ lib/commons-logging-1.2.jar,
+ lib/guava-28.0-jre.jar

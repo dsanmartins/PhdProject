@@ -67,6 +67,7 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
     {
       case SasDslPackage.ARCHITECTURE_DEFINITION: return createArchitectureDefinition();
       case SasDslPackage.DSL_RULES: return createDSLRules();
+      case SasDslPackage.DSL_RULE_MCONTROLLER: return createDSLRuleMController();
       case SasDslPackage.DSL_RULE_CONTROLLER: return createDSLRuleController();
       case SasDslPackage.DSL_RULE_MONITOR: return createDSLRuleMonitor();
       case SasDslPackage.DSL_RULE_ANALYZER: return createDSLRuleAnalyzer();
@@ -113,6 +114,18 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
   {
     DSLRulesImpl dslRules = new DSLRulesImpl();
     return dslRules;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLRuleMController createDSLRuleMController()
+  {
+    DSLRuleMControllerImpl dslRuleMController = new DSLRuleMControllerImpl();
+    return dslRuleMController;
   }
 
   /**

@@ -90,6 +90,7 @@ import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationBelong;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
+import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
 import br.ufscar.sas.transformation.Kdm2Uml;
 import br.ufscar.sas.transformation.OpenComponentDiagram;
 import br.ufscar.sas.transformation.Uml2PlantUML;
@@ -523,13 +524,14 @@ public class MainView extends ViewPart implements IPartListener2 {
 		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
-	
+		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 
 		btnFCA.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (radios[0].getSelection())
 				{
+					String title = "This is the current architecture of project: " + projectName;
 					try {
 						dialog.run(true, true, new IRunnableWithProgress() {
 							public void run(IProgressMonitor monitor) {
@@ -538,9 +540,17 @@ public class MainView extends ViewPart implements IPartListener2 {
 								monitor.beginTask("Component Diagram of Current Architecture....", totalUnitsOfWork);
 								try 
 								{
+									AdaptiveSystemUMLProfile umlProfile = new AdaptiveSystemUMLProfile();
+									try {
+										umlProfile.createProfile(umlFolderCurrentAbsolute);
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
 									Kdm2Uml rc = new Kdm2Uml();
 									Uml2PlantUML up = new Uml2PlantUML();
-									up.createPlantComponentDiagram(rc.createComponentDiagram(kdmCurrent, umlCurrent, projectName), umlFolderCurrentAbsolute, projectName);
+									up.createPlantComponentDiagram(rc.createComponentDiagram(kdmCurrent, umlCurrent, projectName, mappingString), umlFolderCurrentAbsolute, projectName, mappingString, title);
 									refreshProjects();
 								} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
 									// TODO Auto-generated catch block
@@ -561,6 +571,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 				{
 					if (radios[1].getSelection()) {
 
+						String title = "This is the planned architecture of project: " + projectName;
 						try {
 							dialog.run(true, true, new IRunnableWithProgress() {
 								public void run(IProgressMonitor monitor) {
@@ -569,9 +580,16 @@ public class MainView extends ViewPart implements IPartListener2 {
 									monitor.beginTask("Component Diagram of Planned Architecture....", totalUnitsOfWork);
 									try 
 									{
+										AdaptiveSystemUMLProfile umlProfile = new AdaptiveSystemUMLProfile();
+										try {
+											umlProfile.createProfile(umlFolderCurrentAbsolute);
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 										Kdm2Uml rc = new Kdm2Uml();
 										Uml2PlantUML up = new Uml2PlantUML();
-										up.createPlantComponentDiagram(rc.createComponentDiagram(kdmPlanned, umlPlanned, ""), umlFolderPlannedAbsolute, projectName);
+										up.createPlantComponentDiagram(rc.createComponentDiagram(kdmPlanned, umlPlanned, "", mappingString), umlFolderPlannedAbsolute, projectName,mappingString, title );
 										refreshProjects();
 									} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
 										// TODO Auto-generated catch block

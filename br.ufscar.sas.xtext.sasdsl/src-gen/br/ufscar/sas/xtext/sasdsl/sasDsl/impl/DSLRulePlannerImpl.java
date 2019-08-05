@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getKnowledge <em>Knowledge</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getPlanner2 <em>Planner2</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,6 +75,16 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
    * @ordered
    */
   protected DSLExecutor executor;
+
+  /**
+   * The cached value of the '{@link #getPlanner2() <em>Planner2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPlanner2()
+   * @generated
+   * @ordered
+   */
+  protected DSLPlanner planner2;
 
   /**
    * <!-- begin-user-doc -->
@@ -282,6 +293,51 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
    * @generated
    */
   @Override
+  public DSLPlanner getPlanner2()
+  {
+    if (planner2 != null && planner2.eIsProxy())
+    {
+      InternalEObject oldPlanner2 = (InternalEObject)planner2;
+      planner2 = (DSLPlanner)eResolveProxy(oldPlanner2);
+      if (planner2 != oldPlanner2)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_PLANNER__PLANNER2, oldPlanner2, planner2));
+      }
+    }
+    return planner2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLPlanner basicGetPlanner2()
+  {
+    return planner2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setPlanner2(DSLPlanner newPlanner2)
+  {
+    DSLPlanner oldPlanner2 = planner2;
+    planner2 = newPlanner2;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_PLANNER__PLANNER2, oldPlanner2, planner2));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -298,6 +354,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
       case SasDslPackage.DSL_RULE_PLANNER__EXECUTOR:
         if (resolve) return getExecutor();
         return basicGetExecutor();
+      case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
+        if (resolve) return getPlanner2();
+        return basicGetPlanner2();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -323,6 +382,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
         return;
       case SasDslPackage.DSL_RULE_PLANNER__EXECUTOR:
         setExecutor((DSLExecutor)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
+        setPlanner2((DSLPlanner)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -350,6 +412,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
       case SasDslPackage.DSL_RULE_PLANNER__EXECUTOR:
         setExecutor((DSLExecutor)null);
         return;
+      case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
+        setPlanner2((DSLPlanner)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -372,6 +437,8 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
         return analyzer != null;
       case SasDslPackage.DSL_RULE_PLANNER__EXECUTOR:
         return executor != null;
+      case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
+        return planner2 != null;
     }
     return super.eIsSet(featureID);
   }

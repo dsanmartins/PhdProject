@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getMonitor <em>Monitor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getRreference <em>Rreference</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getAnalyzer2 <em>Analyzer2</em>}</li>
  * </ul>
  *
  * @generated
@@ -86,6 +87,16 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @ordered
    */
   protected DSLReferenceInput rreference;
+
+  /**
+   * The cached value of the '{@link #getAnalyzer2() <em>Analyzer2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnalyzer2()
+   * @generated
+   * @ordered
+   */
+  protected DSLAnalyzer analyzer2;
 
   /**
    * <!-- begin-user-doc -->
@@ -339,6 +350,51 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
+  public DSLAnalyzer getAnalyzer2()
+  {
+    if (analyzer2 != null && analyzer2.eIsProxy())
+    {
+      InternalEObject oldAnalyzer2 = (InternalEObject)analyzer2;
+      analyzer2 = (DSLAnalyzer)eResolveProxy(oldAnalyzer2);
+      if (analyzer2 != oldAnalyzer2)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2, oldAnalyzer2, analyzer2));
+      }
+    }
+    return analyzer2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLAnalyzer basicGetAnalyzer2()
+  {
+    return analyzer2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAnalyzer2(DSLAnalyzer newAnalyzer2)
+  {
+    DSLAnalyzer oldAnalyzer2 = analyzer2;
+    analyzer2 = newAnalyzer2;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2, oldAnalyzer2, analyzer2));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -358,6 +414,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
         if (resolve) return getRreference();
         return basicGetRreference();
+      case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
+        if (resolve) return getAnalyzer2();
+        return basicGetAnalyzer2();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -386,6 +445,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
         setRreference((DSLReferenceInput)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
+        setAnalyzer2((DSLAnalyzer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -416,6 +478,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
         setRreference((DSLReferenceInput)null);
         return;
+      case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
+        setAnalyzer2((DSLAnalyzer)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -440,6 +505,8 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
         return planner != null;
       case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
         return rreference != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
+        return analyzer2 != null;
     }
     return super.eIsSet(featureID);
   }
