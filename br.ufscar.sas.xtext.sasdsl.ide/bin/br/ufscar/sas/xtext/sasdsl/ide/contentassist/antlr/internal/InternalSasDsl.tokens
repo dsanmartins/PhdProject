@@ -18,8 +18,6 @@
 'Sensor'=42
 'Synchronized'=13
 'analyzer'=26
-'can-access'=11
-'cannot-access'=12
 'controller'=22
 'effector'=30
 'executor'=29
@@ -27,6 +25,8 @@
 'mcontroller'=20
 'measured-output'=31
 'monitor'=23
+'must-not-use'=12
+'must-use'=11
 'planner'=27
 'reference-input'=28
 'sensor'=24

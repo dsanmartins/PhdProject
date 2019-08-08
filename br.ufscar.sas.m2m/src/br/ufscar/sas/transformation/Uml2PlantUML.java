@@ -153,7 +153,7 @@ public class Uml2PlantUML {
 					{
 						DeploymentNode d1 = (DeploymentNode) element;
 						DeploymentNode d2 = (DeploymentNode) e;
-						Relationship relationship = d1.uses(d2, "uses","");
+						Relationship relationship = d1.uses(d2, "must-use","");
 						lRelationships.add(relationship);
 					}
 				}

@@ -66,8 +66,8 @@ public class QueryClass {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('1','Managed');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('2','Managing');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('3','CL Manager');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('4','Control Loop');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('3','MController');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('4','Controller');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('5','Monitor');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('6','Analyzer');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('7','Planner');");
@@ -75,8 +75,8 @@ public class QueryClass {
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('9','Knowledge');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('10','Sensor');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('11','Effector');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','Measured Output');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','Reference Input');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','MeasuredOutput');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','ReferenceInput');");
 		mydb.closeConnection();
 	}
 

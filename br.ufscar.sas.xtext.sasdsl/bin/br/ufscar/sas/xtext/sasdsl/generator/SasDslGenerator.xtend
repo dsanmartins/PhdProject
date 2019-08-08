@@ -15,6 +15,20 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging
+import java.util.ArrayList
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
 
 /**
  * Generates code from your model files on save.
@@ -29,6 +43,19 @@ class SasDslGenerator extends AbstractGenerator {
 	var aggregatedPath = new HashMap<String,String>();
 
 	var depth = newArrayList(5);
+	var lManaging = new ArrayList<DSLManaging>();
+	var lManaged =  new ArrayList<DSLManaged>();
+	var lMController =  new ArrayList<DSLManagerController>();
+	var lController =  new ArrayList<DSLController>();
+	var lMonitor =  new ArrayList<DSLMonitor>();
+	var lAnalyzer =  new ArrayList<DSLAnalyzer>();
+	var lPlanner =  new ArrayList<DSLPlanner>();
+	var lExecutor =  new ArrayList<DSLExecutor>();
+	var lEffector =  new ArrayList<DSLEffector>();
+	var lKnowledge =  new ArrayList<DSLKnowledge>();
+	var lSensor =  new ArrayList<DSLSensor>();
+	var lMOutput =  new ArrayList<DSLMeasuredOutput>();
+	var lRInput =  new ArrayList<DSLReferenceInput>();
 
 	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -50,20 +77,20 @@ class SasDslGenerator extends AbstractGenerator {
 		depth.add(3,0)
 		depth.add(4,0)
 		
-		
 		var managing = architecture.managing
 		for (var i=0; i< managing.size; i++){
 			
 			var level0 = depth.get(0)
 			var man = managing.get(i)
 			structureElementPath.put(man.name, "//@model.1/@structureElement."+ level0)
-			
+			lManaging.add(man)
 			
 			var mcontroller = man.managerController
 			for (var j=0; j<mcontroller.size ; j++){
 				var level1=depth.get(1)
 				var mcon = mcontroller.get(j)
 				structureElementPath.put(mcon.name,"//@model.1/@structureElement."+ level0 +"/" + "@structureElement."+ level1)
+				lMController.add(mcon)
 				
 				var controller = mcon.controller
 				for (var k=0; k< controller.size ; k++){
@@ -73,7 +100,7 @@ class SasDslGenerator extends AbstractGenerator {
 					structureElementPath.put(con.name,"//@model.1/@structureElement."+ level0 +
 														"/" + "@structureElement."+ level1 +
 														 "/" + "@structureElement."+ level2)
-	
+					lController.add(con)
 					var monitor = con.monitor
 					for (var l=0; l< monitor.size; l++){
 						
@@ -82,7 +109,8 @@ class SasDslGenerator extends AbstractGenerator {
 						structureElementPath.put(mon.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
-															"/" + "@structureElement."+ level3)										
+															"/" + "@structureElement."+ level3)					
+						lMonitor.add(mon)					
 						level3++
 						depth.set(3,level3)
 					}
@@ -95,7 +123,8 @@ class SasDslGenerator extends AbstractGenerator {
 						structureElementPath.put(ana.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
-															"/" + "@structureElement."+ level3)										
+															"/" + "@structureElement."+ level3)	
+						lAnalyzer.add(ana)									
 						level3++
 						depth.set(3,level3)
 					}
@@ -108,7 +137,8 @@ class SasDslGenerator extends AbstractGenerator {
 						structureElementPath.put(pla.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
-															"/" + "@structureElement."+ level3)										
+															"/" + "@structureElement."+ level3)			
+						lPlanner.add(pla)							
 						level3++
 						depth.set(3,level3)
 					}
@@ -121,7 +151,8 @@ class SasDslGenerator extends AbstractGenerator {
 						structureElementPath.put(exe.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
-															"/" + "@structureElement."+ level3)										
+															"/" + "@structureElement."+ level3)	
+						lExecutor.add(exe)									
 						level3++
 						depth.set(3,level3)
 					}
@@ -136,6 +167,7 @@ class SasDslGenerator extends AbstractGenerator {
 															"/" + "@structureElement."+ level2 + 
 															"/" + "@structureElement."+ level3)										
 						
+						lKnowledge.add(kno)
 						var ri = kno.referenceInput
 						for (var m = 0; m < ri.size; m++)
 						{
@@ -145,7 +177,8 @@ class SasDslGenerator extends AbstractGenerator {
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
 															"/" + "@structureElement."+ level3 +
-															"/" + "@structureElement."+ level4)					
+															"/" + "@structureElement."+ level4)
+							lRInput.add(r)					
 							level4++
 							depth.set(4,level4)
 						}
@@ -172,7 +205,8 @@ class SasDslGenerator extends AbstractGenerator {
 					var con = controller.get(k)
 					structureElementPath.put(con.name,"//@model.1/@structureElement."+ level0 +
 														 "/" + "@structureElement."+ level1)
-	
+					
+					lController.add(con)
 					var monitor = con.monitor
 					for (var l=0; l< monitor.size; l++){
 						
@@ -180,7 +214,8 @@ class SasDslGenerator extends AbstractGenerator {
 						var mon = monitor.get(l)
 						structureElementPath.put(mon.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
-															"/" + "@structureElement."+ level2)										
+															"/" + "@structureElement."+ level2)		
+						lMonitor.add(mon)							
 						level2++
 						depth.set(2,level2)
 					}
@@ -192,7 +227,8 @@ class SasDslGenerator extends AbstractGenerator {
 						var ana = analyzer.get(l)
 						structureElementPath.put(ana.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
-															"/" + "@structureElement."+ level2)										
+															"/" + "@structureElement."+ level2)		
+						lAnalyzer.add(ana)								
 						level2++
 						depth.set(2,level2)
 					}
@@ -204,7 +240,8 @@ class SasDslGenerator extends AbstractGenerator {
 						var pla = planner.get(l)
 						structureElementPath.put(pla.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
-															"/" + "@structureElement."+ level2)										
+															"/" + "@structureElement."+ level2)	
+						lPlanner.add(pla)									
 						level2++
 						depth.set(2,level2)
 					}
@@ -216,7 +253,8 @@ class SasDslGenerator extends AbstractGenerator {
 						var exe = executor.get(l)
 						structureElementPath.put(exe.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
-															"/" + "@structureElement."+ level2)										
+															"/" + "@structureElement."+ level2)		
+						lExecutor.add(exe)								
 						level2++
 						depth.set(2,level2)
 					}
@@ -229,7 +267,7 @@ class SasDslGenerator extends AbstractGenerator {
 						structureElementPath.put(kno.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2)										
-						
+						lKnowledge.add(kno)
 						var ri = kno.referenceInput
 						for (var m = 0; m < ri.size; m++)
 						{
@@ -238,7 +276,8 @@ class SasDslGenerator extends AbstractGenerator {
 							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 +
-															"/" + "@structureElement."+ level3)					
+															"/" + "@structureElement."+ level3)			
+							lRInput.add(r)		
 							level3++
 							depth.set(3,level3)
 						}
@@ -267,7 +306,7 @@ class SasDslGenerator extends AbstractGenerator {
 			var level0 = depth.get(0)
 			var man = managed.get(i)
 			structureElementPath.put(man.name, "//@model.1/@structureElement."+ level0)
-			
+			lManaged.add(man)
 			var sensor = man.sensor
 			for (var k = 0; k < sensor.size ; k++)
 			{
@@ -275,7 +314,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var sen = sensor.get(k)
 				structureElementPath.put(sen.name, "//@model.1/@structureElement."+ level0 + 
 															"/"+ "@structureElement."+ level1 )
-			
+				lSensor.add(sen)
 				level1++
 				depth.set(1,level1)			
 			}
@@ -287,7 +326,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var efe = effector.get(k)
 				structureElementPath.put(efe.name, "//@model.1/@structureElement."+ level0 + 
 															"/"+ "@structureElement."+ level1 )
-			
+				lEffector.add(efe)
 				level1++
 				depth.set(1,level1)			
 			}
@@ -299,7 +338,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var me = mea.get(k)
 				structureElementPath.put(me.name, "//@model.1/@structureElement."+ level0 + 
 															"/"+ "@structureElement."+ level1 )
-			
+				lMOutput.add(me)
 				level1++
 				depth.set(1,level1)			
 			}
@@ -327,7 +366,7 @@ class SasDslGenerator extends AbstractGenerator {
 		for (var i=0; i< rule.size ; i++){
 			
 			var r = rule.get(i)
-			if (r.access.equals("can-access"))
+			if (r.access.equals("must-use"))
 			{
 				if (r instanceof DSLRuleController){
 					
@@ -1155,11 +1194,79 @@ class SasDslGenerator extends AbstractGenerator {
 	def compile2(ArchitectureDefinition architectureDefinition){
 		
 		'''
+		import 'http://www.eclipse.org/MoDisco/kdm/structure' 
+	
+		-- Check the existence of adaptive system abstractions
+		package structure
+	
+		«FOR DSLManaging managing : lManaging»
+		context StructureModel
+		inv exist_«managing.name»: Subsystem.allInstances()->exists(c| c.name='«managing.name»' and c.stereotype->asSequence()->first().name = 'Managing Subsystem')
 		
+		«ENDFOR»	
+		«FOR DSLManaged managed : lManaged»
+		context StructureModel
+		inv exist_«managed.name»: Subsystem.allInstances()->exists(c| c.name='«managed.name»' and c.stereotype->asSequence()->first().name = 'Managed Subsystem')
 		
+		«ENDFOR»	
+		«FOR DSLManagerController mcontroller : lMController»
+		context StructureModel
+		inv exist_«mcontroller.name»: Component.allInstances()->exists(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')
+		
+		«ENDFOR»	
+		«FOR DSLController controller : lController»
+		context StructureModel
+		inv exist_«controller.name»: Component.allInstances()->exists(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Control Loop')
+		
+		«ENDFOR»	
+		«FOR DSLMonitor monitor : lMonitor»
+		context StructureModel
+		inv exist_«monitor.name»: Component.allInstances()->exists(c| c.name='«monitor.name»' and c.stereotype->asSequence()->first().name = 'Monitor')
+		
+		«ENDFOR»	
+		«FOR DSLAnalyzer analyzer : lAnalyzer»
+		context StructureModel
+		inv exist_«analyzer.name»: Component.allInstances()->exists(c| c.name='«analyzer.name»' and c.stereotype->asSequence()->first().name = 'Analyzer')
+		
+		«ENDFOR»	
+		«FOR DSLPlanner planner : lPlanner»
+		context StructureModel
+		inv exist_«planner.name»: Component.allInstances()->exists(c| c.name='«planner.name»' and c.stereotype->asSequence()->first().name = 'Planner')
+		
+		«ENDFOR»	
+		«FOR DSLExecutor executor : lExecutor»
+		context StructureModel
+		inv exist_«executor.name»: Component.allInstances()->exists(c| c.name='«executor.name»' and c.stereotype->asSequence()->first().name = 'Executor')
+		
+		«ENDFOR»	
+		«FOR DSLKnowledge knowledge : lKnowledge»
+		context StructureModel
+		inv exist_«knowledge.name»: Component.allInstances()->exists(c| c.name='«knowledge.name»' and c.stereotype->asSequence()->first().name = 'Knowledge')
+		
+		«ENDFOR»	
+		«FOR DSLEffector effector : lEffector»
+		context StructureModel
+		inv exist_«effector.name»: Component.allInstances()->exists(c| c.name='«effector.name»' and c.stereotype->asSequence()->first().name = 'Effector')
+		
+		«ENDFOR»	
+		«FOR DSLSensor sensor : lSensor»
+		context StructureModel
+		inv exist_«sensor.name»: Component.allInstances()->exists(c| c.name='«sensor.name»' and c.stereotype->asSequence()->first().name = 'Sensor')
+		
+		«ENDFOR»	
+		«FOR DSLMeasuredOutput mesOutput : lMOutput»
+		context StructureModel
+		inv exist_«mesOutput.name»: Component.allInstances()->exists(c| c.name='«mesOutput.name»' and c.stereotype->asSequence()->first().name = 'Measured Output')
+		
+		«ENDFOR»	
+		«FOR DSLReferenceInput refInput : lRInput»
+		context StructureModel
+		inv exist_«refInput.name»: Component.allInstances()->exists(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')
+		
+		«ENDFOR»	
+	
+		endpackage
 		'''
-		
-		
 		
 	}
 }

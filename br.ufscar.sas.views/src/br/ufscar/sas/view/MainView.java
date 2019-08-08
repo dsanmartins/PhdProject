@@ -172,7 +172,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		tab1.setText("Abstraction Maintainer");
 
 		Group group = new Group(tabFolder, SWT.NONE);
-		Group treeViewGroup = new Group(group, SWT.NONE);
+		Group treeViewGroup = new Group(group, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
 		treeViewGroup.setText("Abstractions Instances");
 		treeViewGroup.setBounds(10, 55, 500, 450);
 		treeViewGroup.setLayout(new FillLayout());
@@ -316,7 +316,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
 		tableViewGroup.setText("Mapping Code Elements with Abstraction Instances");
-		tableViewGroup.setBounds(10, 55, 500, 450);
+		tableViewGroup.setBounds(10, 55, 550, 450);
 		tableViewGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
 
@@ -335,12 +335,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		TableViewerColumn column2 = new TableViewerColumn(viewer, SWT.CENTER);
 		column2.getColumn().setText("Instance");
-		column2.getColumn().setWidth(120);
+		column2.getColumn().setWidth(130);
 		column2.getColumn().setResizable(false);
 
 		TableViewerColumn column3 = new TableViewerColumn(viewer, SWT.CENTER);
 		column3.getColumn().setText("Container");
-		column3.getColumn().setWidth(120);
+		column3.getColumn().setWidth(130);
 		column3.getColumn().setResizable(false);
 
 		EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
@@ -515,56 +515,63 @@ public class MainView extends ViewPart implements IPartListener2 {
 		IProject project  = root.getProject(projectName);
 		IFile kdmCurrent = project.getFile(projectName + "_KDM.xmi");
 		IFile kdmPlanned = project.getFile("PlannedArchitecture/src-gen/PlannedArchitecture.xmi");
-		
+
 		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
 		String umlCurrent =  folder + "/" + projectName + "/CurrentArchitecture/currentArchitecture.uml";
 		String umlPlanned = folder + "/" + projectName + "/PlannedArchitecture/src-gen/plannedArchitecture.uml" ; 
-		
+
 		String umlFolderPlannedRelative = "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
 		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 
+
 		btnFCA.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (radios[0].getSelection())
 				{
-					String title = "This is the current architecture of project: " + projectName;
-					try {
-						dialog.run(true, true, new IRunnableWithProgress() {
-							public void run(IProgressMonitor monitor) {
-								// Creates KDM instance
-								int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
-								monitor.beginTask("Component Diagram of Current Architecture....", totalUnitsOfWork);
-								try 
-								{
-									AdaptiveSystemUMLProfile umlProfile = new AdaptiveSystemUMLProfile();
-									try {
-										umlProfile.createProfile(umlFolderCurrentAbsolute);
-									} catch (IOException e) {
+					if(kdmCurrent.exists())
+					{
+
+						String title = "This is the current architecture of project: " + projectName;
+						try {
+							dialog.run(true, true, new IRunnableWithProgress() {
+								public void run(IProgressMonitor monitor) {
+									// Creates KDM instance
+									int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+									monitor.beginTask("Component Diagram of Current Architecture....", totalUnitsOfWork);
+									try 
+									{
+										AdaptiveSystemUMLProfile umlProfile = new AdaptiveSystemUMLProfile();
+										try {
+											umlProfile.createProfile(umlFolderCurrentAbsolute);
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+
+										Kdm2Uml rc = new Kdm2Uml();
+										Uml2PlantUML up = new Uml2PlantUML();
+										up.createPlantComponentDiagram(rc.createComponentDiagram(kdmCurrent, umlCurrent, projectName, mappingString), umlFolderCurrentAbsolute, projectName, mappingString, title);
+										refreshProjects();
+									} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-									
-									Kdm2Uml rc = new Kdm2Uml();
-									Uml2PlantUML up = new Uml2PlantUML();
-									up.createPlantComponentDiagram(rc.createComponentDiagram(kdmCurrent, umlCurrent, projectName, mappingString), umlFolderCurrentAbsolute, projectName, mappingString, title);
-									refreshProjects();
-								} catch (ExecutionException e1) {e1.printStackTrace();} catch (CoreException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									monitor.done();
 								}
-								monitor.done();
-							}
-						});
-						OpenComponentDiagram od = new OpenComponentDiagram();
-						od.open(umlFolderCurrentRelative, projectName);
-					} catch (InvocationTargetException | InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+							});
+							OpenComponentDiagram od = new OpenComponentDiagram();
+							od.open(umlFolderCurrentRelative, projectName);
+						} catch (InvocationTargetException | InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
+					else 
+						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Current Architecture", "The file " + projectName + "_KDM.xmi" + " does not exist! ");
 
 				}
 				else

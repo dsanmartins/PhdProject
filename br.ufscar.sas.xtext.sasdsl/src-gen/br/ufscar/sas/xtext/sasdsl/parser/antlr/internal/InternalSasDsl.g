@@ -1595,16 +1595,16 @@ ruleDSLAccess returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 	leaveRule();
 }:
 	(
-		kw='can-access'
+		kw='must-use'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0());
+			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustUseKeyword_0());
 		}
 		    |
-		kw='cannot-access'
+		kw='must-not-use'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1());
+			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1());
 		}
 	)
 ;

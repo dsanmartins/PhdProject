@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSasDslParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'can-access'", "'cannot-access'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'must-use'", "'must-not-use'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -2953,13 +2953,13 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLAccess__Alternatives"
-    // InternalSasDsl.g:841:1: rule__DSLAccess__Alternatives : ( ( 'can-access' ) | ( 'cannot-access' ) );
+    // InternalSasDsl.g:841:1: rule__DSLAccess__Alternatives : ( ( 'must-use' ) | ( 'must-not-use' ) );
     public final void rule__DSLAccess__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:845:1: ( ( 'can-access' ) | ( 'cannot-access' ) )
+            // InternalSasDsl.g:845:1: ( ( 'must-use' ) | ( 'must-not-use' ) )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -2977,14 +2977,14 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalSasDsl.g:846:2: ( 'can-access' )
+                    // InternalSasDsl.g:846:2: ( 'must-use' )
                     {
-                    // InternalSasDsl.g:846:2: ( 'can-access' )
-                    // InternalSasDsl.g:847:3: 'can-access'
+                    // InternalSasDsl.g:846:2: ( 'must-use' )
+                    // InternalSasDsl.g:847:3: 'must-use'
                     {
-                     before(grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0()); 
+                     before(grammarAccess.getDSLAccessAccess().getMustUseKeyword_0()); 
                     match(input,11,FOLLOW_2); 
-                     after(grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0()); 
+                     after(grammarAccess.getDSLAccessAccess().getMustUseKeyword_0()); 
 
                     }
 
@@ -2992,14 +2992,14 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:852:2: ( 'cannot-access' )
+                    // InternalSasDsl.g:852:2: ( 'must-not-use' )
                     {
-                    // InternalSasDsl.g:852:2: ( 'cannot-access' )
-                    // InternalSasDsl.g:853:3: 'cannot-access'
+                    // InternalSasDsl.g:852:2: ( 'must-not-use' )
+                    // InternalSasDsl.g:853:3: 'must-not-use'
                     {
-                     before(grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1()); 
+                     before(grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1()); 
                     match(input,12,FOLLOW_2); 
-                     after(grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1()); 
+                     after(grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1()); 
 
                     }
 

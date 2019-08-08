@@ -844,15 +844,15 @@ rule__DSLAccess__Alternatives
 	}
 :
 	(
-		{ before(grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0()); }
-		'can-access'
-		{ after(grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0()); }
+		{ before(grammarAccess.getDSLAccessAccess().getMustUseKeyword_0()); }
+		'must-use'
+		{ after(grammarAccess.getDSLAccessAccess().getMustUseKeyword_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1()); }
-		'cannot-access'
-		{ after(grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1()); }
+		{ before(grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1()); }
+		'must-not-use'
+		{ after(grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1()); }
 	)
 ;
 finally {

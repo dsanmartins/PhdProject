@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSasDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'can-access'", "'cannot-access'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'must-use'", "'must-not-use'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -3521,7 +3521,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLAccess"
-    // InternalSasDsl.g:1590:1: ruleDSLAccess returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'can-access' | kw= 'cannot-access' ) ;
+    // InternalSasDsl.g:1590:1: ruleDSLAccess returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'must-use' | kw= 'must-not-use' ) ;
     public final AntlrDatatypeRuleToken ruleDSLAccess() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -3531,10 +3531,10 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1596:2: ( (kw= 'can-access' | kw= 'cannot-access' ) )
-            // InternalSasDsl.g:1597:2: (kw= 'can-access' | kw= 'cannot-access' )
+            // InternalSasDsl.g:1596:2: ( (kw= 'must-use' | kw= 'must-not-use' ) )
+            // InternalSasDsl.g:1597:2: (kw= 'must-use' | kw= 'must-not-use' )
             {
-            // InternalSasDsl.g:1597:2: (kw= 'can-access' | kw= 'cannot-access' )
+            // InternalSasDsl.g:1597:2: (kw= 'must-use' | kw= 'must-not-use' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -3552,23 +3552,23 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalSasDsl.g:1598:3: kw= 'can-access'
+                    // InternalSasDsl.g:1598:3: kw= 'must-use'
                     {
                     kw=(Token)match(input,27,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getCanAccessKeyword_0());
+                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustUseKeyword_0());
                     		
 
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:1604:3: kw= 'cannot-access'
+                    // InternalSasDsl.g:1604:3: kw= 'must-not-use'
                     {
                     kw=(Token)match(input,28,FOLLOW_2); 
 
                     			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getCannotAccessKeyword_1());
+                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1());
                     		
 
                     }

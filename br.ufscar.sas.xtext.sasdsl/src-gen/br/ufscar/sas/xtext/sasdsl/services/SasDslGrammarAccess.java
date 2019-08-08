@@ -1187,21 +1187,21 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	public class DSLAccessElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cCanAccessKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cCannotAccessKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cMustUseKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cMustNotUseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
 		//DSLAccess:
-		//	'can-access' | 'cannot-access';
+		//	'must-use' | 'must-not-use';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'can-access' | 'cannot-access'
+		//'must-use' | 'must-not-use'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'can-access'
-		public Keyword getCanAccessKeyword_0() { return cCanAccessKeyword_0; }
+		//'must-use'
+		public Keyword getMustUseKeyword_0() { return cMustUseKeyword_0; }
 		
-		//'cannot-access'
-		public Keyword getCannotAccessKeyword_1() { return cCannotAccessKeyword_1; }
+		//'must-not-use'
+		public Keyword getMustNotUseKeyword_1() { return cMustNotUseKeyword_1; }
 	}
 	public class DSLManagingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLManaging");
@@ -1917,7 +1917,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLAccess:
-	//	'can-access' | 'cannot-access';
+	//	'must-use' | 'must-not-use';
 	public DSLAccessElements getDSLAccessAccess() {
 		return pDSLAccess;
 	}

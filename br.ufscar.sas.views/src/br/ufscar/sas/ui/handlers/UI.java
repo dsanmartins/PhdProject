@@ -11,11 +11,19 @@
  *******************************************************************************/
 package br.ufscar.sas.ui.handlers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -45,7 +53,7 @@ public class UI extends AbstractHandler {
 		ISelectionService service = window.getSelectionService();
 		// set structured selection
 		IStructuredSelection structured = (IStructuredSelection) service.getSelection();
-		
+
 		String projectName = "";
 
 		try {
@@ -58,7 +66,7 @@ public class UI extends AbstractHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
 
 		try {	
@@ -68,8 +76,34 @@ public class UI extends AbstractHandler {
 			e.printStackTrace();
 		}
 		window.getActivePage();
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
+		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/" ;
+		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
+
+		Path plannedPath = Paths.get(umlFolderPlannedAbsolute);
+		Path architecture = plannedPath.resolve("architecture.sas");
+		Path currentPath = Paths.get(umlFolderCurrentAbsolute);
+
+		try {Files.createDirectories(plannedPath);} catch (IOException e) {e.printStackTrace();}
+		try {
+			if (!Files.exists(architecture, LinkOption.NOFOLLOW_LINKS))
+			{
+				Files.createFile(architecture);
+				Files.write(architecture, this.architectureTemplate().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+			}	
+
+		} 
+		catch (IOException e1) {
+
+			e1.printStackTrace();
+		}
+		try {Files.createDirectories(currentPath);} catch (IOException e) {	e.printStackTrace();}
+		try {this.refreshProjects();} catch (CoreException e) {	e.printStackTrace();}
+
 		MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "The project " + projectName + " was selected! ");
-		
+
 		return null;
 	}
 
@@ -79,4 +113,35 @@ public class UI extends AbstractHandler {
 		}
 	}
 
+	public String architectureTemplate() {
+
+		return "Architecture TemplateAdaptiveSystem {\n" + 
+				"	\n" + 
+				"	Managing Managing_1 {\n" + 
+				"		\n" + 
+				"		Controller Controller_1{\n" + 
+				"			\n" + 
+				"			Monitor Monitor_1;\n" + 
+				"			Analyzer Ananlyzer_1;\n" + 
+				"			Planner Planner_1;\n" + 
+				"			Executor Executor_1;\n" + 
+				"			Knowledge Knowledge_1 {\n" + 
+				"				\n" + 
+				"				 ReferenceInput ReferenceInput_1;\n" + 
+				"			}\n" + 
+				"		}\n" + 
+				"	}\n" + 
+				"	Managed Managed_1 {\n" + 
+				"				\n" + 
+				"		 Sensor Sensor_1;\n" + 
+				"		 Effector Efector_1;\n" + 
+				"		 MeasuredOutput MeasuredOutput_1;\n" + 
+				"	}\n" + 
+				"}\n" + 
+				"\n" + 
+				"Rules{\n" + 
+				"	\n" + 
+				"	\n" + 
+				"}";
+	}
 }
