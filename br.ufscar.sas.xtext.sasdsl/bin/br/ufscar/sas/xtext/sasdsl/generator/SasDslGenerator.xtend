@@ -1194,10 +1194,18 @@ class SasDslGenerator extends AbstractGenerator {
 	def compile2(ArchitectureDefinition architectureDefinition){
 		
 		'''
-		import 'http://www.eclipse.org/MoDisco/kdm/structure' 
+	import 'http://www.eclipse.org/MoDisco/kdm/core'
+	import 'http://www.eclipse.org/MoDisco/kdm/kdm'
+	import 'http://www.eclipse.org/MoDisco/kdm/source'
+	import 'http://www.eclipse.org/MoDisco/kdm/code'
+	import 'http://www.eclipse.org/MoDisco/kdm/action'
+	import 'http://www.eclipse.org/MoDisco/kdm/structure'
 	
-		-- Check the existence of adaptive system abstractions
-		package structure
+	package structure
+	
+	---------------------------------------------------------
+	-- Check the existence of adaptive system abstractions --
+	---------------------------------------------------------
 	
 		«FOR DSLManaging managing : lManaging»
 		context StructureModel
@@ -1264,8 +1272,133 @@ class SasDslGenerator extends AbstractGenerator {
 		inv exist_«refInput.name»: Component.allInstances()->exists(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')
 		
 		«ENDFOR»	
+	--------------------------------------------------------
+	-- Check compositions of adaptive system abstractions --
+	--------------------------------------------------------
 	
-		endpackage
+		«FOR DSLManaging managing : lManaging»
+		«IF managing.eContainer instanceof ArchitectureDefinition»
+		context StructureModel
+		inv composite_«managing.name»: Subsystem.allInstances()->select(c| c.name='«managing.name»' and c.stereotype->asSequence()->first().name = 'Managing Subsystem') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLManaged managed : lManaged»
+		«IF managed.eContainer instanceof ArchitectureDefinition»
+		context StructureModel
+		inv composite_«managed.name»: Subsystem.allInstances()->select(c| c.name='«managed.name»' and c.stereotype->asSequence()->first().name = 'Managed Subsystem') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLManagerController mcontroller : lMController»
+		«IF mcontroller.eContainer instanceof DSLManaging»
+		«var managing = mcontroller.eContainer as DSLManaging»
+		context StructureModel
+		inv composite_«mcontroller.name»: Component.allInstances()->select(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
+										  exists(d|d.oclContainer().oclAsType(Subsystem).name='«managing.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managing Subsystem')
+		«ENDIF»
+		«ENDFOR»
+			
+		«FOR DSLController controller : lController»
+		«IF controller.eContainer instanceof DSLManaging»
+		«var managing = controller.eContainer as DSLManaging»
+		context StructureModel
+		inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
+										 exists(d|d.oclContainer().oclAsType(Subsystem).name='«managing.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managing Subsystem')
+		«ELSEIF controller.eContainer instanceof DSLManagerController»
+		«var mcontroller = controller.eContainer as DSLManagerController»
+		context StructureModel
+				inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
+												 exists(d|d.oclContainer().oclAsType(Subsystem).name='«mcontroller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'CL Manager')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLMonitor monitor : lMonitor»
+		«IF monitor.eContainer instanceof DSLController»
+		«var controller = monitor.eContainer as DSLController»
+		context StructureModel
+		inv composite_«monitor.name»: Component.allInstances()->select(c| c.name='«monitor.name»' and c.stereotype->asSequence()->first().name = 'Monitor')->
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+		«ENDIF»
+		«ENDFOR»
+			
+		«FOR DSLAnalyzer analyzer : lAnalyzer»
+		«IF analyzer.eContainer instanceof DSLController»
+		«var controller = analyzer.eContainer as DSLController»
+		context StructureModel
+		inv composite_«analyzer.name»: Component.allInstances()->select(c| c.name='«analyzer.name»' and c.stereotype->asSequence()->first().name = 'Analyzer')->
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+		«ENDIF»
+		«ENDFOR»
+			
+		«FOR DSLPlanner planner : lPlanner»
+		«IF planner.eContainer instanceof DSLController»
+		«var controller = planner.eContainer as DSLController»
+		context StructureModel
+		inv composite_«planner.name»: Component.allInstances()->select(c| c.name='«planner.name»' and c.stereotype->asSequence()->first().name = 'Planner')->
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLExecutor executor : lExecutor»
+		«IF executor.eContainer instanceof DSLController»
+		«var controller = executor.eContainer as DSLController»
+		context StructureModel
+		inv composite_«executor.name»: Component.allInstances()->select(c| c.name='«executor.name»' and c.stereotype->asSequence()->first().name = 'Executor')->
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLKnowledge knowledge : lKnowledge»
+		«IF knowledge.eContainer instanceof DSLController»
+		«var controller = knowledge.eContainer as DSLController»
+		context StructureModel
+		inv composite_«knowledge.name»: Component.allInstances()->select(c| c.name='«knowledge.name»' and c.stereotype->asSequence()->first().name = 'Knowledge')->
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLEffector effector : lEffector»
+		«IF effector.eContainer instanceof DSLManaged»
+		«var managed = effector.eContainer as DSLManaged»
+		context StructureModel
+		inv composite_«effector.name»: Component.allInstances()->select(c| c.name='«effector.name»' and c.stereotype->asSequence()->first().name = 'Effector')->
+									   exists(d|d.oclContainer().oclAsType(Subsystem).name='«managed.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managed Subsystem')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLSensor sensor : lSensor»
+		«IF sensor.eContainer instanceof DSLManaged»
+		«var managed = sensor.eContainer as DSLManaged»
+		context StructureModel
+		inv composite_«sensor.name»: Component.allInstances()->select(c| c.name='«sensor.name»' and c.stereotype->asSequence()->first().name = 'Sensor')->
+									   exists(d|d.oclContainer().oclAsType(Subsystem).name='«managed.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managed Subsystem')
+		«ENDIF»
+		«ENDFOR»
+			
+		«FOR DSLMeasuredOutput mesOutput : lMOutput»
+		«IF mesOutput.eContainer instanceof DSLManaged»
+		«var managed = mesOutput.eContainer as DSLManaged»
+		context StructureModel
+		inv composite_«mesOutput.name»: Component.allInstances()->select(c| c.name='«mesOutput.name»' and c.stereotype->asSequence()->first().name = 'Measured Output')->
+								     exists(d|d.oclContainer().oclAsType(Subsystem).name='«managed.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managed Subsystem')
+		«ENDIF»
+		«ENDFOR»	
+		
+		«FOR DSLReferenceInput refInput : lRInput»
+		«IF refInput.eContainer instanceof DSLKnowledge»
+		«var knowledge = refInput.eContainer as DSLKnowledge»
+		context StructureModel
+		inv composite_«refInput.name»: Component.allInstances()->select(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')->
+									    exists(d|d.oclContainer().oclAsType(Component).name='«knowledge.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Knowledge')
+		«ENDIF»
+		«ENDFOR»	
+	
+		--------------------------------------------------------
+		-- Check access rules of adaptive system abstractions --
+		--------------------------------------------------------
+	
+	endpackage
 		'''
 		
 	}

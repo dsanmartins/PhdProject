@@ -2244,15 +2244,27 @@ public class SasDslGenerator extends AbstractGenerator {
   
   public CharSequence compile2(final ArchitectureDefinition architectureDefinition) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("\t");
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/structure\' ");
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/core\'");
+    _builder.newLine();
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/kdm\'");
+    _builder.newLine();
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/source\'");
+    _builder.newLine();
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/code\'");
+    _builder.newLine();
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/action\'");
+    _builder.newLine();
+    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/structure\'");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("-- Check the existence of adaptive system abstractions");
-    _builder.newLine();
-    _builder.append("\t");
     _builder.append("package structure");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("---------------------------------------------------------");
+    _builder.newLine();
+    _builder.append("-- Check the existence of adaptive system abstractions --");
+    _builder.newLine();
+    _builder.append("---------------------------------------------------------");
     _builder.newLine();
     _builder.newLine();
     {
@@ -2489,8 +2501,470 @@ public class SasDslGenerator extends AbstractGenerator {
         _builder.newLine();
       }
     }
+    _builder.append("--------------------------------------------------------");
+    _builder.newLine();
+    _builder.append("-- Check compositions of adaptive system abstractions --");
+    _builder.newLine();
+    _builder.append("--------------------------------------------------------");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      for(final DSLManaging managing_1 : this.lManaging) {
+        {
+          EObject _eContainer = managing_1.eContainer();
+          if ((_eContainer instanceof ArchitectureDefinition)) {
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_26 = managing_1.getName();
+            _builder.append(_name_26, "\t");
+            _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
+            String _name_27 = managing_1.getName();
+            _builder.append(_name_27, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managing Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLManaged managed_1 : this.lManaged) {
+        {
+          EObject _eContainer_1 = managed_1.eContainer();
+          if ((_eContainer_1 instanceof ArchitectureDefinition)) {
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_28 = managed_1.getName();
+            _builder.append(_name_28, "\t");
+            _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
+            String _name_29 = managed_1.getName();
+            _builder.append(_name_29, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managed Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLManagerController mcontroller_1 : this.lMController) {
+        {
+          EObject _eContainer_2 = mcontroller_1.eContainer();
+          if ((_eContainer_2 instanceof DSLManaging)) {
+            _builder.append("\t");
+            EObject _eContainer_3 = mcontroller_1.eContainer();
+            DSLManaging managing_2 = ((DSLManaging) _eContainer_3);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_30 = mcontroller_1.getName();
+            _builder.append(_name_30, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_31 = mcontroller_1.getName();
+            _builder.append(_name_31, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'CL Manager\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+            String _name_32 = managing_2.getName();
+            _builder.append(_name_32, "\t\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.newLine();
+    {
+      for(final DSLController controller_1 : this.lController) {
+        {
+          EObject _eContainer_4 = controller_1.eContainer();
+          if ((_eContainer_4 instanceof DSLManaging)) {
+            _builder.append("\t");
+            EObject _eContainer_5 = controller_1.eContainer();
+            DSLManaging managing_3 = ((DSLManaging) _eContainer_5);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_33 = controller_1.getName();
+            _builder.append(_name_33, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_34 = controller_1.getName();
+            _builder.append(_name_34, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'CL Manager\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t\t ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+            String _name_35 = managing_3.getName();
+            _builder.append(_name_35, "\t\t\t\t\t\t\t\t\t ");
+            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
+            _builder.newLineIfNotEmpty();
+          } else {
+            EObject _eContainer_6 = controller_1.eContainer();
+            if ((_eContainer_6 instanceof DSLManagerController)) {
+              _builder.append("\t");
+              EObject _eContainer_7 = controller_1.eContainer();
+              DSLManagerController mcontroller_2 = ((DSLManagerController) _eContainer_7);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("\t\t");
+              _builder.append("inv composite_");
+              String _name_36 = controller_1.getName();
+              _builder.append(_name_36, "\t\t\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_37 = controller_1.getName();
+              _builder.append(_name_37, "\t\t\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'CL Manager\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t\t\t\t ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+              String _name_38 = mcontroller_2.getName();
+              _builder.append(_name_38, "\t\t\t\t\t\t\t\t\t\t\t ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'CL Manager\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLMonitor monitor_1 : this.lMonitor) {
+        {
+          EObject _eContainer_8 = monitor_1.eContainer();
+          if ((_eContainer_8 instanceof DSLController)) {
+            _builder.append("\t");
+            EObject _eContainer_9 = monitor_1.eContainer();
+            DSLController controller_2 = ((DSLController) _eContainer_9);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_39 = monitor_1.getName();
+            _builder.append(_name_39, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_40 = monitor_1.getName();
+            _builder.append(_name_40, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Monitor\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_41 = controller_2.getName();
+            _builder.append(_name_41, "\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Control Loop\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.newLine();
+    {
+      for(final DSLAnalyzer analyzer_1 : this.lAnalyzer) {
+        {
+          EObject _eContainer_10 = analyzer_1.eContainer();
+          if ((_eContainer_10 instanceof DSLController)) {
+            _builder.append("\t");
+            EObject _eContainer_11 = analyzer_1.eContainer();
+            DSLController controller_3 = ((DSLController) _eContainer_11);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_42 = analyzer_1.getName();
+            _builder.append(_name_42, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_43 = analyzer_1.getName();
+            _builder.append(_name_43, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Analyzer\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_44 = controller_3.getName();
+            _builder.append(_name_44, "\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Control Loop\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.newLine();
+    {
+      for(final DSLPlanner planner_1 : this.lPlanner) {
+        {
+          EObject _eContainer_12 = planner_1.eContainer();
+          if ((_eContainer_12 instanceof DSLController)) {
+            _builder.append("\t");
+            EObject _eContainer_13 = planner_1.eContainer();
+            DSLController controller_4 = ((DSLController) _eContainer_13);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_45 = planner_1.getName();
+            _builder.append(_name_45, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_46 = planner_1.getName();
+            _builder.append(_name_46, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Planner\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_47 = controller_4.getName();
+            _builder.append(_name_47, "\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Control Loop\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLExecutor executor_1 : this.lExecutor) {
+        {
+          EObject _eContainer_14 = executor_1.eContainer();
+          if ((_eContainer_14 instanceof DSLController)) {
+            _builder.append("\t");
+            EObject _eContainer_15 = executor_1.eContainer();
+            DSLController controller_5 = ((DSLController) _eContainer_15);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_48 = executor_1.getName();
+            _builder.append(_name_48, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_49 = executor_1.getName();
+            _builder.append(_name_49, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Executor\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_50 = controller_5.getName();
+            _builder.append(_name_50, "\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Control Loop\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLKnowledge knowledge_1 : this.lKnowledge) {
+        {
+          EObject _eContainer_16 = knowledge_1.eContainer();
+          if ((_eContainer_16 instanceof DSLController)) {
+            _builder.append("\t");
+            EObject _eContainer_17 = knowledge_1.eContainer();
+            DSLController controller_6 = ((DSLController) _eContainer_17);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_51 = knowledge_1.getName();
+            _builder.append(_name_51, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_52 = knowledge_1.getName();
+            _builder.append(_name_52, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Knowledge\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t  ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_53 = controller_6.getName();
+            _builder.append(_name_53, "\t\t\t\t\t\t\t\t  ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Control Loop\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLEffector effector_1 : this.lEffector) {
+        {
+          EObject _eContainer_18 = effector_1.eContainer();
+          if ((_eContainer_18 instanceof DSLManaged)) {
+            _builder.append("\t");
+            EObject _eContainer_19 = effector_1.eContainer();
+            DSLManaged managed_2 = ((DSLManaged) _eContainer_19);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_54 = effector_1.getName();
+            _builder.append(_name_54, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_55 = effector_1.getName();
+            _builder.append(_name_55, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Effector\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t   ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+            String _name_56 = managed_2.getName();
+            _builder.append(_name_56, "\t\t\t\t\t\t\t\t   ");
+            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLSensor sensor_1 : this.lSensor) {
+        {
+          EObject _eContainer_20 = sensor_1.eContainer();
+          if ((_eContainer_20 instanceof DSLManaged)) {
+            _builder.append("\t");
+            EObject _eContainer_21 = sensor_1.eContainer();
+            DSLManaged managed_3 = ((DSLManaged) _eContainer_21);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_57 = sensor_1.getName();
+            _builder.append(_name_57, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_58 = sensor_1.getName();
+            _builder.append(_name_58, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Sensor\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t   ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+            String _name_59 = managed_3.getName();
+            _builder.append(_name_59, "\t\t\t\t\t\t\t\t   ");
+            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t\t");
+    _builder.newLine();
+    {
+      for(final DSLMeasuredOutput mesOutput_1 : this.lMOutput) {
+        {
+          EObject _eContainer_22 = mesOutput_1.eContainer();
+          if ((_eContainer_22 instanceof DSLManaged)) {
+            _builder.append("\t");
+            EObject _eContainer_23 = mesOutput_1.eContainer();
+            DSLManaged managed_4 = ((DSLManaged) _eContainer_23);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_60 = mesOutput_1.getName();
+            _builder.append(_name_60, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_61 = mesOutput_1.getName();
+            _builder.append(_name_61, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Measured Output\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t     ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+            String _name_62 = managed_4.getName();
+            _builder.append(_name_62, "\t\t\t\t\t\t\t     ");
+            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    {
+      for(final DSLReferenceInput refInput_1 : this.lRInput) {
+        {
+          EObject _eContainer_24 = refInput_1.eContainer();
+          if ((_eContainer_24 instanceof DSLKnowledge)) {
+            _builder.append("\t");
+            EObject _eContainer_25 = refInput_1.eContainer();
+            DSLKnowledge knowledge_2 = ((DSLKnowledge) _eContainer_25);
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("context StructureModel");
+            _builder.newLine();
+            _builder.append("\t");
+            _builder.append("inv composite_");
+            String _name_63 = refInput_1.getName();
+            _builder.append(_name_63, "\t");
+            _builder.append(": Component.allInstances()->select(c| c.name=\'");
+            String _name_64 = refInput_1.getName();
+            _builder.append(_name_64, "\t");
+            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Reference Input\')->");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("\t\t\t\t\t\t\t    ");
+            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+            String _name_65 = knowledge_2.getName();
+            _builder.append(_name_65, "\t\t\t\t\t\t\t\t    ");
+            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Knowledge\')");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
     _builder.newLine();
     _builder.append("\t");
+    _builder.append("--------------------------------------------------------");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("-- Check access rules of adaptive system abstractions --");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("--------------------------------------------------------");
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("endpackage");
     _builder.newLine();
     return _builder;
