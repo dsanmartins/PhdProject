@@ -667,10 +667,10 @@ public class Manager   {
 		case "Planner" : return "/0/@extension.0/@stereotype.2";
 		case "Executor" : return "/0/@extension.0/@stereotype.3";
 		case "Knowledge" : return "/0/@extension.0/@stereotype.4";
-		case "Reference Input" : return "/0/@extension.0/@stereotype.5";
-		case "Measured Output" : return "/0/@extension.0/@stereotype.6";
-		case "CL Manager" : return "/0/@extension.0/@stereotype.7";
-		case "Control Loop" : return "/0/@extension.0/@stereotype.8";
+		case "ReferenceInput" : return "/0/@extension.0/@stereotype.5";
+		case "MeasuredOutput" : return "/0/@extension.0/@stereotype.6";
+		case "MController" : return "/0/@extension.0/@stereotype.7";
+		case "Controller" : return "/0/@extension.0/@stereotype.8";
 		case "Sensor" : return "/0/@extension.0/@stereotype.9";
 		case "Effector" : return "/0/@extension.0/@stereotype.10";
 		case "Managing" : return "/0/@extension.0/@stereotype.11";
