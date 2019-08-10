@@ -4,31 +4,33 @@
 package br.ufscar.sas.xtext.sasdsl.generator
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
+import java.util.ArrayList
 import java.util.HashMap
+import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging
-import java.util.ArrayList
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
 
 /**
  * Generates code from your model files on save.
@@ -56,6 +58,7 @@ class SasDslGenerator extends AbstractGenerator {
 	var lSensor =  new ArrayList<DSLSensor>();
 	var lMOutput =  new ArrayList<DSLMeasuredOutput>();
 	var lRInput =  new ArrayList<DSLReferenceInput>();
+	var lRules = new ArrayList<String>();
 
 	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -65,6 +68,7 @@ class SasDslGenerator extends AbstractGenerator {
 			this.createPath(e)
 			fsa.generateFile("PlannedArchitecture.xmi", e.compile)
 			fsa.generateFile("Constraints.ocl", e.compile2)
+			lRules.clear();	
 		}
 	}
 	
@@ -349,6 +353,7 @@ class SasDslGenerator extends AbstractGenerator {
 		}
 		
 		var rule = architecture.rules
+		var rMController=0
 		var rController = 0
 		var rMonitor =0
 		var rAnalyzer=0
@@ -400,6 +405,7 @@ class SasDslGenerator extends AbstractGenerator {
 						
 						if (r.controller2 !==null)
 						{
+							lRules.add(r.controller1.name + "-" + r.controller2.name)
 							var pathInAggregated = inAggregatedPath.get(r.controller2.name)
 							if (pathInAggregated !== null)
 							{
@@ -491,6 +497,7 @@ class SasDslGenerator extends AbstractGenerator {
 							
 							if (r.analyzer !==null)
 							{
+								lRules.add(r.monitor.name + "-" + r.analyzer.name)
 								var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
 								if (pathInAggregated !== null)
 								{
@@ -503,6 +510,7 @@ class SasDslGenerator extends AbstractGenerator {
 							}					
 							if (r.knowledge !==null)
 							{
+								lRules.add(r.monitor.name + "-" + r.knowledge.name)
 								var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
 								if (pathInAggregated !== null)
 								{
@@ -516,6 +524,7 @@ class SasDslGenerator extends AbstractGenerator {
 						
 							if (r.sensor !==null)
 							{
+								lRules.add(r.monitor.name + "-" + r.sensor.name)
 								var pathInAggregated = inAggregatedPath.get(r.sensor.name)
 								if (pathInAggregated !== null)
 								{
@@ -639,6 +648,7 @@ class SasDslGenerator extends AbstractGenerator {
 									outAggregatedPath.put(r.analyzer.name,pathAggregated)
 									if (r.monitor !==null)
 									{
+										lRules.add(r.analyzer.name + "-" + r.monitor.name)
 										var pathInAggregated = inAggregatedPath.get(r.monitor.name)
 										if (pathInAggregated !== null)
 										{
@@ -651,6 +661,7 @@ class SasDslGenerator extends AbstractGenerator {
 									}					
 									if (r.knowledge !==null)
 									{
+										lRules.add(r.analyzer.name + "-" + r.knowledge.name)
 										var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
 										if (pathInAggregated !== null)
 										{
@@ -663,6 +674,7 @@ class SasDslGenerator extends AbstractGenerator {
 									}
 									if (r.planner !==null)
 									{
+										lRules.add(r.analyzer.name + "-" + r.planner.name)
 										var pathInAggregated = inAggregatedPath.get(r.planner.name)
 										if (pathInAggregated !== null)
 										{
@@ -675,6 +687,7 @@ class SasDslGenerator extends AbstractGenerator {
 									}
 									if (r.rreference !==null)
 									{
+										lRules.add(r.analyzer.name + "-" + r.rreference.name)
 										var pathInAggregated = inAggregatedPath.get(r.rreference.name)
 										if (pathInAggregated !== null)
 										{
@@ -790,6 +803,7 @@ class SasDslGenerator extends AbstractGenerator {
 											
 											if (r.analyzer !==null)
 											{
+												lRules.add(r.planner.name + "-" + r.analyzer.name)
 												var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
 												if (pathInAggregated !== null)
 												{
@@ -802,6 +816,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}					
 											if (r.knowledge !==null)
 											{
+												lRules.add(r.planner.name + "-" + r.knowledge.name)
 												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
 												if (pathInAggregated !== null)
 												{
@@ -814,6 +829,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}
 											if (r.executor !==null)
 											{
+												lRules.add(r.planner.name + "-" + r.executor.name)
 												var pathInAggregated = inAggregatedPath.get(r.executor.name)
 												if (pathInAggregated !== null)
 												{
@@ -920,6 +936,7 @@ class SasDslGenerator extends AbstractGenerator {
 											
 											if (r.planner !==null)
 											{
+												lRules.add(r.executor.name + "-" + r.planner.name)
 												var pathInAggregated = inAggregatedPath.get(r.planner.name)
 												if (pathInAggregated !== null)
 												{
@@ -932,6 +949,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}					
 											if (r.knowledge !==null)
 											{
+												lRules.add(r.executor.name + "-" + r.knowledge.name)
 												var pathInAggregated = inAggregatedPath.get(r.knowledge.name)
 												if (pathInAggregated !== null)
 												{
@@ -944,6 +962,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}
 											if (r.effector !==null)
 											{
+												lRules.add(r.executor.name + "-" + r.effector.name)
 												var pathInAggregated = inAggregatedPath.get(r.effector.name)
 												if (pathInAggregated !== null)
 												{
@@ -1017,6 +1036,7 @@ class SasDslGenerator extends AbstractGenerator {
 											outAggregatedPath.put(r.sensor.name,pathAggregated)		
 											if (r.measured !==null)
 											{
+												lRules.add(r.sensor.name + "-" + r.measured.name)
 												var pathInAggregated = inAggregatedPath.get(r.measured.name)
 												if (pathInAggregated !== null)
 												{
@@ -1040,10 +1060,74 @@ class SasDslGenerator extends AbstractGenerator {
 										}
 										else
 										{
-											if (r.sensor !== null)	
+											if (r.sensor !== null)
 												aggregated = "<aggregated from='" + structureElementPath.get(r.sensor.name) +"' to='" + structureElementPath.get(r.measured.name) + "'" + relation
 											
 											aggregatedPath.put(r.sensor.name, aggregated)
+										}
+									}
+									else{ 
+										
+										if (r instanceof DSLRuleMController){
+											
+											var pathAggregated = outAggregatedPath.get(r.mcontroller1)
+											if (pathAggregated !== null)
+											{
+												pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
+												pathAggregated = pathAggregated + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '"
+												outAggregatedPath.replace(r.mcontroller1.name,pathAggregated)
+												
+												if (r.mcontroller2 !== null)
+												{
+													var pathInAggregated = inAggregatedPath.get(r.mcontroller2.name)
+													if (pathInAggregated !== null)
+													{
+														pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+														pathInAggregated = pathInAggregated + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '";
+														inAggregatedPath.replace(r.mcontroller2.name, pathInAggregated)
+													}
+													else
+													{
+														pathInAggregated = "inAggregated='" + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '";
+														inAggregatedPath.put(r.mcontroller2.name,pathInAggregated)
+													}
+												}
+											}
+											else
+											{
+												pathAggregated = "outAggregated='" + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '"
+												outAggregatedPath.put(r.mcontroller1.name,pathAggregated)
+												
+												if (r.mcontroller2 !==null)
+												{
+													lRules.add(r.mcontroller1.name + "-" + r.mcontroller2.name)
+													var pathInAggregated = inAggregatedPath.get(r.mcontroller2.name)
+													if (pathInAggregated !== null)
+													{
+														pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+														pathInAggregated = pathInAggregated + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '";
+														inAggregatedPath.replace(r.mcontroller2.name, pathInAggregated)
+													}
+													else
+														inAggregatedPath.put(r.mcontroller2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+												}
+											}
+											rMController++
+											var aggregated = aggregatedPath.get(r.mcontroller1.name); 
+											if (aggregated !== null)
+											{
+												if (r.mcontroller2 !== null)
+													aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.mcontroller1.name) +"' to='" + structureElementPath.get(r.mcontroller2.name) + "'" + relation			
+											
+												aggregatedPath.replace(r.mcontroller1.name, aggregated)
+											}
+											else
+											{
+												if (r.mcontroller2 !== null)
+													aggregated = "<aggregated from='" + structureElementPath.get(r.mcontroller1.name) +"' to='" + structureElementPath.get(r.mcontroller2.name) + "'" + relation
+												
+												aggregatedPath.put(r.mcontroller1.name, aggregated)
+											}
 										}
 									}
 								}
@@ -1397,9 +1481,13 @@ class SasDslGenerator extends AbstractGenerator {
 		--------------------------------------------------------
 		-- Check access rules of adaptive system abstractions --
 		--------------------------------------------------------
-	
+		
+		«FOR String str: lRules»
+		context StructureModel
+		inv access_«str.split(Pattern.quote("-")).get(0)»_«str.split(Pattern.quote("-")).get(1)»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«str.split(Pattern.quote("-")).get(0)»' and c.to.name='«str.split(Pattern.quote("-")).get(1)»') 
+		
+		«ENDFOR»
 	endpackage
 		'''
-		
 	}
 }

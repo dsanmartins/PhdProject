@@ -32,11 +32,30 @@ public class SasDslParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, SasDslGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getDSLRulesAccess().getAlternatives(), "rule__DSLRules__Alternatives");
+			builder.put(grammarAccess.getDSLRuleMControllerAccess().getAccessAlternatives_2_0(), "rule__DSLRuleMController__AccessAlternatives_2_0");
+			builder.put(grammarAccess.getDSLRuleControllerAccess().getAccessAlternatives_2_0(), "rule__DSLRuleController__AccessAlternatives_2_0");
 			builder.put(grammarAccess.getDSLRuleMonitorAccess().getAlternatives(), "rule__DSLRuleMonitor__Alternatives");
+			builder.put(grammarAccess.getDSLRuleMonitorAccess().getAccessAlternatives_0_2_0(), "rule__DSLRuleMonitor__AccessAlternatives_0_2_0");
+			builder.put(grammarAccess.getDSLRuleMonitorAccess().getAccessAlternatives_1_2_0(), "rule__DSLRuleMonitor__AccessAlternatives_1_2_0");
+			builder.put(grammarAccess.getDSLRuleMonitorAccess().getAccessAlternatives_2_2_0(), "rule__DSLRuleMonitor__AccessAlternatives_2_2_0");
+			builder.put(grammarAccess.getDSLRuleMonitorAccess().getAccessAlternatives_3_2_0(), "rule__DSLRuleMonitor__AccessAlternatives_3_2_0");
 			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAlternatives(), "rule__DSLRuleAnalyzer__Alternatives");
+			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAccessAlternatives_0_2_0(), "rule__DSLRuleAnalyzer__AccessAlternatives_0_2_0");
+			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAccessAlternatives_1_2_0(), "rule__DSLRuleAnalyzer__AccessAlternatives_1_2_0");
+			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAccessAlternatives_2_2_0(), "rule__DSLRuleAnalyzer__AccessAlternatives_2_2_0");
+			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAccessAlternatives_3_2_0(), "rule__DSLRuleAnalyzer__AccessAlternatives_3_2_0");
+			builder.put(grammarAccess.getDSLRuleAnalyzerAccess().getAccessAlternatives_4_2_0(), "rule__DSLRuleAnalyzer__AccessAlternatives_4_2_0");
 			builder.put(grammarAccess.getDSLRulePlannerAccess().getAlternatives(), "rule__DSLRulePlanner__Alternatives");
+			builder.put(grammarAccess.getDSLRulePlannerAccess().getAccessAlternatives_0_2_0(), "rule__DSLRulePlanner__AccessAlternatives_0_2_0");
+			builder.put(grammarAccess.getDSLRulePlannerAccess().getAccessAlternatives_1_2_0(), "rule__DSLRulePlanner__AccessAlternatives_1_2_0");
+			builder.put(grammarAccess.getDSLRulePlannerAccess().getAccessAlternatives_2_2_0(), "rule__DSLRulePlanner__AccessAlternatives_2_2_0");
+			builder.put(grammarAccess.getDSLRulePlannerAccess().getAccessAlternatives_3_2_0(), "rule__DSLRulePlanner__AccessAlternatives_3_2_0");
 			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAlternatives(), "rule__DSLRuleExecutor__Alternatives");
-			builder.put(grammarAccess.getDSLAccessAccess().getAlternatives(), "rule__DSLAccess__Alternatives");
+			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_0_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_0_2_0");
+			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_1_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_1_2_0");
+			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_2_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_2_2_0");
+			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_3_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_3_2_0");
+			builder.put(grammarAccess.getDSLRuleMOAccess().getAccessAlternatives_2_0(), "rule__DSLRuleMO__AccessAlternatives_2_0");
 			builder.put(grammarAccess.getDSLTypeMCAccess().getAlternatives(), "rule__DSLTypeMC__Alternatives");
 			builder.put(grammarAccess.getArchitectureDefinitionAccess().getGroup(), "rule__ArchitectureDefinition__Group__0");
 			builder.put(grammarAccess.getDSLRuleMControllerAccess().getGroup(), "rule__DSLRuleMController__Group__0");

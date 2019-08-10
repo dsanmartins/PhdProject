@@ -294,21 +294,29 @@ ruleDSLRuleMController returns [EObject current=null]
 		)
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getDSLRuleMControllerAccess().getAccessDSLAccessParserRuleCall_2_0());
-				}
-				lv_access_2_0=ruleDSLAccess
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDSLRuleMControllerRule());
+				(
+					lv_access_2_1='must-use'
+					{
+						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMControllerAccess().getAccessMustUseKeyword_2_0_0());
 					}
-					set(
-						$current,
-						"access",
-						lv_access_2_0,
-						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-					afterParserOrEnumRuleCall();
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleMControllerRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_1, null);
+					}
+					    |
+					lv_access_2_2='must-not-use'
+					{
+						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMControllerAccess().getAccessMustNotUseKeyword_2_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleMControllerRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_2, null);
+					}
+				)
 			)
 		)
 		otherlv_3='mcontroller'
@@ -370,21 +378,29 @@ ruleDSLRuleController returns [EObject current=null]
 		)
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getDSLRuleControllerAccess().getAccessDSLAccessParserRuleCall_2_0());
-				}
-				lv_access_2_0=ruleDSLAccess
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDSLRuleControllerRule());
+				(
+					lv_access_2_1='must-use'
+					{
+						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleControllerAccess().getAccessMustUseKeyword_2_0_0());
 					}
-					set(
-						$current,
-						"access",
-						lv_access_2_0,
-						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-					afterParserOrEnumRuleCall();
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleControllerRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_1, null);
+					}
+					    |
+					lv_access_2_2='must-not-use'
+					{
+						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleControllerAccess().getAccessMustNotUseKeyword_2_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleControllerRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_2, null);
+					}
+				)
 			)
 		)
 		otherlv_3='controller'
@@ -447,21 +463,29 @@ ruleDSLRuleMonitor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-					}
-					lv_access_2_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
+					(
+						lv_access_2_1='must-use'
+						{
+							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_0_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_2_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_1, null);
+						}
+						    |
+						lv_access_2_2='must-not-use'
+						{
+							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_0_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_2, null);
+						}
+					)
 				)
 			)
 			otherlv_3='sensor'
@@ -507,21 +531,29 @@ ruleDSLRuleMonitor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-					}
-					lv_access_8_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
+					(
+						lv_access_8_1='must-use'
+						{
+							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_1_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_8_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_1, null);
+						}
+						    |
+						lv_access_8_2='must-not-use'
+						{
+							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_1_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_2, null);
+						}
+					)
 				)
 			)
 			otherlv_9='knowledge'
@@ -567,21 +599,29 @@ ruleDSLRuleMonitor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-					}
-					lv_access_14_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
+					(
+						lv_access_14_1='must-use'
+						{
+							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_2_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_14_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_1, null);
+						}
+						    |
+						lv_access_14_2='must-not-use'
+						{
+							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_2_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_2, null);
+						}
+					)
 				)
 			)
 			otherlv_15='analyzer'
@@ -627,21 +667,29 @@ ruleDSLRuleMonitor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-					}
-					lv_access_20_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
+					(
+						lv_access_20_1='must-use'
+						{
+							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_3_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_20_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_1, null);
+						}
+						    |
+						lv_access_20_2='must-not-use'
+						{
+							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_3_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_2, null);
+						}
+					)
 				)
 			)
 			otherlv_21='monitor'
@@ -705,21 +753,29 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-					}
-					lv_access_2_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
+					(
+						lv_access_2_1='must-use'
+						{
+							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_0_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_2_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_1, null);
+						}
+						    |
+						lv_access_2_2='must-not-use'
+						{
+							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_0_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_2, null);
+						}
+					)
 				)
 			)
 			otherlv_3='knowledge'
@@ -765,21 +821,29 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-					}
-					lv_access_8_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
+					(
+						lv_access_8_1='must-use'
+						{
+							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_1_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_8_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_1, null);
+						}
+						    |
+						lv_access_8_2='must-not-use'
+						{
+							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_1_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_2, null);
+						}
+					)
 				)
 			)
 			otherlv_9='monitor'
@@ -825,21 +889,29 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-					}
-					lv_access_14_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
+					(
+						lv_access_14_1='must-use'
+						{
+							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_2_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_14_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_1, null);
+						}
+						    |
+						lv_access_14_2='must-not-use'
+						{
+							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_2_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_2, null);
+						}
+					)
 				)
 			)
 			otherlv_15='planner'
@@ -885,21 +957,29 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-					}
-					lv_access_20_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
+					(
+						lv_access_20_1='must-use'
+						{
+							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_3_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_20_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_1, null);
+						}
+						    |
+						lv_access_20_2='must-not-use'
+						{
+							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_3_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_2, null);
+						}
+					)
 				)
 			)
 			otherlv_21='reference-input'
@@ -945,21 +1025,29 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_4_2_0());
-					}
-					lv_access_26_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
+					(
+						lv_access_26_1='must-use'
+						{
+							newLeafNode(lv_access_26_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_4_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_26_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_26_1, null);
+						}
+						    |
+						lv_access_26_2='must-not-use'
+						{
+							newLeafNode(lv_access_26_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_4_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_26_2, null);
+						}
+					)
 				)
 			)
 			otherlv_27='analyzer'
@@ -1023,21 +1111,29 @@ ruleDSLRulePlanner returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-					}
-					lv_access_2_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
+					(
+						lv_access_2_1='must-use'
+						{
+							newLeafNode(lv_access_2_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_0_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_2_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_1, null);
+						}
+						    |
+						lv_access_2_2='must-not-use'
+						{
+							newLeafNode(lv_access_2_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_0_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_2, null);
+						}
+					)
 				)
 			)
 			otherlv_3='knowledge'
@@ -1083,21 +1179,29 @@ ruleDSLRulePlanner returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-					}
-					lv_access_8_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
+					(
+						lv_access_8_1='must-use'
+						{
+							newLeafNode(lv_access_8_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_1_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_8_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_1, null);
+						}
+						    |
+						lv_access_8_2='must-not-use'
+						{
+							newLeafNode(lv_access_8_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_1_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_2, null);
+						}
+					)
 				)
 			)
 			otherlv_9='analyzer'
@@ -1143,21 +1247,29 @@ ruleDSLRulePlanner returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-					}
-					lv_access_14_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
+					(
+						lv_access_14_1='must-use'
+						{
+							newLeafNode(lv_access_14_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_2_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_14_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_1, null);
+						}
+						    |
+						lv_access_14_2='must-not-use'
+						{
+							newLeafNode(lv_access_14_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_2_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_2, null);
+						}
+					)
 				)
 			)
 			otherlv_15='executor'
@@ -1203,21 +1315,29 @@ ruleDSLRulePlanner returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-					}
-					lv_access_20_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
+					(
+						lv_access_20_1='must-use'
+						{
+							newLeafNode(lv_access_20_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_3_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_20_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_1, null);
+						}
+						    |
+						lv_access_20_2='must-not-use'
+						{
+							newLeafNode(lv_access_20_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_3_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_2, null);
+						}
+					)
 				)
 			)
 			otherlv_21='planner'
@@ -1281,21 +1401,29 @@ ruleDSLRuleExecutor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-					}
-					lv_access_2_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
+					(
+						lv_access_2_1='must-use'
+						{
+							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_0_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_2_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_1, null);
+						}
+						    |
+						lv_access_2_2='must-not-use'
+						{
+							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_0_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_2_2, null);
+						}
+					)
 				)
 			)
 			otherlv_3='effector'
@@ -1341,21 +1469,29 @@ ruleDSLRuleExecutor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-					}
-					lv_access_8_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
+					(
+						lv_access_8_1='must-use'
+						{
+							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_1_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_8_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_1, null);
+						}
+						    |
+						lv_access_8_2='must-not-use'
+						{
+							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_1_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_8_2, null);
+						}
+					)
 				)
 			)
 			otherlv_9='planner'
@@ -1401,21 +1537,29 @@ ruleDSLRuleExecutor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-					}
-					lv_access_14_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
+					(
+						lv_access_14_1='must-use'
+						{
+							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_2_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_14_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_1, null);
+						}
+						    |
+						lv_access_14_2='must-not-use'
+						{
+							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_2_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_14_2, null);
+						}
+					)
 				)
 			)
 			otherlv_15='knowledge'
@@ -1461,21 +1605,29 @@ ruleDSLRuleExecutor returns [EObject current=null]
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-					}
-					lv_access_20_0=ruleDSLAccess
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
+					(
+						lv_access_20_1='must-use'
+						{
+							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_3_2_0_0());
 						}
-						set(
-							$current,
-							"access",
-							lv_access_20_0,
-							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-						afterParserOrEnumRuleCall();
-					}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_1, null);
+						}
+						    |
+						lv_access_20_2='must-not-use'
+						{
+							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_3_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_20_2, null);
+						}
+					)
 				)
 			)
 			otherlv_21='executor'
@@ -1538,21 +1690,29 @@ ruleDSLRuleMO returns [EObject current=null]
 		)
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getDSLRuleMOAccess().getAccessDSLAccessParserRuleCall_2_0());
-				}
-				lv_access_2_0=ruleDSLAccess
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDSLRuleMORule());
+				(
+					lv_access_2_1='must-use'
+					{
+						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMOAccess().getAccessMustUseKeyword_2_0_0());
 					}
-					set(
-						$current,
-						"access",
-						lv_access_2_0,
-						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-					afterParserOrEnumRuleCall();
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleMORule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_1, null);
+					}
+					    |
+					lv_access_2_2='must-not-use'
+					{
+						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMOAccess().getAccessMustNotUseKeyword_2_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleMORule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_2, null);
+					}
+				)
 			)
 		)
 		otherlv_3='measured-output'
@@ -1575,36 +1735,6 @@ ruleDSLRuleMO returns [EObject current=null]
 		otherlv_5=';'
 		{
 			newLeafNode(otherlv_5, grammarAccess.getDSLRuleMOAccess().getSemicolonKeyword_5());
-		}
-	)
-;
-
-// Entry rule entryRuleDSLAccess
-entryRuleDSLAccess returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getDSLAccessRule()); }
-	iv_ruleDSLAccess=ruleDSLAccess
-	{ $current=$iv_ruleDSLAccess.current.getText(); }
-	EOF;
-
-// Rule DSLAccess
-ruleDSLAccess returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		kw='must-use'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustUseKeyword_0());
-		}
-		    |
-		kw='must-not-use'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1());
 		}
 	)
 ;

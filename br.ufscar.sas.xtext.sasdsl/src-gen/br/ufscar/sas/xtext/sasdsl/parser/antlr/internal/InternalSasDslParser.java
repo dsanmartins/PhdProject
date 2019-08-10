@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSasDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'must-use'", "'must-not-use'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Architecture'", "'{'", "'}'", "'Rules'", "'mcontroller'", "'must-use'", "'must-not-use'", "';'", "'controller'", "'monitor'", "'sensor'", "'knowledge'", "'analyzer'", "'planner'", "'reference-input'", "'executor'", "'effector'", "'measured-output'", "'Managing'", "'Managed'", "'ManagerController'", "'typeOf'", "'Synchronized'", "'Coordinated'", "'Independent'", "'Controller'", "'Monitor'", "'Analyzer'", "'Planner'", "'Executor'", "'Knowledge'", "'Sensor'", "'Effector'", "'ReferenceInput'", "'MeasuredOutput'"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -331,7 +331,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==15||(LA3_0>=17 && LA3_0<=19)||(LA3_0>=21 && LA3_0<=22)||LA3_0==24) ) {
+                if ( (LA3_0==15||(LA3_0>=19 && LA3_0<=21)||(LA3_0>=23 && LA3_0<=24)||LA3_0==26) ) {
                     alt3=1;
                 }
 
@@ -466,32 +466,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             // InternalSasDsl.g:196:2: (this_DSLRuleController_0= ruleDSLRuleController | this_DSLRuleMonitor_1= ruleDSLRuleMonitor | this_DSLRuleAnalyzer_2= ruleDSLRuleAnalyzer | this_DSLRulePlanner_3= ruleDSLRulePlanner | this_DSLRuleExecutor_4= ruleDSLRuleExecutor | this_DSLRuleMO_5= ruleDSLRuleMO | this_DSLRuleMController_6= ruleDSLRuleMController )
             int alt4=7;
             switch ( input.LA(1) ) {
-            case 17:
+            case 19:
                 {
                 alt4=1;
                 }
                 break;
-            case 18:
+            case 20:
                 {
                 alt4=2;
                 }
                 break;
-            case 21:
+            case 23:
                 {
                 alt4=3;
                 }
                 break;
-            case 22:
+            case 24:
                 {
                 alt4=4;
                 }
                 break;
-            case 24:
+            case 26:
                 {
                 alt4=5;
                 }
                 break;
-            case 19:
+            case 21:
                 {
                 alt4=6;
                 }
@@ -694,27 +694,27 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleMController"
-    // InternalSasDsl.g:270:1: ruleDSLRuleMController returns [EObject current=null] : (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalSasDsl.g:270:1: ruleDSLRuleMController returns [EObject current=null] : (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleDSLRuleMController() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:276:2: ( (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalSasDsl.g:277:2: (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:276:2: ( (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalSasDsl.g:277:2: (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalSasDsl.g:277:2: (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-            // InternalSasDsl.g:278:3: otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+            // InternalSasDsl.g:277:2: (otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:278:3: otherlv_0= 'mcontroller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'mcontroller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
             {
             otherlv_0=(Token)match(input,15,FOLLOW_3); 
 
@@ -741,31 +741,64 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSasDsl.g:295:3: ( (lv_access_2_0= ruleDSLAccess ) )
-            // InternalSasDsl.g:296:4: (lv_access_2_0= ruleDSLAccess )
+            // InternalSasDsl.g:295:3: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+            // InternalSasDsl.g:296:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
             {
-            // InternalSasDsl.g:296:4: (lv_access_2_0= ruleDSLAccess )
-            // InternalSasDsl.g:297:5: lv_access_2_0= ruleDSLAccess
+            // InternalSasDsl.g:296:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+            // InternalSasDsl.g:297:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
             {
+            // InternalSasDsl.g:297:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+            int alt5=2;
+            int LA5_0 = input.LA(1);
 
-            					newCompositeNode(grammarAccess.getDSLRuleMControllerAccess().getAccessDSLAccessParserRuleCall_2_0());
-            				
-            pushFollow(FOLLOW_11);
-            lv_access_2_0=ruleDSLAccess();
+            if ( (LA5_0==16) ) {
+                alt5=1;
+            }
+            else if ( (LA5_0==17) ) {
+                alt5=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 5, 0, input);
 
-            state._fsp--;
+                throw nvae;
+            }
+            switch (alt5) {
+                case 1 :
+                    // InternalSasDsl.g:298:6: lv_access_2_1= 'must-use'
+                    {
+                    lv_access_2_1=(Token)match(input,16,FOLLOW_11); 
 
+                    						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMControllerAccess().getAccessMustUseKeyword_2_0_0());
+                    					
 
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getDSLRuleMControllerRule());
-            					}
-            					set(
-            						current,
-            						"access",
-            						lv_access_2_0,
-            						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-            					afterParserOrEnumRuleCall();
-            				
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleMControllerRule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_1, null);
+                    					
+
+                    }
+                    break;
+                case 2 :
+                    // InternalSasDsl.g:309:6: lv_access_2_2= 'must-not-use'
+                    {
+                    lv_access_2_2=(Token)match(input,17,FOLLOW_11); 
+
+                    						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMControllerAccess().getAccessMustNotUseKeyword_2_0_1());
+                    					
+
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleMControllerRule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_2, null);
+                    					
+
+                    }
+                    break;
+
+            }
+
 
             }
 
@@ -776,11 +809,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_3, grammarAccess.getDSLRuleMControllerAccess().getMcontrollerKeyword_3());
             		
-            // InternalSasDsl.g:318:3: ( (otherlv_4= RULE_ID ) )
-            // InternalSasDsl.g:319:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:326:3: ( (otherlv_4= RULE_ID ) )
+            // InternalSasDsl.g:327:4: (otherlv_4= RULE_ID )
             {
-            // InternalSasDsl.g:319:4: (otherlv_4= RULE_ID )
-            // InternalSasDsl.g:320:5: otherlv_4= RULE_ID
+            // InternalSasDsl.g:327:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:328:5: otherlv_4= RULE_ID
             {
 
             					if (current==null) {
@@ -797,7 +830,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getDSLRuleMControllerAccess().getSemicolonKeyword_5());
             		
@@ -824,7 +857,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRuleController"
-    // InternalSasDsl.g:339:1: entryRuleDSLRuleController returns [EObject current=null] : iv_ruleDSLRuleController= ruleDSLRuleController EOF ;
+    // InternalSasDsl.g:347:1: entryRuleDSLRuleController returns [EObject current=null] : iv_ruleDSLRuleController= ruleDSLRuleController EOF ;
     public final EObject entryRuleDSLRuleController() throws RecognitionException {
         EObject current = null;
 
@@ -832,8 +865,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:339:58: (iv_ruleDSLRuleController= ruleDSLRuleController EOF )
-            // InternalSasDsl.g:340:2: iv_ruleDSLRuleController= ruleDSLRuleController EOF
+            // InternalSasDsl.g:347:58: (iv_ruleDSLRuleController= ruleDSLRuleController EOF )
+            // InternalSasDsl.g:348:2: iv_ruleDSLRuleController= ruleDSLRuleController EOF
             {
              newCompositeNode(grammarAccess.getDSLRuleControllerRule()); 
             pushFollow(FOLLOW_1);
@@ -860,37 +893,37 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleController"
-    // InternalSasDsl.g:346:1: ruleDSLRuleController returns [EObject current=null] : (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalSasDsl.g:354:1: ruleDSLRuleController returns [EObject current=null] : (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleDSLRuleController() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:352:2: ( (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalSasDsl.g:353:2: (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:360:2: ( (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalSasDsl.g:361:2: (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalSasDsl.g:353:2: (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-            // InternalSasDsl.g:354:3: otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+            // InternalSasDsl.g:361:2: (otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:362:3: otherlv_0= 'controller' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'controller' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,17,FOLLOW_3); 
+            otherlv_0=(Token)match(input,19,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLRuleControllerAccess().getControllerKeyword_0());
             		
-            // InternalSasDsl.g:358:3: ( (otherlv_1= RULE_ID ) )
-            // InternalSasDsl.g:359:4: (otherlv_1= RULE_ID )
+            // InternalSasDsl.g:366:3: ( (otherlv_1= RULE_ID ) )
+            // InternalSasDsl.g:367:4: (otherlv_1= RULE_ID )
             {
-            // InternalSasDsl.g:359:4: (otherlv_1= RULE_ID )
-            // InternalSasDsl.g:360:5: otherlv_1= RULE_ID
+            // InternalSasDsl.g:367:4: (otherlv_1= RULE_ID )
+            // InternalSasDsl.g:368:5: otherlv_1= RULE_ID
             {
 
             					if (current==null) {
@@ -907,46 +940,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSasDsl.g:371:3: ( (lv_access_2_0= ruleDSLAccess ) )
-            // InternalSasDsl.g:372:4: (lv_access_2_0= ruleDSLAccess )
+            // InternalSasDsl.g:379:3: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+            // InternalSasDsl.g:380:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
             {
-            // InternalSasDsl.g:372:4: (lv_access_2_0= ruleDSLAccess )
-            // InternalSasDsl.g:373:5: lv_access_2_0= ruleDSLAccess
+            // InternalSasDsl.g:380:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+            // InternalSasDsl.g:381:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
             {
+            // InternalSasDsl.g:381:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+            int alt6=2;
+            int LA6_0 = input.LA(1);
 
-            					newCompositeNode(grammarAccess.getDSLRuleControllerAccess().getAccessDSLAccessParserRuleCall_2_0());
-            				
-            pushFollow(FOLLOW_13);
-            lv_access_2_0=ruleDSLAccess();
+            if ( (LA6_0==16) ) {
+                alt6=1;
+            }
+            else if ( (LA6_0==17) ) {
+                alt6=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 6, 0, input);
 
-            state._fsp--;
+                throw nvae;
+            }
+            switch (alt6) {
+                case 1 :
+                    // InternalSasDsl.g:382:6: lv_access_2_1= 'must-use'
+                    {
+                    lv_access_2_1=(Token)match(input,16,FOLLOW_13); 
 
+                    						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleControllerAccess().getAccessMustUseKeyword_2_0_0());
+                    					
 
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getDSLRuleControllerRule());
-            					}
-            					set(
-            						current,
-            						"access",
-            						lv_access_2_0,
-            						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-            					afterParserOrEnumRuleCall();
-            				
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleControllerRule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_1, null);
+                    					
+
+                    }
+                    break;
+                case 2 :
+                    // InternalSasDsl.g:393:6: lv_access_2_2= 'must-not-use'
+                    {
+                    lv_access_2_2=(Token)match(input,17,FOLLOW_13); 
+
+                    						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleControllerAccess().getAccessMustNotUseKeyword_2_0_1());
+                    					
+
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleControllerRule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_2, null);
+                    					
+
+                    }
+                    break;
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,17,FOLLOW_3); 
+
+            }
+
+            otherlv_3=(Token)match(input,19,FOLLOW_3); 
 
             			newLeafNode(otherlv_3, grammarAccess.getDSLRuleControllerAccess().getControllerKeyword_3());
             		
-            // InternalSasDsl.g:394:3: ( (otherlv_4= RULE_ID ) )
-            // InternalSasDsl.g:395:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:410:3: ( (otherlv_4= RULE_ID ) )
+            // InternalSasDsl.g:411:4: (otherlv_4= RULE_ID )
             {
-            // InternalSasDsl.g:395:4: (otherlv_4= RULE_ID )
-            // InternalSasDsl.g:396:5: otherlv_4= RULE_ID
+            // InternalSasDsl.g:411:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:412:5: otherlv_4= RULE_ID
             {
 
             					if (current==null) {
@@ -963,7 +1029,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getDSLRuleControllerAccess().getSemicolonKeyword_5());
             		
@@ -990,7 +1056,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRuleMonitor"
-    // InternalSasDsl.g:415:1: entryRuleDSLRuleMonitor returns [EObject current=null] : iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF ;
+    // InternalSasDsl.g:431:1: entryRuleDSLRuleMonitor returns [EObject current=null] : iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF ;
     public final EObject entryRuleDSLRuleMonitor() throws RecognitionException {
         EObject current = null;
 
@@ -998,8 +1064,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:415:55: (iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF )
-            // InternalSasDsl.g:416:2: iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF
+            // InternalSasDsl.g:431:55: (iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF )
+            // InternalSasDsl.g:432:2: iv_ruleDSLRuleMonitor= ruleDSLRuleMonitor EOF
             {
              newCompositeNode(grammarAccess.getDSLRuleMonitorRule()); 
             pushFollow(FOLLOW_1);
@@ -1026,111 +1092,111 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleMonitor"
-    // InternalSasDsl.g:422:1: ruleDSLRuleMonitor returns [EObject current=null] : ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
+    // InternalSasDsl.g:438:1: ruleDSLRuleMonitor returns [EObject current=null] : ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
     public final EObject ruleDSLRuleMonitor() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
+        Token lv_access_8_1=null;
+        Token lv_access_8_2=null;
         Token otherlv_9=null;
         Token otherlv_10=null;
         Token otherlv_11=null;
         Token otherlv_12=null;
         Token otherlv_13=null;
+        Token lv_access_14_1=null;
+        Token lv_access_14_2=null;
         Token otherlv_15=null;
         Token otherlv_16=null;
         Token otherlv_17=null;
         Token otherlv_18=null;
         Token otherlv_19=null;
+        Token lv_access_20_1=null;
+        Token lv_access_20_2=null;
         Token otherlv_21=null;
         Token otherlv_22=null;
         Token otherlv_23=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_8_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_14_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_20_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:428:2: ( ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
-            // InternalSasDsl.g:429:2: ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            // InternalSasDsl.g:444:2: ( ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
+            // InternalSasDsl.g:445:2: ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
             {
-            // InternalSasDsl.g:429:2: ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
-            int alt5=4;
-            int LA5_0 = input.LA(1);
+            // InternalSasDsl.g:445:2: ( (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            int alt11=4;
+            int LA11_0 = input.LA(1);
 
-            if ( (LA5_0==18) ) {
-                int LA5_1 = input.LA(2);
+            if ( (LA11_0==20) ) {
+                int LA11_1 = input.LA(2);
 
-                if ( (LA5_1==RULE_ID) ) {
-                    int LA5_2 = input.LA(3);
+                if ( (LA11_1==RULE_ID) ) {
+                    int LA11_2 = input.LA(3);
 
-                    if ( (LA5_2==27) ) {
+                    if ( (LA11_2==16) ) {
                         switch ( input.LA(4) ) {
-                        case 18:
-                            {
-                            alt5=4;
-                            }
-                            break;
                         case 20:
                             {
-                            alt5=2;
+                            alt11=4;
+                            }
+                            break;
+                        case 23:
+                            {
+                            alt11=3;
+                            }
+                            break;
+                        case 22:
+                            {
+                            alt11=2;
                             }
                             break;
                         case 21:
                             {
-                            alt5=3;
-                            }
-                            break;
-                        case 19:
-                            {
-                            alt5=1;
+                            alt11=1;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 5, 3, input);
+                                new NoViableAltException("", 11, 3, input);
 
                             throw nvae;
                         }
 
                     }
-                    else if ( (LA5_2==28) ) {
+                    else if ( (LA11_2==17) ) {
                         switch ( input.LA(4) ) {
-                        case 18:
-                            {
-                            alt5=4;
-                            }
-                            break;
                         case 20:
                             {
-                            alt5=2;
+                            alt11=4;
+                            }
+                            break;
+                        case 23:
+                            {
+                            alt11=3;
+                            }
+                            break;
+                        case 22:
+                            {
+                            alt11=2;
                             }
                             break;
                         case 21:
                             {
-                            alt5=3;
-                            }
-                            break;
-                        case 19:
-                            {
-                            alt5=1;
+                            alt11=1;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 5, 4, input);
+                                new NoViableAltException("", 11, 4, input);
 
                             throw nvae;
                         }
@@ -1138,40 +1204,40 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("", 5, 2, input);
+                            new NoViableAltException("", 11, 2, input);
 
                         throw nvae;
                     }
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 5, 1, input);
+                        new NoViableAltException("", 11, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 5, 0, input);
+                    new NoViableAltException("", 11, 0, input);
 
                 throw nvae;
             }
-            switch (alt5) {
+            switch (alt11) {
                 case 1 :
-                    // InternalSasDsl.g:430:3: (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:446:3: (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
                     {
-                    // InternalSasDsl.g:430:3: (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-                    // InternalSasDsl.g:431:4: otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+                    // InternalSasDsl.g:446:3: (otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:447:4: otherlv_0= 'monitor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'sensor' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
                     {
-                    otherlv_0=(Token)match(input,18,FOLLOW_3); 
+                    otherlv_0=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getDSLRuleMonitorAccess().getMonitorKeyword_0_0());
                     			
-                    // InternalSasDsl.g:435:4: ( (otherlv_1= RULE_ID ) )
-                    // InternalSasDsl.g:436:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:451:4: ( (otherlv_1= RULE_ID ) )
+                    // InternalSasDsl.g:452:5: (otherlv_1= RULE_ID )
                     {
-                    // InternalSasDsl.g:436:5: (otherlv_1= RULE_ID )
-                    // InternalSasDsl.g:437:6: otherlv_1= RULE_ID
+                    // InternalSasDsl.g:452:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:453:6: otherlv_1= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1188,46 +1254,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:448:4: ( (lv_access_2_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:449:5: (lv_access_2_0= ruleDSLAccess )
+                    // InternalSasDsl.g:464:4: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:465:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:449:5: (lv_access_2_0= ruleDSLAccess )
-                    // InternalSasDsl.g:450:6: lv_access_2_0= ruleDSLAccess
+                    // InternalSasDsl.g:465:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:466:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:466:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+                    int alt7=2;
+                    int LA7_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-                    					
-                    pushFollow(FOLLOW_14);
-                    lv_access_2_0=ruleDSLAccess();
+                    if ( (LA7_0==16) ) {
+                        alt7=1;
+                    }
+                    else if ( (LA7_0==17) ) {
+                        alt7=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 7, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt7) {
+                        case 1 :
+                            // InternalSasDsl.g:467:7: lv_access_2_1= 'must-use'
+                            {
+                            lv_access_2_1=(Token)match(input,16,FOLLOW_14); 
 
+                            							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_0_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_2_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:478:7: lv_access_2_2= 'must-not-use'
+                            {
+                            lv_access_2_2=(Token)match(input,17,FOLLOW_14); 
+
+                            							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_0_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_3=(Token)match(input,19,FOLLOW_3); 
+
+                    }
+
+                    otherlv_3=(Token)match(input,21,FOLLOW_3); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDSLRuleMonitorAccess().getSensorKeyword_0_3());
                     			
-                    // InternalSasDsl.g:471:4: ( (otherlv_4= RULE_ID ) )
-                    // InternalSasDsl.g:472:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:495:4: ( (otherlv_4= RULE_ID ) )
+                    // InternalSasDsl.g:496:5: (otherlv_4= RULE_ID )
                     {
-                    // InternalSasDsl.g:472:5: (otherlv_4= RULE_ID )
-                    // InternalSasDsl.g:473:6: otherlv_4= RULE_ID
+                    // InternalSasDsl.g:496:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:497:6: otherlv_4= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1244,7 +1343,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getDSLRuleMonitorAccess().getSemicolonKeyword_0_5());
                     			
@@ -1255,20 +1354,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:490:3: (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:514:3: (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
                     {
-                    // InternalSasDsl.g:490:3: (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
-                    // InternalSasDsl.g:491:4: otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
+                    // InternalSasDsl.g:514:3: (otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:515:4: otherlv_6= 'monitor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'knowledge' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
                     {
-                    otherlv_6=(Token)match(input,18,FOLLOW_3); 
+                    otherlv_6=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDSLRuleMonitorAccess().getMonitorKeyword_1_0());
                     			
-                    // InternalSasDsl.g:495:4: ( (otherlv_7= RULE_ID ) )
-                    // InternalSasDsl.g:496:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:519:4: ( (otherlv_7= RULE_ID ) )
+                    // InternalSasDsl.g:520:5: (otherlv_7= RULE_ID )
                     {
-                    // InternalSasDsl.g:496:5: (otherlv_7= RULE_ID )
-                    // InternalSasDsl.g:497:6: otherlv_7= RULE_ID
+                    // InternalSasDsl.g:520:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:521:6: otherlv_7= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1285,46 +1384,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:508:4: ( (lv_access_8_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:509:5: (lv_access_8_0= ruleDSLAccess )
+                    // InternalSasDsl.g:532:4: ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:533:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:509:5: (lv_access_8_0= ruleDSLAccess )
-                    // InternalSasDsl.g:510:6: lv_access_8_0= ruleDSLAccess
+                    // InternalSasDsl.g:533:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:534:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:534:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
+                    int alt8=2;
+                    int LA8_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-                    					
-                    pushFollow(FOLLOW_15);
-                    lv_access_8_0=ruleDSLAccess();
+                    if ( (LA8_0==16) ) {
+                        alt8=1;
+                    }
+                    else if ( (LA8_0==17) ) {
+                        alt8=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 8, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt8) {
+                        case 1 :
+                            // InternalSasDsl.g:535:7: lv_access_8_1= 'must-use'
+                            {
+                            lv_access_8_1=(Token)match(input,16,FOLLOW_15); 
 
+                            							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_1_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_8_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:546:7: lv_access_8_2= 'must-not-use'
+                            {
+                            lv_access_8_2=(Token)match(input,17,FOLLOW_15); 
+
+                            							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_1_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_9=(Token)match(input,20,FOLLOW_3); 
+
+                    }
+
+                    otherlv_9=(Token)match(input,22,FOLLOW_3); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getDSLRuleMonitorAccess().getKnowledgeKeyword_1_3());
                     			
-                    // InternalSasDsl.g:531:4: ( (otherlv_10= RULE_ID ) )
-                    // InternalSasDsl.g:532:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:563:4: ( (otherlv_10= RULE_ID ) )
+                    // InternalSasDsl.g:564:5: (otherlv_10= RULE_ID )
                     {
-                    // InternalSasDsl.g:532:5: (otherlv_10= RULE_ID )
-                    // InternalSasDsl.g:533:6: otherlv_10= RULE_ID
+                    // InternalSasDsl.g:564:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:565:6: otherlv_10= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1341,7 +1473,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDSLRuleMonitorAccess().getSemicolonKeyword_1_5());
                     			
@@ -1352,20 +1484,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSasDsl.g:550:3: (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:582:3: (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
                     {
-                    // InternalSasDsl.g:550:3: (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
-                    // InternalSasDsl.g:551:4: otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
+                    // InternalSasDsl.g:582:3: (otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:583:4: otherlv_12= 'monitor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'analyzer' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
                     {
-                    otherlv_12=(Token)match(input,18,FOLLOW_3); 
+                    otherlv_12=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDSLRuleMonitorAccess().getMonitorKeyword_2_0());
                     			
-                    // InternalSasDsl.g:555:4: ( (otherlv_13= RULE_ID ) )
-                    // InternalSasDsl.g:556:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:587:4: ( (otherlv_13= RULE_ID ) )
+                    // InternalSasDsl.g:588:5: (otherlv_13= RULE_ID )
                     {
-                    // InternalSasDsl.g:556:5: (otherlv_13= RULE_ID )
-                    // InternalSasDsl.g:557:6: otherlv_13= RULE_ID
+                    // InternalSasDsl.g:588:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:589:6: otherlv_13= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1382,46 +1514,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:568:4: ( (lv_access_14_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:569:5: (lv_access_14_0= ruleDSLAccess )
+                    // InternalSasDsl.g:600:4: ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:601:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:569:5: (lv_access_14_0= ruleDSLAccess )
-                    // InternalSasDsl.g:570:6: lv_access_14_0= ruleDSLAccess
+                    // InternalSasDsl.g:601:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:602:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:602:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
+                    int alt9=2;
+                    int LA9_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-                    					
-                    pushFollow(FOLLOW_16);
-                    lv_access_14_0=ruleDSLAccess();
+                    if ( (LA9_0==16) ) {
+                        alt9=1;
+                    }
+                    else if ( (LA9_0==17) ) {
+                        alt9=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 9, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt9) {
+                        case 1 :
+                            // InternalSasDsl.g:603:7: lv_access_14_1= 'must-use'
+                            {
+                            lv_access_14_1=(Token)match(input,16,FOLLOW_16); 
 
+                            							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_2_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_14_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:614:7: lv_access_14_2= 'must-not-use'
+                            {
+                            lv_access_14_2=(Token)match(input,17,FOLLOW_16); 
+
+                            							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_2_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_15=(Token)match(input,21,FOLLOW_3); 
+
+                    }
+
+                    otherlv_15=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getDSLRuleMonitorAccess().getAnalyzerKeyword_2_3());
                     			
-                    // InternalSasDsl.g:591:4: ( (otherlv_16= RULE_ID ) )
-                    // InternalSasDsl.g:592:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:631:4: ( (otherlv_16= RULE_ID ) )
+                    // InternalSasDsl.g:632:5: (otherlv_16= RULE_ID )
                     {
-                    // InternalSasDsl.g:592:5: (otherlv_16= RULE_ID )
-                    // InternalSasDsl.g:593:6: otherlv_16= RULE_ID
+                    // InternalSasDsl.g:632:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:633:6: otherlv_16= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1438,7 +1603,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_17=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_17=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getDSLRuleMonitorAccess().getSemicolonKeyword_2_5());
                     			
@@ -1449,20 +1614,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSasDsl.g:610:3: (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:650:3: (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
                     {
-                    // InternalSasDsl.g:610:3: (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
-                    // InternalSasDsl.g:611:4: otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
+                    // InternalSasDsl.g:650:3: (otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:651:4: otherlv_18= 'monitor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'monitor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
                     {
-                    otherlv_18=(Token)match(input,18,FOLLOW_3); 
+                    otherlv_18=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getDSLRuleMonitorAccess().getMonitorKeyword_3_0());
                     			
-                    // InternalSasDsl.g:615:4: ( (otherlv_19= RULE_ID ) )
-                    // InternalSasDsl.g:616:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:655:4: ( (otherlv_19= RULE_ID ) )
+                    // InternalSasDsl.g:656:5: (otherlv_19= RULE_ID )
                     {
-                    // InternalSasDsl.g:616:5: (otherlv_19= RULE_ID )
-                    // InternalSasDsl.g:617:6: otherlv_19= RULE_ID
+                    // InternalSasDsl.g:656:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:657:6: otherlv_19= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1479,46 +1644,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:628:4: ( (lv_access_20_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:629:5: (lv_access_20_0= ruleDSLAccess )
+                    // InternalSasDsl.g:668:4: ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:669:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:629:5: (lv_access_20_0= ruleDSLAccess )
-                    // InternalSasDsl.g:630:6: lv_access_20_0= ruleDSLAccess
+                    // InternalSasDsl.g:669:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:670:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:670:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
+                    int alt10=2;
+                    int LA10_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleMonitorAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-                    					
-                    pushFollow(FOLLOW_17);
-                    lv_access_20_0=ruleDSLAccess();
+                    if ( (LA10_0==16) ) {
+                        alt10=1;
+                    }
+                    else if ( (LA10_0==17) ) {
+                        alt10=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 10, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt10) {
+                        case 1 :
+                            // InternalSasDsl.g:671:7: lv_access_20_1= 'must-use'
+                            {
+                            lv_access_20_1=(Token)match(input,16,FOLLOW_17); 
 
+                            							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleMonitorAccess().getAccessMustUseKeyword_3_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleMonitorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_20_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:682:7: lv_access_20_2= 'must-not-use'
+                            {
+                            lv_access_20_2=(Token)match(input,17,FOLLOW_17); 
+
+                            							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleMonitorAccess().getAccessMustNotUseKeyword_3_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleMonitorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_21=(Token)match(input,18,FOLLOW_3); 
+
+                    }
+
+                    otherlv_21=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getDSLRuleMonitorAccess().getMonitorKeyword_3_3());
                     			
-                    // InternalSasDsl.g:651:4: ( (otherlv_22= RULE_ID ) )
-                    // InternalSasDsl.g:652:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:699:4: ( (otherlv_22= RULE_ID ) )
+                    // InternalSasDsl.g:700:5: (otherlv_22= RULE_ID )
                     {
-                    // InternalSasDsl.g:652:5: (otherlv_22= RULE_ID )
-                    // InternalSasDsl.g:653:6: otherlv_22= RULE_ID
+                    // InternalSasDsl.g:700:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:701:6: otherlv_22= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1535,7 +1733,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_23=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_23=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_23, grammarAccess.getDSLRuleMonitorAccess().getSemicolonKeyword_3_5());
                     			
@@ -1568,7 +1766,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRuleAnalyzer"
-    // InternalSasDsl.g:673:1: entryRuleDSLRuleAnalyzer returns [EObject current=null] : iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF ;
+    // InternalSasDsl.g:721:1: entryRuleDSLRuleAnalyzer returns [EObject current=null] : iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF ;
     public final EObject entryRuleDSLRuleAnalyzer() throws RecognitionException {
         EObject current = null;
 
@@ -1576,8 +1774,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:673:56: (iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF )
-            // InternalSasDsl.g:674:2: iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF
+            // InternalSasDsl.g:721:56: (iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF )
+            // InternalSasDsl.g:722:2: iv_ruleDSLRuleAnalyzer= ruleDSLRuleAnalyzer EOF
             {
              newCompositeNode(grammarAccess.getDSLRuleAnalyzerRule()); 
             pushFollow(FOLLOW_1);
@@ -1604,72 +1802,72 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleAnalyzer"
-    // InternalSasDsl.g:680:1: ruleDSLRuleAnalyzer returns [EObject current=null] : ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) ) ;
+    // InternalSasDsl.g:728:1: ruleDSLRuleAnalyzer returns [EObject current=null] : ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) ) ;
     public final EObject ruleDSLRuleAnalyzer() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
+        Token lv_access_8_1=null;
+        Token lv_access_8_2=null;
         Token otherlv_9=null;
         Token otherlv_10=null;
         Token otherlv_11=null;
         Token otherlv_12=null;
         Token otherlv_13=null;
+        Token lv_access_14_1=null;
+        Token lv_access_14_2=null;
         Token otherlv_15=null;
         Token otherlv_16=null;
         Token otherlv_17=null;
         Token otherlv_18=null;
         Token otherlv_19=null;
+        Token lv_access_20_1=null;
+        Token lv_access_20_2=null;
         Token otherlv_21=null;
         Token otherlv_22=null;
         Token otherlv_23=null;
         Token otherlv_24=null;
         Token otherlv_25=null;
+        Token lv_access_26_1=null;
+        Token lv_access_26_2=null;
         Token otherlv_27=null;
         Token otherlv_28=null;
         Token otherlv_29=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_8_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_14_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_20_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_26_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:686:2: ( ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) ) )
-            // InternalSasDsl.g:687:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )
+            // InternalSasDsl.g:734:2: ( ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) ) )
+            // InternalSasDsl.g:735:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )
             {
-            // InternalSasDsl.g:687:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )
-            int alt6=5;
-            alt6 = dfa6.predict(input);
-            switch (alt6) {
+            // InternalSasDsl.g:735:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )
+            int alt17=5;
+            alt17 = dfa17.predict(input);
+            switch (alt17) {
                 case 1 :
-                    // InternalSasDsl.g:688:3: (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:736:3: (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
                     {
-                    // InternalSasDsl.g:688:3: (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-                    // InternalSasDsl.g:689:4: otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+                    // InternalSasDsl.g:736:3: (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:737:4: otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
                     {
-                    otherlv_0=(Token)match(input,21,FOLLOW_3); 
+                    otherlv_0=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_0_0());
                     			
-                    // InternalSasDsl.g:693:4: ( (otherlv_1= RULE_ID ) )
-                    // InternalSasDsl.g:694:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:741:4: ( (otherlv_1= RULE_ID ) )
+                    // InternalSasDsl.g:742:5: (otherlv_1= RULE_ID )
                     {
-                    // InternalSasDsl.g:694:5: (otherlv_1= RULE_ID )
-                    // InternalSasDsl.g:695:6: otherlv_1= RULE_ID
+                    // InternalSasDsl.g:742:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:743:6: otherlv_1= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1686,46 +1884,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:706:4: ( (lv_access_2_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:707:5: (lv_access_2_0= ruleDSLAccess )
+                    // InternalSasDsl.g:754:4: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:755:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:707:5: (lv_access_2_0= ruleDSLAccess )
-                    // InternalSasDsl.g:708:6: lv_access_2_0= ruleDSLAccess
+                    // InternalSasDsl.g:755:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:756:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:756:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+                    int alt12=2;
+                    int LA12_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-                    					
-                    pushFollow(FOLLOW_15);
-                    lv_access_2_0=ruleDSLAccess();
+                    if ( (LA12_0==16) ) {
+                        alt12=1;
+                    }
+                    else if ( (LA12_0==17) ) {
+                        alt12=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 12, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt12) {
+                        case 1 :
+                            // InternalSasDsl.g:757:7: lv_access_2_1= 'must-use'
+                            {
+                            lv_access_2_1=(Token)match(input,16,FOLLOW_15); 
 
+                            							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_0_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_2_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:768:7: lv_access_2_2= 'must-not-use'
+                            {
+                            lv_access_2_2=(Token)match(input,17,FOLLOW_15); 
+
+                            							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_0_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_3=(Token)match(input,20,FOLLOW_3); 
+
+                    }
+
+                    otherlv_3=(Token)match(input,22,FOLLOW_3); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDSLRuleAnalyzerAccess().getKnowledgeKeyword_0_3());
                     			
-                    // InternalSasDsl.g:729:4: ( (otherlv_4= RULE_ID ) )
-                    // InternalSasDsl.g:730:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:785:4: ( (otherlv_4= RULE_ID ) )
+                    // InternalSasDsl.g:786:5: (otherlv_4= RULE_ID )
                     {
-                    // InternalSasDsl.g:730:5: (otherlv_4= RULE_ID )
-                    // InternalSasDsl.g:731:6: otherlv_4= RULE_ID
+                    // InternalSasDsl.g:786:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:787:6: otherlv_4= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1742,7 +1973,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_0_5());
                     			
@@ -1753,20 +1984,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:748:3: (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:804:3: (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
                     {
-                    // InternalSasDsl.g:748:3: (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
-                    // InternalSasDsl.g:749:4: otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
+                    // InternalSasDsl.g:804:3: (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:805:4: otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
                     {
-                    otherlv_6=(Token)match(input,21,FOLLOW_3); 
+                    otherlv_6=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_1_0());
                     			
-                    // InternalSasDsl.g:753:4: ( (otherlv_7= RULE_ID ) )
-                    // InternalSasDsl.g:754:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:809:4: ( (otherlv_7= RULE_ID ) )
+                    // InternalSasDsl.g:810:5: (otherlv_7= RULE_ID )
                     {
-                    // InternalSasDsl.g:754:5: (otherlv_7= RULE_ID )
-                    // InternalSasDsl.g:755:6: otherlv_7= RULE_ID
+                    // InternalSasDsl.g:810:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:811:6: otherlv_7= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1783,46 +2014,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:766:4: ( (lv_access_8_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:767:5: (lv_access_8_0= ruleDSLAccess )
+                    // InternalSasDsl.g:822:4: ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:823:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:767:5: (lv_access_8_0= ruleDSLAccess )
-                    // InternalSasDsl.g:768:6: lv_access_8_0= ruleDSLAccess
+                    // InternalSasDsl.g:823:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:824:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:824:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
+                    int alt13=2;
+                    int LA13_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-                    					
-                    pushFollow(FOLLOW_17);
-                    lv_access_8_0=ruleDSLAccess();
+                    if ( (LA13_0==16) ) {
+                        alt13=1;
+                    }
+                    else if ( (LA13_0==17) ) {
+                        alt13=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 13, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt13) {
+                        case 1 :
+                            // InternalSasDsl.g:825:7: lv_access_8_1= 'must-use'
+                            {
+                            lv_access_8_1=(Token)match(input,16,FOLLOW_17); 
 
+                            							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_1_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_8_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:836:7: lv_access_8_2= 'must-not-use'
+                            {
+                            lv_access_8_2=(Token)match(input,17,FOLLOW_17); 
+
+                            							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_1_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_9=(Token)match(input,18,FOLLOW_3); 
+
+                    }
+
+                    otherlv_9=(Token)match(input,20,FOLLOW_3); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getDSLRuleAnalyzerAccess().getMonitorKeyword_1_3());
                     			
-                    // InternalSasDsl.g:789:4: ( (otherlv_10= RULE_ID ) )
-                    // InternalSasDsl.g:790:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:853:4: ( (otherlv_10= RULE_ID ) )
+                    // InternalSasDsl.g:854:5: (otherlv_10= RULE_ID )
                     {
-                    // InternalSasDsl.g:790:5: (otherlv_10= RULE_ID )
-                    // InternalSasDsl.g:791:6: otherlv_10= RULE_ID
+                    // InternalSasDsl.g:854:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:855:6: otherlv_10= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1839,7 +2103,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_1_5());
                     			
@@ -1850,20 +2114,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSasDsl.g:808:3: (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:872:3: (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
                     {
-                    // InternalSasDsl.g:808:3: (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
-                    // InternalSasDsl.g:809:4: otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
+                    // InternalSasDsl.g:872:3: (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:873:4: otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
                     {
-                    otherlv_12=(Token)match(input,21,FOLLOW_3); 
+                    otherlv_12=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_2_0());
                     			
-                    // InternalSasDsl.g:813:4: ( (otherlv_13= RULE_ID ) )
-                    // InternalSasDsl.g:814:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:877:4: ( (otherlv_13= RULE_ID ) )
+                    // InternalSasDsl.g:878:5: (otherlv_13= RULE_ID )
                     {
-                    // InternalSasDsl.g:814:5: (otherlv_13= RULE_ID )
-                    // InternalSasDsl.g:815:6: otherlv_13= RULE_ID
+                    // InternalSasDsl.g:878:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:879:6: otherlv_13= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1880,46 +2144,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:826:4: ( (lv_access_14_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:827:5: (lv_access_14_0= ruleDSLAccess )
+                    // InternalSasDsl.g:890:4: ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:891:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:827:5: (lv_access_14_0= ruleDSLAccess )
-                    // InternalSasDsl.g:828:6: lv_access_14_0= ruleDSLAccess
+                    // InternalSasDsl.g:891:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:892:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:892:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
+                    int alt14=2;
+                    int LA14_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-                    					
-                    pushFollow(FOLLOW_18);
-                    lv_access_14_0=ruleDSLAccess();
+                    if ( (LA14_0==16) ) {
+                        alt14=1;
+                    }
+                    else if ( (LA14_0==17) ) {
+                        alt14=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 14, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt14) {
+                        case 1 :
+                            // InternalSasDsl.g:893:7: lv_access_14_1= 'must-use'
+                            {
+                            lv_access_14_1=(Token)match(input,16,FOLLOW_18); 
 
+                            							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_2_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_14_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:904:7: lv_access_14_2= 'must-not-use'
+                            {
+                            lv_access_14_2=(Token)match(input,17,FOLLOW_18); 
+
+                            							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_2_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_15=(Token)match(input,22,FOLLOW_3); 
+
+                    }
+
+                    otherlv_15=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getDSLRuleAnalyzerAccess().getPlannerKeyword_2_3());
                     			
-                    // InternalSasDsl.g:849:4: ( (otherlv_16= RULE_ID ) )
-                    // InternalSasDsl.g:850:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:921:4: ( (otherlv_16= RULE_ID ) )
+                    // InternalSasDsl.g:922:5: (otherlv_16= RULE_ID )
                     {
-                    // InternalSasDsl.g:850:5: (otherlv_16= RULE_ID )
-                    // InternalSasDsl.g:851:6: otherlv_16= RULE_ID
+                    // InternalSasDsl.g:922:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:923:6: otherlv_16= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1936,7 +2233,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_17=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_17=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_2_5());
                     			
@@ -1947,20 +2244,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSasDsl.g:868:3: (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:940:3: (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
                     {
-                    // InternalSasDsl.g:868:3: (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
-                    // InternalSasDsl.g:869:4: otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
+                    // InternalSasDsl.g:940:3: (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:941:4: otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
                     {
-                    otherlv_18=(Token)match(input,21,FOLLOW_3); 
+                    otherlv_18=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_3_0());
                     			
-                    // InternalSasDsl.g:873:4: ( (otherlv_19= RULE_ID ) )
-                    // InternalSasDsl.g:874:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:945:4: ( (otherlv_19= RULE_ID ) )
+                    // InternalSasDsl.g:946:5: (otherlv_19= RULE_ID )
                     {
-                    // InternalSasDsl.g:874:5: (otherlv_19= RULE_ID )
-                    // InternalSasDsl.g:875:6: otherlv_19= RULE_ID
+                    // InternalSasDsl.g:946:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:947:6: otherlv_19= RULE_ID
                     {
 
                     						if (current==null) {
@@ -1977,46 +2274,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:886:4: ( (lv_access_20_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:887:5: (lv_access_20_0= ruleDSLAccess )
+                    // InternalSasDsl.g:958:4: ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:959:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:887:5: (lv_access_20_0= ruleDSLAccess )
-                    // InternalSasDsl.g:888:6: lv_access_20_0= ruleDSLAccess
+                    // InternalSasDsl.g:959:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:960:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:960:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
+                    int alt15=2;
+                    int LA15_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-                    					
-                    pushFollow(FOLLOW_19);
-                    lv_access_20_0=ruleDSLAccess();
+                    if ( (LA15_0==16) ) {
+                        alt15=1;
+                    }
+                    else if ( (LA15_0==17) ) {
+                        alt15=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 15, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt15) {
+                        case 1 :
+                            // InternalSasDsl.g:961:7: lv_access_20_1= 'must-use'
+                            {
+                            lv_access_20_1=(Token)match(input,16,FOLLOW_19); 
 
+                            							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_3_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_20_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:972:7: lv_access_20_2= 'must-not-use'
+                            {
+                            lv_access_20_2=(Token)match(input,17,FOLLOW_19); 
+
+                            							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_3_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_21=(Token)match(input,23,FOLLOW_3); 
+
+                    }
+
+                    otherlv_21=(Token)match(input,25,FOLLOW_3); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getDSLRuleAnalyzerAccess().getReferenceInputKeyword_3_3());
                     			
-                    // InternalSasDsl.g:909:4: ( (otherlv_22= RULE_ID ) )
-                    // InternalSasDsl.g:910:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:989:4: ( (otherlv_22= RULE_ID ) )
+                    // InternalSasDsl.g:990:5: (otherlv_22= RULE_ID )
                     {
-                    // InternalSasDsl.g:910:5: (otherlv_22= RULE_ID )
-                    // InternalSasDsl.g:911:6: otherlv_22= RULE_ID
+                    // InternalSasDsl.g:990:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:991:6: otherlv_22= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2033,7 +2363,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_23=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_23=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_23, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_3_5());
                     			
@@ -2044,20 +2374,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSasDsl.g:928:3: (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' )
+                    // InternalSasDsl.g:1008:3: (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' )
                     {
-                    // InternalSasDsl.g:928:3: (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' )
-                    // InternalSasDsl.g:929:4: otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';'
+                    // InternalSasDsl.g:1008:3: (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' )
+                    // InternalSasDsl.g:1009:4: otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';'
                     {
-                    otherlv_24=(Token)match(input,21,FOLLOW_3); 
+                    otherlv_24=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_24, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_4_0());
                     			
-                    // InternalSasDsl.g:933:4: ( (otherlv_25= RULE_ID ) )
-                    // InternalSasDsl.g:934:5: (otherlv_25= RULE_ID )
+                    // InternalSasDsl.g:1013:4: ( (otherlv_25= RULE_ID ) )
+                    // InternalSasDsl.g:1014:5: (otherlv_25= RULE_ID )
                     {
-                    // InternalSasDsl.g:934:5: (otherlv_25= RULE_ID )
-                    // InternalSasDsl.g:935:6: otherlv_25= RULE_ID
+                    // InternalSasDsl.g:1014:5: (otherlv_25= RULE_ID )
+                    // InternalSasDsl.g:1015:6: otherlv_25= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2074,46 +2404,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:946:4: ( (lv_access_26_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:947:5: (lv_access_26_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1026:4: ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1027:5: ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:947:5: (lv_access_26_0= ruleDSLAccess )
-                    // InternalSasDsl.g:948:6: lv_access_26_0= ruleDSLAccess
+                    // InternalSasDsl.g:1027:5: ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1028:6: (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1028:6: (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' )
+                    int alt16=2;
+                    int LA16_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleAnalyzerAccess().getAccessDSLAccessParserRuleCall_4_2_0());
-                    					
-                    pushFollow(FOLLOW_16);
-                    lv_access_26_0=ruleDSLAccess();
+                    if ( (LA16_0==16) ) {
+                        alt16=1;
+                    }
+                    else if ( (LA16_0==17) ) {
+                        alt16=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 16, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt16) {
+                        case 1 :
+                            // InternalSasDsl.g:1029:7: lv_access_26_1= 'must-use'
+                            {
+                            lv_access_26_1=(Token)match(input,16,FOLLOW_16); 
 
+                            							newLeafNode(lv_access_26_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_4_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleAnalyzerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_26_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_26_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1040:7: lv_access_26_2= 'must-not-use'
+                            {
+                            lv_access_26_2=(Token)match(input,17,FOLLOW_16); 
+
+                            							newLeafNode(lv_access_26_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_4_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_26_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_27=(Token)match(input,21,FOLLOW_3); 
+
+                    }
+
+                    otherlv_27=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_27, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_4_3());
                     			
-                    // InternalSasDsl.g:969:4: ( (otherlv_28= RULE_ID ) )
-                    // InternalSasDsl.g:970:5: (otherlv_28= RULE_ID )
+                    // InternalSasDsl.g:1057:4: ( (otherlv_28= RULE_ID ) )
+                    // InternalSasDsl.g:1058:5: (otherlv_28= RULE_ID )
                     {
-                    // InternalSasDsl.g:970:5: (otherlv_28= RULE_ID )
-                    // InternalSasDsl.g:971:6: otherlv_28= RULE_ID
+                    // InternalSasDsl.g:1058:5: (otherlv_28= RULE_ID )
+                    // InternalSasDsl.g:1059:6: otherlv_28= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2130,7 +2493,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_29=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_29=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_29, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_4_5());
                     			
@@ -2163,7 +2526,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRulePlanner"
-    // InternalSasDsl.g:991:1: entryRuleDSLRulePlanner returns [EObject current=null] : iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF ;
+    // InternalSasDsl.g:1079:1: entryRuleDSLRulePlanner returns [EObject current=null] : iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF ;
     public final EObject entryRuleDSLRulePlanner() throws RecognitionException {
         EObject current = null;
 
@@ -2171,8 +2534,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:991:55: (iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF )
-            // InternalSasDsl.g:992:2: iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF
+            // InternalSasDsl.g:1079:55: (iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF )
+            // InternalSasDsl.g:1080:2: iv_ruleDSLRulePlanner= ruleDSLRulePlanner EOF
             {
              newCompositeNode(grammarAccess.getDSLRulePlannerRule()); 
             pushFollow(FOLLOW_1);
@@ -2199,111 +2562,111 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRulePlanner"
-    // InternalSasDsl.g:998:1: ruleDSLRulePlanner returns [EObject current=null] : ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
+    // InternalSasDsl.g:1086:1: ruleDSLRulePlanner returns [EObject current=null] : ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
     public final EObject ruleDSLRulePlanner() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
+        Token lv_access_8_1=null;
+        Token lv_access_8_2=null;
         Token otherlv_9=null;
         Token otherlv_10=null;
         Token otherlv_11=null;
         Token otherlv_12=null;
         Token otherlv_13=null;
+        Token lv_access_14_1=null;
+        Token lv_access_14_2=null;
         Token otherlv_15=null;
         Token otherlv_16=null;
         Token otherlv_17=null;
         Token otherlv_18=null;
         Token otherlv_19=null;
+        Token lv_access_20_1=null;
+        Token lv_access_20_2=null;
         Token otherlv_21=null;
         Token otherlv_22=null;
         Token otherlv_23=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_8_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_14_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_20_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1004:2: ( ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
-            // InternalSasDsl.g:1005:2: ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            // InternalSasDsl.g:1092:2: ( ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
+            // InternalSasDsl.g:1093:2: ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
             {
-            // InternalSasDsl.g:1005:2: ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
-            int alt7=4;
-            int LA7_0 = input.LA(1);
+            // InternalSasDsl.g:1093:2: ( (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            int alt22=4;
+            int LA22_0 = input.LA(1);
 
-            if ( (LA7_0==22) ) {
-                int LA7_1 = input.LA(2);
+            if ( (LA22_0==24) ) {
+                int LA22_1 = input.LA(2);
 
-                if ( (LA7_1==RULE_ID) ) {
-                    int LA7_2 = input.LA(3);
+                if ( (LA22_1==RULE_ID) ) {
+                    int LA22_2 = input.LA(3);
 
-                    if ( (LA7_2==27) ) {
+                    if ( (LA22_2==16) ) {
                         switch ( input.LA(4) ) {
                         case 24:
                             {
-                            alt7=3;
+                            alt22=4;
                             }
                             break;
-                        case 20:
+                        case 26:
                             {
-                            alt7=1;
+                            alt22=3;
+                            }
+                            break;
+                        case 23:
+                            {
+                            alt22=2;
                             }
                             break;
                         case 22:
                             {
-                            alt7=4;
-                            }
-                            break;
-                        case 21:
-                            {
-                            alt7=2;
+                            alt22=1;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 7, 3, input);
+                                new NoViableAltException("", 22, 3, input);
 
                             throw nvae;
                         }
 
                     }
-                    else if ( (LA7_2==28) ) {
+                    else if ( (LA22_2==17) ) {
                         switch ( input.LA(4) ) {
-                        case 24:
+                        case 26:
                             {
-                            alt7=3;
+                            alt22=3;
                             }
                             break;
-                        case 20:
+                        case 23:
                             {
-                            alt7=1;
+                            alt22=2;
                             }
                             break;
                         case 22:
                             {
-                            alt7=4;
+                            alt22=1;
                             }
                             break;
-                        case 21:
+                        case 24:
                             {
-                            alt7=2;
+                            alt22=4;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 7, 4, input);
+                                new NoViableAltException("", 22, 4, input);
 
                             throw nvae;
                         }
@@ -2311,40 +2674,40 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("", 7, 2, input);
+                            new NoViableAltException("", 22, 2, input);
 
                         throw nvae;
                     }
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 7, 1, input);
+                        new NoViableAltException("", 22, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 7, 0, input);
+                    new NoViableAltException("", 22, 0, input);
 
                 throw nvae;
             }
-            switch (alt7) {
+            switch (alt22) {
                 case 1 :
-                    // InternalSasDsl.g:1006:3: (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:1094:3: (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
                     {
-                    // InternalSasDsl.g:1006:3: (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-                    // InternalSasDsl.g:1007:4: otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+                    // InternalSasDsl.g:1094:3: (otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:1095:4: otherlv_0= 'planner' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
                     {
-                    otherlv_0=(Token)match(input,22,FOLLOW_3); 
+                    otherlv_0=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_0_0());
                     			
-                    // InternalSasDsl.g:1011:4: ( (otherlv_1= RULE_ID ) )
-                    // InternalSasDsl.g:1012:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:1099:4: ( (otherlv_1= RULE_ID ) )
+                    // InternalSasDsl.g:1100:5: (otherlv_1= RULE_ID )
                     {
-                    // InternalSasDsl.g:1012:5: (otherlv_1= RULE_ID )
-                    // InternalSasDsl.g:1013:6: otherlv_1= RULE_ID
+                    // InternalSasDsl.g:1100:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:1101:6: otherlv_1= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2361,46 +2724,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1024:4: ( (lv_access_2_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1025:5: (lv_access_2_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1112:4: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1113:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1025:5: (lv_access_2_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1026:6: lv_access_2_0= ruleDSLAccess
+                    // InternalSasDsl.g:1113:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1114:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1114:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+                    int alt18=2;
+                    int LA18_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-                    					
-                    pushFollow(FOLLOW_15);
-                    lv_access_2_0=ruleDSLAccess();
+                    if ( (LA18_0==16) ) {
+                        alt18=1;
+                    }
+                    else if ( (LA18_0==17) ) {
+                        alt18=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 18, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt18) {
+                        case 1 :
+                            // InternalSasDsl.g:1115:7: lv_access_2_1= 'must-use'
+                            {
+                            lv_access_2_1=(Token)match(input,16,FOLLOW_15); 
 
+                            							newLeafNode(lv_access_2_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_0_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_2_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1126:7: lv_access_2_2= 'must-not-use'
+                            {
+                            lv_access_2_2=(Token)match(input,17,FOLLOW_15); 
+
+                            							newLeafNode(lv_access_2_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_0_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_3=(Token)match(input,20,FOLLOW_3); 
+
+                    }
+
+                    otherlv_3=(Token)match(input,22,FOLLOW_3); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDSLRulePlannerAccess().getKnowledgeKeyword_0_3());
                     			
-                    // InternalSasDsl.g:1047:4: ( (otherlv_4= RULE_ID ) )
-                    // InternalSasDsl.g:1048:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:1143:4: ( (otherlv_4= RULE_ID ) )
+                    // InternalSasDsl.g:1144:5: (otherlv_4= RULE_ID )
                     {
-                    // InternalSasDsl.g:1048:5: (otherlv_4= RULE_ID )
-                    // InternalSasDsl.g:1049:6: otherlv_4= RULE_ID
+                    // InternalSasDsl.g:1144:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:1145:6: otherlv_4= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2417,7 +2813,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_0_5());
                     			
@@ -2428,20 +2824,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:1066:3: (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:1162:3: (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
                     {
-                    // InternalSasDsl.g:1066:3: (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
-                    // InternalSasDsl.g:1067:4: otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
+                    // InternalSasDsl.g:1162:3: (otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:1163:4: otherlv_6= 'planner' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'analyzer' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
                     {
-                    otherlv_6=(Token)match(input,22,FOLLOW_3); 
+                    otherlv_6=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_1_0());
                     			
-                    // InternalSasDsl.g:1071:4: ( (otherlv_7= RULE_ID ) )
-                    // InternalSasDsl.g:1072:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:1167:4: ( (otherlv_7= RULE_ID ) )
+                    // InternalSasDsl.g:1168:5: (otherlv_7= RULE_ID )
                     {
-                    // InternalSasDsl.g:1072:5: (otherlv_7= RULE_ID )
-                    // InternalSasDsl.g:1073:6: otherlv_7= RULE_ID
+                    // InternalSasDsl.g:1168:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:1169:6: otherlv_7= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2458,46 +2854,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1084:4: ( (lv_access_8_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1085:5: (lv_access_8_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1180:4: ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1181:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1085:5: (lv_access_8_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1086:6: lv_access_8_0= ruleDSLAccess
+                    // InternalSasDsl.g:1181:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1182:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1182:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
+                    int alt19=2;
+                    int LA19_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-                    					
-                    pushFollow(FOLLOW_16);
-                    lv_access_8_0=ruleDSLAccess();
+                    if ( (LA19_0==16) ) {
+                        alt19=1;
+                    }
+                    else if ( (LA19_0==17) ) {
+                        alt19=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 19, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt19) {
+                        case 1 :
+                            // InternalSasDsl.g:1183:7: lv_access_8_1= 'must-use'
+                            {
+                            lv_access_8_1=(Token)match(input,16,FOLLOW_16); 
 
+                            							newLeafNode(lv_access_8_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_1_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_8_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1194:7: lv_access_8_2= 'must-not-use'
+                            {
+                            lv_access_8_2=(Token)match(input,17,FOLLOW_16); 
+
+                            							newLeafNode(lv_access_8_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_1_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_9=(Token)match(input,21,FOLLOW_3); 
+
+                    }
+
+                    otherlv_9=(Token)match(input,23,FOLLOW_3); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getDSLRulePlannerAccess().getAnalyzerKeyword_1_3());
                     			
-                    // InternalSasDsl.g:1107:4: ( (otherlv_10= RULE_ID ) )
-                    // InternalSasDsl.g:1108:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:1211:4: ( (otherlv_10= RULE_ID ) )
+                    // InternalSasDsl.g:1212:5: (otherlv_10= RULE_ID )
                     {
-                    // InternalSasDsl.g:1108:5: (otherlv_10= RULE_ID )
-                    // InternalSasDsl.g:1109:6: otherlv_10= RULE_ID
+                    // InternalSasDsl.g:1212:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:1213:6: otherlv_10= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2514,7 +2943,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_1_5());
                     			
@@ -2525,20 +2954,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSasDsl.g:1126:3: (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:1230:3: (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
                     {
-                    // InternalSasDsl.g:1126:3: (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
-                    // InternalSasDsl.g:1127:4: otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
+                    // InternalSasDsl.g:1230:3: (otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:1231:4: otherlv_12= 'planner' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'executor' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
                     {
-                    otherlv_12=(Token)match(input,22,FOLLOW_3); 
+                    otherlv_12=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_2_0());
                     			
-                    // InternalSasDsl.g:1131:4: ( (otherlv_13= RULE_ID ) )
-                    // InternalSasDsl.g:1132:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:1235:4: ( (otherlv_13= RULE_ID ) )
+                    // InternalSasDsl.g:1236:5: (otherlv_13= RULE_ID )
                     {
-                    // InternalSasDsl.g:1132:5: (otherlv_13= RULE_ID )
-                    // InternalSasDsl.g:1133:6: otherlv_13= RULE_ID
+                    // InternalSasDsl.g:1236:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:1237:6: otherlv_13= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2555,46 +2984,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1144:4: ( (lv_access_14_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1145:5: (lv_access_14_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1248:4: ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1249:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1145:5: (lv_access_14_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1146:6: lv_access_14_0= ruleDSLAccess
+                    // InternalSasDsl.g:1249:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1250:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1250:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
+                    int alt20=2;
+                    int LA20_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-                    					
-                    pushFollow(FOLLOW_20);
-                    lv_access_14_0=ruleDSLAccess();
+                    if ( (LA20_0==16) ) {
+                        alt20=1;
+                    }
+                    else if ( (LA20_0==17) ) {
+                        alt20=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 20, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt20) {
+                        case 1 :
+                            // InternalSasDsl.g:1251:7: lv_access_14_1= 'must-use'
+                            {
+                            lv_access_14_1=(Token)match(input,16,FOLLOW_20); 
 
+                            							newLeafNode(lv_access_14_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_2_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_14_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1262:7: lv_access_14_2= 'must-not-use'
+                            {
+                            lv_access_14_2=(Token)match(input,17,FOLLOW_20); 
+
+                            							newLeafNode(lv_access_14_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_2_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_15=(Token)match(input,24,FOLLOW_3); 
+
+                    }
+
+                    otherlv_15=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getDSLRulePlannerAccess().getExecutorKeyword_2_3());
                     			
-                    // InternalSasDsl.g:1167:4: ( (otherlv_16= RULE_ID ) )
-                    // InternalSasDsl.g:1168:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:1279:4: ( (otherlv_16= RULE_ID ) )
+                    // InternalSasDsl.g:1280:5: (otherlv_16= RULE_ID )
                     {
-                    // InternalSasDsl.g:1168:5: (otherlv_16= RULE_ID )
-                    // InternalSasDsl.g:1169:6: otherlv_16= RULE_ID
+                    // InternalSasDsl.g:1280:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:1281:6: otherlv_16= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2611,7 +3073,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_17=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_17=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_2_5());
                     			
@@ -2622,20 +3084,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSasDsl.g:1186:3: (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:1298:3: (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
                     {
-                    // InternalSasDsl.g:1186:3: (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
-                    // InternalSasDsl.g:1187:4: otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
+                    // InternalSasDsl.g:1298:3: (otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:1299:4: otherlv_18= 'planner' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'planner' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
                     {
-                    otherlv_18=(Token)match(input,22,FOLLOW_3); 
+                    otherlv_18=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_3_0());
                     			
-                    // InternalSasDsl.g:1191:4: ( (otherlv_19= RULE_ID ) )
-                    // InternalSasDsl.g:1192:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:1303:4: ( (otherlv_19= RULE_ID ) )
+                    // InternalSasDsl.g:1304:5: (otherlv_19= RULE_ID )
                     {
-                    // InternalSasDsl.g:1192:5: (otherlv_19= RULE_ID )
-                    // InternalSasDsl.g:1193:6: otherlv_19= RULE_ID
+                    // InternalSasDsl.g:1304:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:1305:6: otherlv_19= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2652,46 +3114,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1204:4: ( (lv_access_20_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1205:5: (lv_access_20_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1316:4: ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1317:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1205:5: (lv_access_20_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1206:6: lv_access_20_0= ruleDSLAccess
+                    // InternalSasDsl.g:1317:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1318:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1318:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
+                    int alt21=2;
+                    int LA21_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRulePlannerAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-                    					
-                    pushFollow(FOLLOW_18);
-                    lv_access_20_0=ruleDSLAccess();
+                    if ( (LA21_0==16) ) {
+                        alt21=1;
+                    }
+                    else if ( (LA21_0==17) ) {
+                        alt21=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 21, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt21) {
+                        case 1 :
+                            // InternalSasDsl.g:1319:7: lv_access_20_1= 'must-use'
+                            {
+                            lv_access_20_1=(Token)match(input,16,FOLLOW_18); 
 
+                            							newLeafNode(lv_access_20_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_3_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRulePlannerRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_20_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1330:7: lv_access_20_2= 'must-not-use'
+                            {
+                            lv_access_20_2=(Token)match(input,17,FOLLOW_18); 
+
+                            							newLeafNode(lv_access_20_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_3_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_21=(Token)match(input,22,FOLLOW_3); 
+
+                    }
+
+                    otherlv_21=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_3_3());
                     			
-                    // InternalSasDsl.g:1227:4: ( (otherlv_22= RULE_ID ) )
-                    // InternalSasDsl.g:1228:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:1347:4: ( (otherlv_22= RULE_ID ) )
+                    // InternalSasDsl.g:1348:5: (otherlv_22= RULE_ID )
                     {
-                    // InternalSasDsl.g:1228:5: (otherlv_22= RULE_ID )
-                    // InternalSasDsl.g:1229:6: otherlv_22= RULE_ID
+                    // InternalSasDsl.g:1348:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:1349:6: otherlv_22= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2708,7 +3203,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_23=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_23=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_23, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_3_5());
                     			
@@ -2741,7 +3236,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRuleExecutor"
-    // InternalSasDsl.g:1249:1: entryRuleDSLRuleExecutor returns [EObject current=null] : iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF ;
+    // InternalSasDsl.g:1369:1: entryRuleDSLRuleExecutor returns [EObject current=null] : iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF ;
     public final EObject entryRuleDSLRuleExecutor() throws RecognitionException {
         EObject current = null;
 
@@ -2749,8 +3244,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1249:56: (iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF )
-            // InternalSasDsl.g:1250:2: iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF
+            // InternalSasDsl.g:1369:56: (iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF )
+            // InternalSasDsl.g:1370:2: iv_ruleDSLRuleExecutor= ruleDSLRuleExecutor EOF
             {
              newCompositeNode(grammarAccess.getDSLRuleExecutorRule()); 
             pushFollow(FOLLOW_1);
@@ -2777,111 +3272,111 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleExecutor"
-    // InternalSasDsl.g:1256:1: ruleDSLRuleExecutor returns [EObject current=null] : ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
+    // InternalSasDsl.g:1376:1: ruleDSLRuleExecutor returns [EObject current=null] : ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) ;
     public final EObject ruleDSLRuleExecutor() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
+        Token lv_access_8_1=null;
+        Token lv_access_8_2=null;
         Token otherlv_9=null;
         Token otherlv_10=null;
         Token otherlv_11=null;
         Token otherlv_12=null;
         Token otherlv_13=null;
+        Token lv_access_14_1=null;
+        Token lv_access_14_2=null;
         Token otherlv_15=null;
         Token otherlv_16=null;
         Token otherlv_17=null;
         Token otherlv_18=null;
         Token otherlv_19=null;
+        Token lv_access_20_1=null;
+        Token lv_access_20_2=null;
         Token otherlv_21=null;
         Token otherlv_22=null;
         Token otherlv_23=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_8_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_14_0 = null;
-
-        AntlrDatatypeRuleToken lv_access_20_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1262:2: ( ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
-            // InternalSasDsl.g:1263:2: ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            // InternalSasDsl.g:1382:2: ( ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) ) )
+            // InternalSasDsl.g:1383:2: ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
             {
-            // InternalSasDsl.g:1263:2: ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
-            int alt8=4;
-            int LA8_0 = input.LA(1);
+            // InternalSasDsl.g:1383:2: ( (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) )
+            int alt27=4;
+            int LA27_0 = input.LA(1);
 
-            if ( (LA8_0==24) ) {
-                int LA8_1 = input.LA(2);
+            if ( (LA27_0==26) ) {
+                int LA27_1 = input.LA(2);
 
-                if ( (LA8_1==RULE_ID) ) {
-                    int LA8_2 = input.LA(3);
+                if ( (LA27_1==RULE_ID) ) {
+                    int LA27_2 = input.LA(3);
 
-                    if ( (LA8_2==27) ) {
+                    if ( (LA27_2==16) ) {
                         switch ( input.LA(4) ) {
+                        case 26:
+                            {
+                            alt27=4;
+                            }
+                            break;
                         case 22:
                             {
-                            alt8=2;
-                            }
-                            break;
-                        case 20:
-                            {
-                            alt8=3;
-                            }
-                            break;
-                        case 25:
-                            {
-                            alt8=1;
+                            alt27=3;
                             }
                             break;
                         case 24:
                             {
-                            alt8=4;
+                            alt27=2;
+                            }
+                            break;
+                        case 27:
+                            {
+                            alt27=1;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 8, 3, input);
+                                new NoViableAltException("", 27, 3, input);
 
                             throw nvae;
                         }
 
                     }
-                    else if ( (LA8_2==28) ) {
+                    else if ( (LA27_2==17) ) {
                         switch ( input.LA(4) ) {
-                        case 24:
+                        case 26:
                             {
-                            alt8=4;
+                            alt27=4;
                             }
                             break;
                         case 22:
                             {
-                            alt8=2;
+                            alt27=3;
                             }
                             break;
-                        case 20:
+                        case 24:
                             {
-                            alt8=3;
+                            alt27=2;
                             }
                             break;
-                        case 25:
+                        case 27:
                             {
-                            alt8=1;
+                            alt27=1;
                             }
                             break;
                         default:
                             NoViableAltException nvae =
-                                new NoViableAltException("", 8, 4, input);
+                                new NoViableAltException("", 27, 4, input);
 
                             throw nvae;
                         }
@@ -2889,40 +3384,40 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("", 8, 2, input);
+                            new NoViableAltException("", 27, 2, input);
 
                         throw nvae;
                     }
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 8, 1, input);
+                        new NoViableAltException("", 27, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 8, 0, input);
+                    new NoViableAltException("", 27, 0, input);
 
                 throw nvae;
             }
-            switch (alt8) {
+            switch (alt27) {
                 case 1 :
-                    // InternalSasDsl.g:1264:3: (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:1384:3: (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
                     {
-                    // InternalSasDsl.g:1264:3: (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-                    // InternalSasDsl.g:1265:4: otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+                    // InternalSasDsl.g:1384:3: (otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+                    // InternalSasDsl.g:1385:4: otherlv_0= 'executor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'effector' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
                     {
-                    otherlv_0=(Token)match(input,24,FOLLOW_3); 
+                    otherlv_0=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getDSLRuleExecutorAccess().getExecutorKeyword_0_0());
                     			
-                    // InternalSasDsl.g:1269:4: ( (otherlv_1= RULE_ID ) )
-                    // InternalSasDsl.g:1270:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:1389:4: ( (otherlv_1= RULE_ID ) )
+                    // InternalSasDsl.g:1390:5: (otherlv_1= RULE_ID )
                     {
-                    // InternalSasDsl.g:1270:5: (otherlv_1= RULE_ID )
-                    // InternalSasDsl.g:1271:6: otherlv_1= RULE_ID
+                    // InternalSasDsl.g:1390:5: (otherlv_1= RULE_ID )
+                    // InternalSasDsl.g:1391:6: otherlv_1= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2939,46 +3434,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1282:4: ( (lv_access_2_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1283:5: (lv_access_2_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1402:4: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1403:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1283:5: (lv_access_2_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1284:6: lv_access_2_0= ruleDSLAccess
+                    // InternalSasDsl.g:1403:5: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1404:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1404:6: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+                    int alt23=2;
+                    int LA23_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_0_2_0());
-                    					
-                    pushFollow(FOLLOW_21);
-                    lv_access_2_0=ruleDSLAccess();
+                    if ( (LA23_0==16) ) {
+                        alt23=1;
+                    }
+                    else if ( (LA23_0==17) ) {
+                        alt23=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 23, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt23) {
+                        case 1 :
+                            // InternalSasDsl.g:1405:7: lv_access_2_1= 'must-use'
+                            {
+                            lv_access_2_1=(Token)match(input,16,FOLLOW_21); 
 
+                            							newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_0_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_2_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1416:7: lv_access_2_2= 'must-not-use'
+                            {
+                            lv_access_2_2=(Token)match(input,17,FOLLOW_21); 
+
+                            							newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_0_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_2_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_3=(Token)match(input,25,FOLLOW_3); 
+
+                    }
+
+                    otherlv_3=(Token)match(input,27,FOLLOW_3); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDSLRuleExecutorAccess().getEffectorKeyword_0_3());
                     			
-                    // InternalSasDsl.g:1305:4: ( (otherlv_4= RULE_ID ) )
-                    // InternalSasDsl.g:1306:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:1433:4: ( (otherlv_4= RULE_ID ) )
+                    // InternalSasDsl.g:1434:5: (otherlv_4= RULE_ID )
                     {
-                    // InternalSasDsl.g:1306:5: (otherlv_4= RULE_ID )
-                    // InternalSasDsl.g:1307:6: otherlv_4= RULE_ID
+                    // InternalSasDsl.g:1434:5: (otherlv_4= RULE_ID )
+                    // InternalSasDsl.g:1435:6: otherlv_4= RULE_ID
                     {
 
                     						if (current==null) {
@@ -2995,7 +3523,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getDSLRuleExecutorAccess().getSemicolonKeyword_0_5());
                     			
@@ -3006,20 +3534,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:1324:3: (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:1452:3: (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
                     {
-                    // InternalSasDsl.g:1324:3: (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
-                    // InternalSasDsl.g:1325:4: otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
+                    // InternalSasDsl.g:1452:3: (otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' )
+                    // InternalSasDsl.g:1453:4: otherlv_6= 'executor' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'planner' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';'
                     {
-                    otherlv_6=(Token)match(input,24,FOLLOW_3); 
+                    otherlv_6=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDSLRuleExecutorAccess().getExecutorKeyword_1_0());
                     			
-                    // InternalSasDsl.g:1329:4: ( (otherlv_7= RULE_ID ) )
-                    // InternalSasDsl.g:1330:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:1457:4: ( (otherlv_7= RULE_ID ) )
+                    // InternalSasDsl.g:1458:5: (otherlv_7= RULE_ID )
                     {
-                    // InternalSasDsl.g:1330:5: (otherlv_7= RULE_ID )
-                    // InternalSasDsl.g:1331:6: otherlv_7= RULE_ID
+                    // InternalSasDsl.g:1458:5: (otherlv_7= RULE_ID )
+                    // InternalSasDsl.g:1459:6: otherlv_7= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3036,46 +3564,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1342:4: ( (lv_access_8_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1343:5: (lv_access_8_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1470:4: ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1471:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1343:5: (lv_access_8_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1344:6: lv_access_8_0= ruleDSLAccess
+                    // InternalSasDsl.g:1471:5: ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1472:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1472:6: (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' )
+                    int alt24=2;
+                    int LA24_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_1_2_0());
-                    					
-                    pushFollow(FOLLOW_18);
-                    lv_access_8_0=ruleDSLAccess();
+                    if ( (LA24_0==16) ) {
+                        alt24=1;
+                    }
+                    else if ( (LA24_0==17) ) {
+                        alt24=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 24, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt24) {
+                        case 1 :
+                            // InternalSasDsl.g:1473:7: lv_access_8_1= 'must-use'
+                            {
+                            lv_access_8_1=(Token)match(input,16,FOLLOW_18); 
 
+                            							newLeafNode(lv_access_8_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_1_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_8_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1484:7: lv_access_8_2= 'must-not-use'
+                            {
+                            lv_access_8_2=(Token)match(input,17,FOLLOW_18); 
+
+                            							newLeafNode(lv_access_8_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_1_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_8_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_9=(Token)match(input,22,FOLLOW_3); 
+
+                    }
+
+                    otherlv_9=(Token)match(input,24,FOLLOW_3); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getDSLRuleExecutorAccess().getPlannerKeyword_1_3());
                     			
-                    // InternalSasDsl.g:1365:4: ( (otherlv_10= RULE_ID ) )
-                    // InternalSasDsl.g:1366:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:1501:4: ( (otherlv_10= RULE_ID ) )
+                    // InternalSasDsl.g:1502:5: (otherlv_10= RULE_ID )
                     {
-                    // InternalSasDsl.g:1366:5: (otherlv_10= RULE_ID )
-                    // InternalSasDsl.g:1367:6: otherlv_10= RULE_ID
+                    // InternalSasDsl.g:1502:5: (otherlv_10= RULE_ID )
+                    // InternalSasDsl.g:1503:6: otherlv_10= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3092,7 +3653,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDSLRuleExecutorAccess().getSemicolonKeyword_1_5());
                     			
@@ -3103,20 +3664,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSasDsl.g:1384:3: (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:1520:3: (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
                     {
-                    // InternalSasDsl.g:1384:3: (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
-                    // InternalSasDsl.g:1385:4: otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
+                    // InternalSasDsl.g:1520:3: (otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSasDsl.g:1521:4: otherlv_12= 'executor' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'knowledge' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
                     {
-                    otherlv_12=(Token)match(input,24,FOLLOW_3); 
+                    otherlv_12=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDSLRuleExecutorAccess().getExecutorKeyword_2_0());
                     			
-                    // InternalSasDsl.g:1389:4: ( (otherlv_13= RULE_ID ) )
-                    // InternalSasDsl.g:1390:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:1525:4: ( (otherlv_13= RULE_ID ) )
+                    // InternalSasDsl.g:1526:5: (otherlv_13= RULE_ID )
                     {
-                    // InternalSasDsl.g:1390:5: (otherlv_13= RULE_ID )
-                    // InternalSasDsl.g:1391:6: otherlv_13= RULE_ID
+                    // InternalSasDsl.g:1526:5: (otherlv_13= RULE_ID )
+                    // InternalSasDsl.g:1527:6: otherlv_13= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3133,46 +3694,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1402:4: ( (lv_access_14_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1403:5: (lv_access_14_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1538:4: ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1539:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1403:5: (lv_access_14_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1404:6: lv_access_14_0= ruleDSLAccess
+                    // InternalSasDsl.g:1539:5: ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1540:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1540:6: (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' )
+                    int alt25=2;
+                    int LA25_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_2_2_0());
-                    					
-                    pushFollow(FOLLOW_15);
-                    lv_access_14_0=ruleDSLAccess();
+                    if ( (LA25_0==16) ) {
+                        alt25=1;
+                    }
+                    else if ( (LA25_0==17) ) {
+                        alt25=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 25, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt25) {
+                        case 1 :
+                            // InternalSasDsl.g:1541:7: lv_access_14_1= 'must-use'
+                            {
+                            lv_access_14_1=(Token)match(input,16,FOLLOW_15); 
 
+                            							newLeafNode(lv_access_14_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_2_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_14_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1552:7: lv_access_14_2= 'must-not-use'
+                            {
+                            lv_access_14_2=(Token)match(input,17,FOLLOW_15); 
+
+                            							newLeafNode(lv_access_14_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_2_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_14_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_15=(Token)match(input,20,FOLLOW_3); 
+
+                    }
+
+                    otherlv_15=(Token)match(input,22,FOLLOW_3); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getDSLRuleExecutorAccess().getKnowledgeKeyword_2_3());
                     			
-                    // InternalSasDsl.g:1425:4: ( (otherlv_16= RULE_ID ) )
-                    // InternalSasDsl.g:1426:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:1569:4: ( (otherlv_16= RULE_ID ) )
+                    // InternalSasDsl.g:1570:5: (otherlv_16= RULE_ID )
                     {
-                    // InternalSasDsl.g:1426:5: (otherlv_16= RULE_ID )
-                    // InternalSasDsl.g:1427:6: otherlv_16= RULE_ID
+                    // InternalSasDsl.g:1570:5: (otherlv_16= RULE_ID )
+                    // InternalSasDsl.g:1571:6: otherlv_16= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3189,7 +3783,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_17=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_17=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getDSLRuleExecutorAccess().getSemicolonKeyword_2_5());
                     			
@@ -3200,20 +3794,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSasDsl.g:1444:3: (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:1588:3: (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
                     {
-                    // InternalSasDsl.g:1444:3: (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
-                    // InternalSasDsl.g:1445:4: otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
+                    // InternalSasDsl.g:1588:3: (otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' )
+                    // InternalSasDsl.g:1589:4: otherlv_18= 'executor' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'executor' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';'
                     {
-                    otherlv_18=(Token)match(input,24,FOLLOW_3); 
+                    otherlv_18=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getDSLRuleExecutorAccess().getExecutorKeyword_3_0());
                     			
-                    // InternalSasDsl.g:1449:4: ( (otherlv_19= RULE_ID ) )
-                    // InternalSasDsl.g:1450:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:1593:4: ( (otherlv_19= RULE_ID ) )
+                    // InternalSasDsl.g:1594:5: (otherlv_19= RULE_ID )
                     {
-                    // InternalSasDsl.g:1450:5: (otherlv_19= RULE_ID )
-                    // InternalSasDsl.g:1451:6: otherlv_19= RULE_ID
+                    // InternalSasDsl.g:1594:5: (otherlv_19= RULE_ID )
+                    // InternalSasDsl.g:1595:6: otherlv_19= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3230,46 +3824,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSasDsl.g:1462:4: ( (lv_access_20_0= ruleDSLAccess ) )
-                    // InternalSasDsl.g:1463:5: (lv_access_20_0= ruleDSLAccess )
+                    // InternalSasDsl.g:1606:4: ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) )
+                    // InternalSasDsl.g:1607:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
                     {
-                    // InternalSasDsl.g:1463:5: (lv_access_20_0= ruleDSLAccess )
-                    // InternalSasDsl.g:1464:6: lv_access_20_0= ruleDSLAccess
+                    // InternalSasDsl.g:1607:5: ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) )
+                    // InternalSasDsl.g:1608:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
                     {
+                    // InternalSasDsl.g:1608:6: (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' )
+                    int alt26=2;
+                    int LA26_0 = input.LA(1);
 
-                    						newCompositeNode(grammarAccess.getDSLRuleExecutorAccess().getAccessDSLAccessParserRuleCall_3_2_0());
-                    					
-                    pushFollow(FOLLOW_20);
-                    lv_access_20_0=ruleDSLAccess();
+                    if ( (LA26_0==16) ) {
+                        alt26=1;
+                    }
+                    else if ( (LA26_0==17) ) {
+                        alt26=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 26, 0, input);
 
-                    state._fsp--;
+                        throw nvae;
+                    }
+                    switch (alt26) {
+                        case 1 :
+                            // InternalSasDsl.g:1609:7: lv_access_20_1= 'must-use'
+                            {
+                            lv_access_20_1=(Token)match(input,16,FOLLOW_20); 
 
+                            							newLeafNode(lv_access_20_1, grammarAccess.getDSLRuleExecutorAccess().getAccessMustUseKeyword_3_2_0_0());
+                            						
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getDSLRuleExecutorRule());
-                    						}
-                    						set(
-                    							current,
-                    							"access",
-                    							lv_access_20_0,
-                    							"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-                    						afterParserOrEnumRuleCall();
-                    					
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_1, null);
+                            						
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalSasDsl.g:1620:7: lv_access_20_2= 'must-not-use'
+                            {
+                            lv_access_20_2=(Token)match(input,17,FOLLOW_20); 
+
+                            							newLeafNode(lv_access_20_2, grammarAccess.getDSLRuleExecutorAccess().getAccessMustNotUseKeyword_3_2_0_1());
+                            						
+
+                            							if (current==null) {
+                            								current = createModelElement(grammarAccess.getDSLRuleExecutorRule());
+                            							}
+                            							setWithLastConsumed(current, "access", lv_access_20_2, null);
+                            						
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_21=(Token)match(input,24,FOLLOW_3); 
+
+                    }
+
+                    otherlv_21=(Token)match(input,26,FOLLOW_3); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getDSLRuleExecutorAccess().getExecutorKeyword_3_3());
                     			
-                    // InternalSasDsl.g:1485:4: ( (otherlv_22= RULE_ID ) )
-                    // InternalSasDsl.g:1486:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:1637:4: ( (otherlv_22= RULE_ID ) )
+                    // InternalSasDsl.g:1638:5: (otherlv_22= RULE_ID )
                     {
-                    // InternalSasDsl.g:1486:5: (otherlv_22= RULE_ID )
-                    // InternalSasDsl.g:1487:6: otherlv_22= RULE_ID
+                    // InternalSasDsl.g:1638:5: (otherlv_22= RULE_ID )
+                    // InternalSasDsl.g:1639:6: otherlv_22= RULE_ID
                     {
 
                     						if (current==null) {
@@ -3286,7 +3913,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_23=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_23=(Token)match(input,18,FOLLOW_2); 
 
                     				newLeafNode(otherlv_23, grammarAccess.getDSLRuleExecutorAccess().getSemicolonKeyword_3_5());
                     			
@@ -3319,7 +3946,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLRuleMO"
-    // InternalSasDsl.g:1507:1: entryRuleDSLRuleMO returns [EObject current=null] : iv_ruleDSLRuleMO= ruleDSLRuleMO EOF ;
+    // InternalSasDsl.g:1659:1: entryRuleDSLRuleMO returns [EObject current=null] : iv_ruleDSLRuleMO= ruleDSLRuleMO EOF ;
     public final EObject entryRuleDSLRuleMO() throws RecognitionException {
         EObject current = null;
 
@@ -3327,8 +3954,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1507:50: (iv_ruleDSLRuleMO= ruleDSLRuleMO EOF )
-            // InternalSasDsl.g:1508:2: iv_ruleDSLRuleMO= ruleDSLRuleMO EOF
+            // InternalSasDsl.g:1659:50: (iv_ruleDSLRuleMO= ruleDSLRuleMO EOF )
+            // InternalSasDsl.g:1660:2: iv_ruleDSLRuleMO= ruleDSLRuleMO EOF
             {
              newCompositeNode(grammarAccess.getDSLRuleMORule()); 
             pushFollow(FOLLOW_1);
@@ -3355,37 +3982,37 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLRuleMO"
-    // InternalSasDsl.g:1514:1: ruleDSLRuleMO returns [EObject current=null] : (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalSasDsl.g:1666:1: ruleDSLRuleMO returns [EObject current=null] : (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleDSLRuleMO() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_access_2_1=null;
+        Token lv_access_2_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
-        AntlrDatatypeRuleToken lv_access_2_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1520:2: ( (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalSasDsl.g:1521:2: (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:1672:2: ( (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalSasDsl.g:1673:2: (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalSasDsl.g:1521:2: (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
-            // InternalSasDsl.g:1522:3: otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+            // InternalSasDsl.g:1673:2: (otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSasDsl.g:1674:3: otherlv_0= 'sensor' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'measured-output' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,19,FOLLOW_3); 
+            otherlv_0=(Token)match(input,21,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLRuleMOAccess().getSensorKeyword_0());
             		
-            // InternalSasDsl.g:1526:3: ( (otherlv_1= RULE_ID ) )
-            // InternalSasDsl.g:1527:4: (otherlv_1= RULE_ID )
+            // InternalSasDsl.g:1678:3: ( (otherlv_1= RULE_ID ) )
+            // InternalSasDsl.g:1679:4: (otherlv_1= RULE_ID )
             {
-            // InternalSasDsl.g:1527:4: (otherlv_1= RULE_ID )
-            // InternalSasDsl.g:1528:5: otherlv_1= RULE_ID
+            // InternalSasDsl.g:1679:4: (otherlv_1= RULE_ID )
+            // InternalSasDsl.g:1680:5: otherlv_1= RULE_ID
             {
 
             					if (current==null) {
@@ -3402,46 +4029,79 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSasDsl.g:1539:3: ( (lv_access_2_0= ruleDSLAccess ) )
-            // InternalSasDsl.g:1540:4: (lv_access_2_0= ruleDSLAccess )
+            // InternalSasDsl.g:1691:3: ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) )
+            // InternalSasDsl.g:1692:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
             {
-            // InternalSasDsl.g:1540:4: (lv_access_2_0= ruleDSLAccess )
-            // InternalSasDsl.g:1541:5: lv_access_2_0= ruleDSLAccess
+            // InternalSasDsl.g:1692:4: ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) )
+            // InternalSasDsl.g:1693:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
             {
+            // InternalSasDsl.g:1693:5: (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' )
+            int alt28=2;
+            int LA28_0 = input.LA(1);
 
-            					newCompositeNode(grammarAccess.getDSLRuleMOAccess().getAccessDSLAccessParserRuleCall_2_0());
-            				
-            pushFollow(FOLLOW_22);
-            lv_access_2_0=ruleDSLAccess();
+            if ( (LA28_0==16) ) {
+                alt28=1;
+            }
+            else if ( (LA28_0==17) ) {
+                alt28=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 28, 0, input);
 
-            state._fsp--;
+                throw nvae;
+            }
+            switch (alt28) {
+                case 1 :
+                    // InternalSasDsl.g:1694:6: lv_access_2_1= 'must-use'
+                    {
+                    lv_access_2_1=(Token)match(input,16,FOLLOW_22); 
 
+                    						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleMOAccess().getAccessMustUseKeyword_2_0_0());
+                    					
 
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getDSLRuleMORule());
-            					}
-            					set(
-            						current,
-            						"access",
-            						lv_access_2_0,
-            						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-            					afterParserOrEnumRuleCall();
-            				
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleMORule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_1, null);
+                    					
+
+                    }
+                    break;
+                case 2 :
+                    // InternalSasDsl.g:1705:6: lv_access_2_2= 'must-not-use'
+                    {
+                    lv_access_2_2=(Token)match(input,17,FOLLOW_22); 
+
+                    						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleMOAccess().getAccessMustNotUseKeyword_2_0_1());
+                    					
+
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getDSLRuleMORule());
+                    						}
+                    						setWithLastConsumed(current, "access", lv_access_2_2, null);
+                    					
+
+                    }
+                    break;
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,26,FOLLOW_3); 
+
+            }
+
+            otherlv_3=(Token)match(input,28,FOLLOW_3); 
 
             			newLeafNode(otherlv_3, grammarAccess.getDSLRuleMOAccess().getMeasuredOutputKeyword_3());
             		
-            // InternalSasDsl.g:1562:3: ( (otherlv_4= RULE_ID ) )
-            // InternalSasDsl.g:1563:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:1722:3: ( (otherlv_4= RULE_ID ) )
+            // InternalSasDsl.g:1723:4: (otherlv_4= RULE_ID )
             {
-            // InternalSasDsl.g:1563:4: (otherlv_4= RULE_ID )
-            // InternalSasDsl.g:1564:5: otherlv_4= RULE_ID
+            // InternalSasDsl.g:1723:4: (otherlv_4= RULE_ID )
+            // InternalSasDsl.g:1724:5: otherlv_4= RULE_ID
             {
 
             					if (current==null) {
@@ -3458,7 +4118,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getDSLRuleMOAccess().getSemicolonKeyword_5());
             		
@@ -3484,119 +4144,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleDSLRuleMO"
 
 
-    // $ANTLR start "entryRuleDSLAccess"
-    // InternalSasDsl.g:1583:1: entryRuleDSLAccess returns [String current=null] : iv_ruleDSLAccess= ruleDSLAccess EOF ;
-    public final String entryRuleDSLAccess() throws RecognitionException {
-        String current = null;
-
-        AntlrDatatypeRuleToken iv_ruleDSLAccess = null;
-
-
-        try {
-            // InternalSasDsl.g:1583:49: (iv_ruleDSLAccess= ruleDSLAccess EOF )
-            // InternalSasDsl.g:1584:2: iv_ruleDSLAccess= ruleDSLAccess EOF
-            {
-             newCompositeNode(grammarAccess.getDSLAccessRule()); 
-            pushFollow(FOLLOW_1);
-            iv_ruleDSLAccess=ruleDSLAccess();
-
-            state._fsp--;
-
-             current =iv_ruleDSLAccess.getText(); 
-            match(input,EOF,FOLLOW_2); 
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleDSLAccess"
-
-
-    // $ANTLR start "ruleDSLAccess"
-    // InternalSasDsl.g:1590:1: ruleDSLAccess returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'must-use' | kw= 'must-not-use' ) ;
-    public final AntlrDatatypeRuleToken ruleDSLAccess() throws RecognitionException {
-        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
-
-        Token kw=null;
-
-
-        	enterRule();
-
-        try {
-            // InternalSasDsl.g:1596:2: ( (kw= 'must-use' | kw= 'must-not-use' ) )
-            // InternalSasDsl.g:1597:2: (kw= 'must-use' | kw= 'must-not-use' )
-            {
-            // InternalSasDsl.g:1597:2: (kw= 'must-use' | kw= 'must-not-use' )
-            int alt9=2;
-            int LA9_0 = input.LA(1);
-
-            if ( (LA9_0==27) ) {
-                alt9=1;
-            }
-            else if ( (LA9_0==28) ) {
-                alt9=2;
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("", 9, 0, input);
-
-                throw nvae;
-            }
-            switch (alt9) {
-                case 1 :
-                    // InternalSasDsl.g:1598:3: kw= 'must-use'
-                    {
-                    kw=(Token)match(input,27,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustUseKeyword_0());
-                    		
-
-                    }
-                    break;
-                case 2 :
-                    // InternalSasDsl.g:1604:3: kw= 'must-not-use'
-                    {
-                    kw=(Token)match(input,28,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getDSLAccessAccess().getMustNotUseKeyword_1());
-                    		
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-
-            	leaveRule();
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleDSLAccess"
-
-
     // $ANTLR start "entryRuleDSLManaging"
-    // InternalSasDsl.g:1613:1: entryRuleDSLManaging returns [EObject current=null] : iv_ruleDSLManaging= ruleDSLManaging EOF ;
+    // InternalSasDsl.g:1743:1: entryRuleDSLManaging returns [EObject current=null] : iv_ruleDSLManaging= ruleDSLManaging EOF ;
     public final EObject entryRuleDSLManaging() throws RecognitionException {
         EObject current = null;
 
@@ -3604,8 +4153,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1613:52: (iv_ruleDSLManaging= ruleDSLManaging EOF )
-            // InternalSasDsl.g:1614:2: iv_ruleDSLManaging= ruleDSLManaging EOF
+            // InternalSasDsl.g:1743:52: (iv_ruleDSLManaging= ruleDSLManaging EOF )
+            // InternalSasDsl.g:1744:2: iv_ruleDSLManaging= ruleDSLManaging EOF
             {
              newCompositeNode(grammarAccess.getDSLManagingRule()); 
             pushFollow(FOLLOW_1);
@@ -3632,7 +4181,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLManaging"
-    // InternalSasDsl.g:1620:1: ruleDSLManaging returns [EObject current=null] : (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' ) ;
+    // InternalSasDsl.g:1750:1: ruleDSLManaging returns [EObject current=null] : (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' ) ;
     public final EObject ruleDSLManaging() throws RecognitionException {
         EObject current = null;
 
@@ -3649,21 +4198,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1626:2: ( (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' ) )
-            // InternalSasDsl.g:1627:2: (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' )
+            // InternalSasDsl.g:1756:2: ( (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' ) )
+            // InternalSasDsl.g:1757:2: (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' )
             {
-            // InternalSasDsl.g:1627:2: (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' )
-            // InternalSasDsl.g:1628:3: otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}'
+            // InternalSasDsl.g:1757:2: (otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}' )
+            // InternalSasDsl.g:1758:3: otherlv_0= 'Managing' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_managerController_3_0= ruleDSLManagerController ) )* ( (lv_controller_4_0= ruleDSLController ) )* otherlv_5= '}'
             {
             otherlv_0=(Token)match(input,29,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLManagingAccess().getManagingKeyword_0());
             		
-            // InternalSasDsl.g:1632:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:1633:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1762:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:1763:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:1633:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:1634:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:1763:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1764:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_4); 
 
@@ -3689,23 +4238,23 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLManagingAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:1654:3: ( (lv_managerController_3_0= ruleDSLManagerController ) )*
-            loop10:
+            // InternalSasDsl.g:1784:3: ( (lv_managerController_3_0= ruleDSLManagerController ) )*
+            loop29:
             do {
-                int alt10=2;
-                int LA10_0 = input.LA(1);
+                int alt29=2;
+                int LA29_0 = input.LA(1);
 
-                if ( (LA10_0==31) ) {
-                    alt10=1;
+                if ( (LA29_0==31) ) {
+                    alt29=1;
                 }
 
 
-                switch (alt10) {
+                switch (alt29) {
             	case 1 :
-            	    // InternalSasDsl.g:1655:4: (lv_managerController_3_0= ruleDSLManagerController )
+            	    // InternalSasDsl.g:1785:4: (lv_managerController_3_0= ruleDSLManagerController )
             	    {
-            	    // InternalSasDsl.g:1655:4: (lv_managerController_3_0= ruleDSLManagerController )
-            	    // InternalSasDsl.g:1656:5: lv_managerController_3_0= ruleDSLManagerController
+            	    // InternalSasDsl.g:1785:4: (lv_managerController_3_0= ruleDSLManagerController )
+            	    // InternalSasDsl.g:1786:5: lv_managerController_3_0= ruleDSLManagerController
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagingAccess().getManagerControllerDSLManagerControllerParserRuleCall_3_0());
@@ -3734,27 +4283,27 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop10;
+            	    break loop29;
                 }
             } while (true);
 
-            // InternalSasDsl.g:1673:3: ( (lv_controller_4_0= ruleDSLController ) )*
-            loop11:
+            // InternalSasDsl.g:1803:3: ( (lv_controller_4_0= ruleDSLController ) )*
+            loop30:
             do {
-                int alt11=2;
-                int LA11_0 = input.LA(1);
+                int alt30=2;
+                int LA30_0 = input.LA(1);
 
-                if ( (LA11_0==36) ) {
-                    alt11=1;
+                if ( (LA30_0==36) ) {
+                    alt30=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt30) {
             	case 1 :
-            	    // InternalSasDsl.g:1674:4: (lv_controller_4_0= ruleDSLController )
+            	    // InternalSasDsl.g:1804:4: (lv_controller_4_0= ruleDSLController )
             	    {
-            	    // InternalSasDsl.g:1674:4: (lv_controller_4_0= ruleDSLController )
-            	    // InternalSasDsl.g:1675:5: lv_controller_4_0= ruleDSLController
+            	    // InternalSasDsl.g:1804:4: (lv_controller_4_0= ruleDSLController )
+            	    // InternalSasDsl.g:1805:5: lv_controller_4_0= ruleDSLController
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagingAccess().getControllerDSLControllerParserRuleCall_4_0());
@@ -3783,7 +4332,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop11;
+            	    break loop30;
                 }
             } while (true);
 
@@ -3814,7 +4363,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLManaged"
-    // InternalSasDsl.g:1700:1: entryRuleDSLManaged returns [EObject current=null] : iv_ruleDSLManaged= ruleDSLManaged EOF ;
+    // InternalSasDsl.g:1830:1: entryRuleDSLManaged returns [EObject current=null] : iv_ruleDSLManaged= ruleDSLManaged EOF ;
     public final EObject entryRuleDSLManaged() throws RecognitionException {
         EObject current = null;
 
@@ -3822,8 +4371,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1700:51: (iv_ruleDSLManaged= ruleDSLManaged EOF )
-            // InternalSasDsl.g:1701:2: iv_ruleDSLManaged= ruleDSLManaged EOF
+            // InternalSasDsl.g:1830:51: (iv_ruleDSLManaged= ruleDSLManaged EOF )
+            // InternalSasDsl.g:1831:2: iv_ruleDSLManaged= ruleDSLManaged EOF
             {
              newCompositeNode(grammarAccess.getDSLManagedRule()); 
             pushFollow(FOLLOW_1);
@@ -3850,7 +4399,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLManaged"
-    // InternalSasDsl.g:1707:1: ruleDSLManaged returns [EObject current=null] : (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) ;
+    // InternalSasDsl.g:1837:1: ruleDSLManaged returns [EObject current=null] : (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) ;
     public final EObject ruleDSLManaged() throws RecognitionException {
         EObject current = null;
 
@@ -3869,21 +4418,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1713:2: ( (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) )
-            // InternalSasDsl.g:1714:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
+            // InternalSasDsl.g:1843:2: ( (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) )
+            // InternalSasDsl.g:1844:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
             {
-            // InternalSasDsl.g:1714:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
-            // InternalSasDsl.g:1715:3: otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}'
+            // InternalSasDsl.g:1844:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
+            // InternalSasDsl.g:1845:3: otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,30,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLManagedAccess().getManagedKeyword_0());
             		
-            // InternalSasDsl.g:1719:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:1720:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1849:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:1850:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:1720:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:1721:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:1850:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1851:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_4); 
 
@@ -3909,24 +4458,24 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLManagedAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:1741:3: ( (lv_sensor_3_0= ruleDSLSensor ) )+
-            int cnt12=0;
-            loop12:
+            // InternalSasDsl.g:1871:3: ( (lv_sensor_3_0= ruleDSLSensor ) )+
+            int cnt31=0;
+            loop31:
             do {
-                int alt12=2;
-                int LA12_0 = input.LA(1);
+                int alt31=2;
+                int LA31_0 = input.LA(1);
 
-                if ( (LA12_0==42) ) {
-                    alt12=1;
+                if ( (LA31_0==42) ) {
+                    alt31=1;
                 }
 
 
-                switch (alt12) {
+                switch (alt31) {
             	case 1 :
-            	    // InternalSasDsl.g:1742:4: (lv_sensor_3_0= ruleDSLSensor )
+            	    // InternalSasDsl.g:1872:4: (lv_sensor_3_0= ruleDSLSensor )
             	    {
-            	    // InternalSasDsl.g:1742:4: (lv_sensor_3_0= ruleDSLSensor )
-            	    // InternalSasDsl.g:1743:5: lv_sensor_3_0= ruleDSLSensor
+            	    // InternalSasDsl.g:1872:4: (lv_sensor_3_0= ruleDSLSensor )
+            	    // InternalSasDsl.g:1873:5: lv_sensor_3_0= ruleDSLSensor
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getSensorDSLSensorParserRuleCall_3_0());
@@ -3955,32 +4504,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt12 >= 1 ) break loop12;
+            	    if ( cnt31 >= 1 ) break loop31;
                         EarlyExitException eee =
-                            new EarlyExitException(12, input);
+                            new EarlyExitException(31, input);
                         throw eee;
                 }
-                cnt12++;
+                cnt31++;
             } while (true);
 
-            // InternalSasDsl.g:1760:3: ( (lv_effector_4_0= ruleDSLEffector ) )+
-            int cnt13=0;
-            loop13:
+            // InternalSasDsl.g:1890:3: ( (lv_effector_4_0= ruleDSLEffector ) )+
+            int cnt32=0;
+            loop32:
             do {
-                int alt13=2;
-                int LA13_0 = input.LA(1);
+                int alt32=2;
+                int LA32_0 = input.LA(1);
 
-                if ( (LA13_0==43) ) {
-                    alt13=1;
+                if ( (LA32_0==43) ) {
+                    alt32=1;
                 }
 
 
-                switch (alt13) {
+                switch (alt32) {
             	case 1 :
-            	    // InternalSasDsl.g:1761:4: (lv_effector_4_0= ruleDSLEffector )
+            	    // InternalSasDsl.g:1891:4: (lv_effector_4_0= ruleDSLEffector )
             	    {
-            	    // InternalSasDsl.g:1761:4: (lv_effector_4_0= ruleDSLEffector )
-            	    // InternalSasDsl.g:1762:5: lv_effector_4_0= ruleDSLEffector
+            	    // InternalSasDsl.g:1891:4: (lv_effector_4_0= ruleDSLEffector )
+            	    // InternalSasDsl.g:1892:5: lv_effector_4_0= ruleDSLEffector
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getEffectorDSLEffectorParserRuleCall_4_0());
@@ -4009,32 +4558,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt13 >= 1 ) break loop13;
+            	    if ( cnt32 >= 1 ) break loop32;
                         EarlyExitException eee =
-                            new EarlyExitException(13, input);
+                            new EarlyExitException(32, input);
                         throw eee;
                 }
-                cnt13++;
+                cnt32++;
             } while (true);
 
-            // InternalSasDsl.g:1779:3: ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+
-            int cnt14=0;
-            loop14:
+            // InternalSasDsl.g:1909:3: ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+
+            int cnt33=0;
+            loop33:
             do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
+                int alt33=2;
+                int LA33_0 = input.LA(1);
 
-                if ( (LA14_0==45) ) {
-                    alt14=1;
+                if ( (LA33_0==45) ) {
+                    alt33=1;
                 }
 
 
-                switch (alt14) {
+                switch (alt33) {
             	case 1 :
-            	    // InternalSasDsl.g:1780:4: (lv_measuredOutput_5_0= ruleDSLMeasuredOutput )
+            	    // InternalSasDsl.g:1910:4: (lv_measuredOutput_5_0= ruleDSLMeasuredOutput )
             	    {
-            	    // InternalSasDsl.g:1780:4: (lv_measuredOutput_5_0= ruleDSLMeasuredOutput )
-            	    // InternalSasDsl.g:1781:5: lv_measuredOutput_5_0= ruleDSLMeasuredOutput
+            	    // InternalSasDsl.g:1910:4: (lv_measuredOutput_5_0= ruleDSLMeasuredOutput )
+            	    // InternalSasDsl.g:1911:5: lv_measuredOutput_5_0= ruleDSLMeasuredOutput
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0());
@@ -4063,12 +4612,12 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt14 >= 1 ) break loop14;
+            	    if ( cnt33 >= 1 ) break loop33;
                         EarlyExitException eee =
-                            new EarlyExitException(14, input);
+                            new EarlyExitException(33, input);
                         throw eee;
                 }
-                cnt14++;
+                cnt33++;
             } while (true);
 
             otherlv_6=(Token)match(input,13,FOLLOW_2); 
@@ -4098,7 +4647,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLManagerController"
-    // InternalSasDsl.g:1806:1: entryRuleDSLManagerController returns [EObject current=null] : iv_ruleDSLManagerController= ruleDSLManagerController EOF ;
+    // InternalSasDsl.g:1936:1: entryRuleDSLManagerController returns [EObject current=null] : iv_ruleDSLManagerController= ruleDSLManagerController EOF ;
     public final EObject entryRuleDSLManagerController() throws RecognitionException {
         EObject current = null;
 
@@ -4106,8 +4655,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1806:61: (iv_ruleDSLManagerController= ruleDSLManagerController EOF )
-            // InternalSasDsl.g:1807:2: iv_ruleDSLManagerController= ruleDSLManagerController EOF
+            // InternalSasDsl.g:1936:61: (iv_ruleDSLManagerController= ruleDSLManagerController EOF )
+            // InternalSasDsl.g:1937:2: iv_ruleDSLManagerController= ruleDSLManagerController EOF
             {
              newCompositeNode(grammarAccess.getDSLManagerControllerRule()); 
             pushFollow(FOLLOW_1);
@@ -4134,7 +4683,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLManagerController"
-    // InternalSasDsl.g:1813:1: ruleDSLManagerController returns [EObject current=null] : (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' ) ;
+    // InternalSasDsl.g:1943:1: ruleDSLManagerController returns [EObject current=null] : (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' ) ;
     public final EObject ruleDSLManagerController() throws RecognitionException {
         EObject current = null;
 
@@ -4150,21 +4699,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1819:2: ( (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' ) )
-            // InternalSasDsl.g:1820:2: (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' )
+            // InternalSasDsl.g:1949:2: ( (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' ) )
+            // InternalSasDsl.g:1950:2: (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' )
             {
-            // InternalSasDsl.g:1820:2: (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' )
-            // InternalSasDsl.g:1821:3: otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}'
+            // InternalSasDsl.g:1950:2: (otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}' )
+            // InternalSasDsl.g:1951:3: otherlv_0= 'ManagerController' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'typeOf' ruleDSLTypeMC otherlv_4= '{' ( (lv_controller_5_0= ruleDSLController ) )+ otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,31,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLManagerControllerAccess().getManagerControllerKeyword_0());
             		
-            // InternalSasDsl.g:1825:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:1826:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1955:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:1956:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:1826:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:1827:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:1956:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:1957:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_29); 
 
@@ -4205,24 +4754,24 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_4, grammarAccess.getDSLManagerControllerAccess().getLeftCurlyBracketKeyword_4());
             		
-            // InternalSasDsl.g:1858:3: ( (lv_controller_5_0= ruleDSLController ) )+
-            int cnt15=0;
-            loop15:
+            // InternalSasDsl.g:1988:3: ( (lv_controller_5_0= ruleDSLController ) )+
+            int cnt34=0;
+            loop34:
             do {
-                int alt15=2;
-                int LA15_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( (LA15_0==36) ) {
-                    alt15=1;
+                if ( (LA34_0==36) ) {
+                    alt34=1;
                 }
 
 
-                switch (alt15) {
+                switch (alt34) {
             	case 1 :
-            	    // InternalSasDsl.g:1859:4: (lv_controller_5_0= ruleDSLController )
+            	    // InternalSasDsl.g:1989:4: (lv_controller_5_0= ruleDSLController )
             	    {
-            	    // InternalSasDsl.g:1859:4: (lv_controller_5_0= ruleDSLController )
-            	    // InternalSasDsl.g:1860:5: lv_controller_5_0= ruleDSLController
+            	    // InternalSasDsl.g:1989:4: (lv_controller_5_0= ruleDSLController )
+            	    // InternalSasDsl.g:1990:5: lv_controller_5_0= ruleDSLController
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getControllerDSLControllerParserRuleCall_5_0());
@@ -4251,12 +4800,12 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt15 >= 1 ) break loop15;
+            	    if ( cnt34 >= 1 ) break loop34;
                         EarlyExitException eee =
-                            new EarlyExitException(15, input);
+                            new EarlyExitException(34, input);
                         throw eee;
                 }
-                cnt15++;
+                cnt34++;
             } while (true);
 
             otherlv_6=(Token)match(input,13,FOLLOW_2); 
@@ -4286,7 +4835,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLTypeMC"
-    // InternalSasDsl.g:1885:1: entryRuleDSLTypeMC returns [String current=null] : iv_ruleDSLTypeMC= ruleDSLTypeMC EOF ;
+    // InternalSasDsl.g:2015:1: entryRuleDSLTypeMC returns [String current=null] : iv_ruleDSLTypeMC= ruleDSLTypeMC EOF ;
     public final String entryRuleDSLTypeMC() throws RecognitionException {
         String current = null;
 
@@ -4294,8 +4843,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1885:49: (iv_ruleDSLTypeMC= ruleDSLTypeMC EOF )
-            // InternalSasDsl.g:1886:2: iv_ruleDSLTypeMC= ruleDSLTypeMC EOF
+            // InternalSasDsl.g:2015:49: (iv_ruleDSLTypeMC= ruleDSLTypeMC EOF )
+            // InternalSasDsl.g:2016:2: iv_ruleDSLTypeMC= ruleDSLTypeMC EOF
             {
              newCompositeNode(grammarAccess.getDSLTypeMCRule()); 
             pushFollow(FOLLOW_1);
@@ -4322,7 +4871,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLTypeMC"
-    // InternalSasDsl.g:1892:1: ruleDSLTypeMC returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' ) ;
+    // InternalSasDsl.g:2022:1: ruleDSLTypeMC returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' ) ;
     public final AntlrDatatypeRuleToken ruleDSLTypeMC() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4332,37 +4881,37 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1898:2: ( (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' ) )
-            // InternalSasDsl.g:1899:2: (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' )
+            // InternalSasDsl.g:2028:2: ( (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' ) )
+            // InternalSasDsl.g:2029:2: (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' )
             {
-            // InternalSasDsl.g:1899:2: (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' )
-            int alt16=3;
+            // InternalSasDsl.g:2029:2: (kw= 'Synchronized' | kw= 'Coordinated' | kw= 'Independent' )
+            int alt35=3;
             switch ( input.LA(1) ) {
             case 33:
                 {
-                alt16=1;
+                alt35=1;
                 }
                 break;
             case 34:
                 {
-                alt16=2;
+                alt35=2;
                 }
                 break;
             case 35:
                 {
-                alt16=3;
+                alt35=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 35, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt16) {
+            switch (alt35) {
                 case 1 :
-                    // InternalSasDsl.g:1900:3: kw= 'Synchronized'
+                    // InternalSasDsl.g:2030:3: kw= 'Synchronized'
                     {
                     kw=(Token)match(input,33,FOLLOW_2); 
 
@@ -4373,7 +4922,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSasDsl.g:1906:3: kw= 'Coordinated'
+                    // InternalSasDsl.g:2036:3: kw= 'Coordinated'
                     {
                     kw=(Token)match(input,34,FOLLOW_2); 
 
@@ -4384,7 +4933,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSasDsl.g:1912:3: kw= 'Independent'
+                    // InternalSasDsl.g:2042:3: kw= 'Independent'
                     {
                     kw=(Token)match(input,35,FOLLOW_2); 
 
@@ -4417,7 +4966,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLController"
-    // InternalSasDsl.g:1921:1: entryRuleDSLController returns [EObject current=null] : iv_ruleDSLController= ruleDSLController EOF ;
+    // InternalSasDsl.g:2051:1: entryRuleDSLController returns [EObject current=null] : iv_ruleDSLController= ruleDSLController EOF ;
     public final EObject entryRuleDSLController() throws RecognitionException {
         EObject current = null;
 
@@ -4425,8 +4974,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:1921:54: (iv_ruleDSLController= ruleDSLController EOF )
-            // InternalSasDsl.g:1922:2: iv_ruleDSLController= ruleDSLController EOF
+            // InternalSasDsl.g:2051:54: (iv_ruleDSLController= ruleDSLController EOF )
+            // InternalSasDsl.g:2052:2: iv_ruleDSLController= ruleDSLController EOF
             {
              newCompositeNode(grammarAccess.getDSLControllerRule()); 
             pushFollow(FOLLOW_1);
@@ -4453,7 +5002,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLController"
-    // InternalSasDsl.g:1928:1: ruleDSLController returns [EObject current=null] : (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' ) ;
+    // InternalSasDsl.g:2058:1: ruleDSLController returns [EObject current=null] : (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' ) ;
     public final EObject ruleDSLController() throws RecognitionException {
         EObject current = null;
 
@@ -4476,21 +5025,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1934:2: ( (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' ) )
-            // InternalSasDsl.g:1935:2: (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' )
+            // InternalSasDsl.g:2064:2: ( (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' ) )
+            // InternalSasDsl.g:2065:2: (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' )
             {
-            // InternalSasDsl.g:1935:2: (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' )
-            // InternalSasDsl.g:1936:3: otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}'
+            // InternalSasDsl.g:2065:2: (otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}' )
+            // InternalSasDsl.g:2066:3: otherlv_0= 'Controller' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_monitor_3_0= ruleDSLMonitor ) )+ ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+ ( (lv_planner_5_0= ruleDSLPlanner ) )+ ( (lv_executor_6_0= ruleDSLExecutor ) )+ ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+ otherlv_8= '}'
             {
             otherlv_0=(Token)match(input,36,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLControllerAccess().getControllerKeyword_0());
             		
-            // InternalSasDsl.g:1940:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:1941:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2070:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2071:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:1941:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:1942:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2071:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2072:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_4); 
 
@@ -4516,24 +5065,24 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLControllerAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:1962:3: ( (lv_monitor_3_0= ruleDSLMonitor ) )+
-            int cnt17=0;
-            loop17:
+            // InternalSasDsl.g:2092:3: ( (lv_monitor_3_0= ruleDSLMonitor ) )+
+            int cnt36=0;
+            loop36:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt36=2;
+                int LA36_0 = input.LA(1);
 
-                if ( (LA17_0==37) ) {
-                    alt17=1;
+                if ( (LA36_0==37) ) {
+                    alt36=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt36) {
             	case 1 :
-            	    // InternalSasDsl.g:1963:4: (lv_monitor_3_0= ruleDSLMonitor )
+            	    // InternalSasDsl.g:2093:4: (lv_monitor_3_0= ruleDSLMonitor )
             	    {
-            	    // InternalSasDsl.g:1963:4: (lv_monitor_3_0= ruleDSLMonitor )
-            	    // InternalSasDsl.g:1964:5: lv_monitor_3_0= ruleDSLMonitor
+            	    // InternalSasDsl.g:2093:4: (lv_monitor_3_0= ruleDSLMonitor )
+            	    // InternalSasDsl.g:2094:5: lv_monitor_3_0= ruleDSLMonitor
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getMonitorDSLMonitorParserRuleCall_3_0());
@@ -4562,32 +5111,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt17 >= 1 ) break loop17;
+            	    if ( cnt36 >= 1 ) break loop36;
                         EarlyExitException eee =
-                            new EarlyExitException(17, input);
+                            new EarlyExitException(36, input);
                         throw eee;
                 }
-                cnt17++;
+                cnt36++;
             } while (true);
 
-            // InternalSasDsl.g:1981:3: ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+
-            int cnt18=0;
-            loop18:
+            // InternalSasDsl.g:2111:3: ( (lv_analyzer_4_0= ruleDSLAnalyzer ) )+
+            int cnt37=0;
+            loop37:
             do {
-                int alt18=2;
-                int LA18_0 = input.LA(1);
+                int alt37=2;
+                int LA37_0 = input.LA(1);
 
-                if ( (LA18_0==38) ) {
-                    alt18=1;
+                if ( (LA37_0==38) ) {
+                    alt37=1;
                 }
 
 
-                switch (alt18) {
+                switch (alt37) {
             	case 1 :
-            	    // InternalSasDsl.g:1982:4: (lv_analyzer_4_0= ruleDSLAnalyzer )
+            	    // InternalSasDsl.g:2112:4: (lv_analyzer_4_0= ruleDSLAnalyzer )
             	    {
-            	    // InternalSasDsl.g:1982:4: (lv_analyzer_4_0= ruleDSLAnalyzer )
-            	    // InternalSasDsl.g:1983:5: lv_analyzer_4_0= ruleDSLAnalyzer
+            	    // InternalSasDsl.g:2112:4: (lv_analyzer_4_0= ruleDSLAnalyzer )
+            	    // InternalSasDsl.g:2113:5: lv_analyzer_4_0= ruleDSLAnalyzer
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getAnalyzerDSLAnalyzerParserRuleCall_4_0());
@@ -4616,32 +5165,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt18 >= 1 ) break loop18;
+            	    if ( cnt37 >= 1 ) break loop37;
                         EarlyExitException eee =
-                            new EarlyExitException(18, input);
+                            new EarlyExitException(37, input);
                         throw eee;
                 }
-                cnt18++;
+                cnt37++;
             } while (true);
 
-            // InternalSasDsl.g:2000:3: ( (lv_planner_5_0= ruleDSLPlanner ) )+
-            int cnt19=0;
-            loop19:
+            // InternalSasDsl.g:2130:3: ( (lv_planner_5_0= ruleDSLPlanner ) )+
+            int cnt38=0;
+            loop38:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt38=2;
+                int LA38_0 = input.LA(1);
 
-                if ( (LA19_0==39) ) {
-                    alt19=1;
+                if ( (LA38_0==39) ) {
+                    alt38=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt38) {
             	case 1 :
-            	    // InternalSasDsl.g:2001:4: (lv_planner_5_0= ruleDSLPlanner )
+            	    // InternalSasDsl.g:2131:4: (lv_planner_5_0= ruleDSLPlanner )
             	    {
-            	    // InternalSasDsl.g:2001:4: (lv_planner_5_0= ruleDSLPlanner )
-            	    // InternalSasDsl.g:2002:5: lv_planner_5_0= ruleDSLPlanner
+            	    // InternalSasDsl.g:2131:4: (lv_planner_5_0= ruleDSLPlanner )
+            	    // InternalSasDsl.g:2132:5: lv_planner_5_0= ruleDSLPlanner
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getPlannerDSLPlannerParserRuleCall_5_0());
@@ -4670,32 +5219,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt19 >= 1 ) break loop19;
+            	    if ( cnt38 >= 1 ) break loop38;
                         EarlyExitException eee =
-                            new EarlyExitException(19, input);
+                            new EarlyExitException(38, input);
                         throw eee;
                 }
-                cnt19++;
+                cnt38++;
             } while (true);
 
-            // InternalSasDsl.g:2019:3: ( (lv_executor_6_0= ruleDSLExecutor ) )+
-            int cnt20=0;
-            loop20:
+            // InternalSasDsl.g:2149:3: ( (lv_executor_6_0= ruleDSLExecutor ) )+
+            int cnt39=0;
+            loop39:
             do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
+                int alt39=2;
+                int LA39_0 = input.LA(1);
 
-                if ( (LA20_0==40) ) {
-                    alt20=1;
+                if ( (LA39_0==40) ) {
+                    alt39=1;
                 }
 
 
-                switch (alt20) {
+                switch (alt39) {
             	case 1 :
-            	    // InternalSasDsl.g:2020:4: (lv_executor_6_0= ruleDSLExecutor )
+            	    // InternalSasDsl.g:2150:4: (lv_executor_6_0= ruleDSLExecutor )
             	    {
-            	    // InternalSasDsl.g:2020:4: (lv_executor_6_0= ruleDSLExecutor )
-            	    // InternalSasDsl.g:2021:5: lv_executor_6_0= ruleDSLExecutor
+            	    // InternalSasDsl.g:2150:4: (lv_executor_6_0= ruleDSLExecutor )
+            	    // InternalSasDsl.g:2151:5: lv_executor_6_0= ruleDSLExecutor
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getExecutorDSLExecutorParserRuleCall_6_0());
@@ -4724,32 +5273,32 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt20 >= 1 ) break loop20;
+            	    if ( cnt39 >= 1 ) break loop39;
                         EarlyExitException eee =
-                            new EarlyExitException(20, input);
+                            new EarlyExitException(39, input);
                         throw eee;
                 }
-                cnt20++;
+                cnt39++;
             } while (true);
 
-            // InternalSasDsl.g:2038:3: ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+
-            int cnt21=0;
-            loop21:
+            // InternalSasDsl.g:2168:3: ( (lv_knowledge_7_0= ruleDSLKnowledge ) )+
+            int cnt40=0;
+            loop40:
             do {
-                int alt21=2;
-                int LA21_0 = input.LA(1);
+                int alt40=2;
+                int LA40_0 = input.LA(1);
 
-                if ( (LA21_0==41) ) {
-                    alt21=1;
+                if ( (LA40_0==41) ) {
+                    alt40=1;
                 }
 
 
-                switch (alt21) {
+                switch (alt40) {
             	case 1 :
-            	    // InternalSasDsl.g:2039:4: (lv_knowledge_7_0= ruleDSLKnowledge )
+            	    // InternalSasDsl.g:2169:4: (lv_knowledge_7_0= ruleDSLKnowledge )
             	    {
-            	    // InternalSasDsl.g:2039:4: (lv_knowledge_7_0= ruleDSLKnowledge )
-            	    // InternalSasDsl.g:2040:5: lv_knowledge_7_0= ruleDSLKnowledge
+            	    // InternalSasDsl.g:2169:4: (lv_knowledge_7_0= ruleDSLKnowledge )
+            	    // InternalSasDsl.g:2170:5: lv_knowledge_7_0= ruleDSLKnowledge
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getKnowledgeDSLKnowledgeParserRuleCall_7_0());
@@ -4778,12 +5327,12 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt21 >= 1 ) break loop21;
+            	    if ( cnt40 >= 1 ) break loop40;
                         EarlyExitException eee =
-                            new EarlyExitException(21, input);
+                            new EarlyExitException(40, input);
                         throw eee;
                 }
-                cnt21++;
+                cnt40++;
             } while (true);
 
             otherlv_8=(Token)match(input,13,FOLLOW_2); 
@@ -4813,7 +5362,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLMonitor"
-    // InternalSasDsl.g:2065:1: entryRuleDSLMonitor returns [EObject current=null] : iv_ruleDSLMonitor= ruleDSLMonitor EOF ;
+    // InternalSasDsl.g:2195:1: entryRuleDSLMonitor returns [EObject current=null] : iv_ruleDSLMonitor= ruleDSLMonitor EOF ;
     public final EObject entryRuleDSLMonitor() throws RecognitionException {
         EObject current = null;
 
@@ -4821,8 +5370,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2065:51: (iv_ruleDSLMonitor= ruleDSLMonitor EOF )
-            // InternalSasDsl.g:2066:2: iv_ruleDSLMonitor= ruleDSLMonitor EOF
+            // InternalSasDsl.g:2195:51: (iv_ruleDSLMonitor= ruleDSLMonitor EOF )
+            // InternalSasDsl.g:2196:2: iv_ruleDSLMonitor= ruleDSLMonitor EOF
             {
              newCompositeNode(grammarAccess.getDSLMonitorRule()); 
             pushFollow(FOLLOW_1);
@@ -4849,7 +5398,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLMonitor"
-    // InternalSasDsl.g:2072:1: ruleDSLMonitor returns [EObject current=null] : (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2202:1: ruleDSLMonitor returns [EObject current=null] : (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLMonitor() throws RecognitionException {
         EObject current = null;
 
@@ -4861,21 +5410,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2078:2: ( (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2079:2: (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2208:2: ( (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2209:2: (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2079:2: (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2080:3: otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2209:2: (otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2210:3: otherlv_0= 'Monitor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,37,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLMonitorAccess().getMonitorKeyword_0());
             		
-            // InternalSasDsl.g:2084:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2085:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2214:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2215:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2085:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2086:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2215:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2216:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -4897,7 +5446,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLMonitorAccess().getSemicolonKeyword_2());
             		
@@ -4924,7 +5473,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLAnalyzer"
-    // InternalSasDsl.g:2110:1: entryRuleDSLAnalyzer returns [EObject current=null] : iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF ;
+    // InternalSasDsl.g:2240:1: entryRuleDSLAnalyzer returns [EObject current=null] : iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF ;
     public final EObject entryRuleDSLAnalyzer() throws RecognitionException {
         EObject current = null;
 
@@ -4932,8 +5481,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2110:52: (iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF )
-            // InternalSasDsl.g:2111:2: iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF
+            // InternalSasDsl.g:2240:52: (iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF )
+            // InternalSasDsl.g:2241:2: iv_ruleDSLAnalyzer= ruleDSLAnalyzer EOF
             {
              newCompositeNode(grammarAccess.getDSLAnalyzerRule()); 
             pushFollow(FOLLOW_1);
@@ -4960,7 +5509,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLAnalyzer"
-    // InternalSasDsl.g:2117:1: ruleDSLAnalyzer returns [EObject current=null] : (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2247:1: ruleDSLAnalyzer returns [EObject current=null] : (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLAnalyzer() throws RecognitionException {
         EObject current = null;
 
@@ -4972,21 +5521,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2123:2: ( (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2124:2: (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2253:2: ( (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2254:2: (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2124:2: (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2125:3: otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2254:2: (otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2255:3: otherlv_0= 'Analyzer' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,38,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLAnalyzerAccess().getAnalyzerKeyword_0());
             		
-            // InternalSasDsl.g:2129:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2130:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2259:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2260:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2130:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2131:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2260:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2261:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5008,7 +5557,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLAnalyzerAccess().getSemicolonKeyword_2());
             		
@@ -5035,7 +5584,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLPlanner"
-    // InternalSasDsl.g:2155:1: entryRuleDSLPlanner returns [EObject current=null] : iv_ruleDSLPlanner= ruleDSLPlanner EOF ;
+    // InternalSasDsl.g:2285:1: entryRuleDSLPlanner returns [EObject current=null] : iv_ruleDSLPlanner= ruleDSLPlanner EOF ;
     public final EObject entryRuleDSLPlanner() throws RecognitionException {
         EObject current = null;
 
@@ -5043,8 +5592,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2155:51: (iv_ruleDSLPlanner= ruleDSLPlanner EOF )
-            // InternalSasDsl.g:2156:2: iv_ruleDSLPlanner= ruleDSLPlanner EOF
+            // InternalSasDsl.g:2285:51: (iv_ruleDSLPlanner= ruleDSLPlanner EOF )
+            // InternalSasDsl.g:2286:2: iv_ruleDSLPlanner= ruleDSLPlanner EOF
             {
              newCompositeNode(grammarAccess.getDSLPlannerRule()); 
             pushFollow(FOLLOW_1);
@@ -5071,7 +5620,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLPlanner"
-    // InternalSasDsl.g:2162:1: ruleDSLPlanner returns [EObject current=null] : (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2292:1: ruleDSLPlanner returns [EObject current=null] : (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLPlanner() throws RecognitionException {
         EObject current = null;
 
@@ -5083,21 +5632,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2168:2: ( (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2169:2: (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2298:2: ( (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2299:2: (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2169:2: (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2170:3: otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2299:2: (otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2300:3: otherlv_0= 'Planner' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,39,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLPlannerAccess().getPlannerKeyword_0());
             		
-            // InternalSasDsl.g:2174:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2175:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2304:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2305:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2175:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2176:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2305:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2306:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5119,7 +5668,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLPlannerAccess().getSemicolonKeyword_2());
             		
@@ -5146,7 +5695,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLExecutor"
-    // InternalSasDsl.g:2200:1: entryRuleDSLExecutor returns [EObject current=null] : iv_ruleDSLExecutor= ruleDSLExecutor EOF ;
+    // InternalSasDsl.g:2330:1: entryRuleDSLExecutor returns [EObject current=null] : iv_ruleDSLExecutor= ruleDSLExecutor EOF ;
     public final EObject entryRuleDSLExecutor() throws RecognitionException {
         EObject current = null;
 
@@ -5154,8 +5703,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2200:52: (iv_ruleDSLExecutor= ruleDSLExecutor EOF )
-            // InternalSasDsl.g:2201:2: iv_ruleDSLExecutor= ruleDSLExecutor EOF
+            // InternalSasDsl.g:2330:52: (iv_ruleDSLExecutor= ruleDSLExecutor EOF )
+            // InternalSasDsl.g:2331:2: iv_ruleDSLExecutor= ruleDSLExecutor EOF
             {
              newCompositeNode(grammarAccess.getDSLExecutorRule()); 
             pushFollow(FOLLOW_1);
@@ -5182,7 +5731,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLExecutor"
-    // InternalSasDsl.g:2207:1: ruleDSLExecutor returns [EObject current=null] : (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2337:1: ruleDSLExecutor returns [EObject current=null] : (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLExecutor() throws RecognitionException {
         EObject current = null;
 
@@ -5194,21 +5743,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2213:2: ( (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2214:2: (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2343:2: ( (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2344:2: (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2214:2: (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2215:3: otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2344:2: (otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2345:3: otherlv_0= 'Executor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,40,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLExecutorAccess().getExecutorKeyword_0());
             		
-            // InternalSasDsl.g:2219:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2220:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2349:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2350:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2220:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2221:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2350:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2351:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5230,7 +5779,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLExecutorAccess().getSemicolonKeyword_2());
             		
@@ -5257,7 +5806,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLKnowledge"
-    // InternalSasDsl.g:2245:1: entryRuleDSLKnowledge returns [EObject current=null] : iv_ruleDSLKnowledge= ruleDSLKnowledge EOF ;
+    // InternalSasDsl.g:2375:1: entryRuleDSLKnowledge returns [EObject current=null] : iv_ruleDSLKnowledge= ruleDSLKnowledge EOF ;
     public final EObject entryRuleDSLKnowledge() throws RecognitionException {
         EObject current = null;
 
@@ -5265,8 +5814,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2245:53: (iv_ruleDSLKnowledge= ruleDSLKnowledge EOF )
-            // InternalSasDsl.g:2246:2: iv_ruleDSLKnowledge= ruleDSLKnowledge EOF
+            // InternalSasDsl.g:2375:53: (iv_ruleDSLKnowledge= ruleDSLKnowledge EOF )
+            // InternalSasDsl.g:2376:2: iv_ruleDSLKnowledge= ruleDSLKnowledge EOF
             {
              newCompositeNode(grammarAccess.getDSLKnowledgeRule()); 
             pushFollow(FOLLOW_1);
@@ -5293,7 +5842,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLKnowledge"
-    // InternalSasDsl.g:2252:1: ruleDSLKnowledge returns [EObject current=null] : (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' ) ;
+    // InternalSasDsl.g:2382:1: ruleDSLKnowledge returns [EObject current=null] : (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' ) ;
     public final EObject ruleDSLKnowledge() throws RecognitionException {
         EObject current = null;
 
@@ -5308,21 +5857,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2258:2: ( (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' ) )
-            // InternalSasDsl.g:2259:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' )
+            // InternalSasDsl.g:2388:2: ( (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' ) )
+            // InternalSasDsl.g:2389:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' )
             {
-            // InternalSasDsl.g:2259:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' )
-            // InternalSasDsl.g:2260:3: otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}'
+            // InternalSasDsl.g:2389:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}' )
+            // InternalSasDsl.g:2390:3: otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ otherlv_4= '}'
             {
             otherlv_0=(Token)match(input,41,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLKnowledgeAccess().getKnowledgeKeyword_0());
             		
-            // InternalSasDsl.g:2264:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2265:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2394:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2395:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2265:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2266:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2395:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2396:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_4); 
 
@@ -5348,24 +5897,24 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLKnowledgeAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:2286:3: ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+
-            int cnt22=0;
-            loop22:
+            // InternalSasDsl.g:2416:3: ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+
+            int cnt41=0;
+            loop41:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt41=2;
+                int LA41_0 = input.LA(1);
 
-                if ( (LA22_0==44) ) {
-                    alt22=1;
+                if ( (LA41_0==44) ) {
+                    alt41=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt41) {
             	case 1 :
-            	    // InternalSasDsl.g:2287:4: (lv_referenceInput_3_0= ruleDSLReferenceInput )
+            	    // InternalSasDsl.g:2417:4: (lv_referenceInput_3_0= ruleDSLReferenceInput )
             	    {
-            	    // InternalSasDsl.g:2287:4: (lv_referenceInput_3_0= ruleDSLReferenceInput )
-            	    // InternalSasDsl.g:2288:5: lv_referenceInput_3_0= ruleDSLReferenceInput
+            	    // InternalSasDsl.g:2417:4: (lv_referenceInput_3_0= ruleDSLReferenceInput )
+            	    // InternalSasDsl.g:2418:5: lv_referenceInput_3_0= ruleDSLReferenceInput
             	    {
 
             	    					newCompositeNode(grammarAccess.getDSLKnowledgeAccess().getReferenceInputDSLReferenceInputParserRuleCall_3_0());
@@ -5394,12 +5943,12 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt22 >= 1 ) break loop22;
+            	    if ( cnt41 >= 1 ) break loop41;
                         EarlyExitException eee =
-                            new EarlyExitException(22, input);
+                            new EarlyExitException(41, input);
                         throw eee;
                 }
-                cnt22++;
+                cnt41++;
             } while (true);
 
             otherlv_4=(Token)match(input,13,FOLLOW_2); 
@@ -5429,7 +5978,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLSensor"
-    // InternalSasDsl.g:2313:1: entryRuleDSLSensor returns [EObject current=null] : iv_ruleDSLSensor= ruleDSLSensor EOF ;
+    // InternalSasDsl.g:2443:1: entryRuleDSLSensor returns [EObject current=null] : iv_ruleDSLSensor= ruleDSLSensor EOF ;
     public final EObject entryRuleDSLSensor() throws RecognitionException {
         EObject current = null;
 
@@ -5437,8 +5986,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2313:50: (iv_ruleDSLSensor= ruleDSLSensor EOF )
-            // InternalSasDsl.g:2314:2: iv_ruleDSLSensor= ruleDSLSensor EOF
+            // InternalSasDsl.g:2443:50: (iv_ruleDSLSensor= ruleDSLSensor EOF )
+            // InternalSasDsl.g:2444:2: iv_ruleDSLSensor= ruleDSLSensor EOF
             {
              newCompositeNode(grammarAccess.getDSLSensorRule()); 
             pushFollow(FOLLOW_1);
@@ -5465,7 +6014,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLSensor"
-    // InternalSasDsl.g:2320:1: ruleDSLSensor returns [EObject current=null] : (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2450:1: ruleDSLSensor returns [EObject current=null] : (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLSensor() throws RecognitionException {
         EObject current = null;
 
@@ -5477,21 +6026,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2326:2: ( (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2327:2: (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2456:2: ( (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2457:2: (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2327:2: (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2328:3: otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2457:2: (otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2458:3: otherlv_0= 'Sensor' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,42,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLSensorAccess().getSensorKeyword_0());
             		
-            // InternalSasDsl.g:2332:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2333:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2462:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2463:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2333:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2334:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2463:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2464:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5513,7 +6062,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLSensorAccess().getSemicolonKeyword_2());
             		
@@ -5540,7 +6089,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLEffector"
-    // InternalSasDsl.g:2358:1: entryRuleDSLEffector returns [EObject current=null] : iv_ruleDSLEffector= ruleDSLEffector EOF ;
+    // InternalSasDsl.g:2488:1: entryRuleDSLEffector returns [EObject current=null] : iv_ruleDSLEffector= ruleDSLEffector EOF ;
     public final EObject entryRuleDSLEffector() throws RecognitionException {
         EObject current = null;
 
@@ -5548,8 +6097,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2358:52: (iv_ruleDSLEffector= ruleDSLEffector EOF )
-            // InternalSasDsl.g:2359:2: iv_ruleDSLEffector= ruleDSLEffector EOF
+            // InternalSasDsl.g:2488:52: (iv_ruleDSLEffector= ruleDSLEffector EOF )
+            // InternalSasDsl.g:2489:2: iv_ruleDSLEffector= ruleDSLEffector EOF
             {
              newCompositeNode(grammarAccess.getDSLEffectorRule()); 
             pushFollow(FOLLOW_1);
@@ -5576,7 +6125,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLEffector"
-    // InternalSasDsl.g:2365:1: ruleDSLEffector returns [EObject current=null] : (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2495:1: ruleDSLEffector returns [EObject current=null] : (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLEffector() throws RecognitionException {
         EObject current = null;
 
@@ -5588,21 +6137,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2371:2: ( (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2372:2: (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2501:2: ( (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2502:2: (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2372:2: (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2373:3: otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2502:2: (otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2503:3: otherlv_0= 'Effector' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,43,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLEffectorAccess().getEffectorKeyword_0());
             		
-            // InternalSasDsl.g:2377:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2378:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2507:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2508:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2378:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2379:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2508:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2509:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5624,7 +6173,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLEffectorAccess().getSemicolonKeyword_2());
             		
@@ -5651,7 +6200,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLReferenceInput"
-    // InternalSasDsl.g:2403:1: entryRuleDSLReferenceInput returns [EObject current=null] : iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF ;
+    // InternalSasDsl.g:2533:1: entryRuleDSLReferenceInput returns [EObject current=null] : iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF ;
     public final EObject entryRuleDSLReferenceInput() throws RecognitionException {
         EObject current = null;
 
@@ -5659,8 +6208,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2403:58: (iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF )
-            // InternalSasDsl.g:2404:2: iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF
+            // InternalSasDsl.g:2533:58: (iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF )
+            // InternalSasDsl.g:2534:2: iv_ruleDSLReferenceInput= ruleDSLReferenceInput EOF
             {
              newCompositeNode(grammarAccess.getDSLReferenceInputRule()); 
             pushFollow(FOLLOW_1);
@@ -5687,7 +6236,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLReferenceInput"
-    // InternalSasDsl.g:2410:1: ruleDSLReferenceInput returns [EObject current=null] : (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2540:1: ruleDSLReferenceInput returns [EObject current=null] : (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLReferenceInput() throws RecognitionException {
         EObject current = null;
 
@@ -5699,21 +6248,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2416:2: ( (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2417:2: (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2546:2: ( (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2547:2: (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2417:2: (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2418:3: otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2547:2: (otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2548:3: otherlv_0= 'ReferenceInput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,44,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLReferenceInputAccess().getReferenceInputKeyword_0());
             		
-            // InternalSasDsl.g:2422:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2423:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2552:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2553:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2423:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2424:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2553:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2554:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5735,7 +6284,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLReferenceInputAccess().getSemicolonKeyword_2());
             		
@@ -5762,7 +6311,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDSLMeasuredOutput"
-    // InternalSasDsl.g:2448:1: entryRuleDSLMeasuredOutput returns [EObject current=null] : iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF ;
+    // InternalSasDsl.g:2578:1: entryRuleDSLMeasuredOutput returns [EObject current=null] : iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF ;
     public final EObject entryRuleDSLMeasuredOutput() throws RecognitionException {
         EObject current = null;
 
@@ -5770,8 +6319,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSasDsl.g:2448:58: (iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF )
-            // InternalSasDsl.g:2449:2: iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF
+            // InternalSasDsl.g:2578:58: (iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF )
+            // InternalSasDsl.g:2579:2: iv_ruleDSLMeasuredOutput= ruleDSLMeasuredOutput EOF
             {
              newCompositeNode(grammarAccess.getDSLMeasuredOutputRule()); 
             pushFollow(FOLLOW_1);
@@ -5798,7 +6347,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLMeasuredOutput"
-    // InternalSasDsl.g:2455:1: ruleDSLMeasuredOutput returns [EObject current=null] : (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalSasDsl.g:2585:1: ruleDSLMeasuredOutput returns [EObject current=null] : (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleDSLMeasuredOutput() throws RecognitionException {
         EObject current = null;
 
@@ -5810,21 +6359,21 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2461:2: ( (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalSasDsl.g:2462:2: (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2591:2: ( (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalSasDsl.g:2592:2: (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalSasDsl.g:2462:2: (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalSasDsl.g:2463:3: otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalSasDsl.g:2592:2: (otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalSasDsl.g:2593:3: otherlv_0= 'MeasuredOutput' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= ';'
             {
             otherlv_0=(Token)match(input,45,FOLLOW_3); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDSLMeasuredOutputAccess().getMeasuredOutputKeyword_0());
             		
-            // InternalSasDsl.g:2467:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalSasDsl.g:2468:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2597:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalSasDsl.g:2598:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalSasDsl.g:2468:4: (lv_name_1_0= RULE_ID )
-            // InternalSasDsl.g:2469:5: lv_name_1_0= RULE_ID
+            // InternalSasDsl.g:2598:4: (lv_name_1_0= RULE_ID )
+            // InternalSasDsl.g:2599:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
@@ -5846,7 +6395,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,18,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLMeasuredOutputAccess().getSemicolonKeyword_2());
             		
@@ -5874,18 +6423,18 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
     // Delegated rules
 
 
-    protected DFA6 dfa6 = new DFA6(this);
+    protected DFA17 dfa17 = new DFA17(this);
     static final String dfa_1s = "\12\uffff";
-    static final String dfa_2s = "\1\25\1\4\1\33\2\22\5\uffff";
-    static final String dfa_3s = "\1\25\1\4\1\34\2\27\5\uffff";
-    static final String dfa_4s = "\5\uffff\1\3\1\1\1\4\1\2\1\5";
+    static final String dfa_2s = "\1\27\1\4\1\20\2\24\5\uffff";
+    static final String dfa_3s = "\1\27\1\4\1\21\2\31\5\uffff";
+    static final String dfa_4s = "\5\uffff\1\5\1\4\1\3\1\2\1\1";
     static final String dfa_5s = "\12\uffff}>";
     static final String[] dfa_6s = {
             "\1\1",
             "\1\2",
             "\1\3\1\4",
-            "\1\10\1\uffff\1\6\1\11\1\5\1\7",
-            "\1\10\1\uffff\1\6\1\11\1\5\1\7",
+            "\1\10\1\uffff\1\11\1\5\1\7\1\6",
+            "\1\10\1\uffff\1\11\1\5\1\7\1\6",
             "",
             "",
             "",
@@ -5900,11 +6449,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
     static final short[] dfa_5 = DFA.unpackEncodedString(dfa_5s);
     static final short[][] dfa_6 = unpackEncodedStringArray(dfa_6s);
 
-    class DFA6 extends DFA {
+    class DFA17 extends DFA {
 
-        public DFA6(BaseRecognizer recognizer) {
+        public DFA17(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 6;
+            this.decisionNumber = 17;
             this.eot = dfa_1;
             this.eof = dfa_1;
             this.min = dfa_2;
@@ -5914,7 +6463,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             this.transition = dfa_6;
         }
         public String getDescription() {
-            return "687:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( (lv_access_2_0= ruleDSLAccess ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( (lv_access_8_0= ruleDSLAccess ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( (lv_access_14_0= ruleDSLAccess ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( (lv_access_20_0= ruleDSLAccess ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( (lv_access_26_0= ruleDSLAccess ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )";
+            return "735:2: ( (otherlv_0= 'analyzer' ( (otherlv_1= RULE_ID ) ) ( ( (lv_access_2_1= 'must-use' | lv_access_2_2= 'must-not-use' ) ) ) otherlv_3= 'knowledge' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) | (otherlv_6= 'analyzer' ( (otherlv_7= RULE_ID ) ) ( ( (lv_access_8_1= 'must-use' | lv_access_8_2= 'must-not-use' ) ) ) otherlv_9= 'monitor' ( (otherlv_10= RULE_ID ) ) otherlv_11= ';' ) | (otherlv_12= 'analyzer' ( (otherlv_13= RULE_ID ) ) ( ( (lv_access_14_1= 'must-use' | lv_access_14_2= 'must-not-use' ) ) ) otherlv_15= 'planner' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | (otherlv_18= 'analyzer' ( (otherlv_19= RULE_ID ) ) ( ( (lv_access_20_1= 'must-use' | lv_access_20_2= 'must-not-use' ) ) ) otherlv_21= 'reference-input' ( (otherlv_22= RULE_ID ) ) otherlv_23= ';' ) | (otherlv_24= 'analyzer' ( (otherlv_25= RULE_ID ) ) ( ( (lv_access_26_1= 'must-use' | lv_access_26_2= 'must-not-use' ) ) ) otherlv_27= 'analyzer' ( (otherlv_28= RULE_ID ) ) otherlv_29= ';' ) )";
         }
     }
  
@@ -5927,20 +6476,20 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000060000000L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000040002000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000000016EA000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000018000000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000005B8A000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000030000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000010000000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000001080002000L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000001000002000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000040000000000L});

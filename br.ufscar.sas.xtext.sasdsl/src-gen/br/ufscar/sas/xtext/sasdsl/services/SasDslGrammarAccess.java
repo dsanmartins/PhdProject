@@ -142,7 +142,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cMcontroller1DSLManagerControllerCrossReference_1_0 = (CrossReference)cMcontroller1Assignment_1.eContents().get(0);
 		private final RuleCall cMcontroller1DSLManagerControllerIDTerminalRuleCall_1_0_1 = (RuleCall)cMcontroller1DSLManagerControllerCrossReference_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_0 = (Alternatives)cAccessAssignment_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_0_0 = (Keyword)cAccessAlternatives_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_0_1 = (Keyword)cAccessAlternatives_2_0.eContents().get(1);
 		private final Keyword cMcontrollerKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cMcontroller2Assignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final CrossReference cMcontroller2DSLManagerControllerCrossReference_4_0 = (CrossReference)cMcontroller2Assignment_4.eContents().get(0);
@@ -150,11 +152,12 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DSLRuleMController:
-		//	'mcontroller' mcontroller1=[DSLManagerController] access=DSLAccess 'mcontroller' mcontroller2=[DSLManagerController]
-		//	';';
+		//	'mcontroller' mcontroller1=[DSLManagerController] access=('must-use' | 'must-not-use') 'mcontroller'
+		//	mcontroller2=[DSLManagerController] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'mcontroller' mcontroller1=[DSLManagerController] access=DSLAccess 'mcontroller' mcontroller2=[DSLManagerController] ';'
+		//'mcontroller' mcontroller1=[DSLManagerController] access=('must-use' | 'must-not-use') 'mcontroller'
+		//mcontroller2=[DSLManagerController] ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'mcontroller'
@@ -169,11 +172,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getMcontroller1DSLManagerControllerIDTerminalRuleCall_1_0_1() { return cMcontroller1DSLManagerControllerIDTerminalRuleCall_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_0() { return cAccessDSLAccessParserRuleCall_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_0() { return cAccessAlternatives_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_0_0() { return cAccessMustUseKeyword_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_0_1() { return cAccessMustNotUseKeyword_2_0_1; }
 		
 		//'mcontroller'
 		public Keyword getMcontrollerKeyword_3() { return cMcontrollerKeyword_3; }
@@ -198,7 +207,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cController1DSLControllerCrossReference_1_0 = (CrossReference)cController1Assignment_1.eContents().get(0);
 		private final RuleCall cController1DSLControllerIDTerminalRuleCall_1_0_1 = (RuleCall)cController1DSLControllerCrossReference_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_0 = (Alternatives)cAccessAssignment_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_0_0 = (Keyword)cAccessAlternatives_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_0_1 = (Keyword)cAccessAlternatives_2_0.eContents().get(1);
 		private final Keyword cControllerKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cController2Assignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final CrossReference cController2DSLControllerCrossReference_4_0 = (CrossReference)cController2Assignment_4.eContents().get(0);
@@ -206,10 +217,12 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DSLRuleController:
-		//	'controller' controller1=[DSLController] access=DSLAccess 'controller' controller2=[DSLController] ';';
+		//	'controller' controller1=[DSLController] access=('must-use' | 'must-not-use') 'controller' controller2=[DSLController]
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'controller' controller1=[DSLController] access=DSLAccess 'controller' controller2=[DSLController] ';'
+		//'controller' controller1=[DSLController] access=('must-use' | 'must-not-use') 'controller' controller2=[DSLController]
+		//';'
 		public Group getGroup() { return cGroup; }
 		
 		//'controller'
@@ -224,11 +237,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getController1DSLControllerIDTerminalRuleCall_1_0_1() { return cController1DSLControllerIDTerminalRuleCall_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_0() { return cAccessDSLAccessParserRuleCall_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_0() { return cAccessAlternatives_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_0_0() { return cAccessMustUseKeyword_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_0_1() { return cAccessMustNotUseKeyword_2_0_1; }
 		
 		//'controller'
 		public Keyword getControllerKeyword_3() { return cControllerKeyword_3; }
@@ -254,7 +273,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cMonitorDSLMonitorCrossReference_0_1_0 = (CrossReference)cMonitorAssignment_0_1.eContents().get(0);
 		private final RuleCall cMonitorDSLMonitorIDTerminalRuleCall_0_1_0_1 = (RuleCall)cMonitorDSLMonitorCrossReference_0_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_0_2_0 = (RuleCall)cAccessAssignment_0_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_0_2_0 = (Alternatives)cAccessAssignment_0_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_0_2_0_0 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_0_2_0_1 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(1);
 		private final Keyword cSensorKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
 		private final Assignment cSensorAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
 		private final CrossReference cSensorDSLSensorCrossReference_0_4_0 = (CrossReference)cSensorAssignment_0_4.eContents().get(0);
@@ -266,7 +287,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cMonitorDSLMonitorCrossReference_1_1_0 = (CrossReference)cMonitorAssignment_1_1.eContents().get(0);
 		private final RuleCall cMonitorDSLMonitorIDTerminalRuleCall_1_1_0_1 = (RuleCall)cMonitorDSLMonitorCrossReference_1_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_1_2_0 = (RuleCall)cAccessAssignment_1_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_1_2_0 = (Alternatives)cAccessAssignment_1_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_1_2_0_0 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_1_2_0_1 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(1);
 		private final Keyword cKnowledgeKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		private final Assignment cKnowledgeAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
 		private final CrossReference cKnowledgeDSLKnowledgeCrossReference_1_4_0 = (CrossReference)cKnowledgeAssignment_1_4.eContents().get(0);
@@ -278,7 +301,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cMonitorDSLMonitorCrossReference_2_1_0 = (CrossReference)cMonitorAssignment_2_1.eContents().get(0);
 		private final RuleCall cMonitorDSLMonitorIDTerminalRuleCall_2_1_0_1 = (RuleCall)cMonitorDSLMonitorCrossReference_2_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_2_0 = (RuleCall)cAccessAssignment_2_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_2_0 = (Alternatives)cAccessAssignment_2_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_2_0_0 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_2_0_1 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(1);
 		private final Keyword cAnalyzerKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Assignment cAnalyzerAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_2_4_0 = (CrossReference)cAnalyzerAssignment_2_4.eContents().get(0);
@@ -290,7 +315,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cMonitorDSLMonitorCrossReference_3_1_0 = (CrossReference)cMonitorAssignment_3_1.eContents().get(0);
 		private final RuleCall cMonitorDSLMonitorIDTerminalRuleCall_3_1_0_1 = (RuleCall)cMonitorDSLMonitorCrossReference_3_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_3_2_0 = (RuleCall)cAccessAssignment_3_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_3_2_0 = (Alternatives)cAccessAssignment_3_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_3_2_0_0 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_3_2_0_1 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(1);
 		private final Keyword cMonitorKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Assignment cMonitor2Assignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
 		private final CrossReference cMonitor2DSLMonitorCrossReference_3_4_0 = (CrossReference)cMonitor2Assignment_3_4.eContents().get(0);
@@ -298,17 +325,19 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3_5 = (Keyword)cGroup_3.eContents().get(5);
 		
 		//DSLRuleMonitor:
-		//	'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor=[DSLSensor] ';' | 'monitor' monitor=[DSLMonitor]
-		//	access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer'
-		//	analyzer=[DSLAnalyzer] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'monitor' monitor2=[DSLMonitor] ';';
+		//	'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor=[DSLSensor] ';' | 'monitor'
+		//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor'
+		//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'monitor'
+		//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2=[DSLMonitor] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor=[DSLSensor] ';' | 'monitor' monitor=[DSLMonitor]
-		//access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer'
-		//analyzer=[DSLAnalyzer] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'monitor' monitor2=[DSLMonitor] ';'
+		//'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor=[DSLSensor] ';' | 'monitor'
+		//monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor'
+		//monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'monitor'
+		//monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2=[DSLMonitor] ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor=[DSLSensor] ';'
+		//'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor=[DSLSensor] ';'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'monitor'
@@ -323,11 +352,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getMonitorDSLMonitorIDTerminalRuleCall_0_1_0_1() { return cMonitorDSLMonitorIDTerminalRuleCall_0_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_0_2() { return cAccessAssignment_0_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_0_2_0() { return cAccessDSLAccessParserRuleCall_0_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_0_2_0() { return cAccessAlternatives_0_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_0_2_0_0() { return cAccessMustUseKeyword_0_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_0_2_0_1() { return cAccessMustNotUseKeyword_0_2_0_1; }
 		
 		//'sensor'
 		public Keyword getSensorKeyword_0_3() { return cSensorKeyword_0_3; }
@@ -344,7 +379,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_0_5() { return cSemicolonKeyword_0_5; }
 		
-		//'monitor' monitor=[DSLMonitor] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';'
+		//'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';'
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'monitor'
@@ -359,11 +394,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getMonitorDSLMonitorIDTerminalRuleCall_1_1_0_1() { return cMonitorDSLMonitorIDTerminalRuleCall_1_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_1_2() { return cAccessAssignment_1_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_1_2_0() { return cAccessDSLAccessParserRuleCall_1_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_1_2_0() { return cAccessAlternatives_1_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_1_2_0_0() { return cAccessMustUseKeyword_1_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_1_2_0_1() { return cAccessMustNotUseKeyword_1_2_0_1; }
 		
 		//'knowledge'
 		public Keyword getKnowledgeKeyword_1_3() { return cKnowledgeKeyword_1_3; }
@@ -380,7 +421,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_1_5() { return cSemicolonKeyword_1_5; }
 		
-		//'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer' analyzer=[DSLAnalyzer] ';'
+		//'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';'
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'monitor'
@@ -395,11 +436,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getMonitorDSLMonitorIDTerminalRuleCall_2_1_0_1() { return cMonitorDSLMonitorIDTerminalRuleCall_2_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2_2() { return cAccessAssignment_2_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_2_0() { return cAccessDSLAccessParserRuleCall_2_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_2_0() { return cAccessAlternatives_2_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_2_0_0() { return cAccessMustUseKeyword_2_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_2_0_1() { return cAccessMustNotUseKeyword_2_2_0_1; }
 		
 		//'analyzer'
 		public Keyword getAnalyzerKeyword_2_3() { return cAnalyzerKeyword_2_3; }
@@ -416,7 +463,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_2_5() { return cSemicolonKeyword_2_5; }
 		
-		//'monitor' monitor=[DSLMonitor] access=DSLAccess 'monitor' monitor2=[DSLMonitor] ';'
+		//'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2=[DSLMonitor] ';'
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'monitor'
@@ -431,11 +478,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getMonitorDSLMonitorIDTerminalRuleCall_3_1_0_1() { return cMonitorDSLMonitorIDTerminalRuleCall_3_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_3_2() { return cAccessAssignment_3_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_3_2_0() { return cAccessDSLAccessParserRuleCall_3_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_3_2_0() { return cAccessAlternatives_3_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_3_2_0_0() { return cAccessMustUseKeyword_3_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_3_2_0_1() { return cAccessMustNotUseKeyword_3_2_0_1; }
 		
 		//'monitor'
 		public Keyword getMonitorKeyword_3_3() { return cMonitorKeyword_3_3; }
@@ -461,7 +514,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_0_1_0 = (CrossReference)cAnalyzerAssignment_0_1.eContents().get(0);
 		private final RuleCall cAnalyzerDSLAnalyzerIDTerminalRuleCall_0_1_0_1 = (RuleCall)cAnalyzerDSLAnalyzerCrossReference_0_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_0_2_0 = (RuleCall)cAccessAssignment_0_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_0_2_0 = (Alternatives)cAccessAssignment_0_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_0_2_0_0 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_0_2_0_1 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(1);
 		private final Keyword cKnowledgeKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
 		private final Assignment cKnowledgeAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
 		private final CrossReference cKnowledgeDSLKnowledgeCrossReference_0_4_0 = (CrossReference)cKnowledgeAssignment_0_4.eContents().get(0);
@@ -473,7 +528,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_1_1_0 = (CrossReference)cAnalyzerAssignment_1_1.eContents().get(0);
 		private final RuleCall cAnalyzerDSLAnalyzerIDTerminalRuleCall_1_1_0_1 = (RuleCall)cAnalyzerDSLAnalyzerCrossReference_1_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_1_2_0 = (RuleCall)cAccessAssignment_1_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_1_2_0 = (Alternatives)cAccessAssignment_1_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_1_2_0_0 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_1_2_0_1 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(1);
 		private final Keyword cMonitorKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		private final Assignment cMonitorAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
 		private final CrossReference cMonitorDSLMonitorCrossReference_1_4_0 = (CrossReference)cMonitorAssignment_1_4.eContents().get(0);
@@ -485,7 +542,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_2_1_0 = (CrossReference)cAnalyzerAssignment_2_1.eContents().get(0);
 		private final RuleCall cAnalyzerDSLAnalyzerIDTerminalRuleCall_2_1_0_1 = (RuleCall)cAnalyzerDSLAnalyzerCrossReference_2_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_2_0 = (RuleCall)cAccessAssignment_2_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_2_0 = (Alternatives)cAccessAssignment_2_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_2_0_0 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_2_0_1 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(1);
 		private final Keyword cPlannerKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Assignment cPlannerAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
 		private final CrossReference cPlannerDSLPlannerCrossReference_2_4_0 = (CrossReference)cPlannerAssignment_2_4.eContents().get(0);
@@ -497,7 +556,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_3_1_0 = (CrossReference)cAnalyzerAssignment_3_1.eContents().get(0);
 		private final RuleCall cAnalyzerDSLAnalyzerIDTerminalRuleCall_3_1_0_1 = (RuleCall)cAnalyzerDSLAnalyzerCrossReference_3_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_3_2_0 = (RuleCall)cAccessAssignment_3_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_3_2_0 = (Alternatives)cAccessAssignment_3_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_3_2_0_0 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_3_2_0_1 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(1);
 		private final Keyword cReferenceInputKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Assignment cRreferenceAssignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
 		private final CrossReference cRreferenceDSLReferenceInputCrossReference_3_4_0 = (CrossReference)cRreferenceAssignment_3_4.eContents().get(0);
@@ -509,7 +570,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_4_1_0 = (CrossReference)cAnalyzerAssignment_4_1.eContents().get(0);
 		private final RuleCall cAnalyzerDSLAnalyzerIDTerminalRuleCall_4_1_0_1 = (RuleCall)cAnalyzerDSLAnalyzerCrossReference_4_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_4_2_0 = (RuleCall)cAccessAssignment_4_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_4_2_0 = (Alternatives)cAccessAssignment_4_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_4_2_0_0 = (Keyword)cAccessAlternatives_4_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_4_2_0_1 = (Keyword)cAccessAlternatives_4_2_0.eContents().get(1);
 		private final Keyword cAnalyzerKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Assignment cAnalyzer2Assignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
 		private final CrossReference cAnalyzer2DSLAnalyzerCrossReference_4_4_0 = (CrossReference)cAnalyzer2Assignment_4_4.eContents().get(0);
@@ -517,21 +580,21 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4_5 = (Keyword)cGroup_4.eContents().get(5);
 		
 		//DSLRuleAnalyzer:
-		//	'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'analyzer'
-		//	analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor=[DSLMonitor] ';' | 'analyzer' analyzer=[DSLAnalyzer]
-		//	access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess
-		//	'reference-input' rreference=[DSLReferenceInput] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'analyzer'
-		//	analyzer2=[DSLAnalyzer] ';';
+		//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' |
+		//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor=[DSLMonitor] ';' | 'analyzer'
+		//	analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'analyzer'
+		//	analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference=[DSLReferenceInput] ';' |
+		//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2=[DSLAnalyzer] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'analyzer'
-		//analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor=[DSLMonitor] ';' | 'analyzer' analyzer=[DSLAnalyzer]
-		//access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess
-		//'reference-input' rreference=[DSLReferenceInput] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'analyzer'
-		//analyzer2=[DSLAnalyzer] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' |
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor=[DSLMonitor] ';' | 'analyzer'
+		//analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'analyzer'
+		//analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference=[DSLReferenceInput] ';' |
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2=[DSLAnalyzer] ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'analyzer'
@@ -546,11 +609,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getAnalyzerDSLAnalyzerIDTerminalRuleCall_0_1_0_1() { return cAnalyzerDSLAnalyzerIDTerminalRuleCall_0_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_0_2() { return cAccessAssignment_0_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_0_2_0() { return cAccessDSLAccessParserRuleCall_0_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_0_2_0() { return cAccessAlternatives_0_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_0_2_0_0() { return cAccessMustUseKeyword_0_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_0_2_0_1() { return cAccessMustNotUseKeyword_0_2_0_1; }
 		
 		//'knowledge'
 		public Keyword getKnowledgeKeyword_0_3() { return cKnowledgeKeyword_0_3; }
@@ -567,7 +636,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_0_5() { return cSemicolonKeyword_0_5; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor=[DSLMonitor] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor=[DSLMonitor] ';'
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'analyzer'
@@ -582,11 +651,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getAnalyzerDSLAnalyzerIDTerminalRuleCall_1_1_0_1() { return cAnalyzerDSLAnalyzerIDTerminalRuleCall_1_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_1_2() { return cAccessAssignment_1_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_1_2_0() { return cAccessDSLAccessParserRuleCall_1_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_1_2_0() { return cAccessAlternatives_1_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_1_2_0_0() { return cAccessMustUseKeyword_1_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_1_2_0_1() { return cAccessMustNotUseKeyword_1_2_0_1; }
 		
 		//'monitor'
 		public Keyword getMonitorKeyword_1_3() { return cMonitorKeyword_1_3; }
@@ -603,7 +678,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_1_5() { return cSemicolonKeyword_1_5; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'planner' planner=[DSLPlanner] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';'
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'analyzer'
@@ -618,11 +693,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getAnalyzerDSLAnalyzerIDTerminalRuleCall_2_1_0_1() { return cAnalyzerDSLAnalyzerIDTerminalRuleCall_2_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2_2() { return cAccessAssignment_2_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_2_0() { return cAccessDSLAccessParserRuleCall_2_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_2_0() { return cAccessAlternatives_2_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_2_0_0() { return cAccessMustUseKeyword_2_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_2_0_1() { return cAccessMustNotUseKeyword_2_2_0_1; }
 		
 		//'planner'
 		public Keyword getPlannerKeyword_2_3() { return cPlannerKeyword_2_3; }
@@ -639,7 +720,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_2_5() { return cSemicolonKeyword_2_5; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'reference-input' rreference=[DSLReferenceInput] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference=[DSLReferenceInput]
+		//';'
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'analyzer'
@@ -654,11 +736,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getAnalyzerDSLAnalyzerIDTerminalRuleCall_3_1_0_1() { return cAnalyzerDSLAnalyzerIDTerminalRuleCall_3_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_3_2() { return cAccessAssignment_3_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_3_2_0() { return cAccessDSLAccessParserRuleCall_3_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_3_2_0() { return cAccessAlternatives_3_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_3_2_0_0() { return cAccessMustUseKeyword_3_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_3_2_0_1() { return cAccessMustNotUseKeyword_3_2_0_1; }
 		
 		//'reference-input'
 		public Keyword getReferenceInputKeyword_3_3() { return cReferenceInputKeyword_3_3; }
@@ -675,7 +763,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_3_5() { return cSemicolonKeyword_3_5; }
 		
-		//'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'analyzer' analyzer2=[DSLAnalyzer] ';'
+		//'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2=[DSLAnalyzer] ';'
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//'analyzer'
@@ -690,11 +778,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getAnalyzerDSLAnalyzerIDTerminalRuleCall_4_1_0_1() { return cAnalyzerDSLAnalyzerIDTerminalRuleCall_4_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_4_2() { return cAccessAssignment_4_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_4_2_0() { return cAccessDSLAccessParserRuleCall_4_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_4_2_0() { return cAccessAlternatives_4_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_4_2_0_0() { return cAccessMustUseKeyword_4_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_4_2_0_1() { return cAccessMustNotUseKeyword_4_2_0_1; }
 		
 		//'analyzer'
 		public Keyword getAnalyzerKeyword_4_3() { return cAnalyzerKeyword_4_3; }
@@ -720,7 +814,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cPlannerDSLPlannerCrossReference_0_1_0 = (CrossReference)cPlannerAssignment_0_1.eContents().get(0);
 		private final RuleCall cPlannerDSLPlannerIDTerminalRuleCall_0_1_0_1 = (RuleCall)cPlannerDSLPlannerCrossReference_0_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_0_2_0 = (RuleCall)cAccessAssignment_0_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_0_2_0 = (Alternatives)cAccessAssignment_0_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_0_2_0_0 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_0_2_0_1 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(1);
 		private final Keyword cKnowledgeKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
 		private final Assignment cKnowledgeAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
 		private final CrossReference cKnowledgeDSLKnowledgeCrossReference_0_4_0 = (CrossReference)cKnowledgeAssignment_0_4.eContents().get(0);
@@ -732,7 +828,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cPlannerDSLPlannerCrossReference_1_1_0 = (CrossReference)cPlannerAssignment_1_1.eContents().get(0);
 		private final RuleCall cPlannerDSLPlannerIDTerminalRuleCall_1_1_0_1 = (RuleCall)cPlannerDSLPlannerCrossReference_1_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_1_2_0 = (RuleCall)cAccessAssignment_1_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_1_2_0 = (Alternatives)cAccessAssignment_1_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_1_2_0_0 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_1_2_0_1 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(1);
 		private final Keyword cAnalyzerKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		private final Assignment cAnalyzerAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
 		private final CrossReference cAnalyzerDSLAnalyzerCrossReference_1_4_0 = (CrossReference)cAnalyzerAssignment_1_4.eContents().get(0);
@@ -744,7 +842,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cPlannerDSLPlannerCrossReference_2_1_0 = (CrossReference)cPlannerAssignment_2_1.eContents().get(0);
 		private final RuleCall cPlannerDSLPlannerIDTerminalRuleCall_2_1_0_1 = (RuleCall)cPlannerDSLPlannerCrossReference_2_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_2_0 = (RuleCall)cAccessAssignment_2_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_2_0 = (Alternatives)cAccessAssignment_2_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_2_0_0 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_2_0_1 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(1);
 		private final Keyword cExecutorKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Assignment cExecutorAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
 		private final CrossReference cExecutorDSLExecutorCrossReference_2_4_0 = (CrossReference)cExecutorAssignment_2_4.eContents().get(0);
@@ -756,7 +856,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cPlannerDSLPlannerCrossReference_3_1_0 = (CrossReference)cPlannerAssignment_3_1.eContents().get(0);
 		private final RuleCall cPlannerDSLPlannerIDTerminalRuleCall_3_1_0_1 = (RuleCall)cPlannerDSLPlannerCrossReference_3_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_3_2_0 = (RuleCall)cAccessAssignment_3_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_3_2_0 = (Alternatives)cAccessAssignment_3_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_3_2_0_0 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_3_2_0_1 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(1);
 		private final Keyword cPlannerKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Assignment cPlanner2Assignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
 		private final CrossReference cPlanner2DSLPlannerCrossReference_3_4_0 = (CrossReference)cPlanner2Assignment_3_4.eContents().get(0);
@@ -764,19 +866,19 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3_5 = (Keyword)cGroup_3.eContents().get(5);
 		
 		//DSLRulePlanner:
-		//	'planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'planner'
-		//	planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner' planner=[DSLPlanner]
-		//	access=DSLAccess 'executor' executor=[DSLExecutor] ';' | 'planner' planner=[DSLPlanner] access=DSLAccess 'planner'
-		//	planner2=[DSLPlanner] ';';
+		//	'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' |
+		//	'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner'
+		//	planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor=[DSLExecutor] ';' | 'planner'
+		//	planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2=[DSLPlanner] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'planner'
-		//planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner' planner=[DSLPlanner]
-		//access=DSLAccess 'executor' executor=[DSLExecutor] ';' | 'planner' planner=[DSLPlanner] access=DSLAccess 'planner'
-		//planner2=[DSLPlanner] ';'
+		//'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'planner'
+		//planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner'
+		//planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor=[DSLExecutor] ';' | 'planner'
+		//planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2=[DSLPlanner] ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';'
+		//'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'planner'
@@ -791,11 +893,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getPlannerDSLPlannerIDTerminalRuleCall_0_1_0_1() { return cPlannerDSLPlannerIDTerminalRuleCall_0_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_0_2() { return cAccessAssignment_0_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_0_2_0() { return cAccessDSLAccessParserRuleCall_0_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_0_2_0() { return cAccessAlternatives_0_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_0_2_0_0() { return cAccessMustUseKeyword_0_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_0_2_0_1() { return cAccessMustNotUseKeyword_0_2_0_1; }
 		
 		//'knowledge'
 		public Keyword getKnowledgeKeyword_0_3() { return cKnowledgeKeyword_0_3; }
@@ -812,7 +920,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_0_5() { return cSemicolonKeyword_0_5; }
 		
-		//'planner' planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer=[DSLAnalyzer] ';'
+		//'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';'
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'planner'
@@ -827,11 +935,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getPlannerDSLPlannerIDTerminalRuleCall_1_1_0_1() { return cPlannerDSLPlannerIDTerminalRuleCall_1_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_1_2() { return cAccessAssignment_1_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_1_2_0() { return cAccessDSLAccessParserRuleCall_1_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_1_2_0() { return cAccessAlternatives_1_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_1_2_0_0() { return cAccessMustUseKeyword_1_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_1_2_0_1() { return cAccessMustNotUseKeyword_1_2_0_1; }
 		
 		//'analyzer'
 		public Keyword getAnalyzerKeyword_1_3() { return cAnalyzerKeyword_1_3; }
@@ -848,7 +962,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_1_5() { return cSemicolonKeyword_1_5; }
 		
-		//'planner' planner=[DSLPlanner] access=DSLAccess 'executor' executor=[DSLExecutor] ';'
+		//'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor=[DSLExecutor] ';'
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'planner'
@@ -863,11 +977,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getPlannerDSLPlannerIDTerminalRuleCall_2_1_0_1() { return cPlannerDSLPlannerIDTerminalRuleCall_2_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2_2() { return cAccessAssignment_2_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_2_0() { return cAccessDSLAccessParserRuleCall_2_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_2_0() { return cAccessAlternatives_2_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_2_0_0() { return cAccessMustUseKeyword_2_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_2_0_1() { return cAccessMustNotUseKeyword_2_2_0_1; }
 		
 		//'executor'
 		public Keyword getExecutorKeyword_2_3() { return cExecutorKeyword_2_3; }
@@ -884,7 +1004,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_2_5() { return cSemicolonKeyword_2_5; }
 		
-		//'planner' planner=[DSLPlanner] access=DSLAccess 'planner' planner2=[DSLPlanner] ';'
+		//'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2=[DSLPlanner] ';'
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'planner'
@@ -899,11 +1019,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getPlannerDSLPlannerIDTerminalRuleCall_3_1_0_1() { return cPlannerDSLPlannerIDTerminalRuleCall_3_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_3_2() { return cAccessAssignment_3_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_3_2_0() { return cAccessDSLAccessParserRuleCall_3_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_3_2_0() { return cAccessAlternatives_3_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_3_2_0_0() { return cAccessMustUseKeyword_3_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_3_2_0_1() { return cAccessMustNotUseKeyword_3_2_0_1; }
 		
 		//'planner'
 		public Keyword getPlannerKeyword_3_3() { return cPlannerKeyword_3_3; }
@@ -929,7 +1055,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cExecutorDSLExecutorCrossReference_0_1_0 = (CrossReference)cExecutorAssignment_0_1.eContents().get(0);
 		private final RuleCall cExecutorDSLExecutorIDTerminalRuleCall_0_1_0_1 = (RuleCall)cExecutorDSLExecutorCrossReference_0_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_0_2_0 = (RuleCall)cAccessAssignment_0_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_0_2_0 = (Alternatives)cAccessAssignment_0_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_0_2_0_0 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_0_2_0_1 = (Keyword)cAccessAlternatives_0_2_0.eContents().get(1);
 		private final Keyword cEffectorKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
 		private final Assignment cEffectorAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
 		private final CrossReference cEffectorDSLEffectorCrossReference_0_4_0 = (CrossReference)cEffectorAssignment_0_4.eContents().get(0);
@@ -941,7 +1069,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cExecutorDSLExecutorCrossReference_1_1_0 = (CrossReference)cExecutorAssignment_1_1.eContents().get(0);
 		private final RuleCall cExecutorDSLExecutorIDTerminalRuleCall_1_1_0_1 = (RuleCall)cExecutorDSLExecutorCrossReference_1_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_1_2_0 = (RuleCall)cAccessAssignment_1_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_1_2_0 = (Alternatives)cAccessAssignment_1_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_1_2_0_0 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_1_2_0_1 = (Keyword)cAccessAlternatives_1_2_0.eContents().get(1);
 		private final Keyword cPlannerKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		private final Assignment cPlannerAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
 		private final CrossReference cPlannerDSLPlannerCrossReference_1_4_0 = (CrossReference)cPlannerAssignment_1_4.eContents().get(0);
@@ -953,7 +1083,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cExecutorDSLExecutorCrossReference_2_1_0 = (CrossReference)cExecutorAssignment_2_1.eContents().get(0);
 		private final RuleCall cExecutorDSLExecutorIDTerminalRuleCall_2_1_0_1 = (RuleCall)cExecutorDSLExecutorCrossReference_2_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_2_0 = (RuleCall)cAccessAssignment_2_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_2_0 = (Alternatives)cAccessAssignment_2_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_2_0_0 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_2_0_1 = (Keyword)cAccessAlternatives_2_2_0.eContents().get(1);
 		private final Keyword cKnowledgeKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Assignment cKnowledgeAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
 		private final CrossReference cKnowledgeDSLKnowledgeCrossReference_2_4_0 = (CrossReference)cKnowledgeAssignment_2_4.eContents().get(0);
@@ -965,7 +1097,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cExecutorDSLExecutorCrossReference_3_1_0 = (CrossReference)cExecutorAssignment_3_1.eContents().get(0);
 		private final RuleCall cExecutorDSLExecutorIDTerminalRuleCall_3_1_0_1 = (RuleCall)cExecutorDSLExecutorCrossReference_3_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_3_2_0 = (RuleCall)cAccessAssignment_3_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_3_2_0 = (Alternatives)cAccessAssignment_3_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_3_2_0_0 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_3_2_0_1 = (Keyword)cAccessAlternatives_3_2_0.eContents().get(1);
 		private final Keyword cExecutorKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Assignment cExecutor2Assignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
 		private final CrossReference cExecutor2DSLExecutorCrossReference_3_4_0 = (CrossReference)cExecutor2Assignment_3_4.eContents().get(0);
@@ -973,19 +1107,19 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3_5 = (Keyword)cGroup_3.eContents().get(5);
 		
 		//DSLRuleExecutor:
-		//	'executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector=[DSLEffector] ';' | 'executor'
-		//	executor=[DSLExecutor] access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'executor' executor=[DSLExecutor]
-		//	access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor' executor=[DSLExecutor] access=DSLAccess
-		//	'executor' executor2=[DSLExecutor] ';';
+		//	'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector=[DSLEffector] ';' |
+		//	'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'executor'
+		//	executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor'
+		//	executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2=[DSLExecutor] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector=[DSLEffector] ';' | 'executor'
-		//executor=[DSLExecutor] access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'executor' executor=[DSLExecutor]
-		//access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor' executor=[DSLExecutor] access=DSLAccess
-		//'executor' executor2=[DSLExecutor] ';'
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector=[DSLEffector] ';' |
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'executor'
+		//executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor'
+		//executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2=[DSLExecutor] ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector=[DSLEffector] ';'
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector=[DSLEffector] ';'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'executor'
@@ -1000,11 +1134,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getExecutorDSLExecutorIDTerminalRuleCall_0_1_0_1() { return cExecutorDSLExecutorIDTerminalRuleCall_0_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_0_2() { return cAccessAssignment_0_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_0_2_0() { return cAccessDSLAccessParserRuleCall_0_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_0_2_0() { return cAccessAlternatives_0_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_0_2_0_0() { return cAccessMustUseKeyword_0_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_0_2_0_1() { return cAccessMustNotUseKeyword_0_2_0_1; }
 		
 		//'effector'
 		public Keyword getEffectorKeyword_0_3() { return cEffectorKeyword_0_3; }
@@ -1021,7 +1161,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_0_5() { return cSemicolonKeyword_0_5; }
 		
-		//'executor' executor=[DSLExecutor] access=DSLAccess 'planner' planner=[DSLPlanner] ';'
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';'
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'executor'
@@ -1036,11 +1176,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getExecutorDSLExecutorIDTerminalRuleCall_1_1_0_1() { return cExecutorDSLExecutorIDTerminalRuleCall_1_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_1_2() { return cAccessAssignment_1_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_1_2_0() { return cAccessDSLAccessParserRuleCall_1_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_1_2_0() { return cAccessAlternatives_1_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_1_2_0_0() { return cAccessMustUseKeyword_1_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_1_2_0_1() { return cAccessMustNotUseKeyword_1_2_0_1; }
 		
 		//'planner'
 		public Keyword getPlannerKeyword_1_3() { return cPlannerKeyword_1_3; }
@@ -1057,7 +1203,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_1_5() { return cSemicolonKeyword_1_5; }
 		
-		//'executor' executor=[DSLExecutor] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';'
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';'
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'executor'
@@ -1072,11 +1218,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getExecutorDSLExecutorIDTerminalRuleCall_2_1_0_1() { return cExecutorDSLExecutorIDTerminalRuleCall_2_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2_2() { return cAccessAssignment_2_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_2_0() { return cAccessDSLAccessParserRuleCall_2_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_2_0() { return cAccessAlternatives_2_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_2_0_0() { return cAccessMustUseKeyword_2_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_2_0_1() { return cAccessMustNotUseKeyword_2_2_0_1; }
 		
 		//'knowledge'
 		public Keyword getKnowledgeKeyword_2_3() { return cKnowledgeKeyword_2_3; }
@@ -1093,7 +1245,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_2_5() { return cSemicolonKeyword_2_5; }
 		
-		//'executor' executor=[DSLExecutor] access=DSLAccess 'executor' executor2=[DSLExecutor] ';'
+		//'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2=[DSLExecutor] ';'
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'executor'
@@ -1108,11 +1260,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getExecutorDSLExecutorIDTerminalRuleCall_3_1_0_1() { return cExecutorDSLExecutorIDTerminalRuleCall_3_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_3_2() { return cAccessAssignment_3_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_3_2_0() { return cAccessDSLAccessParserRuleCall_3_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_3_2_0() { return cAccessAlternatives_3_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_3_2_0_0() { return cAccessMustUseKeyword_3_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_3_2_0_1() { return cAccessMustNotUseKeyword_3_2_0_1; }
 		
 		//'executor'
 		public Keyword getExecutorKeyword_3_3() { return cExecutorKeyword_3_3; }
@@ -1137,7 +1295,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cSensorDSLSensorCrossReference_1_0 = (CrossReference)cSensorAssignment_1.eContents().get(0);
 		private final RuleCall cSensorDSLSensorIDTerminalRuleCall_1_0_1 = (RuleCall)cSensorDSLSensorCrossReference_1_0.eContents().get(1);
 		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAccessDSLAccessParserRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
+		private final Alternatives cAccessAlternatives_2_0 = (Alternatives)cAccessAssignment_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_0_0 = (Keyword)cAccessAlternatives_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_0_1 = (Keyword)cAccessAlternatives_2_0.eContents().get(1);
 		private final Keyword cMeasuredOutputKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cMeasuredAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final CrossReference cMeasuredDSLMeasuredOutputCrossReference_4_0 = (CrossReference)cMeasuredAssignment_4.eContents().get(0);
@@ -1145,10 +1305,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DSLRuleMO:
-		//	'sensor' sensor=[DSLSensor] access=DSLAccess 'measured-output' measured=[DSLMeasuredOutput] ';';
+		//	'sensor' sensor=[DSLSensor] access=('must-use' | 'must-not-use') 'measured-output' measured=[DSLMeasuredOutput] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'sensor' sensor=[DSLSensor] access=DSLAccess 'measured-output' measured=[DSLMeasuredOutput] ';'
+		//'sensor' sensor=[DSLSensor] access=('must-use' | 'must-not-use') 'measured-output' measured=[DSLMeasuredOutput] ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'sensor'
@@ -1163,11 +1323,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getSensorDSLSensorIDTerminalRuleCall_1_0_1() { return cSensorDSLSensorIDTerminalRuleCall_1_0_1; }
 		
-		//access=DSLAccess
+		//access=('must-use' | 'must-not-use')
 		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
 		
-		//DSLAccess
-		public RuleCall getAccessDSLAccessParserRuleCall_2_0() { return cAccessDSLAccessParserRuleCall_2_0; }
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_0() { return cAccessAlternatives_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_0_0() { return cAccessMustUseKeyword_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_0_1() { return cAccessMustNotUseKeyword_2_0_1; }
 		
 		//'measured-output'
 		public Keyword getMeasuredOutputKeyword_3() { return cMeasuredOutputKeyword_3; }
@@ -1183,25 +1349,6 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//';'
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
-	}
-	public class DSLAccessElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAccess");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cMustUseKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cMustNotUseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		
-		//DSLAccess:
-		//	'must-use' | 'must-not-use';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'must-use' | 'must-not-use'
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//'must-use'
-		public Keyword getMustUseKeyword_0() { return cMustUseKeyword_0; }
-		
-		//'must-not-use'
-		public Keyword getMustNotUseKeyword_1() { return cMustNotUseKeyword_1; }
 	}
 	public class DSLManagingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLManaging");
@@ -1730,7 +1877,6 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DSLRulePlannerElements pDSLRulePlanner;
 	private final DSLRuleExecutorElements pDSLRuleExecutor;
 	private final DSLRuleMOElements pDSLRuleMO;
-	private final DSLAccessElements pDSLAccess;
 	private final DSLManagingElements pDSLManaging;
 	private final DSLManagedElements pDSLManaged;
 	private final DSLManagerControllerElements pDSLManagerController;
@@ -1764,7 +1910,6 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDSLRulePlanner = new DSLRulePlannerElements();
 		this.pDSLRuleExecutor = new DSLRuleExecutorElements();
 		this.pDSLRuleMO = new DSLRuleMOElements();
-		this.pDSLAccess = new DSLAccessElements();
 		this.pDSLManaging = new DSLManagingElements();
 		this.pDSLManaged = new DSLManagedElements();
 		this.pDSLManagerController = new DSLManagerControllerElements();
@@ -1834,8 +1979,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleMController:
-	//	'mcontroller' mcontroller1=[DSLManagerController] access=DSLAccess 'mcontroller' mcontroller2=[DSLManagerController]
-	//	';';
+	//	'mcontroller' mcontroller1=[DSLManagerController] access=('must-use' | 'must-not-use') 'mcontroller'
+	//	mcontroller2=[DSLManagerController] ';';
 	public DSLRuleMControllerElements getDSLRuleMControllerAccess() {
 		return pDSLRuleMController;
 	}
@@ -1845,7 +1990,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleController:
-	//	'controller' controller1=[DSLController] access=DSLAccess 'controller' controller2=[DSLController] ';';
+	//	'controller' controller1=[DSLController] access=('must-use' | 'must-not-use') 'controller' controller2=[DSLController]
+	//	';';
 	public DSLRuleControllerElements getDSLRuleControllerAccess() {
 		return pDSLRuleController;
 	}
@@ -1855,9 +2001,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleMonitor:
-	//	'monitor' monitor=[DSLMonitor] access=DSLAccess 'sensor' sensor=[DSLSensor] ';' | 'monitor' monitor=[DSLMonitor]
-	//	access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'analyzer'
-	//	analyzer=[DSLAnalyzer] ';' | 'monitor' monitor=[DSLMonitor] access=DSLAccess 'monitor' monitor2=[DSLMonitor] ';';
+	//	'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor=[DSLSensor] ';' | 'monitor'
+	//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'monitor'
+	//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'monitor'
+	//	monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2=[DSLMonitor] ';';
 	public DSLRuleMonitorElements getDSLRuleMonitorAccess() {
 		return pDSLRuleMonitor;
 	}
@@ -1867,11 +2014,11 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleAnalyzer:
-	//	'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'analyzer'
-	//	analyzer=[DSLAnalyzer] access=DSLAccess 'monitor' monitor=[DSLMonitor] ';' | 'analyzer' analyzer=[DSLAnalyzer]
-	//	access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess
-	//	'reference-input' rreference=[DSLReferenceInput] ';' | 'analyzer' analyzer=[DSLAnalyzer] access=DSLAccess 'analyzer'
-	//	analyzer2=[DSLAnalyzer] ';';
+	//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' |
+	//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor=[DSLMonitor] ';' | 'analyzer'
+	//	analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'analyzer'
+	//	analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference=[DSLReferenceInput] ';' |
+	//	'analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2=[DSLAnalyzer] ';';
 	public DSLRuleAnalyzerElements getDSLRuleAnalyzerAccess() {
 		return pDSLRuleAnalyzer;
 	}
@@ -1881,10 +2028,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRulePlanner:
-	//	'planner' planner=[DSLPlanner] access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'planner'
-	//	planner=[DSLPlanner] access=DSLAccess 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner' planner=[DSLPlanner]
-	//	access=DSLAccess 'executor' executor=[DSLExecutor] ';' | 'planner' planner=[DSLPlanner] access=DSLAccess 'planner'
-	//	planner2=[DSLPlanner] ';';
+	//	'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' |
+	//	'planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer=[DSLAnalyzer] ';' | 'planner'
+	//	planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor=[DSLExecutor] ';' | 'planner'
+	//	planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2=[DSLPlanner] ';';
 	public DSLRulePlannerElements getDSLRulePlannerAccess() {
 		return pDSLRulePlanner;
 	}
@@ -1894,10 +2041,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleExecutor:
-	//	'executor' executor=[DSLExecutor] access=DSLAccess 'effector' effector=[DSLEffector] ';' | 'executor'
-	//	executor=[DSLExecutor] access=DSLAccess 'planner' planner=[DSLPlanner] ';' | 'executor' executor=[DSLExecutor]
-	//	access=DSLAccess 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor' executor=[DSLExecutor] access=DSLAccess
-	//	'executor' executor2=[DSLExecutor] ';';
+	//	'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector=[DSLEffector] ';' |
+	//	'executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner=[DSLPlanner] ';' | 'executor'
+	//	executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'knowledge' knowledge=[DSLKnowledge] ';' | 'executor'
+	//	executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2=[DSLExecutor] ';';
 	public DSLRuleExecutorElements getDSLRuleExecutorAccess() {
 		return pDSLRuleExecutor;
 	}
@@ -1907,23 +2054,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLRuleMO:
-	//	'sensor' sensor=[DSLSensor] access=DSLAccess 'measured-output' measured=[DSLMeasuredOutput] ';';
+	//	'sensor' sensor=[DSLSensor] access=('must-use' | 'must-not-use') 'measured-output' measured=[DSLMeasuredOutput] ';';
 	public DSLRuleMOElements getDSLRuleMOAccess() {
 		return pDSLRuleMO;
 	}
 	
 	public ParserRule getDSLRuleMORule() {
 		return getDSLRuleMOAccess().getRule();
-	}
-	
-	//DSLAccess:
-	//	'must-use' | 'must-not-use';
-	public DSLAccessElements getDSLAccessAccess() {
-		return pDSLAccess;
-	}
-	
-	public ParserRule getDSLAccessRule() {
-		return getDSLAccessAccess().getRule();
 	}
 	
 	//DSLManaging:
