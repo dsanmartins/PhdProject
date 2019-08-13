@@ -95,7 +95,7 @@
 	        <filterExpression>
 	            <and>
 	                <adapt type="org.eclipse.core.resources.IResource">
-	                    <test property="org.eclipse.core.resources.name" value="annotations.db"/>
+	                    <test property="org.eclipse.core.resources.name" value="*.db"/>
 	                </adapt>
 	            </and>
 	        </filterExpression>
