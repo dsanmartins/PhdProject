@@ -25,13 +25,19 @@ public class DataConstraint {
 	public void createTables() throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("create table IF NOT EXISTS existence (project_name text, abstraction text, result integer) ");
-		mydb.executeStmt("create table IF NOT EXISTS composite (project_name text, abstraction text, result integer) ");
+		mydb.executeStmt("create table IF NOT EXISTS existence (project_name text, abstraction text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS composite (project_name text, abstraction text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS access (project_name text, abstraction1 text, abstraction2 text, result integer) ");
 		mydb.executeStmt("create table IF NOT EXISTS drifts (project_name text, component integer, subsystem integer, association integer) ");
+		mydb.executeStmt("create table IF NOT EXISTS existence_rules (project_name text, _key text, rule text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS composite_rules (project_name text, _key text, rule text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS access_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("delete from existence"); 
 		mydb.executeStmt("delete from composite"); 
-		mydb.executeStmt("delete from access"); 
+		mydb.executeStmt("delete from access");
+		mydb.executeStmt("delete from existence_rules"); 
+		mydb.executeStmt("delete from composite_rules"); 
+		mydb.executeStmt("delete from access_rules"); 
 		mydb.executeStmt("delete from drifts"); 
 		mydb.closeConnection();
 	}
@@ -42,6 +48,9 @@ public class DataConstraint {
 		mydb.executeStmt("delete from existence"); 
 		mydb.executeStmt("delete from composite"); 
 		mydb.executeStmt("delete from access"); 
+		mydb.executeStmt("delete from existence_rules"); 
+		mydb.executeStmt("delete from composite_rules"); 
+		mydb.executeStmt("delete from access_rules"); 
 		mydb.executeStmt("delete from drifts"); 
 	}
 
@@ -50,6 +59,14 @@ public class DataConstraint {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into existence(project_name, abstraction, result) values"
 				+ " ('" + projectName + "','" +   abstraction + "',"  + result + ");"); 
+		mydb.closeConnection();
+	}
+	
+	public void insertExistenceRules(String projectName, String key, String rule, int result) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into existence_rules(project_name, _key, rule, result) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
 		mydb.closeConnection();
 	}
 
@@ -61,11 +78,27 @@ public class DataConstraint {
 		mydb.closeConnection();
 	}
 
+	public void insertCompositeRules(String projectName, String key, String rule, int result) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into composite_rules(project_name, _key, rule, result) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.closeConnection();
+	}
+	
 	public void insertAccess(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into access(project_name, abstraction1, abstraction2, result) values"
 				+ " ('" + projectName + "','" +   abstraction1 + "','"  +   abstraction2 + "',"+ result + ");"); 
+		mydb.closeConnection();
+	}
+	
+	public void insertAccessRules(String projectName, String key, String rule, int result) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into access_rules(project_name, _key, rule, result) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
 		mydb.closeConnection();
 	}
 

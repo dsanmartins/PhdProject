@@ -105,6 +105,8 @@ public class CheckConstraint {
 
 					try {
 						dataConstraint.insertExistence(projectName.replaceAll("\\/", ""), abstraction, (check.booleanValue() ? 1 : 0 ));
+						dataConstraint.insertExistenceRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -115,6 +117,7 @@ public class CheckConstraint {
 
 						try {
 							dataConstraint.insertComposite(projectName.replaceAll("\\/", ""), abstraction, (check.booleanValue() ? 1 : 0 ));
+							dataConstraint.insertCompositeRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -126,6 +129,7 @@ public class CheckConstraint {
 							String abstraction2 = key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
 							try {
 								dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+								dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -140,6 +144,7 @@ public class CheckConstraint {
 				if (type.equals("exist")) 
 					try {
 						dataConstraint.insertExistence(projectName.replaceAll("\\/", ""), abstraction, 0);
+						dataConstraint.insertExistenceRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , 0);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -148,6 +153,7 @@ public class CheckConstraint {
 					if (type.equals("composite")) {
 						try {
 							dataConstraint.insertComposite(projectName.replaceAll("\\/", ""), abstraction, 0);
+							dataConstraint.insertCompositeRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") ,0);
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -157,6 +163,7 @@ public class CheckConstraint {
 						String abstraction2 = key.split(Pattern.quote("_"))[3]  + "_" +  key.split(Pattern.quote("_"))[4];
 						try {
 							dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, 0);
+							dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") ,0);
 						} catch (Exception e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
