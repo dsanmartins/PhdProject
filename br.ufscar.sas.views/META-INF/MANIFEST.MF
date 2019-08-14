@@ -29,7 +29,8 @@ Import-Package: br.ufscar.sas.createKDM,
  org.eclipse.zest.layouts,
  org.eclipse.zest.layouts.algorithms,
  org.eclipse.zest.layouts.dataStructures,
- br.ufscar.sas.checkconstraint
+ br.ufscar.sas.checkconstraint,
+ br.ufscar.sas.report
 Export-Package: br.ufscar.sas.view
 Bundle-ClassPath: lib/javaparser-core-3.6.2.jar,
  .

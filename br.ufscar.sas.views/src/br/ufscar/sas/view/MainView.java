@@ -90,6 +90,7 @@ import br.ufscar.sas.dataconstraint.DataConstraint;
 import br.ufscar.sas.parser.FieldClassVisitor;
 import br.ufscar.sas.parser.MethodVisitor;
 import br.ufscar.sas.parser.VariableVisitor;
+import br.ufscar.sas.report.Report;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationBelong;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
@@ -140,7 +141,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 				QueryClass queryClass = new QueryClass(databaseUrl);
 				queryClass.createTables(); 
 				queryClass.populateAbstractions(); 
-				
+
 				DataConstraint dataConstraint = new DataConstraint(databaseUrl);
 				dataConstraint.createTables();
 
@@ -519,97 +520,100 @@ public class MainView extends ViewPart implements IPartListener2 {
 		Group controlGroup2 = new Group(group, SWT.NONE);
 		controlGroup2.setText("Check Constraints");
 		controlGroup2.setBounds(10, 150, 450,300);
-		
+
 		Label lblExistence =  new Label(controlGroup2, SWT.NONE);
 		lblExistence.setText("Lack of abstractions:");
 		lblExistence.setBounds(15, 15, 150, 20);
-		
+
 		Text txtExistence =  new Text(controlGroup2, SWT.NONE);
 		txtExistence.setText("0");
 		txtExistence.setBounds(151, 15, 30, 20);
 		txtExistence.setEditable(false);
-		
+
 		Label lblInfo1 =  new Label(controlGroup2, SWT.NONE);
 		lblInfo1.setText(", after applying");
 		lblInfo1.setBounds(200, 15, 150, 20);
-		
+
 		Text txtExistenceRule =  new Text(controlGroup2, SWT.NONE);
 		txtExistenceRule.setText("0");
 		txtExistenceRule.setBounds(310, 15, 30, 20);
 		txtExistenceRule.setEditable(false);
-		
+
 		Label lblInfoRule =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule.setText("rules.");
 		lblInfoRule.setBounds(350, 15, 150, 20);
-		
+
 		Label lblComposite =  new Label(controlGroup2, SWT.NONE);
 		lblComposite.setText("Wrong composition:");
 		lblComposite.setBounds(15, 60, 150, 20);
-		
+
 		Text txtComposition =  new Text(controlGroup2, SWT.NONE);
 		txtComposition.setText("0");
 		txtComposition.setBounds(151, 60, 30, 20);
 		txtComposition.setEditable(false);
-		
+
 		Label lblInfo2 =  new Label(controlGroup2, SWT.NONE);
 		lblInfo2.setText(", after applying");
 		lblInfo2.setBounds(200, 60, 150, 20);
-		
+
 		Text txtCompositionRule =  new Text(controlGroup2, SWT.NONE);
 		txtCompositionRule.setText("0");
 		txtCompositionRule.setBounds(310, 60, 30, 20);
 		txtCompositionRule.setEditable(false);
-		
+
 		Label lblInfoRule2 =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule2.setText("rules.");
 		lblInfoRule2.setBounds(350, 60, 150, 20);
-		
+
 		Label lblAccess =  new Label(controlGroup2, SWT.NONE);
 		lblAccess.setText("Lack of relations:");
 		lblAccess.setBounds(15, 105, 150, 20);
-		
+
 		Text txtAccess =  new Text(controlGroup2, SWT.NONE);
 		txtAccess.setText("0");
 		txtAccess.setBounds(151, 105, 30, 20);
 		txtAccess.setEditable(false);
-		
+
 		Label lblInfo3 =  new Label(controlGroup2, SWT.NONE);
 		lblInfo3.setText(", after applying");
 		lblInfo3.setBounds(200, 105, 150, 20);
-		
+
 		Text txtAccessRule =  new Text(controlGroup2, SWT.NONE);
 		txtAccessRule.setText("0");
 		txtAccessRule.setBounds(310, 105, 30, 20);
 		txtAccessRule.setEditable(false);
-		
+
 		Label lblInfoRule3 =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule3.setText("rules.");
 		lblInfoRule3.setBounds(350, 105, 150, 20);
-		
+
 		Label lblDrifts1 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts1.setText("Untested abstractions");
 		lblDrifts1.setBounds(50, 145, 150, 20);
-		
+
 		Text txtDrifts1 =  new Text(controlGroup2, SWT.NONE);
 		txtDrifts1.setText("0");
 		txtDrifts1.setBounds(110, 175, 30, 20);
 		txtDrifts1.setEditable(false);
-		
+
 		Label lblDrifts2 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts2.setText("Untested relations");
 		lblDrifts2.setBounds(300, 145, 150, 20);
-		
+
 		Text txtDrifts2 =  new Text(controlGroup2, SWT.NONE);
 		txtDrifts2.setText("0");
 		txtDrifts2.setBounds(350, 175, 30, 20);
 		txtDrifts2.setEditable(false);
-		
-		
-		
+
 		Button checkConstraint = new Button(controlGroup2, SWT.NONE);
 		checkConstraint.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		checkConstraint.setBounds(10, 240, 60, 25);
 		checkConstraint.setText("Check");
+
+		Button generateReport = new Button(controlGroup2, SWT.NONE);
+		generateReport.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		generateReport.setBounds(80, 240, 60, 25);
+		generateReport.setText("Report");
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
@@ -628,9 +632,31 @@ public class MainView extends ViewPart implements IPartListener2 {
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
 		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 		String workspacePath = folder + "/";
-	
+
+		generateReport.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					dialog.run(true, true, new IRunnableWithProgress() {
+						public void run(IProgressMonitor monitor) {
+							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+							monitor.beginTask("Creating architectural report....", totalUnitsOfWork);
+							Report report = new Report();
+							report.create(workspacePath + projectName + "/", projectName, umlFolderPlannedAbsolute, umlFolderCurrentAbsolute);
+							monitor.done();
+							try {refreshProjects();}catch (CoreException e) {e.printStackTrace();} 
+						}});
+				} catch (InvocationTargetException  | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+
+		});
+
 		checkConstraint.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+
+				CheckConstraint checkConstraintMethod = new CheckConstraint(workspacePath, projectName);
 
 				if (constraintPath.exists() && kdmCurrent.exists()) {
 					try {
@@ -638,15 +664,15 @@ public class MainView extends ViewPart implements IPartListener2 {
 							public void run(IProgressMonitor monitor) {
 								int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 								monitor.beginTask("Verifying constraints....", totalUnitsOfWork);
-								CheckConstraint checkConstraint = new CheckConstraint();
+
 								try {
-									checkConstraint.checkConstraint(kdmCurrent, constraintPath, workspacePath);
+									checkConstraintMethod.checkConstraint(kdmCurrent, constraintPath);
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 								try {
-									checkConstraint.checkDrifts(kdmCurrent, kdmPlanned, workspacePath);
+									checkConstraintMethod.checkDrifts(kdmCurrent, kdmPlanned);
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -655,6 +681,39 @@ public class MainView extends ViewPart implements IPartListener2 {
 							}});
 					} catch (InvocationTargetException  | InterruptedException e1) {
 						e1.printStackTrace();
+					}
+					try {
+						final List<Integer> lstValues = checkConstraintMethod.getExistenceAbstractions();
+						txtExistence.setText(lstValues.get(0).toString());
+						txtExistenceRule.setText(lstValues.get(1).toString());
+					} catch (Exception e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					try {
+						final List<Integer> lstValues = checkConstraintMethod.getCompositeAbstractions();
+						txtComposition.setText(lstValues.get(0).toString());
+						txtCompositionRule.setText(lstValues.get(1).toString());
+					} catch (Exception e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					try {
+						final List<Integer> lstValues = checkConstraintMethod.getAccessAbstractions();
+						txtAccess.setText(lstValues.get(0).toString());
+						txtAccessRule.setText(lstValues.get(1).toString());
+					} catch (Exception e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					try {
+						final List<Integer> lstValues = checkConstraintMethod.getUntestedValues();
+						int value = lstValues.get(0) + lstValues.get(1);
+						txtDrifts1.setText(String.valueOf(value));
+						txtDrifts2.setText(lstValues.get(2).toString());
+					} catch (Exception e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
 					}
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The model was checked against ocl restrictions.");
 				}
@@ -765,7 +824,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 		});
 
 		tab1.setControl(group);
-
 	}
 
 	public void moveFile(String in, String out) {

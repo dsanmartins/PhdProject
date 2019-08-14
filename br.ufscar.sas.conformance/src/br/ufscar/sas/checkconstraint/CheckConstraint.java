@@ -3,6 +3,7 @@ package br.ufscar.sas.checkconstraint;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -37,11 +38,26 @@ import br.ufscar.sas.dataconstraint.DataConstraint;
 
 public class CheckConstraint {
 
+	String workspacePath;
+	String projectName;
 
-	public void checkConstraint(IFile currentArchitecturePath, IFile constraintPath, String workspacePath) throws SQLException  {
+	public CheckConstraint(String workspacePath, String projectName) {
 
-		String projectName = currentArchitecturePath.getProject().getName();
-		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName + "/");
+		this.workspacePath = workspacePath;
+		this.projectName = projectName + "/";
+
+	}
+
+	public void checkConstraint(IFile currentArchitecturePath, IFile constraintPath) throws SQLException  {
+
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		try {
+			dataConstraint.deleteTables();
+		} catch (Exception e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 
 		OCLstdlib.install(); 
 		CompleteOCLStandaloneSetup.doSetup();
@@ -81,14 +97,14 @@ public class CheckConstraint {
 			ExpressionInOCL expressionInOCL = constraintMap.get(key);
 			String type = key.split(Pattern.quote("_"))[0];
 			String abstraction = key.split(Pattern.quote("_"))[1] + "_" +key.split(Pattern.quote("_"))[2];
-			
+
 			try {
 				check = (Boolean) ocl.evaluate(structureModel, expressionInOCL);
 
 				if (type.equals("exist")) {
 
 					try {
-						dataConstraint.insertExistence(projectName, abstraction, (check.booleanValue() ? 1 : 0 ));
+						dataConstraint.insertExistence(projectName.replaceAll("\\/", ""), abstraction, (check.booleanValue() ? 1 : 0 ));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -98,40 +114,40 @@ public class CheckConstraint {
 					if (type.equals("composite")) {
 
 						try {
-							dataConstraint.insertComposite(projectName, abstraction, (check.booleanValue() ? 1 : 0 ));
+							dataConstraint.insertComposite(projectName.replaceAll("\\/", ""), abstraction, (check.booleanValue() ? 1 : 0 ));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 					else {
-						
+
 						if (type.equals("access")) {
 							String abstraction2 = key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
 							try {
-								dataConstraint.insertAccess(projectName, abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+								dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					}
-					
+
 				}
 			}
 			catch (InvalidValueException e)
 			{
 				if (type.equals("exist")) 
-				try {
-					dataConstraint.insertExistence(projectName, abstraction, 0);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					try {
+						dataConstraint.insertExistence(projectName.replaceAll("\\/", ""), abstraction, 0);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				else {
 					if (type.equals("composite")) {
 						try {
-							dataConstraint.insertComposite(projectName, abstraction, 0);
+							dataConstraint.insertComposite(projectName.replaceAll("\\/", ""), abstraction, 0);
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -140,7 +156,7 @@ public class CheckConstraint {
 					else {
 						String abstraction2 = key.split(Pattern.quote("_"))[3]  + "_" +  key.split(Pattern.quote("_"))[4];
 						try {
-							dataConstraint.insertAccess(projectName, abstraction, abstraction2, 0);
+							dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, 0);
 						} catch (Exception e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
@@ -149,20 +165,19 @@ public class CheckConstraint {
 				}
 			}
 		}	
-		
+
 	}
-	
-	public void checkDrifts(IFile currentArchitecturePath, IFile plannedArchitecturePath, String workspacePath) throws SQLException {
-		
-		String projectName = currentArchitecturePath.getProject().getName();
-		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName + "/");
-		
+
+	public void checkDrifts(IFile currentArchitecturePath, IFile plannedArchitecturePath) throws SQLException {
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+
 		int nComponent = this.checkDriftsComponents(currentArchitecturePath, plannedArchitecturePath);
 		int nSubsystem = this.checkDriftsSubsystems(currentArchitecturePath, plannedArchitecturePath);
 		int nAssociation = this.checkDriftsAssociation(currentArchitecturePath, plannedArchitecturePath);
-		
+
 		try {
-			dataConstraint.insertDrifts(projectName, nComponent, nSubsystem, nAssociation);
+			dataConstraint.insertDrifts(projectName.replaceAll("\\/", ""), nComponent, nSubsystem, nAssociation);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,8 +185,7 @@ public class CheckConstraint {
 	}
 
 	private int checkDriftsComponents(IFile currentArchitecturePath, IFile plannedArchitecturePath) {
-		
-		int total = 0;
+
 		OCLstdlib.install(); 
 		CompleteOCLStandaloneSetup.doSetup();
 		OCLstdlibStandaloneSetup.doSetup();
@@ -223,7 +237,6 @@ public class CheckConstraint {
 
 	private int checkDriftsSubsystems(IFile currentArchitecturePath, IFile plannedArchitecturePath) {
 
-		int total = 0;
 		OCLstdlib.install(); 
 		CompleteOCLStandaloneSetup.doSetup();
 		OCLstdlibStandaloneSetup.doSetup();
@@ -247,7 +260,7 @@ public class CheckConstraint {
 			ExpressionInOCL query = ocl.createQuery(StructurePackage.Literals.STRUCTURE_MODEL,"Subsystem.allInstances()");
 			Query evaluateQuery = ocl.createQuery(query);
 			currentSubsystem =  (Set<Subsystem>) evaluateQuery.evaluateUnboxed(structureModel);
-			
+
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -276,7 +289,6 @@ public class CheckConstraint {
 
 	private int checkDriftsAssociation(IFile currentArchitecturePath, IFile plannedArchitecturePath) {
 
-		int total = 0;
 		OCLstdlib.install(); 
 		CompleteOCLStandaloneSetup.doSetup();
 		OCLstdlibStandaloneSetup.doSetup();
@@ -326,4 +338,29 @@ public class CheckConstraint {
 
 		return currentAggregated.size();
 	}
+
+	public List<Integer> getExistenceAbstractions() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getExistenceAbstractions();
+	}
+
+	public List<Integer> getCompositeAbstractions() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getCompositionAbstractions();
+	}
+
+	public List<Integer> getAccessAbstractions() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getAccessAbstractions();
+	}
+	
+	public List<Integer> getUntestedValues() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getUntestedValues();
+	}
+	
 }
