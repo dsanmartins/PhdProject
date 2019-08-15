@@ -23,6 +23,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 import br.ufscar.sas.xtext.sasdsl.services.SasDslGrammarAccess;
@@ -111,6 +112,9 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case SasDslPackage.DSL_RULE_PLANNER:
 				sequence_DSLRulePlanner(context, (DSLRulePlanner) semanticObject); 
+				return; 
+			case SasDslPackage.DSL_SELF_HEALING_ALT:
+				sequence_DSLSelfHealingAlt(context, (DSLSelfHealingAlt) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_SENSOR:
 				sequence_DSLSensor(context, (DSLSensor) semanticObject); 
@@ -210,7 +214,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLKnowledge returns DSLKnowledge
 	 *
 	 * Constraint:
-	 *     (name=ID referenceInput+=DSLReferenceInput+)
+	 *     (name=ID referenceInput+=DSLReferenceInput+ shalt+=DSLSelfHealingAlt*)
 	 */
 	protected void sequence_DSLKnowledge(ISerializationContext context, DSLKnowledge semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -336,7 +340,8 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') monitor=[DSLMonitor|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') rreference=[DSLReferenceInput|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') analyzer2=[DSLAnalyzer|ID])
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') analyzer2=[DSLAnalyzer|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') shalt=[DSLSelfHealingAlt|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleAnalyzer(ISerializationContext context, DSLRuleAnalyzer semanticObject) {
@@ -429,11 +434,30 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') analyzer=[DSLAnalyzer|ID]) | 
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID]) | 
-	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') planner2=[DSLPlanner|ID])
+	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') planner2=[DSLPlanner|ID]) | 
+	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') shalt=[DSLSelfHealingAlt|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRulePlanner(ISerializationContext context, DSLRulePlanner semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DSLSelfHealingAlt returns DSLSelfHealingAlt
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_DSLSelfHealingAlt(ISerializationContext context, DSLSelfHealingAlt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DSL_SELF_HEALING_ALT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DSL_SELF_HEALING_ALT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDSLSelfHealingAltAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	

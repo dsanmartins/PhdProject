@@ -77,6 +77,7 @@ public class QueryClass {
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('11','Effector');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','MeasuredOutput');");
 		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','ReferenceInput');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('14','SelfHealingAlt');");
 		mydb.closeConnection();
 	}
 

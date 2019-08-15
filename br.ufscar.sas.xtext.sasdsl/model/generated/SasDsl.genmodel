@@ -37,6 +37,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleAnalyzer/planner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleAnalyzer/rreference"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleAnalyzer/analyzer2"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleAnalyzer/shalt"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLRulePlanner">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRulePlanner/planner"/>
@@ -44,6 +45,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRulePlanner/analyzer"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRulePlanner/executor"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRulePlanner/planner2"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRulePlanner/shalt"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLRuleExecutor">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleExecutor/executor"/>
@@ -94,6 +96,7 @@
     <genClasses ecoreClass="SasDsl.ecore#//DSLKnowledge">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLKnowledge/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLKnowledge/referenceInput"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLKnowledge/shalt"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLSensor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLSensor/name"/>
@@ -106,6 +109,9 @@
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLMeasuredOutput">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLMeasuredOutput/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DSLSelfHealingAlt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLSelfHealingAlt/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -36,6 +36,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rreference" eType="#//DSLReferenceInput"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer2" eType="#//DSLAnalyzer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shalt" eType="#//DSLSelfHealingAlt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRulePlanner" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner" eType="#//DSLPlanner"/>
@@ -43,6 +44,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" eType="#//DSLAnalyzer"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="executor" eType="#//DSLExecutor"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="planner2" eType="#//DSLPlanner"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shalt" eType="#//DSLSelfHealingAlt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRuleExecutor" eSuperTypes="#//DSLRules">
     <eStructuralFeatures xsi:type="ecore:EReference" name="executor" eType="#//DSLExecutor"/>
@@ -105,6 +107,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referenceInput" upperBound="-1"
         eType="#//DSLReferenceInput" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shalt" upperBound="-1"
+        eType="#//DSLSelfHealingAlt" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLSensor">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -116,6 +120,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLMeasuredOutput">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DSLSelfHealingAlt">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

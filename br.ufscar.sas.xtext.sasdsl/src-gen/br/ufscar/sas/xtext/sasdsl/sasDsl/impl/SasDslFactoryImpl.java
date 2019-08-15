@@ -87,6 +87,7 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
       case SasDslPackage.DSL_EFFECTOR: return createDSLEffector();
       case SasDslPackage.DSL_REFERENCE_INPUT: return createDSLReferenceInput();
       case SasDslPackage.DSL_MEASURED_OUTPUT: return createDSLMeasuredOutput();
+      case SasDslPackage.DSL_SELF_HEALING_ALT: return createDSLSelfHealingAlt();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -354,6 +355,18 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
   {
     DSLMeasuredOutputImpl dslMeasuredOutput = new DSLMeasuredOutputImpl();
     return dslMeasuredOutput;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLSelfHealingAlt createDSLSelfHealingAlt()
+  {
+    DSLSelfHealingAltImpl dslSelfHealingAlt = new DSLSelfHealingAltImpl();
+    return dslSelfHealingAlt;
   }
 
   /**

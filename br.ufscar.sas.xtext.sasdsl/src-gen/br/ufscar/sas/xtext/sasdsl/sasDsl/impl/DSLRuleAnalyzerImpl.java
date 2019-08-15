@@ -9,6 +9,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getRreference <em>Rreference</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getAnalyzer2 <em>Analyzer2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @generated
@@ -97,6 +99,16 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @ordered
    */
   protected DSLAnalyzer analyzer2;
+
+  /**
+   * The cached value of the '{@link #getShalt() <em>Shalt</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getShalt()
+   * @generated
+   * @ordered
+   */
+  protected DSLSelfHealingAlt shalt;
 
   /**
    * <!-- begin-user-doc -->
@@ -395,6 +407,51 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
+  public DSLSelfHealingAlt getShalt()
+  {
+    if (shalt != null && shalt.eIsProxy())
+    {
+      InternalEObject oldShalt = (InternalEObject)shalt;
+      shalt = (DSLSelfHealingAlt)eResolveProxy(oldShalt);
+      if (shalt != oldShalt)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+      }
+    }
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLSelfHealingAlt basicGetShalt()
+  {
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setShalt(DSLSelfHealingAlt newShalt)
+  {
+    DSLSelfHealingAlt oldShalt = shalt;
+    shalt = newShalt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -417,6 +474,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         if (resolve) return getAnalyzer2();
         return basicGetAnalyzer2();
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        if (resolve) return getShalt();
+        return basicGetShalt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -448,6 +508,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         setAnalyzer2((DSLAnalyzer)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        setShalt((DSLSelfHealingAlt)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -481,6 +544,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         setAnalyzer2((DSLAnalyzer)null);
         return;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        setShalt((DSLSelfHealingAlt)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -507,6 +573,8 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
         return rreference != null;
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         return analyzer2 != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        return shalt != null;
     }
     return super.eIsSet(featureID);
   }

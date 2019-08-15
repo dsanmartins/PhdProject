@@ -1072,6 +1072,74 @@ ruleDSLRuleAnalyzer returns [EObject current=null]
 				newLeafNode(otherlv_29, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_4_5());
 			}
 		)
+		    |
+		(
+			otherlv_30='analyzer'
+			{
+				newLeafNode(otherlv_30, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerKeyword_5_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+						}
+					}
+					otherlv_31=RULE_ID
+					{
+						newLeafNode(otherlv_31, grammarAccess.getDSLRuleAnalyzerAccess().getAnalyzerDSLAnalyzerCrossReference_5_1_0());
+					}
+				)
+			)
+			(
+				(
+					(
+						lv_access_32_1='must-use'
+						{
+							newLeafNode(lv_access_32_1, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustUseKeyword_5_2_0_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_32_1, null);
+						}
+						    |
+						lv_access_32_2='must-not-use'
+						{
+							newLeafNode(lv_access_32_2, grammarAccess.getDSLRuleAnalyzerAccess().getAccessMustNotUseKeyword_5_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_32_2, null);
+						}
+					)
+				)
+			)
+			otherlv_33='alternative'
+			{
+				newLeafNode(otherlv_33, grammarAccess.getDSLRuleAnalyzerAccess().getAlternativeKeyword_5_3());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleAnalyzerRule());
+						}
+					}
+					otherlv_34=RULE_ID
+					{
+						newLeafNode(otherlv_34, grammarAccess.getDSLRuleAnalyzerAccess().getShaltDSLSelfHealingAltCrossReference_5_4_0());
+					}
+				)
+			)
+			otherlv_35=';'
+			{
+				newLeafNode(otherlv_35, grammarAccess.getDSLRuleAnalyzerAccess().getSemicolonKeyword_5_5());
+			}
+		)
 	)
 ;
 
@@ -1360,6 +1428,74 @@ ruleDSLRulePlanner returns [EObject current=null]
 			otherlv_23=';'
 			{
 				newLeafNode(otherlv_23, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_3_5());
+			}
+		)
+		    |
+		(
+			otherlv_24='planner'
+			{
+				newLeafNode(otherlv_24, grammarAccess.getDSLRulePlannerAccess().getPlannerKeyword_4_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+						}
+					}
+					otherlv_25=RULE_ID
+					{
+						newLeafNode(otherlv_25, grammarAccess.getDSLRulePlannerAccess().getPlannerDSLPlannerCrossReference_4_1_0());
+					}
+				)
+			)
+			(
+				(
+					(
+						lv_access_26_1='must-use'
+						{
+							newLeafNode(lv_access_26_1, grammarAccess.getDSLRulePlannerAccess().getAccessMustUseKeyword_4_2_0_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_26_1, null);
+						}
+						    |
+						lv_access_26_2='must-not-use'
+						{
+							newLeafNode(lv_access_26_2, grammarAccess.getDSLRulePlannerAccess().getAccessMustNotUseKeyword_4_2_0_1());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+							}
+							setWithLastConsumed($current, "access", lv_access_26_2, null);
+						}
+					)
+				)
+			)
+			otherlv_27='alternative'
+			{
+				newLeafNode(otherlv_27, grammarAccess.getDSLRulePlannerAccess().getAlternativeKeyword_4_3());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRulePlannerRule());
+						}
+					}
+					otherlv_28=RULE_ID
+					{
+						newLeafNode(otherlv_28, grammarAccess.getDSLRulePlannerAccess().getShaltDSLSelfHealingAltCrossReference_4_4_0());
+					}
+				)
+			)
+			otherlv_29=';'
+			{
+				newLeafNode(otherlv_29, grammarAccess.getDSLRulePlannerAccess().getSemicolonKeyword_4_5());
 			}
 		)
 	)
@@ -2432,9 +2568,28 @@ ruleDSLKnowledge returns [EObject current=null]
 				}
 			)
 		)+
-		otherlv_4='}'
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDSLKnowledgeAccess().getShaltDSLSelfHealingAltParserRuleCall_4_0());
+				}
+				lv_shalt_4_0=ruleDSLSelfHealingAlt
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDSLKnowledgeRule());
+					}
+					add(
+						$current,
+						"shalt",
+						lv_shalt_4_0,
+						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLSelfHealingAlt");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_5='}'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getDSLKnowledgeAccess().getRightCurlyBracketKeyword_4());
+			newLeafNode(otherlv_5, grammarAccess.getDSLKnowledgeAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -2615,6 +2770,51 @@ ruleDSLMeasuredOutput returns [EObject current=null]
 		otherlv_2=';'
 		{
 			newLeafNode(otherlv_2, grammarAccess.getDSLMeasuredOutputAccess().getSemicolonKeyword_2());
+		}
+	)
+;
+
+// Entry rule entryRuleDSLSelfHealingAlt
+entryRuleDSLSelfHealingAlt returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDSLSelfHealingAltRule()); }
+	iv_ruleDSLSelfHealingAlt=ruleDSLSelfHealingAlt
+	{ $current=$iv_ruleDSLSelfHealingAlt.current; }
+	EOF;
+
+// Rule DSLSelfHealingAlt
+ruleDSLSelfHealingAlt returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='SelfHealingAlt'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getDSLSelfHealingAltAccess().getSelfHealingAltKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getDSLSelfHealingAltAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDSLSelfHealingAltRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_2=';'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getDSLSelfHealingAltAccess().getSemicolonKeyword_2());
 		}
 	)
 ;

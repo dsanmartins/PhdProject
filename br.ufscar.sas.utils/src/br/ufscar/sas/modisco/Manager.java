@@ -675,6 +675,7 @@ public class Manager   {
 		case "Effector" : return "/0/@extension.0/@stereotype.10";
 		case "Managing" : return "/0/@extension.0/@stereotype.11";
 		case "Managed" : return "/0/@extension.0/@stereotype.12";
+		case "SelfHealingAlt" : return "/0/@extension.0/@stereotype.13";
 		default: return "";
 		}
 	}

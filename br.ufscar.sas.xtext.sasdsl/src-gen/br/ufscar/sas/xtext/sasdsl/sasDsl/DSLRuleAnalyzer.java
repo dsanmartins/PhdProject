@@ -19,6 +19,7 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getRreference <em>Rreference</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getAnalyzer2 <em>Analyzer2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleAnalyzer()
@@ -182,5 +183,31 @@ public interface DSLRuleAnalyzer extends DSLRules
    * @generated
    */
   void setAnalyzer2(DSLAnalyzer value);
+
+  /**
+   * Returns the value of the '<em><b>Shalt</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Shalt</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Shalt</em>' reference.
+   * @see #setShalt(DSLSelfHealingAlt)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleAnalyzer_Shalt()
+   * @model
+   * @generated
+   */
+  DSLSelfHealingAlt getShalt();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getShalt <em>Shalt</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Shalt</em>' reference.
+   * @see #getShalt()
+   * @generated
+   */
+  void setShalt(DSLSelfHealingAlt value);
 
 } // DSLRuleAnalyzer

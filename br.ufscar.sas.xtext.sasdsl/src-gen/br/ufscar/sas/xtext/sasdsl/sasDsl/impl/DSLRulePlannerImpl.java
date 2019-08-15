@@ -8,6 +8,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getExecutor <em>Executor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getPlanner2 <em>Planner2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @generated
@@ -85,6 +87,16 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
    * @ordered
    */
   protected DSLPlanner planner2;
+
+  /**
+   * The cached value of the '{@link #getShalt() <em>Shalt</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getShalt()
+   * @generated
+   * @ordered
+   */
+  protected DSLSelfHealingAlt shalt;
 
   /**
    * <!-- begin-user-doc -->
@@ -338,6 +350,51 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
    * @generated
    */
   @Override
+  public DSLSelfHealingAlt getShalt()
+  {
+    if (shalt != null && shalt.eIsProxy())
+    {
+      InternalEObject oldShalt = (InternalEObject)shalt;
+      shalt = (DSLSelfHealingAlt)eResolveProxy(oldShalt);
+      if (shalt != oldShalt)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_PLANNER__SHALT, oldShalt, shalt));
+      }
+    }
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLSelfHealingAlt basicGetShalt()
+  {
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setShalt(DSLSelfHealingAlt newShalt)
+  {
+    DSLSelfHealingAlt oldShalt = shalt;
+    shalt = newShalt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_PLANNER__SHALT, oldShalt, shalt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -357,6 +414,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
       case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
         if (resolve) return getPlanner2();
         return basicGetPlanner2();
+      case SasDslPackage.DSL_RULE_PLANNER__SHALT:
+        if (resolve) return getShalt();
+        return basicGetShalt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -385,6 +445,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
         return;
       case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
         setPlanner2((DSLPlanner)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_PLANNER__SHALT:
+        setShalt((DSLSelfHealingAlt)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -415,6 +478,9 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
       case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
         setPlanner2((DSLPlanner)null);
         return;
+      case SasDslPackage.DSL_RULE_PLANNER__SHALT:
+        setShalt((DSLSelfHealingAlt)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -439,6 +505,8 @@ public class DSLRulePlannerImpl extends DSLRulesImpl implements DSLRulePlanner
         return executor != null;
       case SasDslPackage.DSL_RULE_PLANNER__PLANNER2:
         return planner2 != null;
+      case SasDslPackage.DSL_RULE_PLANNER__SHALT:
+        return shalt != null;
     }
     return super.eIsSet(featureID);
   }

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt
 
 /**
  * Generates code from your model files on save.
@@ -58,6 +59,7 @@ class SasDslGenerator extends AbstractGenerator {
 	var lSensor =  new ArrayList<DSLSensor>();
 	var lMOutput =  new ArrayList<DSLMeasuredOutput>();
 	var lRInput =  new ArrayList<DSLReferenceInput>();
+	var lAlternative =  new ArrayList<DSLSelfHealingAlt>();
 		
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 				
@@ -184,6 +186,21 @@ class SasDslGenerator extends AbstractGenerator {
 							depth.set(4,level4)
 						}
 						
+						var selfHeal = kno.shalt
+						for (var s = 0; s< selfHeal.size; s++ )
+						{
+							var level4 = depth.get(3);
+							var r = selfHeal.get(s)
+							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
+															"/" + "@structureElement."+ level1 + 
+															"/" + "@structureElement."+ level2 +
+															"/" + "@structureElement."+ level3 +
+															"/" + "@structureElement."+ level4)		
+							lAlternative.add(r)		
+							level4++
+							depth.set(4,level4)
+						}
+						
 						level3++
 						depth.set(3,level3)
 					}
@@ -279,6 +296,20 @@ class SasDslGenerator extends AbstractGenerator {
 															"/" + "@structureElement."+ level2 +
 															"/" + "@structureElement."+ level3)			
 							lRInput.add(r)		
+							level3++
+							depth.set(3,level3)
+						}
+						
+						var selfHeal = kno.shalt
+						for (var s = 0; s< selfHeal.size; s++ )
+						{
+							var level3 = depth.get(3);
+							var r = selfHeal.get(s)
+							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
+															"/" + "@structureElement."+ level1 + 
+															"/" + "@structureElement."+ level2 +
+															"/" + "@structureElement."+ level3)			
+							lAlternative.add(r)		
 							level3++
 							depth.set(3,level3)
 						}
@@ -683,6 +714,22 @@ class SasDslGenerator extends AbstractGenerator {
 										}
 									}	
 									
+									if (r.shalt !== null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.shalt.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.shalt.name,pathInAggregated)
+										}
+									}	
+									
 								}
 								else
 								{
@@ -748,6 +795,20 @@ class SasDslGenerator extends AbstractGenerator {
 										else
 											inAggregatedPath.put(r.analyzer2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
 									}
+									if (r.shalt !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.shalt.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.shalt.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+									}
+									
+									
 									
 								}
 								rAnalyzer++
@@ -769,6 +830,9 @@ class SasDslGenerator extends AbstractGenerator {
 												else
 													if (r.analyzer2 !== null)
 														aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.analyzer2.name) + "'" + relation
+													else
+														if (r.shalt !== null)
+															aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation	
 									
 									aggregatedPath.replace(r.analyzer.name, aggregated)
 								}
@@ -788,6 +852,9 @@ class SasDslGenerator extends AbstractGenerator {
 												else
 													if (r.analyzer2 !== null)
 														aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.analyzer2.name) + "'" + relation
+													else
+														if (r.shalt !== null)
+															aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
 									
 									aggregatedPath.put(r.analyzer.name, aggregated)
 								}
@@ -865,6 +932,21 @@ class SasDslGenerator extends AbstractGenerator {
 												}
 											}	
 											
+											if (r.shalt !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.shalt.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.put(r.shalt.name,pathInAggregated)
+												}
+											}	
 										}
 										else
 										{
@@ -919,6 +1001,18 @@ class SasDslGenerator extends AbstractGenerator {
 												else
 													inAggregatedPath.put(r.planner2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
 											}
+											if (r.shalt !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.shalt.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.shalt.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+											}
 											
 										}
 										rPlanner++
@@ -937,6 +1031,10 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.planner2 !== null)
 															aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.planner2.name) + "'" + relation
+														else
+															if (r.shalt !== null)
+																aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
+												
 												
 											aggregatedPath.replace(r.planner.name, aggregated)
 										}
@@ -953,6 +1051,9 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.planner2 !== null)
 															aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.planner2.name) + "'" + relation
+														else
+															if (r.shalt !== null)
+																aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
 															
 											aggregatedPath.put(r.planner.name, aggregated)
 										}
@@ -1286,6 +1387,7 @@ class SasDslGenerator extends AbstractGenerator {
 			     <stereotype name="Effector" type="structure:Component"/>
 			     <stereotype name="Managing Subsystem" type="structure:Subsystem"/>
 			     <stereotype name="Managed Subsystem" type="structure:Subsystem"/>
+			     <stereotype name="Self-Healing Alternative" type="structure:Component"/>
 			</extension>
 			<model xsi:type="structure:StructureModel" name="ArchitecturalView_">
 				«FOR arch : architectureDefinition.managing»
@@ -1319,6 +1421,9 @@ class SasDslGenerator extends AbstractGenerator {
 								<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4" «inAggregatedPath.get(knowledge.name)»>
 									«FOR referenceInput: knowledge.referenceInput»
 									<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5"/>
+									«ENDFOR»	
+									«FOR shalt: knowledge.shalt»
+									<structureElement xsi:type="structure:Component" name="«shalt.name»" stereotype="/0/@extension.0/@stereotype.13"/>
 									«ENDFOR»																											
 								</structureElement>
 								«ENDFOR»
@@ -1354,6 +1459,9 @@ class SasDslGenerator extends AbstractGenerator {
 						<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4" «inAggregatedPath.get(knowledge.name)»>
 							«FOR referenceInput: knowledge.referenceInput»
 							<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5" «inAggregatedPath.get(referenceInput.name)» />
+							«ENDFOR»
+							«FOR shalt: knowledge.shalt»
+							<structureElement xsi:type="structure:Component" name="«shalt.name»" stereotype="/0/@extension.0/@stereotype.13" «inAggregatedPath.get(shalt.name)» />
 							«ENDFOR»																											
 						</structureElement>
 						«ENDFOR»
@@ -1467,6 +1575,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«FOR DSLReferenceInput refInput : lRInput»
 		context StructureModel
 		inv exist_«refInput.name»: Component.allInstances()->exists(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')
+		
+		«ENDFOR»	
+		«FOR DSLSelfHealingAlt shalt : lAlternative»
+		context StructureModel
+		inv exist_«shalt.name»: Component.allInstances()->exists(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Self-Healing Alternative')
 		
 		«ENDFOR»	
 	--------------------------------------------------------
@@ -1589,6 +1702,15 @@ class SasDslGenerator extends AbstractGenerator {
 		inv composite_«refInput.name»: Component.allInstances()->select(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')->
 									    exists(d|d.oclContainer().oclAsType(Component).name='«knowledge.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Knowledge')
 		«ENDIF»
+		«ENDFOR»
+		
+		«FOR DSLSelfHealingAlt shalt : lAlternative»
+		«IF shalt.eContainer instanceof DSLKnowledge»
+		«var knowledge = shalt.eContainer as DSLKnowledge»
+		context StructureModel
+		inv composite_«shalt.name»: Component.allInstances()->select(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Self-Healing Alternative')->
+									    exists(d|d.oclContainer().oclAsType(Component).name='«knowledge.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Knowledge')
+		«ENDIF»
 		«ENDFOR»	
 	
 		--------------------------------------------------------
@@ -1671,6 +1793,12 @@ class SasDslGenerator extends AbstractGenerator {
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
 		«ENDIF»
+		«IF dslRuleAnalyzer.shalt !== null»
+		«var firstArgument = dslRuleAnalyzer.analyzer»
+		«var secondArgument = dslRuleAnalyzer.shalt»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRulePlanner»
 		«var dslRulePlanner = dslRule as DSLRulePlanner»
 		«IF dslRulePlanner.analyzer !== null»
@@ -1682,6 +1810,12 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRulePlanner.planner2 !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.planner2»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ENDIF»
+		«IF dslRulePlanner.shalt !== null»
+		«var firstArgument = dslRulePlanner.planner»
+		«var secondArgument = dslRulePlanner.shalt»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
 		«ENDIF»

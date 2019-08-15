@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge#getName <em>Name</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge#getReferenceInput <em>Reference Input</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLKnowledge()
@@ -67,5 +68,21 @@ public interface DSLKnowledge extends EObject
    * @generated
    */
   EList<DSLReferenceInput> getReferenceInput();
+
+  /**
+   * Returns the value of the '<em><b>Shalt</b></em>' containment reference list.
+   * The list contents are of type {@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Shalt</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Shalt</em>' containment reference list.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLKnowledge_Shalt()
+   * @model containment="true"
+   * @generated
+   */
+  EList<DSLSelfHealingAlt> getShalt();
 
 } // DSLKnowledge

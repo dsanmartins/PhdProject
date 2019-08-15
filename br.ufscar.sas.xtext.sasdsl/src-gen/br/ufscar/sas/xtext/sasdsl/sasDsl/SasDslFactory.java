@@ -222,6 +222,15 @@ public interface SasDslFactory extends EFactory
   DSLMeasuredOutput createDSLMeasuredOutput();
 
   /**
+   * Returns a new object of class '<em>DSL Self Healing Alt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DSL Self Healing Alt</em>'.
+   * @generated
+   */
+  DSLSelfHealingAlt createDSLSelfHealingAlt();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

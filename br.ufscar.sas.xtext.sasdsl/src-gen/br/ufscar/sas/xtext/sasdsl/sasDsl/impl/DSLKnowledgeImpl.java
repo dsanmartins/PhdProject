@@ -5,6 +5,7 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 
 import java.util.Collection;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLKnowledgeImpl#getName <em>Name</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLKnowledgeImpl#getReferenceInput <em>Reference Input</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLKnowledgeImpl#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @generated
@@ -68,6 +70,16 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
    * @ordered
    */
   protected EList<DSLReferenceInput> referenceInput;
+
+  /**
+   * The cached value of the '{@link #getShalt() <em>Shalt</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getShalt()
+   * @generated
+   * @ordered
+   */
+  protected EList<DSLSelfHealingAlt> shalt;
 
   /**
    * <!-- begin-user-doc -->
@@ -136,12 +148,29 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
    * @generated
    */
   @Override
+  public EList<DSLSelfHealingAlt> getShalt()
+  {
+    if (shalt == null)
+    {
+      shalt = new EObjectContainmentEList<DSLSelfHealingAlt>(DSLSelfHealingAlt.class, this, SasDslPackage.DSL_KNOWLEDGE__SHALT);
+    }
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case SasDslPackage.DSL_KNOWLEDGE__REFERENCE_INPUT:
         return ((InternalEList<?>)getReferenceInput()).basicRemove(otherEnd, msgs);
+      case SasDslPackage.DSL_KNOWLEDGE__SHALT:
+        return ((InternalEList<?>)getShalt()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -160,6 +189,8 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
         return getName();
       case SasDslPackage.DSL_KNOWLEDGE__REFERENCE_INPUT:
         return getReferenceInput();
+      case SasDslPackage.DSL_KNOWLEDGE__SHALT:
+        return getShalt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -182,6 +213,10 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
         getReferenceInput().clear();
         getReferenceInput().addAll((Collection<? extends DSLReferenceInput>)newValue);
         return;
+      case SasDslPackage.DSL_KNOWLEDGE__SHALT:
+        getShalt().clear();
+        getShalt().addAll((Collection<? extends DSLSelfHealingAlt>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -202,6 +237,9 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
       case SasDslPackage.DSL_KNOWLEDGE__REFERENCE_INPUT:
         getReferenceInput().clear();
         return;
+      case SasDslPackage.DSL_KNOWLEDGE__SHALT:
+        getShalt().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -220,6 +258,8 @@ public class DSLKnowledgeImpl extends MinimalEObjectImpl.Container implements DS
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SasDslPackage.DSL_KNOWLEDGE__REFERENCE_INPUT:
         return referenceInput != null && !referenceInput.isEmpty();
+      case SasDslPackage.DSL_KNOWLEDGE__SHALT:
+        return shalt != null && !shalt.isEmpty();
     }
     return super.eIsSet(featureID);
   }

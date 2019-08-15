@@ -10,6 +10,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
@@ -82,6 +83,12 @@ public class MyDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNameP
       if (obj instanceof DSLMeasuredOutput) {
         _matched=true;
         return QualifiedName.create(((DSLMeasuredOutput)obj).getName());
+      }
+    }
+    if (!_matched) {
+      if (obj instanceof DSLSelfHealingAlt) {
+        _matched=true;
+        return QualifiedName.create(((DSLSelfHealingAlt)obj).getName());
       }
     }
     return super.getFullyQualifiedName(obj);

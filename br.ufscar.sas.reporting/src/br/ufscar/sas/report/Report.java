@@ -35,7 +35,7 @@ public class Report {
 
 		XWPFRun r1 = title.createRun();
 		r1.setBold(true);
-		r1.setColor("5983b0");
+		r1.setColor("17365d");
 		String t1 = "Architectural Report of " + projectName + " Project" ;
 		r1.setText(t1);
 		r1.addBreak();
@@ -46,7 +46,7 @@ public class Report {
 		
 		r1 = section1.createRun();
 		r1.setBold(true);
-		r1.setColor("5983b0");
+		r1.setColor("17365d");
 		t1 = "Architectural Diagrams" ;
 		r1.setText(t1);
 		r1.addBreak();

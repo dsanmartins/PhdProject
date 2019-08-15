@@ -379,13 +379,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_ANALYZER__ANALYZER2 = DSL_RULES_FEATURE_COUNT + 5;
 
   /**
+   * The feature id for the '<em><b>Shalt</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_ANALYZER__SHALT = DSL_RULES_FEATURE_COUNT + 6;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Analyzer</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_ANALYZER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 6;
+  int DSL_RULE_ANALYZER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 7;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl <em>DSL Rule Planner</em>}' class.
@@ -452,13 +461,22 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_PLANNER__PLANNER2 = DSL_RULES_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Shalt</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_PLANNER__SHALT = DSL_RULES_FEATURE_COUNT + 5;
+
+  /**
    * The number of structural features of the '<em>DSL Rule Planner</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_RULE_PLANNER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 5;
+  int DSL_RULE_PLANNER_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl <em>DSL Rule Executor</em>}' class.
@@ -931,13 +949,22 @@ public interface SasDslPackage extends EPackage
   int DSL_KNOWLEDGE__REFERENCE_INPUT = 1;
 
   /**
+   * The feature id for the '<em><b>Shalt</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_KNOWLEDGE__SHALT = 2;
+
+  /**
    * The number of structural features of the '<em>DSL Knowledge</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_KNOWLEDGE_FEATURE_COUNT = 2;
+  int DSL_KNOWLEDGE_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSensorImpl <em>DSL Sensor</em>}' class.
@@ -1050,6 +1077,34 @@ public interface SasDslPackage extends EPackage
    * @ordered
    */
   int DSL_MEASURED_OUTPUT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSelfHealingAltImpl <em>DSL Self Healing Alt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSelfHealingAltImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLSelfHealingAlt()
+   * @generated
+   */
+  int DSL_SELF_HEALING_ALT = 22;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_SELF_HEALING_ALT__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>DSL Self Healing Alt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_SELF_HEALING_ALT_FEATURE_COUNT = 1;
 
 
   /**
@@ -1333,6 +1388,17 @@ public interface SasDslPackage extends EPackage
   EReference getDSLRuleAnalyzer_Analyzer2();
 
   /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getShalt <em>Shalt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Shalt</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer#getShalt()
+   * @see #getDSLRuleAnalyzer()
+   * @generated
+   */
+  EReference getDSLRuleAnalyzer_Shalt();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner <em>DSL Rule Planner</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1396,6 +1462,17 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EReference getDSLRulePlanner_Planner2();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getShalt <em>Shalt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Shalt</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner#getShalt()
+   * @see #getDSLRulePlanner()
+   * @generated
+   */
+  EReference getDSLRulePlanner_Shalt();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor <em>DSL Rule Executor</em>}'.
@@ -1816,6 +1893,17 @@ public interface SasDslPackage extends EPackage
   EReference getDSLKnowledge_ReferenceInput();
 
   /**
+   * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge#getShalt <em>Shalt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Shalt</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge#getShalt()
+   * @see #getDSLKnowledge()
+   * @generated
+   */
+  EReference getDSLKnowledge_Shalt();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor <em>DSL Sensor</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1898,6 +1986,27 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EAttribute getDSLMeasuredOutput_Name();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt <em>DSL Self Healing Alt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DSL Self Healing Alt</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt
+   * @generated
+   */
+  EClass getDSLSelfHealingAlt();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt#getName()
+   * @see #getDSLSelfHealingAlt()
+   * @generated
+   */
+  EAttribute getDSLSelfHealingAlt_Name();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -2143,6 +2252,14 @@ public interface SasDslPackage extends EPackage
     EReference DSL_RULE_ANALYZER__ANALYZER2 = eINSTANCE.getDSLRuleAnalyzer_Analyzer2();
 
     /**
+     * The meta object literal for the '<em><b>Shalt</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_ANALYZER__SHALT = eINSTANCE.getDSLRuleAnalyzer_Shalt();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulePlannerImpl <em>DSL Rule Planner</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2191,6 +2308,14 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EReference DSL_RULE_PLANNER__PLANNER2 = eINSTANCE.getDSLRulePlanner_Planner2();
+
+    /**
+     * The meta object literal for the '<em><b>Shalt</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_PLANNER__SHALT = eINSTANCE.getDSLRulePlanner_Shalt();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleExecutorImpl <em>DSL Rule Executor</em>}' class.
@@ -2527,6 +2652,14 @@ public interface SasDslPackage extends EPackage
     EReference DSL_KNOWLEDGE__REFERENCE_INPUT = eINSTANCE.getDSLKnowledge_ReferenceInput();
 
     /**
+     * The meta object literal for the '<em><b>Shalt</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_KNOWLEDGE__SHALT = eINSTANCE.getDSLKnowledge_Shalt();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSensorImpl <em>DSL Sensor</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2597,6 +2730,24 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EAttribute DSL_MEASURED_OUTPUT__NAME = eINSTANCE.getDSLMeasuredOutput_Name();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSelfHealingAltImpl <em>DSL Self Healing Alt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSelfHealingAltImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLSelfHealingAlt()
+     * @generated
+     */
+    EClass DSL_SELF_HEALING_ALT = eINSTANCE.getDSLSelfHealingAlt();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DSL_SELF_HEALING_ALT__NAME = eINSTANCE.getDSLSelfHealingAlt_Name();
 
   }
 

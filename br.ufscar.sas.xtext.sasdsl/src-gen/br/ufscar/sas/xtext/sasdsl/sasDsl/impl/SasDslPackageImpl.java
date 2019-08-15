@@ -24,6 +24,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslFactory;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
@@ -196,6 +197,13 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   private EClass dslMeasuredOutputEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass dslSelfHealingAltEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -552,6 +560,17 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
+  public EReference getDSLRuleAnalyzer_Shalt()
+  {
+    return (EReference)dslRuleAnalyzerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getDSLRulePlanner()
   {
     return dslRulePlannerEClass;
@@ -610,6 +629,17 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
   public EReference getDSLRulePlanner_Planner2()
   {
     return (EReference)dslRulePlannerEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDSLRulePlanner_Shalt()
+  {
+    return (EReference)dslRulePlannerEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1047,6 +1077,17 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
+  public EReference getDSLKnowledge_Shalt()
+  {
+    return (EReference)dslKnowledgeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getDSLSensor()
   {
     return dslSensorEClass;
@@ -1135,6 +1176,28 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
+  public EClass getDSLSelfHealingAlt()
+  {
+    return dslSelfHealingAltEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDSLSelfHealingAlt_Name()
+  {
+    return (EAttribute)dslSelfHealingAltEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public SasDslFactory getSasDslFactory()
   {
     return (SasDslFactory)getEFactoryInstance();
@@ -1191,6 +1254,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     createEReference(dslRuleAnalyzerEClass, DSL_RULE_ANALYZER__PLANNER);
     createEReference(dslRuleAnalyzerEClass, DSL_RULE_ANALYZER__RREFERENCE);
     createEReference(dslRuleAnalyzerEClass, DSL_RULE_ANALYZER__ANALYZER2);
+    createEReference(dslRuleAnalyzerEClass, DSL_RULE_ANALYZER__SHALT);
 
     dslRulePlannerEClass = createEClass(DSL_RULE_PLANNER);
     createEReference(dslRulePlannerEClass, DSL_RULE_PLANNER__PLANNER);
@@ -1198,6 +1262,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     createEReference(dslRulePlannerEClass, DSL_RULE_PLANNER__ANALYZER);
     createEReference(dslRulePlannerEClass, DSL_RULE_PLANNER__EXECUTOR);
     createEReference(dslRulePlannerEClass, DSL_RULE_PLANNER__PLANNER2);
+    createEReference(dslRulePlannerEClass, DSL_RULE_PLANNER__SHALT);
 
     dslRuleExecutorEClass = createEClass(DSL_RULE_EXECUTOR);
     createEReference(dslRuleExecutorEClass, DSL_RULE_EXECUTOR__EXECUTOR);
@@ -1248,6 +1313,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     dslKnowledgeEClass = createEClass(DSL_KNOWLEDGE);
     createEAttribute(dslKnowledgeEClass, DSL_KNOWLEDGE__NAME);
     createEReference(dslKnowledgeEClass, DSL_KNOWLEDGE__REFERENCE_INPUT);
+    createEReference(dslKnowledgeEClass, DSL_KNOWLEDGE__SHALT);
 
     dslSensorEClass = createEClass(DSL_SENSOR);
     createEAttribute(dslSensorEClass, DSL_SENSOR__NAME);
@@ -1260,6 +1326,9 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     dslMeasuredOutputEClass = createEClass(DSL_MEASURED_OUTPUT);
     createEAttribute(dslMeasuredOutputEClass, DSL_MEASURED_OUTPUT__NAME);
+
+    dslSelfHealingAltEClass = createEClass(DSL_SELF_HEALING_ALT);
+    createEAttribute(dslSelfHealingAltEClass, DSL_SELF_HEALING_ALT__NAME);
   }
 
   /**
@@ -1331,6 +1400,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     initEReference(getDSLRuleAnalyzer_Planner(), this.getDSLPlanner(), null, "planner", null, 0, 1, DSLRuleAnalyzer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLRuleAnalyzer_Rreference(), this.getDSLReferenceInput(), null, "rreference", null, 0, 1, DSLRuleAnalyzer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLRuleAnalyzer_Analyzer2(), this.getDSLAnalyzer(), null, "analyzer2", null, 0, 1, DSLRuleAnalyzer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLRuleAnalyzer_Shalt(), this.getDSLSelfHealingAlt(), null, "shalt", null, 0, 1, DSLRuleAnalyzer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslRulePlannerEClass, DSLRulePlanner.class, "DSLRulePlanner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDSLRulePlanner_Planner(), this.getDSLPlanner(), null, "planner", null, 0, 1, DSLRulePlanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1338,6 +1408,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     initEReference(getDSLRulePlanner_Analyzer(), this.getDSLAnalyzer(), null, "analyzer", null, 0, 1, DSLRulePlanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLRulePlanner_Executor(), this.getDSLExecutor(), null, "executor", null, 0, 1, DSLRulePlanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLRulePlanner_Planner2(), this.getDSLPlanner(), null, "planner2", null, 0, 1, DSLRulePlanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLRulePlanner_Shalt(), this.getDSLSelfHealingAlt(), null, "shalt", null, 0, 1, DSLRulePlanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslRuleExecutorEClass, DSLRuleExecutor.class, "DSLRuleExecutor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDSLRuleExecutor_Executor(), this.getDSLExecutor(), null, "executor", null, 0, 1, DSLRuleExecutor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1388,6 +1459,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     initEClass(dslKnowledgeEClass, DSLKnowledge.class, "DSLKnowledge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLKnowledge_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLKnowledge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLKnowledge_ReferenceInput(), this.getDSLReferenceInput(), null, "referenceInput", null, 0, -1, DSLKnowledge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLKnowledge_Shalt(), this.getDSLSelfHealingAlt(), null, "shalt", null, 0, -1, DSLKnowledge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslSensorEClass, DSLSensor.class, "DSLSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLSensor_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLSensor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1400,6 +1472,9 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     initEClass(dslMeasuredOutputEClass, DSLMeasuredOutput.class, "DSLMeasuredOutput", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLMeasuredOutput_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLMeasuredOutput.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(dslSelfHealingAltEClass, DSLSelfHealingAlt.class, "DSLSelfHealingAlt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDSLSelfHealingAlt_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLSelfHealingAlt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

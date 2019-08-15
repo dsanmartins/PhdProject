@@ -39,7 +39,8 @@ DSLRuleAnalyzer:
 	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor = [DSLMonitor] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference = [DSLReferenceInput] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2 = [DSLAnalyzer] ';') 
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2 = [DSLAnalyzer] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'alternative' shalt = [DSLSelfHealingAlt] ';') 
 ;
 
 DSLRulePlanner:
@@ -47,7 +48,8 @@ DSLRulePlanner:
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer = [DSLAnalyzer] ';') |
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') |
-	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2 = [DSLPlanner] ';')
+	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2 = [DSLPlanner] ';') |
+	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'alternative' shalt = [DSLSelfHealingAlt] ';')
 ;
 
 DSLRuleExecutor:
@@ -138,6 +140,7 @@ DSLKnowledge:
 	'Knowledge' name=ID '{'
 	
 		referenceInput += DSLReferenceInput+
+		shalt  += DSLSelfHealingAlt*
 	
 	'}'
 ;
@@ -160,6 +163,11 @@ DSLReferenceInput:
 DSLMeasuredOutput:
 	
 	'MeasuredOutput' name=ID ';'
+;
+
+DSLSelfHealingAlt:
+	
+	'SelfHealingAlt' name= ID ';'
 ;
 
 

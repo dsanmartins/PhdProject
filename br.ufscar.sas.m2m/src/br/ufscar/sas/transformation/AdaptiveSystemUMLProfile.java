@@ -54,6 +54,7 @@ public class AdaptiveSystemUMLProfile {
 		final Stereotype effector = sasProfile.createOwnedStereotype( "Effector",false );
 		final Stereotype managedSubsystem = sasProfile.createOwnedStereotype( "Managing Subsystem",false );
 		final Stereotype managingSubsystem = sasProfile.createOwnedStereotype( "Managed Subsystem",false );
+		final Stereotype selfHealingAlt = sasProfile.createOwnedStereotype( "Self-Healing Alternative",false );
 		
 		monitor.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
 		analyzer.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
@@ -68,6 +69,7 @@ public class AdaptiveSystemUMLProfile {
 		effector.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
 		managedSubsystem.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
 		managingSubsystem.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
+		selfHealingAlt.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
 		
 		sasProfile.define();
 		final File outputFile = new File(path + "AdaptiveSystemProfile.uml" );

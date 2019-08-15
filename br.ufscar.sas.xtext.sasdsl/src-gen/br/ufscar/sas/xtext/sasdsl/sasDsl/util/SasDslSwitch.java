@@ -234,6 +234,13 @@ public class SasDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SasDslPackage.DSL_SELF_HEALING_ALT:
+      {
+        DSLSelfHealingAlt dslSelfHealingAlt = (DSLSelfHealingAlt)theEObject;
+        T result = caseDSLSelfHealingAlt(dslSelfHealingAlt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -586,6 +593,22 @@ public class SasDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDSLMeasuredOutput(DSLMeasuredOutput object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>DSL Self Healing Alt</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>DSL Self Healing Alt</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDSLSelfHealingAlt(DSLSelfHealingAlt object)
   {
     return null;
   }
