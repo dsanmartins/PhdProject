@@ -8,15 +8,10 @@
             category="mainview"
             class="br.ufscar.sas.view.MainView"
             id="MainView"
-            name="Mining AR Smells in SaS">
+            name="Identifying AR Anomalies in ASs"
+            icon="icons/sample.gif">
       </view>
       
-      <view
-            category="mainview"
-            class="br.ufscar.sas.modelgraph.ArchitectureVisualization"
-            id="visualization"
-            name="Architecture Visualization">
-      </view>
       
 	</extension>
 	
@@ -41,7 +36,7 @@
             id="br.ufscar.sas.view.commands.category">
       </category>
       <command
-            name="SaS AR Code Smell"
+            name="Architectural Anomalies ASs"
             categoryId="br.ufscar.sas.view.commands.category"
             id="br.ufscar.sas.view.commands.ui">
       </command>
@@ -79,7 +74,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
          <perspective
-            name="AR Smells SaS"
+            name="AR Anomalies ASs"
             icon=""
             class="br.ufscar.sas.view.Perspective"
             id="br.ufscar.sas.view.Perspective">

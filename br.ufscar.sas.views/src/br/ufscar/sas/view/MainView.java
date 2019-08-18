@@ -45,6 +45,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -75,6 +77,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import org.eclipse.nebula.jface.gridviewer.*;
+import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.nebula.widgets.grid.GridItem;
+
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
@@ -91,9 +97,13 @@ import br.ufscar.sas.parser.FieldClassVisitor;
 import br.ufscar.sas.parser.MethodVisitor;
 import br.ufscar.sas.parser.VariableVisitor;
 import br.ufscar.sas.report.Report;
+import br.ufscar.sas.tableviewer.Anomaly;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationBelong;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
+import br.ufscar.sas.tableviewer.MappedAnomaly;
+import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
+import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
 import br.ufscar.sas.transformation.Kdm2Uml;
@@ -158,7 +168,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		GridData gd_tabFolder = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_tabFolder.widthHint = 1280;
-		gd_tabFolder.heightHint = 800;
+		gd_tabFolder.heightHint = 850;
 		tabFolder.setLayoutData(gd_tabFolder);
 
 		// Tab1
@@ -177,7 +187,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 	private void UIAbstractionMaintainer(TabFolder tabFolder, String projectName)
 	{	
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
-		tab1.setText("Abstraction Maintainer");
+		tab1.setText("Configurations");
 
 		Group group = new Group(tabFolder, SWT.NONE);
 		Group treeViewGroup = new Group(group, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -306,11 +316,86 @@ public class MainView extends ViewPart implements IPartListener2 {
 				}
 			}
 		});
+
+		Group tableViewGroup = new Group(group, SWT.NONE);
+		tableViewGroup.setText("Architectural Anomalies");
+		tableViewGroup.setBounds(10, 520, 500, 300);
+		tableViewGroup.setLayout(new FillLayout());
+		tab1.setControl(group);
+
+		GridTableViewer gridTableViewer = new GridTableViewer(tableViewGroup, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
+		gridTableViewer.setUseHashlookup(true);
+		gridTableViewer.getGrid().setLinesVisible(true);
+		gridTableViewer.getGrid().setHeaderVisible(true);
+		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
+
+		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column1.setResizeable(false);
+		column1.setWidth(75);
+		column1.setText("Anomaly");
+
+		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column2.setResizeable(false);
+		column2.setWidth(210);
+		column2.setText("Name");
+
+		GridColumn column3 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column3.setResizeable(false);
+		column3.setWidth(210);
+		column3.setWordWrap(true);
+		column3.setText("Description");
+
+		gridTableViewer.setContentProvider(new ArrayContentProvider());
+		gridTableViewer.setLabelProvider(new TableLabelAnomalyProvider());
+
+		DataConstraint queryClass = null;
+		List<Anomaly> anomalyObject = new ArrayList<Anomaly>();
+
+		try {
+			queryClass = new DataConstraint(databaseUrl);
+			List<String> lstAnomaly= queryClass.getAnomalies();
+			for (String anomaly :lstAnomaly )
+				anomalyObject.add(new Anomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]  ));
+
+			gridTableViewer.setInput(anomalyObject);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		GridColumn []cols = gridTableViewer.getGrid().getColumns();
+		for (GridItem item : gridTableViewer.getGrid().getItems()) {
+			GC gc = new GC(item.getDisplay());
+			int hmax = 80;
+			int max = 0;
+			Point tb=null;
+			for(GridColumn col : cols){
+				tb = col.getCellRenderer().computeSize(gc, col.getWidth(), SWT.DEFAULT, item);
+				max = Math.max(max, tb.y);
+				if(max > hmax){
+					break;
+				}
+			}
+
+			if(hmax==-1){
+
+			}else if(max > hmax){
+				max=hmax;
+			}
+
+			gc.dispose();
+			item.setHeight(max);
+		}
+
 	}
 
 	private void UIAnnotation(TabFolder tabFolder, String projectName) {
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
-		tab1.setText("Annotating Code");
+		tab1.setText("Code Elements Annotation");
 
 		Group group = new Group(tabFolder, SWT.NONE);
 
@@ -481,14 +566,21 @@ public class MainView extends ViewPart implements IPartListener2 {
 	}
 
 	private void UIControPanel(TabFolder tabFolder, String projectName) {
+
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
 		tab1.setText("Control Panel");
-
 		Group group = new Group(tabFolder, SWT.NONE);
+
+		Button generateReport = new Button(group, SWT.NONE);
+		generateReport.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		generateReport.setBounds(10, 10, 100, 25);
+		generateReport.setText("Create Report");
+		generateReport.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+		generateReport.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 
 		Group controlGroup = new Group(group, SWT.NONE);
 		controlGroup.setText("Architecture Visualization");
-		controlGroup.setBounds(10, 0, 450, 140);
+		controlGroup.setBounds(10, 50, 450, 130);
 
 		Label label1 = new Label(controlGroup, SWT.NONE);
 		label1.setText("Project Name: " + projectName);
@@ -519,7 +611,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group controlGroup2 = new Group(group, SWT.NONE);
 		controlGroup2.setText("Check Constraints");
-		controlGroup2.setBounds(10, 150, 450,300);
+		controlGroup2.setBounds(10, 200, 450,260);
 
 		Label lblExistence =  new Label(controlGroup2, SWT.NONE);
 		lblExistence.setText("Lack of abstractions:");
@@ -607,14 +699,43 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Button checkConstraint = new Button(controlGroup2, SWT.NONE);
 		checkConstraint.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-		checkConstraint.setBounds(10, 240, 60, 25);
+		checkConstraint.setBounds(10, 200, 60, 25);
 		checkConstraint.setText("Check");
 
-		Button generateReport = new Button(controlGroup2, SWT.NONE);
-		generateReport.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-		generateReport.setBounds(80, 240, 60, 25);
-		generateReport.setText("Report");
+		
+		Group controlGroup3 = new Group(group, SWT.NONE);
+		controlGroup3.setText("Identified Architectural Anomalies");
+		controlGroup3.setBounds(10, 480, 450,260);
+		controlGroup3.setLayout(new GridLayout());
+		
+		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		layoutData.minimumWidth = 300;
+		GridTableViewer gridTableViewer = new GridTableViewer(controlGroup3, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
+		gridTableViewer.setUseHashlookup(true);
+		gridTableViewer.getGrid().setLinesVisible(true);
+		gridTableViewer.getGrid().setHeaderVisible(true);
+		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
+		gridTableViewer.getGrid().setLayoutData(layoutData);
+		
+		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column1.setResizeable(false);
+		column1.setWidth(215);
+		column1.setText("Rule");
+		
+		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column2.setResizeable(false);
+		column2.setWidth(235);
+		column2.setWordWrap(true);
+		column2.setText("Name");
 
+		gridTableViewer.setContentProvider(new ArrayContentProvider());
+		gridTableViewer.setLabelProvider(new TableLabelAnomalyMappedProvider());
+
+		Button generateRecommendation = new Button(controlGroup3, SWT.NONE);
+		generateRecommendation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		generateRecommendation.setBounds(10, 400, 120, 25);
+		generateRecommendation.setText("Refactoring Recomendation");
+		
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project  = root.getProject(projectName);
@@ -657,8 +778,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 			public void widgetSelected(SelectionEvent e) {
 
 				CheckConstraint checkConstraintMethod = new CheckConstraint(workspacePath, projectName);
+				List<MappedAnomaly> anomalyObject = new ArrayList<MappedAnomaly>();
 
 				if (constraintPath.exists() && kdmCurrent.exists()) {
+
 					try {
 						dialog.run(true, true, new IRunnableWithProgress() {
 							public void run(IProgressMonitor monitor) {
@@ -674,6 +797,18 @@ public class MainView extends ViewPart implements IPartListener2 {
 								try {
 									checkConstraintMethod.checkDrifts(kdmCurrent, kdmPlanned);
 								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								try {
+									DataConstraint queryClass = new DataConstraint(databaseUrl);
+									List<String> lstAnomaly= queryClass.getAnomaliesIdentified();
+									for (String anomaly :lstAnomaly )
+										anomalyObject.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1]));
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
@@ -715,6 +850,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
+					gridTableViewer.setInput(anomalyObject);
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The model was checked against ocl restrictions.");
 				}
 				else {

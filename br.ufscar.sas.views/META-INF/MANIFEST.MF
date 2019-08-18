@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.swt,
  org.eclipse.jface,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore,
+ org.eclipse.nebula.widgets.grid
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: br.ufscar.sas.createKDM,
@@ -23,6 +24,7 @@ Import-Package: br.ufscar.sas.createKDM,
  org.eclipse.jdt.launching,
  org.eclipse.ui,
  org.eclipse.ui.part,
+ org.eclipse.nebula.widgets.grid,
  org.eclipse.zest.core.viewers,
  org.eclipse.zest.core.widgets,
  org.eclipse.zest.core.widgets.internal,

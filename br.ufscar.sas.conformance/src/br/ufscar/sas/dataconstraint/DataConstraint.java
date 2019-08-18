@@ -32,6 +32,8 @@ public class DataConstraint {
 		mydb.executeStmt("create table IF NOT EXISTS existence_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS composite_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS access_rules (project_name text, _key text, rule text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS architectural_anomaly (id integer, anomaly_type text, name text, description text, constraint_type text, _from text, _to text)");
+		mydb.executeStmt("create table IF NOT EXISTS mapping(id integer, _key text)");
 		mydb.executeStmt("delete from existence"); 
 		mydb.executeStmt("delete from composite"); 
 		mydb.executeStmt("delete from access");
@@ -39,6 +41,28 @@ public class DataConstraint {
 		mydb.executeStmt("delete from composite_rules"); 
 		mydb.executeStmt("delete from access_rules"); 
 		mydb.executeStmt("delete from drifts"); 
+		mydb.closeConnection();
+		this.insertAnomalies();
+	}
+
+	public void insertAnomalies() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs1 = mydb.executeQry("select count(*) from architectural_anomaly");
+		ResultSet rs2 = mydb.executeQry("select count(*) from mapping");
+
+		if ((Integer) rs1.getObject(1) == 0 && (Integer) rs2.getObject(1)==0)
+		{
+			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
+					+ "values(1,'smell','Scattered Reference Input','This smell arises when Reference Inputs do not have a dedicated Knowledge to store them.','composite','Reference Input','Knowledge')");
+			mydb.executeStmt("insert into mapping(id, _key) values(1,'composite_ReferenceInput')");
+			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
+					+ "values(2,'smell','Mixed Executors and Effectors','This smell occurs when Executors and Effectors are not evident in the architecture of the AS.','exist','Effector','null')");
+			mydb.executeStmt("insert into mapping(id, _key) values(2,'exist_Effector')");
+			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
+					+ "values(3,'smell','Obscured Self-Healing Alternatives','This smell arises when the set of alternatives of a self-healing system is not implemented as a first class entities.','exist','Self-Healing Alternative','null')");
+			mydb.executeStmt("insert into mapping(id, _key) values(3,'composite_SelfHealingAlt')");
+		}
 		mydb.closeConnection();
 	}
 
@@ -61,7 +85,7 @@ public class DataConstraint {
 				+ " ('" + projectName + "','" +   abstraction + "',"  + result + ");"); 
 		mydb.closeConnection();
 	}
-	
+
 	public void insertExistenceRules(String projectName, String key, String rule, int result) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -85,7 +109,7 @@ public class DataConstraint {
 				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
 		mydb.closeConnection();
 	}
-	
+
 	public void insertAccess(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -93,7 +117,7 @@ public class DataConstraint {
 				+ " ('" + projectName + "','" +   abstraction1 + "','"  +   abstraction2 + "',"+ result + ");"); 
 		mydb.closeConnection();
 	}
-	
+
 	public void insertAccessRules(String projectName, String key, String rule, int result) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -134,7 +158,7 @@ public class DataConstraint {
 		mydb.closeConnection();
 		return lst;
 	}
-	
+
 	public List<Integer> getAccessAbstractions() throws Exception{
 
 		List<Integer> lst = new ArrayList<Integer>();
@@ -159,9 +183,9 @@ public class DataConstraint {
 		}
 		return list;
 	}
-	
+
 	public List<Integer> getUntestedValues() throws Exception {
-		
+
 		List<Integer> lst = new ArrayList<Integer>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select component, subsystem, association from drifts");
@@ -170,7 +194,43 @@ public class DataConstraint {
 		lst.add((Integer)rs.getObject(3));
 		mydb.closeConnection();
 		return lst;
-		
+
+	}
+	
+	public List<String> getAnomalies() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select anomaly_type, name, description from architectural_anomaly;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+	
+	public List<String> getAnomaliesIdentified() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A._key, C.name from \n" + 
+				"mapping B inner join \n" + 
+				"(\n" + 
+				"select * \n" + 
+				"from composite_rules  where result = 0\n" + 
+				"UNION ALL\n" + 
+				"select * \n" + 
+				"from existence_rules  where result = 0\n" + 
+				"UNION ALL\n" + 
+				"select * \n" + 
+				"from access_rules  where result = 0\n" + 
+				") A ON A._key LIKE  B._key || '%' \n" + 
+				"inner join architectural_anomaly C on C.id = B.id;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
+		}
+		mydb.closeConnection();
+		return lst;
 	}
 
 }
