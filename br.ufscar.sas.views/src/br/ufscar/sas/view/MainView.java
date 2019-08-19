@@ -96,6 +96,7 @@ import br.ufscar.sas.dataconstraint.DataConstraint;
 import br.ufscar.sas.parser.FieldClassVisitor;
 import br.ufscar.sas.parser.MethodVisitor;
 import br.ufscar.sas.parser.VariableVisitor;
+import br.ufscar.sas.recommendation.RefactoringRecommendation;
 import br.ufscar.sas.report.Report;
 import br.ufscar.sas.tableviewer.Anomaly;
 import br.ufscar.sas.tableviewer.Data;
@@ -702,12 +703,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 		checkConstraint.setBounds(10, 200, 60, 25);
 		checkConstraint.setText("Check");
 
-		
+
 		Group controlGroup3 = new Group(group, SWT.NONE);
 		controlGroup3.setText("Identified Architectural Anomalies");
 		controlGroup3.setBounds(10, 480, 450,260);
 		controlGroup3.setLayout(new GridLayout());
-		
+
 		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		layoutData.minimumWidth = 300;
 		GridTableViewer gridTableViewer = new GridTableViewer(controlGroup3, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
@@ -716,12 +717,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 		gridTableViewer.getGrid().setHeaderVisible(true);
 		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
 		gridTableViewer.getGrid().setLayoutData(layoutData);
-		
+
 		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column1.setResizeable(false);
+		column1.setResizeable(true);
 		column1.setWidth(215);
 		column1.setText("Rule");
-		
+
 		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
 		column2.setResizeable(false);
 		column2.setWidth(235);
@@ -734,8 +735,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 		Button generateRecommendation = new Button(controlGroup3, SWT.NONE);
 		generateRecommendation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		generateRecommendation.setBounds(10, 400, 120, 25);
-		generateRecommendation.setText("Refactoring Recomendation");
-		
+		generateRecommendation.setText("Refactoring Recommendation");
+
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project  = root.getProject(projectName);
@@ -753,6 +754,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
 		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 		String workspacePath = folder + "/";
+		String projectWorkspace = folder + "/" + projectName + "/";
 
 		generateReport.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -766,12 +768,38 @@ public class MainView extends ViewPart implements IPartListener2 {
 							monitor.done();
 							try {refreshProjects();}catch (CoreException e) {e.printStackTrace();} 
 						}});
+					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The report was generated in the root of the project.");
 				} catch (InvocationTargetException  | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
+		});
 
+		generateRecommendation.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
 
+				try {
+					dialog.run(true, true, new IRunnableWithProgress() {
+
+						public void run(IProgressMonitor monitor) {
+							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+							monitor.beginTask("Generation architectural refactorings recommendation....", totalUnitsOfWork);
+							RefactoringRecommendation recomendation = new RefactoringRecommendation();
+							try {
+								recomendation.generateRecommendation(kdmCurrent, databaseUrl,projectWorkspace);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							monitor.done();
+							try {refreshProjects();}catch (CoreException e) {e.printStackTrace();} 
+						}});
+				} catch (InvocationTargetException  | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The refactoring recommendations were generated in the 'Recommendations' folder");
+
+			}
 		});
 
 		checkConstraint.addSelectionListener(new SelectionAdapter() {

@@ -23,6 +23,7 @@ import rMSAS.codeModel.Delete;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.codeModel.impl.DeleteImpl#getFrom <em>From</em>}</li>
+ *   <li>{@link rMSAS.codeModel.impl.DeleteImpl#getEntity <em>Entity</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,6 +38,16 @@ public class DeleteImpl extends AbstractCodeOperationImpl implements Delete {
 	 * @ordered
 	 */
 	protected AbstractCodeElement from;
+
+	/**
+	 * The cached value of the '{@link #getEntity() <em>Entity</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEntity()
+	 * @generated
+	 * @ordered
+	 */
+	protected AbstractCodeElement entity;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,11 +114,54 @@ public class DeleteImpl extends AbstractCodeOperationImpl implements Delete {
 	 * @generated
 	 */
 	@Override
+	public AbstractCodeElement getEntity() {
+		if (entity != null && entity.eIsProxy()) {
+			InternalEObject oldEntity = (InternalEObject)entity;
+			entity = (AbstractCodeElement)eResolveProxy(oldEntity);
+			if (entity != oldEntity) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodeModelPackage.DELETE__ENTITY, oldEntity, entity));
+			}
+		}
+		return entity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AbstractCodeElement basicGetEntity() {
+		return entity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setEntity(AbstractCodeElement newEntity) {
+		AbstractCodeElement oldEntity = entity;
+		entity = newEntity;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodeModelPackage.DELETE__ENTITY, oldEntity, entity));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodeModelPackage.DELETE__FROM:
 				if (resolve) return getFrom();
 				return basicGetFrom();
+			case CodeModelPackage.DELETE__ENTITY:
+				if (resolve) return getEntity();
+				return basicGetEntity();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -122,6 +176,9 @@ public class DeleteImpl extends AbstractCodeOperationImpl implements Delete {
 		switch (featureID) {
 			case CodeModelPackage.DELETE__FROM:
 				setFrom((AbstractCodeElement)newValue);
+				return;
+			case CodeModelPackage.DELETE__ENTITY:
+				setEntity((AbstractCodeElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,6 +195,9 @@ public class DeleteImpl extends AbstractCodeOperationImpl implements Delete {
 			case CodeModelPackage.DELETE__FROM:
 				setFrom((AbstractCodeElement)null);
 				return;
+			case CodeModelPackage.DELETE__ENTITY:
+				setEntity((AbstractCodeElement)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -152,6 +212,8 @@ public class DeleteImpl extends AbstractCodeOperationImpl implements Delete {
 		switch (featureID) {
 			case CodeModelPackage.DELETE__FROM:
 				return from != null;
+			case CodeModelPackage.DELETE__ENTITY:
+				return entity != null;
 		}
 		return super.eIsSet(featureID);
 	}

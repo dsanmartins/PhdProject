@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.Create#getIn <em>In</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.Create#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getCreate()
@@ -46,5 +47,31 @@ public interface Create extends AbstractArchitecturalOperation {
 	 * @generated
 	 */
 	void setIn(AbstractStructureElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Abstraction</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Abstraction</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Abstraction</em>' attribute.
+	 * @see #setAbstraction(String)
+	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getCreate_Abstraction()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getAbstraction();
+
+	/**
+	 * Sets the value of the '{@link rMSAS.architecturalModel.Create#getAbstraction <em>Abstraction</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Abstraction</em>' attribute.
+	 * @see #getAbstraction()
+	 * @generated
+	 */
+	void setAbstraction(String value);
 
 } // Create

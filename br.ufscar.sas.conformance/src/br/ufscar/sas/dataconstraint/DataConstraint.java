@@ -213,19 +213,18 @@ public class DataConstraint {
 	{
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select A._key, C.name from \n" + 
-				"mapping B inner join \n" + 
+		ResultSet rs = mydb.executeQry("select A._key, ifnull(C.name,'Please Set it up')\n" + 
+				"from\n" + 
 				"(\n" + 
-				"select * \n" + 
-				"from composite_rules  where result = 0\n" + 
-				"UNION ALL\n" + 
-				"select * \n" + 
-				"from existence_rules  where result = 0\n" + 
-				"UNION ALL\n" + 
-				"select * \n" + 
-				"from access_rules  where result = 0\n" + 
-				") A ON A._key LIKE  B._key || '%' \n" + 
-				"inner join architectural_anomaly C on C.id = B.id;");		
+				"    select *\n" + 
+				"    from composite_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"    select * \n" + 
+				"    from existence_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"    select * \n" + 
+				"    from access_rules  where result = 0\n" + 
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id ;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
 		}

@@ -282,16 +282,6 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 	 * @generated
 	 */
 	@Override
-	public EReference getAbstractArchitecturalOperation_Abstraction() {
-		return (EReference)abstractArchitecturalOperationEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getMove() {
 		return moveEClass;
 	}
@@ -322,6 +312,16 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 	 * @generated
 	 */
 	@Override
+	public EReference getMove_Abstraction() {
+		return (EReference)moveEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCreate() {
 		return createEClass;
 	}
@@ -342,6 +342,16 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 	 * @generated
 	 */
 	@Override
+	public EAttribute getCreate_Abstraction() {
+		return (EAttribute)createEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getDelete() {
 		return deleteEClass;
 	}
@@ -354,6 +364,16 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 	@Override
 	public EReference getDelete_From() {
 		return (EReference)deleteEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getDelete_Abstraction() {
+		return (EReference)deleteEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -396,17 +416,19 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 		createEAttribute(abstractArchitecturalOperationEClass, ABSTRACT_ARCHITECTURAL_OPERATION__DESCRIPTION);
 		createEReference(abstractArchitecturalOperationEClass, ABSTRACT_ARCHITECTURAL_OPERATION__CODE_OPERATION);
 		createEReference(abstractArchitecturalOperationEClass, ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION);
-		createEReference(abstractArchitecturalOperationEClass, ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION);
 
 		moveEClass = createEClass(MOVE);
 		createEReference(moveEClass, MOVE__FROM);
 		createEReference(moveEClass, MOVE__TO);
+		createEReference(moveEClass, MOVE__ABSTRACTION);
 
 		createEClass = createEClass(CREATE);
 		createEReference(createEClass, CREATE__IN);
+		createEAttribute(createEClass, CREATE__ABSTRACTION);
 
 		deleteEClass = createEClass(DELETE);
 		createEReference(deleteEClass, DELETE__FROM);
+		createEReference(deleteEClass, DELETE__ABSTRACTION);
 	}
 
 	/**
@@ -458,17 +480,19 @@ public class ArchitecturalModelPackageImpl extends EPackageImpl implements Archi
 		initEAttribute(getAbstractArchitecturalOperation_Description(), ecorePackage.getEString(), "description", null, 0, 1, AbstractArchitecturalOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractArchitecturalOperation_CodeOperation(), theCodeModelPackage.getAbstractCodeOperation(), null, "codeOperation", null, 1, -1, AbstractArchitecturalOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractArchitecturalOperation_Condition(), theConstraintModelPackage.getAbstractCondition(), null, "condition", null, 0, 1, AbstractArchitecturalOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractArchitecturalOperation_Abstraction(), theStructurePackage.getAbstractStructureElement(), null, "abstraction", null, 1, 1, AbstractArchitecturalOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(moveEClass, Move.class, "Move", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMove_From(), theStructurePackage.getAbstractStructureElement(), null, "from", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMove_To(), theStructurePackage.getAbstractStructureElement(), null, "to", null, 0, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMove_Abstraction(), theStructurePackage.getAbstractStructureElement(), null, "abstraction", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(createEClass, Create.class, "Create", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCreate_In(), theStructurePackage.getAbstractStructureElement(), null, "in", null, 0, 1, Create.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCreate_Abstraction(), ecorePackage.getEString(), "abstraction", null, 1, 1, Create.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(deleteEClass, Delete.class, "Delete", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDelete_From(), theStructurePackage.getAbstractStructureElement(), null, "from", null, 0, 1, Delete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDelete_Abstraction(), theStructurePackage.getAbstractStructureElement(), null, "abstraction", null, 1, 1, Delete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

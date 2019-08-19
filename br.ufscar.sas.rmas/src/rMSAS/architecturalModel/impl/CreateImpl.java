@@ -23,6 +23,7 @@ import rMSAS.architecturalModel.Create;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.impl.CreateImpl#getIn <em>In</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.impl.CreateImpl#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,6 +38,26 @@ public class CreateImpl extends AbstractArchitecturalOperationImpl implements Cr
 	 * @ordered
 	 */
 	protected AbstractStructureElement in;
+
+	/**
+	 * The default value of the '{@link #getAbstraction() <em>Abstraction</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAbstraction()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ABSTRACTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAbstraction() <em>Abstraction</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAbstraction()
+	 * @generated
+	 * @ordered
+	 */
+	protected String abstraction = ABSTRACTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,11 +124,36 @@ public class CreateImpl extends AbstractArchitecturalOperationImpl implements Cr
 	 * @generated
 	 */
 	@Override
+	public String getAbstraction() {
+		return abstraction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setAbstraction(String newAbstraction) {
+		String oldAbstraction = abstraction;
+		abstraction = newAbstraction;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ArchitecturalModelPackage.CREATE__ABSTRACTION, oldAbstraction, abstraction));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ArchitecturalModelPackage.CREATE__IN:
 				if (resolve) return getIn();
 				return basicGetIn();
+			case ArchitecturalModelPackage.CREATE__ABSTRACTION:
+				return getAbstraction();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -122,6 +168,9 @@ public class CreateImpl extends AbstractArchitecturalOperationImpl implements Cr
 		switch (featureID) {
 			case ArchitecturalModelPackage.CREATE__IN:
 				setIn((AbstractStructureElement)newValue);
+				return;
+			case ArchitecturalModelPackage.CREATE__ABSTRACTION:
+				setAbstraction((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,6 +187,9 @@ public class CreateImpl extends AbstractArchitecturalOperationImpl implements Cr
 			case ArchitecturalModelPackage.CREATE__IN:
 				setIn((AbstractStructureElement)null);
 				return;
+			case ArchitecturalModelPackage.CREATE__ABSTRACTION:
+				setAbstraction(ABSTRACTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -152,8 +204,26 @@ public class CreateImpl extends AbstractArchitecturalOperationImpl implements Cr
 		switch (featureID) {
 			case ArchitecturalModelPackage.CREATE__IN:
 				return in != null;
+			case ArchitecturalModelPackage.CREATE__ABSTRACTION:
+				return ABSTRACTION_EDEFAULT == null ? abstraction != null : !ABSTRACTION_EDEFAULT.equals(abstraction);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (abstraction: ");
+		result.append(abstraction);
+		result.append(')');
+		return result.toString();
 	}
 
 } //CreateImpl

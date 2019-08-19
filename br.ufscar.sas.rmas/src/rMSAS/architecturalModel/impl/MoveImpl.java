@@ -24,6 +24,7 @@ import rMSAS.architecturalModel.Move;
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.impl.MoveImpl#getFrom <em>From</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.impl.MoveImpl#getTo <em>To</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.impl.MoveImpl#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,6 +49,16 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 	 * @ordered
 	 */
 	protected AbstractStructureElement to;
+
+	/**
+	 * The cached value of the '{@link #getAbstraction() <em>Abstraction</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAbstraction()
+	 * @generated
+	 * @ordered
+	 */
+	protected AbstractStructureElement abstraction;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -154,6 +165,46 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 	 * @generated
 	 */
 	@Override
+	public AbstractStructureElement getAbstraction() {
+		if (abstraction != null && abstraction.eIsProxy()) {
+			InternalEObject oldAbstraction = (InternalEObject)abstraction;
+			abstraction = (AbstractStructureElement)eResolveProxy(oldAbstraction);
+			if (abstraction != oldAbstraction) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ArchitecturalModelPackage.MOVE__ABSTRACTION, oldAbstraction, abstraction));
+			}
+		}
+		return abstraction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AbstractStructureElement basicGetAbstraction() {
+		return abstraction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setAbstraction(AbstractStructureElement newAbstraction) {
+		AbstractStructureElement oldAbstraction = abstraction;
+		abstraction = newAbstraction;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ArchitecturalModelPackage.MOVE__ABSTRACTION, oldAbstraction, abstraction));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ArchitecturalModelPackage.MOVE__FROM:
@@ -162,6 +213,9 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 			case ArchitecturalModelPackage.MOVE__TO:
 				if (resolve) return getTo();
 				return basicGetTo();
+			case ArchitecturalModelPackage.MOVE__ABSTRACTION:
+				if (resolve) return getAbstraction();
+				return basicGetAbstraction();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -179,6 +233,9 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 				return;
 			case ArchitecturalModelPackage.MOVE__TO:
 				setTo((AbstractStructureElement)newValue);
+				return;
+			case ArchitecturalModelPackage.MOVE__ABSTRACTION:
+				setAbstraction((AbstractStructureElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,6 +255,9 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 			case ArchitecturalModelPackage.MOVE__TO:
 				setTo((AbstractStructureElement)null);
 				return;
+			case ArchitecturalModelPackage.MOVE__ABSTRACTION:
+				setAbstraction((AbstractStructureElement)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -214,6 +274,8 @@ public class MoveImpl extends AbstractArchitecturalOperationImpl implements Move
 				return from != null;
 			case ArchitecturalModelPackage.MOVE__TO:
 				return to != null;
+			case ArchitecturalModelPackage.MOVE__ABSTRACTION:
+				return abstraction != null;
 		}
 		return super.eIsSet(featureID);
 	}

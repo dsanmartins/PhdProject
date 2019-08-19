@@ -6,8 +6,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
-
 import rMSAS.codeModel.AbstractCodeOperation;
 
 import rMSAS.constraintModel.AbstractCondition;
@@ -24,7 +22,6 @@ import rMSAS.constraintModel.AbstractCondition;
  *   <li>{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getDescription <em>Description</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getCodeOperation <em>Code Operation</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getCondition <em>Condition</em>}</li>
- *   <li>{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getAbstractArchitecturalOperation()
@@ -99,31 +96,5 @@ public interface AbstractArchitecturalOperation extends EObject {
 	 * @generated
 	 */
 	void setCondition(AbstractCondition value);
-
-	/**
-	 * Returns the value of the '<em><b>Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Abstraction</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Abstraction</em>' reference.
-	 * @see #setAbstraction(AbstractStructureElement)
-	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getAbstractArchitecturalOperation_Abstraction()
-	 * @model required="true"
-	 * @generated
-	 */
-	AbstractStructureElement getAbstraction();
-
-	/**
-	 * Sets the value of the '{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getAbstraction <em>Abstraction</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Abstraction</em>' reference.
-	 * @see #getAbstraction()
-	 * @generated
-	 */
-	void setAbstraction(AbstractStructureElement value);
 
 } // AbstractArchitecturalOperation

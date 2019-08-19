@@ -15,6 +15,7 @@ import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.Move#getFrom <em>From</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.Move#getTo <em>To</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.Move#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getMove()
@@ -73,5 +74,31 @@ public interface Move extends AbstractArchitecturalOperation {
 	 * @generated
 	 */
 	void setTo(AbstractStructureElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Abstraction</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Abstraction</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Abstraction</em>' reference.
+	 * @see #setAbstraction(AbstractStructureElement)
+	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getMove_Abstraction()
+	 * @model required="true"
+	 * @generated
+	 */
+	AbstractStructureElement getAbstraction();
+
+	/**
+	 * Sets the value of the '{@link rMSAS.architecturalModel.Move#getAbstraction <em>Abstraction</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Abstraction</em>' reference.
+	 * @see #getAbstraction()
+	 * @generated
+	 */
+	void setAbstraction(AbstractStructureElement value);
 
 } // Move

@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.Delete#getFrom <em>From</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.Delete#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getDelete()
@@ -46,5 +47,31 @@ public interface Delete extends AbstractArchitecturalOperation {
 	 * @generated
 	 */
 	void setFrom(AbstractStructureElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Abstraction</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Abstraction</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Abstraction</em>' reference.
+	 * @see #setAbstraction(AbstractStructureElement)
+	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getDelete_Abstraction()
+	 * @model required="true"
+	 * @generated
+	 */
+	AbstractStructureElement getAbstraction();
+
+	/**
+	 * Sets the value of the '{@link rMSAS.architecturalModel.Delete#getAbstraction <em>Abstraction</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Abstraction</em>' reference.
+	 * @see #getAbstraction()
+	 * @generated
+	 */
+	void setAbstraction(AbstractStructureElement value);
 
 } // Delete

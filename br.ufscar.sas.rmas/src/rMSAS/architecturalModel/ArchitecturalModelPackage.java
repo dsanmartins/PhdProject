@@ -167,22 +167,13 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION = 3;
-
-	/**
 	 * The number of structural features of the '<em>Abstract Architectural Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT = 4;
+	int ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Abstract Architectural Operation</em>' class.
@@ -231,15 +222,6 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int MOVE__CONDITION = ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MOVE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -258,13 +240,22 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int MOVE__TO = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOVE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Move</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOVE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 2;
+	int MOVE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Move</em>' class.
@@ -313,15 +304,6 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int CREATE__CONDITION = ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CREATE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION;
-
-	/**
 	 * The feature id for the '<em><b>In</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -331,13 +313,22 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int CREATE__IN = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Abstraction</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREATE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Create</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CREATE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 1;
+	int CREATE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Create</em>' class.
@@ -386,15 +377,6 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int DELETE__CONDITION = ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -404,13 +386,22 @@ public interface ArchitecturalModelPackage extends EPackage {
 	int DELETE__FROM = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Abstraction</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELETE__ABSTRACTION = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Delete</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELETE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 1;
+	int DELETE_FEATURE_COUNT = ABSTRACT_ARCHITECTURAL_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Delete</em>' class.
@@ -531,17 +522,6 @@ public interface ArchitecturalModelPackage extends EPackage {
 	EReference getAbstractArchitecturalOperation_Condition();
 
 	/**
-	 * Returns the meta object for the reference '{@link rMSAS.architecturalModel.AbstractArchitecturalOperation#getAbstraction <em>Abstraction</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Abstraction</em>'.
-	 * @see rMSAS.architecturalModel.AbstractArchitecturalOperation#getAbstraction()
-	 * @see #getAbstractArchitecturalOperation()
-	 * @generated
-	 */
-	EReference getAbstractArchitecturalOperation_Abstraction();
-
-	/**
 	 * Returns the meta object for class '{@link rMSAS.architecturalModel.Move <em>Move</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -574,6 +554,17 @@ public interface ArchitecturalModelPackage extends EPackage {
 	EReference getMove_To();
 
 	/**
+	 * Returns the meta object for the reference '{@link rMSAS.architecturalModel.Move#getAbstraction <em>Abstraction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Abstraction</em>'.
+	 * @see rMSAS.architecturalModel.Move#getAbstraction()
+	 * @see #getMove()
+	 * @generated
+	 */
+	EReference getMove_Abstraction();
+
+	/**
 	 * Returns the meta object for class '{@link rMSAS.architecturalModel.Create <em>Create</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -595,6 +586,17 @@ public interface ArchitecturalModelPackage extends EPackage {
 	EReference getCreate_In();
 
 	/**
+	 * Returns the meta object for the attribute '{@link rMSAS.architecturalModel.Create#getAbstraction <em>Abstraction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Abstraction</em>'.
+	 * @see rMSAS.architecturalModel.Create#getAbstraction()
+	 * @see #getCreate()
+	 * @generated
+	 */
+	EAttribute getCreate_Abstraction();
+
+	/**
 	 * Returns the meta object for class '{@link rMSAS.architecturalModel.Delete <em>Delete</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -614,6 +616,17 @@ public interface ArchitecturalModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDelete_From();
+
+	/**
+	 * Returns the meta object for the reference '{@link rMSAS.architecturalModel.Delete#getAbstraction <em>Abstraction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Abstraction</em>'.
+	 * @see rMSAS.architecturalModel.Delete#getAbstraction()
+	 * @see #getDelete()
+	 * @generated
+	 */
+	EReference getDelete_Abstraction();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -723,14 +736,6 @@ public interface ArchitecturalModelPackage extends EPackage {
 		EReference ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION = eINSTANCE.getAbstractArchitecturalOperation_Condition();
 
 		/**
-		 * The meta object literal for the '<em><b>Abstraction</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION = eINSTANCE.getAbstractArchitecturalOperation_Abstraction();
-
-		/**
 		 * The meta object literal for the '{@link rMSAS.architecturalModel.impl.MoveImpl <em>Move</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -757,6 +762,14 @@ public interface ArchitecturalModelPackage extends EPackage {
 		EReference MOVE__TO = eINSTANCE.getMove_To();
 
 		/**
+		 * The meta object literal for the '<em><b>Abstraction</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MOVE__ABSTRACTION = eINSTANCE.getMove_Abstraction();
+
+		/**
 		 * The meta object literal for the '{@link rMSAS.architecturalModel.impl.CreateImpl <em>Create</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -775,6 +788,14 @@ public interface ArchitecturalModelPackage extends EPackage {
 		EReference CREATE__IN = eINSTANCE.getCreate_In();
 
 		/**
+		 * The meta object literal for the '<em><b>Abstraction</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CREATE__ABSTRACTION = eINSTANCE.getCreate_Abstraction();
+
+		/**
 		 * The meta object literal for the '{@link rMSAS.architecturalModel.impl.DeleteImpl <em>Delete</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -791,6 +812,14 @@ public interface ArchitecturalModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DELETE__FROM = eINSTANCE.getDelete_From();
+
+		/**
+		 * The meta object literal for the '<em><b>Abstraction</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DELETE__ABSTRACTION = eINSTANCE.getDelete_Abstraction();
 
 	}
 

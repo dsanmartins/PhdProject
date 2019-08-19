@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.codeModel.Delete#getFrom <em>From</em>}</li>
+ *   <li>{@link rMSAS.codeModel.Delete#getEntity <em>Entity</em>}</li>
  * </ul>
  *
  * @see rMSAS.codeModel.CodeModelPackage#getDelete()
@@ -46,5 +47,31 @@ public interface Delete extends AbstractCodeOperation {
 	 * @generated
 	 */
 	void setFrom(AbstractCodeElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Entity</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Entity</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Entity</em>' reference.
+	 * @see #setEntity(AbstractCodeElement)
+	 * @see rMSAS.codeModel.CodeModelPackage#getDelete_Entity()
+	 * @model required="true"
+	 * @generated
+	 */
+	AbstractCodeElement getEntity();
+
+	/**
+	 * Sets the value of the '{@link rMSAS.codeModel.Delete#getEntity <em>Entity</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Entity</em>' reference.
+	 * @see #getEntity()
+	 * @generated
+	 */
+	void setEntity(AbstractCodeElement value);
 
 } // Delete

@@ -21,22 +21,25 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/AbstractArchitecturalOperation/codeOperation"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/AbstractArchitecturalOperation/condition"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/AbstractArchitecturalOperation/abstraction"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//architecturalModel/Move">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Move/from"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Move/to"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Move/abstraction"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//architecturalModel/Create">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Create/in"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rMSAS.ecore#//architecturalModel/Create/abstraction"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//architecturalModel/Delete">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Delete/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rMSAS.ecore#//architecturalModel/Delete/abstraction"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="CodeModel" disposableProviderFactory="true" ecorePackage="rMSAS.ecore#//codeModel">
@@ -44,22 +47,25 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rMSAS.ecore#//codeModel/AbstractCodeOperation/description"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/AbstractCodeOperation/condition"/>
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/AbstractCodeOperation/entity"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//codeModel/Move">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Move/from"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Move/to"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Move/entity"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//codeModel/Create">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Create/in"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rMSAS.ecore#//codeModel/Create/entity"/>
       </genClasses>
       <genClasses ecoreClass="rMSAS.ecore#//codeModel/Delete">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Delete/from"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rMSAS.ecore#//codeModel/Delete/entity"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="ConstraintModel" disposableProviderFactory="true" ecorePackage="rMSAS.ecore#//constraintModel">

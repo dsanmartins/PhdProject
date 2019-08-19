@@ -85,22 +85,13 @@ public interface CodeModelPackage extends EPackage {
 	int ABSTRACT_CODE_OPERATION__CONDITION = 1;
 
 	/**
-	 * The feature id for the '<em><b>Entity</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CODE_OPERATION__ENTITY = 2;
-
-	/**
 	 * The number of structural features of the '<em>Abstract Code Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CODE_OPERATION_FEATURE_COUNT = 3;
+	int ABSTRACT_CODE_OPERATION_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Abstract Code Operation</em>' class.
@@ -140,15 +131,6 @@ public interface CodeModelPackage extends EPackage {
 	int MOVE__CONDITION = ABSTRACT_CODE_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Entity</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MOVE__ENTITY = ABSTRACT_CODE_OPERATION__ENTITY;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -167,13 +149,22 @@ public interface CodeModelPackage extends EPackage {
 	int MOVE__TO = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Entity</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOVE__ENTITY = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Move</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOVE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 2;
+	int MOVE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Move</em>' class.
@@ -213,15 +204,6 @@ public interface CodeModelPackage extends EPackage {
 	int CREATE__CONDITION = ABSTRACT_CODE_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Entity</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CREATE__ENTITY = ABSTRACT_CODE_OPERATION__ENTITY;
-
-	/**
 	 * The feature id for the '<em><b>In</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,13 +213,22 @@ public interface CodeModelPackage extends EPackage {
 	int CREATE__IN = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Entity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CREATE__ENTITY = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Create</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CREATE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 1;
+	int CREATE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Create</em>' class.
@@ -277,15 +268,6 @@ public interface CodeModelPackage extends EPackage {
 	int DELETE__CONDITION = ABSTRACT_CODE_OPERATION__CONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Entity</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE__ENTITY = ABSTRACT_CODE_OPERATION__ENTITY;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -295,13 +277,22 @@ public interface CodeModelPackage extends EPackage {
 	int DELETE__FROM = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Entity</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELETE__ENTITY = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Delete</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELETE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 1;
+	int DELETE_FEATURE_COUNT = ABSTRACT_CODE_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Delete</em>' class.
@@ -346,17 +337,6 @@ public interface CodeModelPackage extends EPackage {
 	EReference getAbstractCodeOperation_Condition();
 
 	/**
-	 * Returns the meta object for the reference '{@link rMSAS.codeModel.AbstractCodeOperation#getEntity <em>Entity</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Entity</em>'.
-	 * @see rMSAS.codeModel.AbstractCodeOperation#getEntity()
-	 * @see #getAbstractCodeOperation()
-	 * @generated
-	 */
-	EReference getAbstractCodeOperation_Entity();
-
-	/**
 	 * Returns the meta object for class '{@link rMSAS.codeModel.Move <em>Move</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -389,6 +369,17 @@ public interface CodeModelPackage extends EPackage {
 	EReference getMove_To();
 
 	/**
+	 * Returns the meta object for the reference '{@link rMSAS.codeModel.Move#getEntity <em>Entity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Entity</em>'.
+	 * @see rMSAS.codeModel.Move#getEntity()
+	 * @see #getMove()
+	 * @generated
+	 */
+	EReference getMove_Entity();
+
+	/**
 	 * Returns the meta object for class '{@link rMSAS.codeModel.Create <em>Create</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -410,6 +401,17 @@ public interface CodeModelPackage extends EPackage {
 	EReference getCreate_In();
 
 	/**
+	 * Returns the meta object for the attribute '{@link rMSAS.codeModel.Create#getEntity <em>Entity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Entity</em>'.
+	 * @see rMSAS.codeModel.Create#getEntity()
+	 * @see #getCreate()
+	 * @generated
+	 */
+	EAttribute getCreate_Entity();
+
+	/**
 	 * Returns the meta object for class '{@link rMSAS.codeModel.Delete <em>Delete</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -429,6 +431,17 @@ public interface CodeModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDelete_From();
+
+	/**
+	 * Returns the meta object for the reference '{@link rMSAS.codeModel.Delete#getEntity <em>Entity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Entity</em>'.
+	 * @see rMSAS.codeModel.Delete#getEntity()
+	 * @see #getDelete()
+	 * @generated
+	 */
+	EReference getDelete_Entity();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -480,14 +493,6 @@ public interface CodeModelPackage extends EPackage {
 		EReference ABSTRACT_CODE_OPERATION__CONDITION = eINSTANCE.getAbstractCodeOperation_Condition();
 
 		/**
-		 * The meta object literal for the '<em><b>Entity</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ABSTRACT_CODE_OPERATION__ENTITY = eINSTANCE.getAbstractCodeOperation_Entity();
-
-		/**
 		 * The meta object literal for the '{@link rMSAS.codeModel.impl.MoveImpl <em>Move</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -514,6 +519,14 @@ public interface CodeModelPackage extends EPackage {
 		EReference MOVE__TO = eINSTANCE.getMove_To();
 
 		/**
+		 * The meta object literal for the '<em><b>Entity</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MOVE__ENTITY = eINSTANCE.getMove_Entity();
+
+		/**
 		 * The meta object literal for the '{@link rMSAS.codeModel.impl.CreateImpl <em>Create</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -532,6 +545,14 @@ public interface CodeModelPackage extends EPackage {
 		EReference CREATE__IN = eINSTANCE.getCreate_In();
 
 		/**
+		 * The meta object literal for the '<em><b>Entity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CREATE__ENTITY = eINSTANCE.getCreate_Entity();
+
+		/**
 		 * The meta object literal for the '{@link rMSAS.codeModel.impl.DeleteImpl <em>Delete</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -548,6 +569,14 @@ public interface CodeModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DELETE__FROM = eINSTANCE.getDelete_From();
+
+		/**
+		 * The meta object literal for the '<em><b>Entity</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DELETE__ENTITY = eINSTANCE.getDelete_Entity();
 
 	}
 

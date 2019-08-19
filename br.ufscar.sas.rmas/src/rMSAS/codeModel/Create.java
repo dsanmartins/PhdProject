@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.codeModel.Create#getIn <em>In</em>}</li>
+ *   <li>{@link rMSAS.codeModel.Create#getEntity <em>Entity</em>}</li>
  * </ul>
  *
  * @see rMSAS.codeModel.CodeModelPackage#getCreate()
@@ -46,5 +47,31 @@ public interface Create extends AbstractCodeOperation {
 	 * @generated
 	 */
 	void setIn(AbstractCodeElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Entity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Entity</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Entity</em>' attribute.
+	 * @see #setEntity(String)
+	 * @see rMSAS.codeModel.CodeModelPackage#getCreate_Entity()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getEntity();
+
+	/**
+	 * Sets the value of the '{@link rMSAS.codeModel.Create#getEntity <em>Entity</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Entity</em>' attribute.
+	 * @see #getEntity()
+	 * @generated
+	 */
+	void setEntity(String value);
 
 } // Create

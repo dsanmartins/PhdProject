@@ -204,16 +204,6 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getAbstractCodeOperation_Entity() {
-		return (EReference)abstractCodeOperationEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getMove() {
 		return moveEClass;
 	}
@@ -244,6 +234,16 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 	 * @generated
 	 */
 	@Override
+	public EReference getMove_Entity() {
+		return (EReference)moveEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCreate() {
 		return createEClass;
 	}
@@ -264,6 +264,16 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 	 * @generated
 	 */
 	@Override
+	public EAttribute getCreate_Entity() {
+		return (EAttribute)createEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getDelete() {
 		return deleteEClass;
 	}
@@ -276,6 +286,16 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 	@Override
 	public EReference getDelete_From() {
 		return (EReference)deleteEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getDelete_Entity() {
+		return (EReference)deleteEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -310,17 +330,19 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 		abstractCodeOperationEClass = createEClass(ABSTRACT_CODE_OPERATION);
 		createEAttribute(abstractCodeOperationEClass, ABSTRACT_CODE_OPERATION__DESCRIPTION);
 		createEReference(abstractCodeOperationEClass, ABSTRACT_CODE_OPERATION__CONDITION);
-		createEReference(abstractCodeOperationEClass, ABSTRACT_CODE_OPERATION__ENTITY);
 
 		moveEClass = createEClass(MOVE);
 		createEReference(moveEClass, MOVE__FROM);
 		createEReference(moveEClass, MOVE__TO);
+		createEReference(moveEClass, MOVE__ENTITY);
 
 		createEClass = createEClass(CREATE);
 		createEReference(createEClass, CREATE__IN);
+		createEAttribute(createEClass, CREATE__ENTITY);
 
 		deleteEClass = createEClass(DELETE);
 		createEReference(deleteEClass, DELETE__FROM);
+		createEReference(deleteEClass, DELETE__ENTITY);
 	}
 
 	/**
@@ -363,17 +385,19 @@ public class CodeModelPackageImpl extends EPackageImpl implements CodeModelPacka
 		initEClass(abstractCodeOperationEClass, AbstractCodeOperation.class, "AbstractCodeOperation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractCodeOperation_Description(), ecorePackage.getEString(), "description", null, 0, 1, AbstractCodeOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractCodeOperation_Condition(), theConstraintModelPackage.getAbstractCondition(), null, "condition", null, 0, 1, AbstractCodeOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractCodeOperation_Entity(), theCodePackage.getAbstractCodeElement(), null, "entity", null, 1, 1, AbstractCodeOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(moveEClass, Move.class, "Move", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMove_From(), theCodePackage.getAbstractCodeElement(), null, "from", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMove_To(), theCodePackage.getAbstractCodeElement(), null, "to", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMove_Entity(), theCodePackage.getAbstractCodeElement(), null, "entity", null, 1, 1, Move.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(createEClass, Create.class, "Create", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCreate_In(), theCodePackage.getAbstractCodeElement(), null, "in", null, 1, 1, Create.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCreate_Entity(), ecorePackage.getEString(), "entity", null, 1, 1, Create.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(deleteEClass, Delete.class, "Delete", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDelete_From(), theCodePackage.getAbstractCodeElement(), null, "from", null, 1, 1, Delete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDelete_Entity(), theCodePackage.getAbstractCodeElement(), null, "entity", null, 1, 1, Delete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

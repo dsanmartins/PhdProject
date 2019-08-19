@@ -24,6 +24,7 @@ import rMSAS.codeModel.Move;
  * <ul>
  *   <li>{@link rMSAS.codeModel.impl.MoveImpl#getFrom <em>From</em>}</li>
  *   <li>{@link rMSAS.codeModel.impl.MoveImpl#getTo <em>To</em>}</li>
+ *   <li>{@link rMSAS.codeModel.impl.MoveImpl#getEntity <em>Entity</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,6 +49,16 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 	 * @ordered
 	 */
 	protected AbstractCodeElement to;
+
+	/**
+	 * The cached value of the '{@link #getEntity() <em>Entity</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEntity()
+	 * @generated
+	 * @ordered
+	 */
+	protected AbstractCodeElement entity;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -154,6 +165,46 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 	 * @generated
 	 */
 	@Override
+	public AbstractCodeElement getEntity() {
+		if (entity != null && entity.eIsProxy()) {
+			InternalEObject oldEntity = (InternalEObject)entity;
+			entity = (AbstractCodeElement)eResolveProxy(oldEntity);
+			if (entity != oldEntity) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodeModelPackage.MOVE__ENTITY, oldEntity, entity));
+			}
+		}
+		return entity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AbstractCodeElement basicGetEntity() {
+		return entity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setEntity(AbstractCodeElement newEntity) {
+		AbstractCodeElement oldEntity = entity;
+		entity = newEntity;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodeModelPackage.MOVE__ENTITY, oldEntity, entity));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodeModelPackage.MOVE__FROM:
@@ -162,6 +213,9 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 			case CodeModelPackage.MOVE__TO:
 				if (resolve) return getTo();
 				return basicGetTo();
+			case CodeModelPackage.MOVE__ENTITY:
+				if (resolve) return getEntity();
+				return basicGetEntity();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -179,6 +233,9 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 				return;
 			case CodeModelPackage.MOVE__TO:
 				setTo((AbstractCodeElement)newValue);
+				return;
+			case CodeModelPackage.MOVE__ENTITY:
+				setEntity((AbstractCodeElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,6 +255,9 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 			case CodeModelPackage.MOVE__TO:
 				setTo((AbstractCodeElement)null);
 				return;
+			case CodeModelPackage.MOVE__ENTITY:
+				setEntity((AbstractCodeElement)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -214,6 +274,8 @@ public class MoveImpl extends AbstractCodeOperationImpl implements Move {
 				return from != null;
 			case CodeModelPackage.MOVE__TO:
 				return to != null;
+			case CodeModelPackage.MOVE__ENTITY:
+				return entity != null;
 		}
 		return super.eIsSet(featureID);
 	}

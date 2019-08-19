@@ -18,8 +18,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
-
 import rMSAS.architecturalModel.AbstractArchitecturalOperation;
 import rMSAS.architecturalModel.ArchitecturalModelPackage;
 
@@ -38,7 +36,6 @@ import rMSAS.constraintModel.AbstractCondition;
  *   <li>{@link rMSAS.architecturalModel.impl.AbstractArchitecturalOperationImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.impl.AbstractArchitecturalOperationImpl#getCodeOperation <em>Code Operation</em>}</li>
  *   <li>{@link rMSAS.architecturalModel.impl.AbstractArchitecturalOperationImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link rMSAS.architecturalModel.impl.AbstractArchitecturalOperationImpl#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @generated
@@ -83,16 +80,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 	 * @ordered
 	 */
 	protected AbstractCondition condition;
-
-	/**
-	 * The cached value of the '{@link #getAbstraction() <em>Abstraction</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAbstraction()
-	 * @generated
-	 * @ordered
-	 */
-	protected AbstractStructureElement abstraction;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -195,46 +182,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 	 * @generated
 	 */
 	@Override
-	public AbstractStructureElement getAbstraction() {
-		if (abstraction != null && abstraction.eIsProxy()) {
-			InternalEObject oldAbstraction = (InternalEObject)abstraction;
-			abstraction = (AbstractStructureElement)eResolveProxy(oldAbstraction);
-			if (abstraction != oldAbstraction) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION, oldAbstraction, abstraction));
-			}
-		}
-		return abstraction;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public AbstractStructureElement basicGetAbstraction() {
-		return abstraction;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setAbstraction(AbstractStructureElement newAbstraction) {
-		AbstractStructureElement oldAbstraction = abstraction;
-		abstraction = newAbstraction;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION, oldAbstraction, abstraction));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__CODE_OPERATION:
@@ -258,9 +205,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION:
 				if (resolve) return getCondition();
 				return basicGetCondition();
-			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION:
-				if (resolve) return getAbstraction();
-				return basicGetAbstraction();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -284,9 +228,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION:
 				setCondition((AbstractCondition)newValue);
 				return;
-			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION:
-				setAbstraction((AbstractStructureElement)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -308,9 +249,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION:
 				setCondition((AbstractCondition)null);
 				return;
-			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION:
-				setAbstraction((AbstractStructureElement)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -329,8 +267,6 @@ public abstract class AbstractArchitecturalOperationImpl extends MinimalEObjectI
 				return codeOperation != null && !codeOperation.isEmpty();
 			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__CONDITION:
 				return condition != null;
-			case ArchitecturalModelPackage.ABSTRACT_ARCHITECTURAL_OPERATION__ABSTRACTION:
-				return abstraction != null;
 		}
 		return super.eIsSet(featureID);
 	}

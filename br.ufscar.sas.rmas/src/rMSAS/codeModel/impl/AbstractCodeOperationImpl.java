@@ -10,8 +10,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
-
 import rMSAS.codeModel.AbstractCodeOperation;
 import rMSAS.codeModel.CodeModelPackage;
 
@@ -27,7 +25,6 @@ import rMSAS.constraintModel.AbstractCondition;
  * <ul>
  *   <li>{@link rMSAS.codeModel.impl.AbstractCodeOperationImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link rMSAS.codeModel.impl.AbstractCodeOperationImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link rMSAS.codeModel.impl.AbstractCodeOperationImpl#getEntity <em>Entity</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,16 +59,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 	 * @ordered
 	 */
 	protected AbstractCondition condition;
-
-	/**
-	 * The cached value of the '{@link #getEntity() <em>Entity</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEntity()
-	 * @generated
-	 * @ordered
-	 */
-	protected AbstractCodeElement entity;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,46 +148,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 	 * @generated
 	 */
 	@Override
-	public AbstractCodeElement getEntity() {
-		if (entity != null && entity.eIsProxy()) {
-			InternalEObject oldEntity = (InternalEObject)entity;
-			entity = (AbstractCodeElement)eResolveProxy(oldEntity);
-			if (entity != oldEntity) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY, oldEntity, entity));
-			}
-		}
-		return entity;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public AbstractCodeElement basicGetEntity() {
-		return entity;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setEntity(AbstractCodeElement newEntity) {
-		AbstractCodeElement oldEntity = entity;
-		entity = newEntity;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY, oldEntity, entity));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodeModelPackage.ABSTRACT_CODE_OPERATION__DESCRIPTION:
@@ -208,9 +155,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 			case CodeModelPackage.ABSTRACT_CODE_OPERATION__CONDITION:
 				if (resolve) return getCondition();
 				return basicGetCondition();
-			case CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY:
-				if (resolve) return getEntity();
-				return basicGetEntity();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -228,9 +172,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 				return;
 			case CodeModelPackage.ABSTRACT_CODE_OPERATION__CONDITION:
 				setCondition((AbstractCondition)newValue);
-				return;
-			case CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY:
-				setEntity((AbstractCodeElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -250,9 +191,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 			case CodeModelPackage.ABSTRACT_CODE_OPERATION__CONDITION:
 				setCondition((AbstractCondition)null);
 				return;
-			case CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY:
-				setEntity((AbstractCodeElement)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -269,8 +207,6 @@ public abstract class AbstractCodeOperationImpl extends MinimalEObjectImpl.Conta
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case CodeModelPackage.ABSTRACT_CODE_OPERATION__CONDITION:
 				return condition != null;
-			case CodeModelPackage.ABSTRACT_CODE_OPERATION__ENTITY:
-				return entity != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -23,6 +23,7 @@ import rMSAS.architecturalModel.Delete;
  * </p>
  * <ul>
  *   <li>{@link rMSAS.architecturalModel.impl.DeleteImpl#getFrom <em>From</em>}</li>
+ *   <li>{@link rMSAS.architecturalModel.impl.DeleteImpl#getAbstraction <em>Abstraction</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,6 +38,16 @@ public class DeleteImpl extends AbstractArchitecturalOperationImpl implements De
 	 * @ordered
 	 */
 	protected AbstractStructureElement from;
+
+	/**
+	 * The cached value of the '{@link #getAbstraction() <em>Abstraction</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAbstraction()
+	 * @generated
+	 * @ordered
+	 */
+	protected AbstractStructureElement abstraction;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,11 +114,54 @@ public class DeleteImpl extends AbstractArchitecturalOperationImpl implements De
 	 * @generated
 	 */
 	@Override
+	public AbstractStructureElement getAbstraction() {
+		if (abstraction != null && abstraction.eIsProxy()) {
+			InternalEObject oldAbstraction = (InternalEObject)abstraction;
+			abstraction = (AbstractStructureElement)eResolveProxy(oldAbstraction);
+			if (abstraction != oldAbstraction) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ArchitecturalModelPackage.DELETE__ABSTRACTION, oldAbstraction, abstraction));
+			}
+		}
+		return abstraction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AbstractStructureElement basicGetAbstraction() {
+		return abstraction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setAbstraction(AbstractStructureElement newAbstraction) {
+		AbstractStructureElement oldAbstraction = abstraction;
+		abstraction = newAbstraction;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ArchitecturalModelPackage.DELETE__ABSTRACTION, oldAbstraction, abstraction));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ArchitecturalModelPackage.DELETE__FROM:
 				if (resolve) return getFrom();
 				return basicGetFrom();
+			case ArchitecturalModelPackage.DELETE__ABSTRACTION:
+				if (resolve) return getAbstraction();
+				return basicGetAbstraction();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -122,6 +176,9 @@ public class DeleteImpl extends AbstractArchitecturalOperationImpl implements De
 		switch (featureID) {
 			case ArchitecturalModelPackage.DELETE__FROM:
 				setFrom((AbstractStructureElement)newValue);
+				return;
+			case ArchitecturalModelPackage.DELETE__ABSTRACTION:
+				setAbstraction((AbstractStructureElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,6 +195,9 @@ public class DeleteImpl extends AbstractArchitecturalOperationImpl implements De
 			case ArchitecturalModelPackage.DELETE__FROM:
 				setFrom((AbstractStructureElement)null);
 				return;
+			case ArchitecturalModelPackage.DELETE__ABSTRACTION:
+				setAbstraction((AbstractStructureElement)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -152,6 +212,8 @@ public class DeleteImpl extends AbstractArchitecturalOperationImpl implements De
 		switch (featureID) {
 			case ArchitecturalModelPackage.DELETE__FROM:
 				return from != null;
+			case ArchitecturalModelPackage.DELETE__ABSTRACTION:
+				return abstraction != null;
 		}
 		return super.eIsSet(featureID);
 	}

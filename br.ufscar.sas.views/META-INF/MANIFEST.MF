@@ -14,25 +14,26 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.nebula.widgets.grid
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: br.ufscar.sas.createKDM,
+Import-Package: br.ufscar.sas.checkconstraint,
+ br.ufscar.sas.createKDM,
  br.ufscar.sas.database,
  br.ufscar.sas.dataconstraint,
  br.ufscar.sas.fca,
+ br.ufscar.sas.recommendation,
+ br.ufscar.sas.report,
  br.ufscar.sas.transformation,
  org.eclipse.draw2d,
  org.eclipse.draw2d.geometry,
  org.eclipse.jdt.launching,
+ org.eclipse.nebula.widgets.grid,
  org.eclipse.ui,
  org.eclipse.ui.part,
- org.eclipse.nebula.widgets.grid,
  org.eclipse.zest.core.viewers,
  org.eclipse.zest.core.widgets,
  org.eclipse.zest.core.widgets.internal,
  org.eclipse.zest.layouts,
  org.eclipse.zest.layouts.algorithms,
- org.eclipse.zest.layouts.dataStructures,
- br.ufscar.sas.checkconstraint,
- br.ufscar.sas.report
+ org.eclipse.zest.layouts.dataStructures
 Export-Package: br.ufscar.sas.view
 Bundle-ClassPath: lib/javaparser-core-3.6.2.jar,
  .
