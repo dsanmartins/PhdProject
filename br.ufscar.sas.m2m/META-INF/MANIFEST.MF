@@ -13,7 +13,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.uml2.uml.resources,
  net.sourceforge.plantuml.eclipse,
  net.sourceforge.plantuml.eclipse.imagecontrol,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.emf.compare,
+ org.eclipse.compare
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.internal.resources,

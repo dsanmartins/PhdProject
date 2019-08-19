@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +109,7 @@ import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
+import br.ufscar.sas.transformation.ComputeModelDiff;
 import br.ufscar.sas.transformation.Kdm2Uml;
 import br.ufscar.sas.transformation.OpenComponentDiagram;
 import br.ufscar.sas.transformation.Uml2PlantUML;
@@ -742,6 +745,11 @@ public class MainView extends ViewPart implements IPartListener2 {
 		IProject project  = root.getProject(projectName);
 		IFile kdmCurrent = project.getFile(projectName + "_KDM.xmi");
 		IFile kdmPlanned = project.getFile("PlannedArchitecture/src-gen/PlannedArchitecture.xmi");
+		
+		IFile iUmlCurrent = project.getFile("CurrentArchitecture/currentArchitecture.uml");
+		IFile iUmlPlanned = project.getFile("PlannedArchitecture/src-gen/plannedArchitecture.uml");
+		
+		
 		IFile constraintPath = project.getFile("PlannedArchitecture/src-gen/Constraints.ocl");
 
 		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
@@ -977,13 +985,30 @@ public class MainView extends ViewPart implements IPartListener2 {
 					else
 					{
 						if (radios[2].getSelection()) {
-
-
+							if (Files.exists(Paths.get(umlCurrent)) && Files.exists(Paths.get(umlPlanned)))
+							{
+								try {
+									dialog.run(true, true, new IRunnableWithProgress() {
+										public void run(IProgressMonitor monitor) {
+											// Creates KDM instance
+											int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+											monitor.beginTask("Computing differences....", totalUnitsOfWork);
+											ComputeModelDiff computeModelDiff = new ComputeModelDiff();
+											computeModelDiff.compute(iUmlCurrent, iUmlPlanned);
+											monitor.done();
+										}
+									});
+								} catch (InvocationTargetException | InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							else
+								MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "Current or planned diagram does not exist! ");
 
 						}
 					}
 				}
-
 			}
 		});
 

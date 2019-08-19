@@ -122,7 +122,7 @@ public class UI extends AbstractHandler {
 				"		Controller Controller_1{\n" + 
 				"			\n" + 
 				"			Monitor Monitor_1;\n" + 
-				"			Analyzer Ananlyzer_1;\n" + 
+				"			Analyzer Analyzer_1;\n" + 
 				"			Planner Planner_1;\n" + 
 				"			Executor Executor_1;\n" + 
 				"			Knowledge Knowledge_1 {\n" + 
