@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -31,8 +32,9 @@ public class Report {
 		XWPFParagraph title= doc.createParagraph();
 		title.setAlignment(ParagraphAlignment.CENTER);
 		title.setWordWrapped(true);
-		title.setStyle("Heading2");
-
+		title.setStyle("Heading1");
+		title.setBorderBottom(Borders.SINGLE);
+		
 		XWPFRun r1 = title.createRun();
 		r1.setBold(true);
 		r1.setColor("17365d");
@@ -84,6 +86,19 @@ public class Report {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		 
+		XWPFParagraph section2 = doc.createParagraph();
+		section2.setPageBreak(true);
+		
+		r1 = section2.createRun();
+		r1.setBold(true);
+		r1.setColor("17365d");
+		t1 = "Rules for Checking Conformance" ;
+		r1.setText(t1);
+		r1.addBreak();
+		r1.addBreak();
+		
+		
 
 		FileOutputStream fo = null;
 

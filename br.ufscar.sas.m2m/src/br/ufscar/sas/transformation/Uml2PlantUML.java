@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import javax.xml.soap.Node;
+
 import org.apache.commons.collections4.map.HashedMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -72,8 +74,9 @@ public class Uml2PlantUML {
 		{
 			if (r.getContents().get(0).eContents().get(z) instanceof Package)
 			{
-				memory1.add((Package)r.getContents().get(0).eContents().get(z));
-				roots.add(((Package) r.getContents().get(0).eContents().get(z)).getName());
+				Package package1 = (Package)r.getContents().get(0).eContents().get(z);
+				memory1.add(package1);
+				roots.add(package1.getName());
 			}
 		}
 		dependenciesList =  LinkedListMultimap.create();  
@@ -114,7 +117,10 @@ public class Uml2PlantUML {
 			DeploymentNode node = null;
 			//Check if it is a root node
 			if (roots.contains(key))
+			{
 				node = model.addDeploymentNode(key, key, key, mappingMap.get(key));
+				roots.remove(key);
+			}
 			else 
 			{
 				//We have to obtain the parent of the node
@@ -137,7 +143,14 @@ public class Uml2PlantUML {
 			}
 			parent = node;
 		}
-
+		//Root nodes without children
+		for (int i = 0; i< roots.size(); i++)
+		{
+			DeploymentNode node= model.addDeploymentNode(roots.get(i), roots.get(i), roots.get(i), mappingMap.get(roots.get(i)));
+			Container container = adaptiveSystem.addContainer("NULL_"+i, "NULL", "NULL"); 
+			node.add(container);
+		}
+		
 		List<Relationship> lRelationships = new ArrayList<Relationship>();
 		
 		for (Element element : model.getElements())
@@ -164,7 +177,7 @@ public class Uml2PlantUML {
 		developmentView.setEnvironment("");
 		for (DeploymentNode node : model.getDeploymentNodes())	
 			developmentView.add(node);
-		
+	
 		for (Relationship relation : lRelationships)	
 			developmentView.add(relation);
 

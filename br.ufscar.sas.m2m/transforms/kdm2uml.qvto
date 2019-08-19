@@ -22,7 +22,12 @@ mapping StructureModel :: Model2Model():Model when {self.name = modelName}{
 	name :="UML Component Diagram";
 	self.structureElement -> select(c | c.oclIsKindOf(Subsystem))[Subsystem] -> forEach(p){
 		result.nestedPackage +=	p->map kdmSubsystem2UmlPackage();
+	};
+	
+	self.structureElement -> select(c | c.oclIsKindOf(Component))[Component] -> forEach(p){
+		result.nestedPackage +=	p->map kdmComponent2UmlPackage();
 	}
+	
 }
 
 mapping Subsystem:: kdmSubsystem2UmlPackage(): uml::Package {
