@@ -755,11 +755,13 @@ public class MainView extends ViewPart implements IPartListener2 {
 		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
 		String umlCurrent =  folder + "/" + projectName + "/CurrentArchitecture/currentArchitecture.uml";
 		String umlPlanned = folder + "/" + projectName + "/PlannedArchitecture/src-gen/plannedArchitecture.uml" ; 
+		String umlDifferences = folder + "/" + projectName + "/PlannedArchitecture/src-gen/differencesArchitecture.uml" ; 
 
 		String umlFolderPlannedRelative = "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
+		
 		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 		String workspacePath = folder + "/";
 		String projectWorkspace = folder + "/" + projectName + "/";
@@ -1006,7 +1008,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 											int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 											monitor.beginTask("Computing differences....", totalUnitsOfWork);
 											ComputeModelDiff computeModelDiff = new ComputeModelDiff();
-											computeModelDiff.compute(iUmlCurrent, iUmlPlanned);
+											computeModelDiff.compute(iUmlCurrent, iUmlPlanned, umlDifferences);
 											monitor.done();
 										}
 									});

@@ -25,14 +25,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Package;
 
-
-import com.google.common.cache.Cache;
 import com.google.common.cache.LoadingCache;
 
 public class ComputeModelDiff {
 
 
-	public void compute(IFile current, IFile planned) {
+	public void compute(IFile current, IFile planned, String differencesUml) {
 
 		ResourceSet resourceSet1 = new ResourceSetImpl();
 		ResourceSet resourceSet2 = new ResourceSetImpl();
@@ -79,6 +77,8 @@ public class ComputeModelDiff {
 		Comparison comparison = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).build().compare(scope);
 		
 		EList<Diff> diff = comparison.getDifferences();
+		
+		
 		for (Diff diff2 : diff)
 		{
 			System.out.println(diff2);
