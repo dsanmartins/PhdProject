@@ -3626,24 +3626,51 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("\t");
                 DSLManagerController secondArgument = dslRuleMController.getMcontroller2();
                 _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv access_");
-                String _name_71 = firstArgument.getName();
-                _builder.append(_name_71, "\t");
-                _builder.append("_");
-                String _name_72 = secondArgument.getName();
-                _builder.append(_name_72, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_73 = firstArgument.getName();
-                _builder.append(_name_73, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_74 = secondArgument.getName();
-                _builder.append(_name_74, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
+                {
+                  boolean _equals = ((DSLRuleMController)dslRule).getAccess().equals("must-use");
+                  if (_equals) {
+                    _builder.append("\t");
+                    _builder.append("context StructureModel");
+                    _builder.newLine();
+                    _builder.append("\t");
+                    _builder.append("inv access_");
+                    String _name_71 = firstArgument.getName();
+                    _builder.append(_name_71, "\t");
+                    _builder.append("_");
+                    String _name_72 = secondArgument.getName();
+                    _builder.append(_name_72, "\t");
+                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                    String _name_73 = firstArgument.getName();
+                    _builder.append(_name_73, "\t");
+                    _builder.append("\' and c.to.name=\'");
+                    String _name_74 = secondArgument.getName();
+                    _builder.append(_name_74, "\t");
+                    _builder.append("\') ");
+                    _builder.newLineIfNotEmpty();
+                  } else {
+                    boolean _equals_1 = ((DSLRuleMController)dslRule).getAccess().equals("must-not-use");
+                    if (_equals_1) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv not_access_");
+                      String _name_75 = firstArgument.getName();
+                      _builder.append(_name_75, "\t");
+                      _builder.append("_");
+                      String _name_76 = secondArgument.getName();
+                      _builder.append(_name_76, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_77 = firstArgument.getName();
+                      _builder.append(_name_77, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_78 = secondArgument.getName();
+                      _builder.append(_name_78, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                    }
+                  }
+                }
               }
             }
           } else {
@@ -3661,24 +3688,51 @@ public class SasDslGenerator extends AbstractGenerator {
                   _builder.append("\t");
                   DSLController secondArgument_1 = dslRuleController.getController2();
                   _builder.newLineIfNotEmpty();
-                  _builder.append("\t");
-                  _builder.append("context StructureModel");
-                  _builder.newLine();
-                  _builder.append("\t");
-                  _builder.append("inv access_");
-                  String _name_75 = firstArgument_1.getName();
-                  _builder.append(_name_75, "\t");
-                  _builder.append("_");
-                  String _name_76 = secondArgument_1.getName();
-                  _builder.append(_name_76, "\t");
-                  _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                  String _name_77 = firstArgument_1.getName();
-                  _builder.append(_name_77, "\t");
-                  _builder.append("\' and c.to.name=\'");
-                  String _name_78 = secondArgument_1.getName();
-                  _builder.append(_name_78, "\t");
-                  _builder.append("\') ");
-                  _builder.newLineIfNotEmpty();
+                  {
+                    boolean _equals_2 = ((DSLRuleController)dslRule).getAccess().equals("must-use");
+                    if (_equals_2) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv access_");
+                      String _name_79 = firstArgument_1.getName();
+                      _builder.append(_name_79, "\t");
+                      _builder.append("_");
+                      String _name_80 = secondArgument_1.getName();
+                      _builder.append(_name_80, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_81 = firstArgument_1.getName();
+                      _builder.append(_name_81, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_82 = secondArgument_1.getName();
+                      _builder.append(_name_82, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                    } else {
+                      boolean _equals_3 = ((DSLRuleController)dslRule).getAccess().equals("must-not-use");
+                      if (_equals_3) {
+                        _builder.append("\t");
+                        _builder.append("context StructureModel");
+                        _builder.newLine();
+                        _builder.append("\t");
+                        _builder.append("inv not_access_");
+                        String _name_83 = firstArgument_1.getName();
+                        _builder.append(_name_83, "\t");
+                        _builder.append("_");
+                        String _name_84 = secondArgument_1.getName();
+                        _builder.append(_name_84, "\t");
+                        _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                        String _name_85 = firstArgument_1.getName();
+                        _builder.append(_name_85, "\t");
+                        _builder.append("\' and c.to.name=\'");
+                        String _name_86 = secondArgument_1.getName();
+                        _builder.append(_name_86, "\t");
+                        _builder.append("\')");
+                        _builder.newLineIfNotEmpty();
+                      }
+                    }
+                  }
                 }
               }
             } else {
@@ -3696,24 +3750,51 @@ public class SasDslGenerator extends AbstractGenerator {
                     _builder.append("\t");
                     DSLAnalyzer secondArgument_2 = dslRuleMonitor.getAnalyzer();
                     _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("context StructureModel");
-                    _builder.newLine();
-                    _builder.append("\t");
-                    _builder.append("inv access_");
-                    String _name_79 = firstArgument_2.getName();
-                    _builder.append(_name_79, "\t");
-                    _builder.append("_");
-                    String _name_80 = secondArgument_2.getName();
-                    _builder.append(_name_80, "\t");
-                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                    String _name_81 = firstArgument_2.getName();
-                    _builder.append(_name_81, "\t");
-                    _builder.append("\' and c.to.name=\'");
-                    String _name_82 = secondArgument_2.getName();
-                    _builder.append(_name_82, "\t");
-                    _builder.append("\') ");
-                    _builder.newLineIfNotEmpty();
+                    {
+                      boolean _equals_4 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                      if (_equals_4) {
+                        _builder.append("\t");
+                        _builder.append("context StructureModel");
+                        _builder.newLine();
+                        _builder.append("\t");
+                        _builder.append("inv access_");
+                        String _name_87 = firstArgument_2.getName();
+                        _builder.append(_name_87, "\t");
+                        _builder.append("_");
+                        String _name_88 = secondArgument_2.getName();
+                        _builder.append(_name_88, "\t");
+                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                        String _name_89 = firstArgument_2.getName();
+                        _builder.append(_name_89, "\t");
+                        _builder.append("\' and c.to.name=\'");
+                        String _name_90 = secondArgument_2.getName();
+                        _builder.append(_name_90, "\t");
+                        _builder.append("\') ");
+                        _builder.newLineIfNotEmpty();
+                      } else {
+                        boolean _equals_5 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                        if (_equals_5) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv not_access_");
+                          String _name_91 = firstArgument_2.getName();
+                          _builder.append(_name_91, "\t");
+                          _builder.append("_");
+                          String _name_92 = secondArgument_2.getName();
+                          _builder.append(_name_92, "\t");
+                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_93 = firstArgument_2.getName();
+                          _builder.append(_name_93, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_94 = secondArgument_2.getName();
+                          _builder.append(_name_94, "\t");
+                          _builder.append("\')");
+                          _builder.newLineIfNotEmpty();
+                        }
+                      }
+                    }
                   }
                 }
                 {
@@ -3726,24 +3807,51 @@ public class SasDslGenerator extends AbstractGenerator {
                     _builder.append("\t");
                     DSLKnowledge secondArgument_3 = dslRuleMonitor.getKnowledge();
                     _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("context StructureModel");
-                    _builder.newLine();
-                    _builder.append("\t");
-                    _builder.append("inv access_");
-                    String _name_83 = firstArgument_3.getName();
-                    _builder.append(_name_83, "\t");
-                    _builder.append("_");
-                    String _name_84 = secondArgument_3.getName();
-                    _builder.append(_name_84, "\t");
-                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                    String _name_85 = firstArgument_3.getName();
-                    _builder.append(_name_85, "\t");
-                    _builder.append("\' and c.to.name=\'");
-                    String _name_86 = secondArgument_3.getName();
-                    _builder.append(_name_86, "\t");
-                    _builder.append("\') ");
-                    _builder.newLineIfNotEmpty();
+                    {
+                      boolean _equals_6 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                      if (_equals_6) {
+                        _builder.append("\t");
+                        _builder.append("context StructureModel");
+                        _builder.newLine();
+                        _builder.append("\t");
+                        _builder.append("inv access_");
+                        String _name_95 = firstArgument_3.getName();
+                        _builder.append(_name_95, "\t");
+                        _builder.append("_");
+                        String _name_96 = secondArgument_3.getName();
+                        _builder.append(_name_96, "\t");
+                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                        String _name_97 = firstArgument_3.getName();
+                        _builder.append(_name_97, "\t");
+                        _builder.append("\' and c.to.name=\'");
+                        String _name_98 = secondArgument_3.getName();
+                        _builder.append(_name_98, "\t");
+                        _builder.append("\') ");
+                        _builder.newLineIfNotEmpty();
+                      } else {
+                        boolean _equals_7 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                        if (_equals_7) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv not_access_");
+                          String _name_99 = firstArgument_3.getName();
+                          _builder.append(_name_99, "\t");
+                          _builder.append("_");
+                          String _name_100 = secondArgument_3.getName();
+                          _builder.append(_name_100, "\t");
+                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_101 = firstArgument_3.getName();
+                          _builder.append(_name_101, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_102 = secondArgument_3.getName();
+                          _builder.append(_name_102, "\t");
+                          _builder.append("\')");
+                          _builder.newLineIfNotEmpty();
+                        }
+                      }
+                    }
                   }
                 }
                 {
@@ -3756,24 +3864,51 @@ public class SasDslGenerator extends AbstractGenerator {
                     _builder.append("\t");
                     DSLMonitor secondArgument_4 = dslRuleMonitor.getMonitor2();
                     _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("context StructureModel");
-                    _builder.newLine();
-                    _builder.append("\t");
-                    _builder.append("inv access_");
-                    String _name_87 = firstArgument_4.getName();
-                    _builder.append(_name_87, "\t");
-                    _builder.append("_");
-                    String _name_88 = secondArgument_4.getName();
-                    _builder.append(_name_88, "\t");
-                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                    String _name_89 = firstArgument_4.getName();
-                    _builder.append(_name_89, "\t");
-                    _builder.append("\' and c.to.name=\'");
-                    String _name_90 = secondArgument_4.getName();
-                    _builder.append(_name_90, "\t");
-                    _builder.append("\') ");
-                    _builder.newLineIfNotEmpty();
+                    {
+                      boolean _equals_8 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                      if (_equals_8) {
+                        _builder.append("\t");
+                        _builder.append("context StructureModel");
+                        _builder.newLine();
+                        _builder.append("\t");
+                        _builder.append("inv access_");
+                        String _name_103 = firstArgument_4.getName();
+                        _builder.append(_name_103, "\t");
+                        _builder.append("_");
+                        String _name_104 = secondArgument_4.getName();
+                        _builder.append(_name_104, "\t");
+                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                        String _name_105 = firstArgument_4.getName();
+                        _builder.append(_name_105, "\t");
+                        _builder.append("\' and c.to.name=\'");
+                        String _name_106 = secondArgument_4.getName();
+                        _builder.append(_name_106, "\t");
+                        _builder.append("\') ");
+                        _builder.newLineIfNotEmpty();
+                      } else {
+                        boolean _equals_9 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                        if (_equals_9) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv not_access_");
+                          String _name_107 = firstArgument_4.getName();
+                          _builder.append(_name_107, "\t");
+                          _builder.append("_");
+                          String _name_108 = secondArgument_4.getName();
+                          _builder.append(_name_108, "\t");
+                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_109 = firstArgument_4.getName();
+                          _builder.append(_name_109, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_110 = secondArgument_4.getName();
+                          _builder.append(_name_110, "\t");
+                          _builder.append("\')");
+                          _builder.newLineIfNotEmpty();
+                        }
+                      }
+                    }
                   }
                 }
                 {
@@ -3786,24 +3921,51 @@ public class SasDslGenerator extends AbstractGenerator {
                     _builder.append("\t");
                     DSLSensor secondArgument_5 = dslRuleMonitor.getSensor();
                     _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.append("context StructureModel");
-                    _builder.newLine();
-                    _builder.append("\t");
-                    _builder.append("inv access_");
-                    String _name_91 = firstArgument_5.getName();
-                    _builder.append(_name_91, "\t");
-                    _builder.append("_");
-                    String _name_92 = secondArgument_5.getName();
-                    _builder.append(_name_92, "\t");
-                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                    String _name_93 = firstArgument_5.getName();
-                    _builder.append(_name_93, "\t");
-                    _builder.append("\' and c.to.name=\'");
-                    String _name_94 = secondArgument_5.getName();
-                    _builder.append(_name_94, "\t");
-                    _builder.append("\') ");
-                    _builder.newLineIfNotEmpty();
+                    {
+                      boolean _equals_10 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                      if (_equals_10) {
+                        _builder.append("\t");
+                        _builder.append("context StructureModel");
+                        _builder.newLine();
+                        _builder.append("\t");
+                        _builder.append("inv access_");
+                        String _name_111 = firstArgument_5.getName();
+                        _builder.append(_name_111, "\t");
+                        _builder.append("_");
+                        String _name_112 = secondArgument_5.getName();
+                        _builder.append(_name_112, "\t");
+                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                        String _name_113 = firstArgument_5.getName();
+                        _builder.append(_name_113, "\t");
+                        _builder.append("\' and c.to.name=\'");
+                        String _name_114 = secondArgument_5.getName();
+                        _builder.append(_name_114, "\t");
+                        _builder.append("\') ");
+                        _builder.newLineIfNotEmpty();
+                      } else {
+                        boolean _equals_11 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                        if (_equals_11) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv not_access_");
+                          String _name_115 = firstArgument_5.getName();
+                          _builder.append(_name_115, "\t");
+                          _builder.append("_");
+                          String _name_116 = secondArgument_5.getName();
+                          _builder.append(_name_116, "\t");
+                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_117 = firstArgument_5.getName();
+                          _builder.append(_name_117, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_118 = secondArgument_5.getName();
+                          _builder.append(_name_118, "\t");
+                          _builder.append("\')");
+                          _builder.newLineIfNotEmpty();
+                        }
+                      }
+                    }
                   }
                 }
               } else {
@@ -3821,24 +3983,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLMonitor secondArgument_6 = dslRuleAnalyzer.getMonitor();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_95 = firstArgument_6.getName();
-                      _builder.append(_name_95, "\t");
-                      _builder.append("_");
-                      String _name_96 = secondArgument_6.getName();
-                      _builder.append(_name_96, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_97 = firstArgument_6.getName();
-                      _builder.append(_name_97, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_98 = secondArgument_6.getName();
-                      _builder.append(_name_98, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_12 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_12) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_119 = firstArgument_6.getName();
+                          _builder.append(_name_119, "\t");
+                          _builder.append("_");
+                          String _name_120 = secondArgument_6.getName();
+                          _builder.append(_name_120, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_121 = firstArgument_6.getName();
+                          _builder.append(_name_121, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_122 = secondArgument_6.getName();
+                          _builder.append(_name_122, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_13 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_13) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_123 = firstArgument_6.getName();
+                            _builder.append(_name_123, "\t");
+                            _builder.append("_");
+                            String _name_124 = secondArgument_6.getName();
+                            _builder.append(_name_124, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_125 = firstArgument_6.getName();
+                            _builder.append(_name_125, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_126 = secondArgument_6.getName();
+                            _builder.append(_name_126, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                   {
@@ -3851,24 +4040,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLKnowledge secondArgument_7 = dslRuleAnalyzer.getKnowledge();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_99 = firstArgument_7.getName();
-                      _builder.append(_name_99, "\t");
-                      _builder.append("_");
-                      String _name_100 = secondArgument_7.getName();
-                      _builder.append(_name_100, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_101 = firstArgument_7.getName();
-                      _builder.append(_name_101, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_102 = secondArgument_7.getName();
-                      _builder.append(_name_102, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_14 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_14) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_127 = firstArgument_7.getName();
+                          _builder.append(_name_127, "\t");
+                          _builder.append("_");
+                          String _name_128 = secondArgument_7.getName();
+                          _builder.append(_name_128, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_129 = firstArgument_7.getName();
+                          _builder.append(_name_129, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_130 = secondArgument_7.getName();
+                          _builder.append(_name_130, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_15 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_15) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_131 = firstArgument_7.getName();
+                            _builder.append(_name_131, "\t");
+                            _builder.append("_");
+                            String _name_132 = secondArgument_7.getName();
+                            _builder.append(_name_132, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_133 = firstArgument_7.getName();
+                            _builder.append(_name_133, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_134 = secondArgument_7.getName();
+                            _builder.append(_name_134, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                   {
@@ -3881,24 +4097,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLReferenceInput secondArgument_8 = dslRuleAnalyzer.getRreference();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_103 = firstArgument_8.getName();
-                      _builder.append(_name_103, "\t");
-                      _builder.append("_");
-                      String _name_104 = secondArgument_8.getName();
-                      _builder.append(_name_104, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_105 = firstArgument_8.getName();
-                      _builder.append(_name_105, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_106 = secondArgument_8.getName();
-                      _builder.append(_name_106, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_16 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_16) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_135 = firstArgument_8.getName();
+                          _builder.append(_name_135, "\t");
+                          _builder.append("_");
+                          String _name_136 = secondArgument_8.getName();
+                          _builder.append(_name_136, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_137 = firstArgument_8.getName();
+                          _builder.append(_name_137, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_138 = secondArgument_8.getName();
+                          _builder.append(_name_138, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_17 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_17) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_139 = firstArgument_8.getName();
+                            _builder.append(_name_139, "\t");
+                            _builder.append("_");
+                            String _name_140 = secondArgument_8.getName();
+                            _builder.append(_name_140, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_141 = firstArgument_8.getName();
+                            _builder.append(_name_141, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_142 = secondArgument_8.getName();
+                            _builder.append(_name_142, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                   {
@@ -3911,24 +4154,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLPlanner secondArgument_9 = dslRuleAnalyzer.getPlanner();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_107 = firstArgument_9.getName();
-                      _builder.append(_name_107, "\t");
-                      _builder.append("_");
-                      String _name_108 = secondArgument_9.getName();
-                      _builder.append(_name_108, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_109 = firstArgument_9.getName();
-                      _builder.append(_name_109, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_110 = secondArgument_9.getName();
-                      _builder.append(_name_110, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_18 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_18) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_143 = firstArgument_9.getName();
+                          _builder.append(_name_143, "\t");
+                          _builder.append("_");
+                          String _name_144 = secondArgument_9.getName();
+                          _builder.append(_name_144, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_145 = firstArgument_9.getName();
+                          _builder.append(_name_145, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_146 = secondArgument_9.getName();
+                          _builder.append(_name_146, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_19 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_19) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_147 = firstArgument_9.getName();
+                            _builder.append(_name_147, "\t");
+                            _builder.append("_");
+                            String _name_148 = secondArgument_9.getName();
+                            _builder.append(_name_148, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_149 = firstArgument_9.getName();
+                            _builder.append(_name_149, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_150 = secondArgument_9.getName();
+                            _builder.append(_name_150, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                   {
@@ -3941,24 +4211,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLAnalyzer secondArgument_10 = dslRuleAnalyzer.getAnalyzer2();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_111 = firstArgument_10.getName();
-                      _builder.append(_name_111, "\t");
-                      _builder.append("_");
-                      String _name_112 = secondArgument_10.getName();
-                      _builder.append(_name_112, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_113 = firstArgument_10.getName();
-                      _builder.append(_name_113, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_114 = secondArgument_10.getName();
-                      _builder.append(_name_114, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_20 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_20) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_151 = firstArgument_10.getName();
+                          _builder.append(_name_151, "\t");
+                          _builder.append("_");
+                          String _name_152 = secondArgument_10.getName();
+                          _builder.append(_name_152, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_153 = firstArgument_10.getName();
+                          _builder.append(_name_153, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_154 = secondArgument_10.getName();
+                          _builder.append(_name_154, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_21 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_21) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_155 = firstArgument_10.getName();
+                            _builder.append(_name_155, "\t");
+                            _builder.append("_");
+                            String _name_156 = secondArgument_10.getName();
+                            _builder.append(_name_156, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_157 = firstArgument_10.getName();
+                            _builder.append(_name_157, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_158 = secondArgument_10.getName();
+                            _builder.append(_name_158, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                   {
@@ -3971,24 +4268,51 @@ public class SasDslGenerator extends AbstractGenerator {
                       _builder.append("\t");
                       DSLSelfHealingAlt secondArgument_11 = dslRuleAnalyzer.getShalt();
                       _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv access_");
-                      String _name_115 = firstArgument_11.getName();
-                      _builder.append(_name_115, "\t");
-                      _builder.append("_");
-                      String _name_116 = secondArgument_11.getName();
-                      _builder.append(_name_116, "\t");
-                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_117 = firstArgument_11.getName();
-                      _builder.append(_name_117, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_118 = secondArgument_11.getName();
-                      _builder.append(_name_118, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_22 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                        if (_equals_22) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_159 = firstArgument_11.getName();
+                          _builder.append(_name_159, "\t");
+                          _builder.append("_");
+                          String _name_160 = secondArgument_11.getName();
+                          _builder.append(_name_160, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_161 = firstArgument_11.getName();
+                          _builder.append(_name_161, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_162 = secondArgument_11.getName();
+                          _builder.append(_name_162, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                        } else {
+                          boolean _equals_23 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_23) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_163 = firstArgument_11.getName();
+                            _builder.append(_name_163, "\t");
+                            _builder.append("_");
+                            String _name_164 = secondArgument_11.getName();
+                            _builder.append(_name_164, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_165 = firstArgument_11.getName();
+                            _builder.append(_name_165, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_166 = secondArgument_11.getName();
+                            _builder.append(_name_166, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                          }
+                        }
+                      }
                     }
                   }
                 } else {
@@ -4006,24 +4330,51 @@ public class SasDslGenerator extends AbstractGenerator {
                         _builder.append("\t");
                         DSLAnalyzer secondArgument_12 = dslRulePlanner.getAnalyzer();
                         _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_119 = firstArgument_12.getName();
-                        _builder.append(_name_119, "\t");
-                        _builder.append("_");
-                        String _name_120 = secondArgument_12.getName();
-                        _builder.append(_name_120, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_121 = firstArgument_12.getName();
-                        _builder.append(_name_121, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_122 = secondArgument_12.getName();
-                        _builder.append(_name_122, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_24 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                          if (_equals_24) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_167 = firstArgument_12.getName();
+                            _builder.append(_name_167, "\t");
+                            _builder.append("_");
+                            String _name_168 = secondArgument_12.getName();
+                            _builder.append(_name_168, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_169 = firstArgument_12.getName();
+                            _builder.append(_name_169, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_170 = secondArgument_12.getName();
+                            _builder.append(_name_170, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                          } else {
+                            boolean _equals_25 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_25) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_171 = firstArgument_12.getName();
+                              _builder.append(_name_171, "\t");
+                              _builder.append("_");
+                              String _name_172 = secondArgument_12.getName();
+                              _builder.append(_name_172, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_173 = firstArgument_12.getName();
+                              _builder.append(_name_173, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_174 = secondArgument_12.getName();
+                              _builder.append(_name_174, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                        }
                       }
                     }
                     {
@@ -4036,24 +4387,51 @@ public class SasDslGenerator extends AbstractGenerator {
                         _builder.append("\t");
                         DSLPlanner secondArgument_13 = dslRulePlanner.getPlanner2();
                         _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_123 = firstArgument_13.getName();
-                        _builder.append(_name_123, "\t");
-                        _builder.append("_");
-                        String _name_124 = secondArgument_13.getName();
-                        _builder.append(_name_124, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_125 = firstArgument_13.getName();
-                        _builder.append(_name_125, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_126 = secondArgument_13.getName();
-                        _builder.append(_name_126, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_26 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                          if (_equals_26) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_175 = firstArgument_13.getName();
+                            _builder.append(_name_175, "\t");
+                            _builder.append("_");
+                            String _name_176 = secondArgument_13.getName();
+                            _builder.append(_name_176, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_177 = firstArgument_13.getName();
+                            _builder.append(_name_177, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_178 = secondArgument_13.getName();
+                            _builder.append(_name_178, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                          } else {
+                            boolean _equals_27 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_27) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_179 = firstArgument_13.getName();
+                              _builder.append(_name_179, "\t");
+                              _builder.append("_");
+                              String _name_180 = secondArgument_13.getName();
+                              _builder.append(_name_180, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_181 = firstArgument_13.getName();
+                              _builder.append(_name_181, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_182 = secondArgument_13.getName();
+                              _builder.append(_name_182, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                        }
                       }
                     }
                     {
@@ -4066,24 +4444,51 @@ public class SasDslGenerator extends AbstractGenerator {
                         _builder.append("\t");
                         DSLSelfHealingAlt secondArgument_14 = dslRulePlanner.getShalt();
                         _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_127 = firstArgument_14.getName();
-                        _builder.append(_name_127, "\t");
-                        _builder.append("_");
-                        String _name_128 = secondArgument_14.getName();
-                        _builder.append(_name_128, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_129 = firstArgument_14.getName();
-                        _builder.append(_name_129, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_130 = secondArgument_14.getName();
-                        _builder.append(_name_130, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_28 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                          if (_equals_28) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_183 = firstArgument_14.getName();
+                            _builder.append(_name_183, "\t");
+                            _builder.append("_");
+                            String _name_184 = secondArgument_14.getName();
+                            _builder.append(_name_184, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_185 = firstArgument_14.getName();
+                            _builder.append(_name_185, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_186 = secondArgument_14.getName();
+                            _builder.append(_name_186, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                          } else {
+                            boolean _equals_29 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_29) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_187 = firstArgument_14.getName();
+                              _builder.append(_name_187, "\t");
+                              _builder.append("_");
+                              String _name_188 = secondArgument_14.getName();
+                              _builder.append(_name_188, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_189 = firstArgument_14.getName();
+                              _builder.append(_name_189, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_190 = secondArgument_14.getName();
+                              _builder.append(_name_190, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                        }
                       }
                     }
                     {
@@ -4096,24 +4501,51 @@ public class SasDslGenerator extends AbstractGenerator {
                         _builder.append("\t");
                         DSLExecutor secondArgument_15 = dslRulePlanner.getExecutor();
                         _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_131 = firstArgument_15.getName();
-                        _builder.append(_name_131, "\t");
-                        _builder.append("_");
-                        String _name_132 = secondArgument_15.getName();
-                        _builder.append(_name_132, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_133 = firstArgument_15.getName();
-                        _builder.append(_name_133, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_134 = secondArgument_15.getName();
-                        _builder.append(_name_134, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_30 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                          if (_equals_30) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_191 = firstArgument_15.getName();
+                            _builder.append(_name_191, "\t");
+                            _builder.append("_");
+                            String _name_192 = secondArgument_15.getName();
+                            _builder.append(_name_192, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_193 = firstArgument_15.getName();
+                            _builder.append(_name_193, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_194 = secondArgument_15.getName();
+                            _builder.append(_name_194, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                          } else {
+                            boolean _equals_31 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_31) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_195 = firstArgument_15.getName();
+                              _builder.append(_name_195, "\t");
+                              _builder.append("_");
+                              String _name_196 = secondArgument_15.getName();
+                              _builder.append(_name_196, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_197 = firstArgument_15.getName();
+                              _builder.append(_name_197, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_198 = secondArgument_15.getName();
+                              _builder.append(_name_198, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                        }
                       }
                     }
                     {
@@ -4126,24 +4558,51 @@ public class SasDslGenerator extends AbstractGenerator {
                         _builder.append("\t");
                         DSLKnowledge secondArgument_16 = dslRulePlanner.getKnowledge();
                         _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_135 = firstArgument_16.getName();
-                        _builder.append(_name_135, "\t");
-                        _builder.append("_");
-                        String _name_136 = secondArgument_16.getName();
-                        _builder.append(_name_136, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_137 = firstArgument_16.getName();
-                        _builder.append(_name_137, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_138 = secondArgument_16.getName();
-                        _builder.append(_name_138, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_32 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                          if (_equals_32) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_199 = firstArgument_16.getName();
+                            _builder.append(_name_199, "\t");
+                            _builder.append("_");
+                            String _name_200 = secondArgument_16.getName();
+                            _builder.append(_name_200, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_201 = firstArgument_16.getName();
+                            _builder.append(_name_201, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_202 = secondArgument_16.getName();
+                            _builder.append(_name_202, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                          } else {
+                            boolean _equals_33 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_33) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_203 = firstArgument_16.getName();
+                              _builder.append(_name_203, "\t");
+                              _builder.append("_");
+                              String _name_204 = secondArgument_16.getName();
+                              _builder.append(_name_204, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_205 = firstArgument_16.getName();
+                              _builder.append(_name_205, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_206 = secondArgument_16.getName();
+                              _builder.append(_name_206, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                        }
                       }
                     }
                   } else {
@@ -4161,24 +4620,51 @@ public class SasDslGenerator extends AbstractGenerator {
                           _builder.append("\t");
                           DSLKnowledge secondArgument_17 = dslRuleExecutor.getKnowledge();
                           _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_139 = firstArgument_17.getName();
-                          _builder.append(_name_139, "\t");
-                          _builder.append("_");
-                          String _name_140 = secondArgument_17.getName();
-                          _builder.append(_name_140, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_141 = firstArgument_17.getName();
-                          _builder.append(_name_141, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_142 = secondArgument_17.getName();
-                          _builder.append(_name_142, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_34 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                            if (_equals_34) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_207 = firstArgument_17.getName();
+                              _builder.append(_name_207, "\t");
+                              _builder.append("_");
+                              String _name_208 = secondArgument_17.getName();
+                              _builder.append(_name_208, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_209 = firstArgument_17.getName();
+                              _builder.append(_name_209, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_210 = secondArgument_17.getName();
+                              _builder.append(_name_210, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                            } else {
+                              boolean _equals_35 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_35) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_211 = firstArgument_17.getName();
+                                _builder.append(_name_211, "\t");
+                                _builder.append("_");
+                                String _name_212 = secondArgument_17.getName();
+                                _builder.append(_name_212, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_213 = firstArgument_17.getName();
+                                _builder.append(_name_213, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_214 = secondArgument_17.getName();
+                                _builder.append(_name_214, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                              }
+                            }
+                          }
                         }
                       }
                       {
@@ -4191,24 +4677,51 @@ public class SasDslGenerator extends AbstractGenerator {
                           _builder.append("\t");
                           DSLPlanner secondArgument_18 = dslRuleExecutor.getPlanner();
                           _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_143 = firstArgument_18.getName();
-                          _builder.append(_name_143, "\t");
-                          _builder.append("_");
-                          String _name_144 = secondArgument_18.getName();
-                          _builder.append(_name_144, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_145 = firstArgument_18.getName();
-                          _builder.append(_name_145, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_146 = secondArgument_18.getName();
-                          _builder.append(_name_146, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_36 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                            if (_equals_36) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_215 = firstArgument_18.getName();
+                              _builder.append(_name_215, "\t");
+                              _builder.append("_");
+                              String _name_216 = secondArgument_18.getName();
+                              _builder.append(_name_216, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_217 = firstArgument_18.getName();
+                              _builder.append(_name_217, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_218 = secondArgument_18.getName();
+                              _builder.append(_name_218, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                            } else {
+                              boolean _equals_37 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_37) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_219 = firstArgument_18.getName();
+                                _builder.append(_name_219, "\t");
+                                _builder.append("_");
+                                String _name_220 = secondArgument_18.getName();
+                                _builder.append(_name_220, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_221 = firstArgument_18.getName();
+                                _builder.append(_name_221, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_222 = secondArgument_18.getName();
+                                _builder.append(_name_222, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                              }
+                            }
+                          }
                         }
                       }
                       {
@@ -4221,24 +4734,51 @@ public class SasDslGenerator extends AbstractGenerator {
                           _builder.append("\t");
                           DSLEffector secondArgument_19 = dslRuleExecutor.getEffector();
                           _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_147 = firstArgument_19.getName();
-                          _builder.append(_name_147, "\t");
-                          _builder.append("_");
-                          String _name_148 = secondArgument_19.getName();
-                          _builder.append(_name_148, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_149 = firstArgument_19.getName();
-                          _builder.append(_name_149, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_150 = secondArgument_19.getName();
-                          _builder.append(_name_150, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_38 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                            if (_equals_38) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_223 = firstArgument_19.getName();
+                              _builder.append(_name_223, "\t");
+                              _builder.append("_");
+                              String _name_224 = secondArgument_19.getName();
+                              _builder.append(_name_224, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_225 = firstArgument_19.getName();
+                              _builder.append(_name_225, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_226 = secondArgument_19.getName();
+                              _builder.append(_name_226, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                            } else {
+                              boolean _equals_39 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_39) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_227 = firstArgument_19.getName();
+                                _builder.append(_name_227, "\t");
+                                _builder.append("_");
+                                String _name_228 = secondArgument_19.getName();
+                                _builder.append(_name_228, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_229 = firstArgument_19.getName();
+                                _builder.append(_name_229, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_230 = secondArgument_19.getName();
+                                _builder.append(_name_230, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                              }
+                            }
+                          }
                         }
                       }
                       {
@@ -4251,24 +4791,51 @@ public class SasDslGenerator extends AbstractGenerator {
                           _builder.append("\t");
                           DSLExecutor secondArgument_20 = dslRuleExecutor.getExecutor2();
                           _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_151 = firstArgument_20.getName();
-                          _builder.append(_name_151, "\t");
-                          _builder.append("_");
-                          String _name_152 = secondArgument_20.getName();
-                          _builder.append(_name_152, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_153 = firstArgument_20.getName();
-                          _builder.append(_name_153, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_154 = secondArgument_20.getName();
-                          _builder.append(_name_154, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_40 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                            if (_equals_40) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_231 = firstArgument_20.getName();
+                              _builder.append(_name_231, "\t");
+                              _builder.append("_");
+                              String _name_232 = secondArgument_20.getName();
+                              _builder.append(_name_232, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_233 = firstArgument_20.getName();
+                              _builder.append(_name_233, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_234 = secondArgument_20.getName();
+                              _builder.append(_name_234, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                            } else {
+                              boolean _equals_41 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_41) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_235 = firstArgument_20.getName();
+                                _builder.append(_name_235, "\t");
+                                _builder.append("_");
+                                String _name_236 = secondArgument_20.getName();
+                                _builder.append(_name_236, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_237 = firstArgument_20.getName();
+                                _builder.append(_name_237, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_238 = secondArgument_20.getName();
+                                _builder.append(_name_238, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                              }
+                            }
+                          }
                         }
                       }
                     } else {
@@ -4286,24 +4853,51 @@ public class SasDslGenerator extends AbstractGenerator {
                             _builder.append("\t");
                             DSLMeasuredOutput secondArgument_21 = dslRuleSensor.getMeasured();
                             _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv access_");
-                            String _name_155 = firstArgument_21.getName();
-                            _builder.append(_name_155, "\t");
-                            _builder.append("_");
-                            String _name_156 = secondArgument_21.getName();
-                            _builder.append(_name_156, "\t");
-                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_157 = firstArgument_21.getName();
-                            _builder.append(_name_157, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_158 = secondArgument_21.getName();
-                            _builder.append(_name_158, "\t");
-                            _builder.append("\') ");
-                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_42 = ((DSLRuleMO)dslRule).getAccess().equals("must-use");
+                              if (_equals_42) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_239 = firstArgument_21.getName();
+                                _builder.append(_name_239, "\t");
+                                _builder.append("_");
+                                String _name_240 = secondArgument_21.getName();
+                                _builder.append(_name_240, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_241 = firstArgument_21.getName();
+                                _builder.append(_name_241, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_242 = secondArgument_21.getName();
+                                _builder.append(_name_242, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                              } else {
+                                boolean _equals_43 = ((DSLRuleMO)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_43) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_243 = firstArgument_21.getName();
+                                  _builder.append(_name_243, "\t");
+                                  _builder.append("_");
+                                  String _name_244 = secondArgument_21.getName();
+                                  _builder.append(_name_244, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_245 = firstArgument_21.getName();
+                                  _builder.append(_name_245, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_246 = secondArgument_21.getName();
+                                  _builder.append(_name_246, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                }
+                              }
+                            }
                           }
                         }
                       }

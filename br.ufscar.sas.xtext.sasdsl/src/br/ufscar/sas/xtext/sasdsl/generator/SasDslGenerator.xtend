@@ -1724,146 +1724,256 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRuleMController.mcontroller2 !== null»
 		«var firstArgument = dslRuleMController.mcontroller1»
 		«var secondArgument = dslRuleMController.mcontroller2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleController»
 		«var dslRuleController = dslRule as DSLRuleController»
 		«IF dslRuleController.controller2 !== null»
 		«var firstArgument = dslRuleController.controller1»
 		«var secondArgument = dslRuleController.controller2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleMonitor»
 		«var dslRuleMonitor = dslRule as DSLRuleMonitor»
 		«IF dslRuleMonitor.analyzer !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.analyzer»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.knowledge !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.knowledge»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.monitor2 !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.monitor2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.sensor !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.sensor»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleAnalyzer»
 		«var dslRuleAnalyzer = dslRule as DSLRuleAnalyzer»
 		«IF dslRuleAnalyzer.monitor !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.monitor»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.knowledge !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.knowledge»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.rreference !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.rreference»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.planner !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.planner»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.analyzer2 !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.analyzer2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.shalt !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.shalt»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRulePlanner»
 		«var dslRulePlanner = dslRule as DSLRulePlanner»
 		«IF dslRulePlanner.analyzer !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.analyzer»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.planner2 !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.planner2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.shalt !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.shalt»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.executor !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.executor»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.knowledge !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.knowledge»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleExecutor»
 		«var dslRuleExecutor = dslRule as DSLRuleExecutor»
 		«IF dslRuleExecutor.knowledge !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.knowledge»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.planner !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.planner»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.effector !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.effector»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.executor2 !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.executor2»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleMO»
 		«var dslRuleSensor = dslRule as DSLRuleMO»
 		«IF dslRuleSensor.measured !== null»
 		«var firstArgument = dslRuleSensor.sensor»
 		«var secondArgument = dslRuleSensor.measured»
+		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
 		«ENDIF»
 		«ENDIF»
 		

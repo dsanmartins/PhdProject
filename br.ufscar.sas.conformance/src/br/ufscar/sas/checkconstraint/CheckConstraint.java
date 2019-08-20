@@ -106,7 +106,7 @@ public class CheckConstraint {
 					try {
 						dataConstraint.insertExistence(projectName.replaceAll("\\/", ""), abstraction, (check.booleanValue() ? 1 : 0 ));
 						dataConstraint.insertExistenceRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
-						
+
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -134,6 +134,19 @@ public class CheckConstraint {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						}else
+						{
+							if (type.equals("not")) {
+								String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
+								abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
+								try {
+									dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+									dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}								
+							}
 						}
 					}
 
@@ -160,13 +173,29 @@ public class CheckConstraint {
 						}
 					}
 					else {
-						String abstraction2 = key.split(Pattern.quote("_"))[3]  + "_" +  key.split(Pattern.quote("_"))[4];
-						try {
-							dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, 0);
-							dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") ,0);
-						} catch (Exception e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
+						if (type.equals("access")) {
+							String abstraction2 = key.split(Pattern.quote("_"))[3]  + "_" +  key.split(Pattern.quote("_"))[4];
+							try {
+								dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, 0);
+								dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") ,0);
+							} catch (Exception e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+						}
+						else
+						{
+							if (type.equals("not")) {
+								String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
+								abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
+								try {
+									dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+									dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+								} catch (Exception e3) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}								
+							}
 						}
 					}
 				}
@@ -363,11 +392,11 @@ public class CheckConstraint {
 		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
 		return dataConstraint.getAccessAbstractions();
 	}
-	
+
 	public List<Integer> getUntestedValues() throws Exception{
 
 		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
 		return dataConstraint.getUntestedValues();
 	}
-	
+
 }
