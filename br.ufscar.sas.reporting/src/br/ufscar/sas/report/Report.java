@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.sl.draw.binding.CTColor;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -24,8 +23,6 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 
 import br.ufscar.sas.dataconstraint.DataConstraint;
