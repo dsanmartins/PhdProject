@@ -60,50 +60,56 @@ public class UI extends AbstractHandler {
 
 			if (structured != null) {
 				IProject jProject = (IProject) structured.getFirstElement();
-				projectName = jProject.getName();
+				if (jProject != null)
+					projectName = jProject.getName();
+				else {
+					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Error", "Please select a project!.");
+				}
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+		if (!projectName.equals("")) {
 
-		try {	
-			window.getActivePage().showView("MainView");
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+
+			try {	
+				window.getActivePage().showView("MainView");
+			} catch (PartInitException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			window.getActivePage();
+
+			IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
+			String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/" ;
+			String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
+
+			Path plannedPath = Paths.get(umlFolderPlannedAbsolute);
+			Path architecture = plannedPath.resolve("architecture.sas");
+			Path currentPath = Paths.get(umlFolderCurrentAbsolute);
+
+			try {Files.createDirectories(plannedPath);} catch (IOException e) {e.printStackTrace();}
+			try {
+				if (!Files.exists(architecture, LinkOption.NOFOLLOW_LINKS))
+				{
+					Files.createFile(architecture);
+					Files.write(architecture, this.architectureTemplate().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+				}	
+
+			} 
+			catch (IOException e1) {
+
+				e1.printStackTrace();
+			}
+			try {Files.createDirectories(currentPath);} catch (IOException e) {	e.printStackTrace();}
+			try {this.refreshProjects();} catch (CoreException e) {	e.printStackTrace();}
+
+			MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "The project " + projectName + " was selected! ");
 		}
-		window.getActivePage();
-
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
-		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/" ;
-		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
-
-		Path plannedPath = Paths.get(umlFolderPlannedAbsolute);
-		Path architecture = plannedPath.resolve("architecture.sas");
-		Path currentPath = Paths.get(umlFolderCurrentAbsolute);
-
-		try {Files.createDirectories(plannedPath);} catch (IOException e) {e.printStackTrace();}
-		try {
-			if (!Files.exists(architecture, LinkOption.NOFOLLOW_LINKS))
-			{
-				Files.createFile(architecture);
-				Files.write(architecture, this.architectureTemplate().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-			}	
-
-		} 
-		catch (IOException e1) {
-
-			e1.printStackTrace();
-		}
-		try {Files.createDirectories(currentPath);} catch (IOException e) {	e.printStackTrace();}
-		try {this.refreshProjects();} catch (CoreException e) {	e.printStackTrace();}
-
-		MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "The project " + projectName + " was selected! ");
-
 		return null;
 	}
 
