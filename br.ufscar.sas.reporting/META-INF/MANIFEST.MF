@@ -4,7 +4,8 @@ Bundle-Name: Reporting
 Bundle-SymbolicName: br.ufscar.sas.reporting
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: br.ufscar.sas.reporting.Activator
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ br.ufscar.sas.conformance
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: br.ufscar.sas.reporting
 Bundle-ActivationPolicy: lazy

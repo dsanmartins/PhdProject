@@ -772,7 +772,19 @@ public class MainView extends ViewPart implements IPartListener2 {
 							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 							monitor.beginTask("Creating architectural report....", totalUnitsOfWork);
 							Report report = new Report();
-							report.create(workspacePath + projectName + "/", projectName, umlFolderPlannedAbsolute, umlFolderCurrentAbsolute);
+							DataConstraint dataConstraint = null;
+							try {
+								dataConstraint = new DataConstraint(databaseUrl);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								report.create(workspacePath + projectName + "/", projectName, umlFolderPlannedAbsolute, umlFolderCurrentAbsolute, dataConstraint);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							monitor.done();
 							try {refreshProjects();}catch (CoreException e) {e.printStackTrace();} 
 						}});

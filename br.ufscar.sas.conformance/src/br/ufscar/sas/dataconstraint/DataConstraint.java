@@ -134,6 +134,45 @@ public class DataConstraint {
 		mydb.closeConnection();
 	}
 
+	public List<String> getExistenceRules() throws Exception{
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, rule, result from existence_rules;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+","+rs.getObject(2).toString()+","+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+
+	}
+
+	public List<String> getAccessRules() throws Exception{
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, rule, result from access_rules;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+","+rs.getObject(2).toString()+","+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+
+	}
+
+	public List<String> getCompositeRules() throws Exception{
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, rule, result from composite_rules;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+","+rs.getObject(2).toString()+","+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+
+	}
+
 	public List<Integer> getExistenceAbstractions() throws Exception{
 
 		List<Integer> lst = new ArrayList<Integer>();
@@ -196,7 +235,7 @@ public class DataConstraint {
 		return lst;
 
 	}
-	
+
 	public List<String> getAnomalies() throws Exception
 	{
 		List<String> lst = new ArrayList<String>();
@@ -208,7 +247,7 @@ public class DataConstraint {
 		mydb.closeConnection();
 		return lst;
 	}
-	
+
 	public List<String> getAnomaliesIdentified() throws Exception
 	{
 		List<String> lst = new ArrayList<String>();
@@ -225,6 +264,25 @@ public class DataConstraint {
 				"    select * \n" + 
 				"    from access_rules  where result = 0\n" + 
 				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id ;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+	
+	public List<String> getAnomaliesIdentifiedReport() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A._key, C.name \n" + 
+				"from\n" + 
+				"(   select * from composite_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"	select * from existence_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"	select * from access_rules  where result = 0\n" + 
+				") A  inner join mapping B  ON A._key LIKE  B._key || '%' inner join architectural_anomaly C on  C.id = B.id ;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
 		}
