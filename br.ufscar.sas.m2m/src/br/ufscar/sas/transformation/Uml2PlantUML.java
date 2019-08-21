@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import javax.xml.soap.Node;
-
 import org.apache.commons.collections4.map.HashedMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;

@@ -755,7 +755,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
 		String umlCurrent =  folder + "/" + projectName + "/CurrentArchitecture/currentArchitecture.uml";
 		String umlPlanned = folder + "/" + projectName + "/PlannedArchitecture/src-gen/plannedArchitecture.uml" ; 
-		String umlDifferences = folder + "/" + projectName + "/PlannedArchitecture/src-gen/differencesArchitecture.uml" ; 
+		String txtDifferences = folder + "/" + projectName + "/CurrentArchitecture/differencesDiagram.txt" ; 
 
 		String umlFolderPlannedRelative = "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
@@ -999,6 +999,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 					else
 					{
 						if (radios[2].getSelection()) {
+							String title = "This is the architecture differences (Curent and Planned) of project: " + projectName;
 							if (Files.exists(Paths.get(umlCurrent)) && Files.exists(Paths.get(umlPlanned)))
 							{
 								try {
@@ -1008,7 +1009,13 @@ public class MainView extends ViewPart implements IPartListener2 {
 											int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 											monitor.beginTask("Computing differences....", totalUnitsOfWork);
 											ComputeModelDiff computeModelDiff = new ComputeModelDiff();
-											computeModelDiff.compute(iUmlCurrent, iUmlPlanned, umlDifferences);
+											Kdm2Uml rc = new Kdm2Uml();
+											try {
+												computeModelDiff.compute(iUmlCurrent, iUmlPlanned, txtDifferences, mappingString, rc.createComponentDiagram(kdmPlanned, umlPlanned, "", mappingString),title);
+											} catch (ExecutionException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
 											monitor.done();
 										}
 									});
