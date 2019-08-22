@@ -17,7 +17,7 @@ public class OpenComponentDiagram {
 		try {
 			IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 			IWorkbenchPage page = window.getActivePage();
-			IPath path2 = new Path(path + "ComponentDiagram.txt");
+			IPath path2 = new Path(path);
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path2);
 			IDE.openEditor(page, file, true);
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("net.sourceforge.plantuml.eclipse.views.PlantUmlView");

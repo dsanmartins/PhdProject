@@ -745,23 +745,23 @@ public class MainView extends ViewPart implements IPartListener2 {
 		IProject project  = root.getProject(projectName);
 		IFile kdmCurrent = project.getFile(projectName + "_KDM.xmi");
 		IFile kdmPlanned = project.getFile("PlannedArchitecture/src-gen/PlannedArchitecture.xmi");
-		
+
 		IFile iUmlCurrent = project.getFile("CurrentArchitecture/currentArchitecture.uml");
 		IFile iUmlPlanned = project.getFile("PlannedArchitecture/src-gen/plannedArchitecture.uml");
-		
-		
+
+
 		IFile constraintPath = project.getFile("PlannedArchitecture/src-gen/Constraints.ocl");
 
 		String folder = workspace.getRoot().getLocation().toFile().getPath().toString();
 		String umlCurrent =  folder + "/" + projectName + "/CurrentArchitecture/currentArchitecture.uml";
 		String umlPlanned = folder + "/" + projectName + "/PlannedArchitecture/src-gen/plannedArchitecture.uml" ; 
-		String txtDifferences = folder + "/" + projectName + "/CurrentArchitecture/differencesDiagram.txt" ; 
+		String plannedArchitecture = folder + "/" + projectName + "/PlannedArchitecture/src-gen/ComponentDiagram.txt" ; 
 
 		String umlFolderPlannedRelative = "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderPlannedAbsolute = folder + "/" + projectName + "/PlannedArchitecture/src-gen/" ;
 		String umlFolderCurrentAbsolute = folder +  "/" + projectName + "/CurrentArchitecture/";
 		String umlFolderCurrentRelative =  "/" + projectName + "/CurrentArchitecture/";
-		
+
 		String mappingString = folder + "/"+projectName + "/CurrentArchitecture/mapping.txt";
 		String workspacePath = folder + "/";
 		String projectWorkspace = folder + "/" + projectName + "/";
@@ -782,7 +782,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								e1.printStackTrace();
 							}
 							try {
-								report.create(workspacePath + projectName + "/", projectName, umlFolderPlannedAbsolute, umlFolderCurrentAbsolute, dataConstraint);
+								report.create(workspacePath + projectName + "/", projectName, umlFolderCurrentAbsolute, umlFolderPlannedAbsolute, dataConstraint);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -947,7 +947,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								}
 							});
 							OpenComponentDiagram od = new OpenComponentDiagram();
-							od.open(umlFolderCurrentRelative, projectName);
+							od.open(umlFolderCurrentRelative + "ComponentDiagram.txt", projectName);
 						} catch (InvocationTargetException | InterruptedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -989,7 +989,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								}
 							});
 							OpenComponentDiagram od = new OpenComponentDiagram();
-							od.open(umlFolderPlannedRelative, projectName);
+							od.open(umlFolderPlannedRelative + "ComponentDiagram.txt", projectName);
 						} catch (InvocationTargetException | InterruptedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -999,7 +999,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 					else
 					{
 						if (radios[2].getSelection()) {
-							String title = "This is the architecture differences (Curent and Planned) of project: " + projectName;
 							if (Files.exists(Paths.get(umlCurrent)) && Files.exists(Paths.get(umlPlanned)))
 							{
 								try {
@@ -1009,16 +1008,18 @@ public class MainView extends ViewPart implements IPartListener2 {
 											int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 											monitor.beginTask("Computing differences....", totalUnitsOfWork);
 											ComputeModelDiff computeModelDiff = new ComputeModelDiff();
-											Kdm2Uml rc = new Kdm2Uml();
+											computeModelDiff.compute(iUmlCurrent, iUmlPlanned, plannedArchitecture, umlFolderCurrentAbsolute);
 											try {
-												computeModelDiff.compute(iUmlCurrent, iUmlPlanned, txtDifferences, mappingString, rc.createComponentDiagram(kdmPlanned, umlPlanned, "", mappingString),title);
-											} catch (ExecutionException e) {
+												refreshProjects();
+											} catch (CoreException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
 											monitor.done();
 										}
 									});
+									OpenComponentDiagram od = new OpenComponentDiagram();
+									od.open(umlFolderCurrentRelative + "differences.txt", projectName);
 								} catch (InvocationTargetException | InterruptedException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

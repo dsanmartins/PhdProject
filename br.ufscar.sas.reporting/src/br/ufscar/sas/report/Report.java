@@ -69,8 +69,13 @@ public class Report {
 			InputStream currentStream = getFigure(currentFile);
 			File plannedFile = new File(plannedPath + "ComponentDiagram.txt");
 			InputStream plannedStream = getFigure(plannedFile);
+			File differencesFile = new File(currentPath + "differences.txt");
+			InputStream diferrencesStream = getFigure(differencesFile);
+			
 			BufferedImage imgCurrent = ImageIO.read(currentStream);
 			BufferedImage imgPlanned = ImageIO.read(plannedStream);
+			BufferedImage imgDifferences = ImageIO.read(diferrencesStream);
+			
 			double width = imgCurrent.getWidth();
 			double height = imgCurrent.getHeight();
 			double scaling = 1.0;
@@ -80,15 +85,26 @@ public class Report {
 			r1.addPicture(currentStream, XWPFDocument.PICTURE_TYPE_JPEG, "Current Architecture",  Units.toEMU(width*scaling), Units.toEMU(height*scaling));
 			r1.addBreak();
 			r1.addBreak();
+			
 			width = imgPlanned.getWidth();
 			height = imgPlanned.getHeight();
 			scaling = 1.0;
 			if (width > 72*6) scaling = (72*6)/width;
-
 			plannedStream.close();
 			plannedStream = getFigure(plannedFile);
 			r1.addPicture(plannedStream, XWPFDocument.PICTURE_TYPE_JPEG, "Planned Architecture",  Units.toEMU(width*scaling), Units.toEMU(height*scaling));
-
+			r1.addBreak();
+			r1.addBreak();
+			
+			width = imgDifferences.getWidth();
+			height = imgDifferences.getHeight();
+			scaling = 1.0;
+			if (width > 72*6) scaling = (72*6)/width;
+			diferrencesStream.close();
+			diferrencesStream = getFigure(differencesFile);
+			r1.addPicture(diferrencesStream, XWPFDocument.PICTURE_TYPE_JPEG, "Differences",  Units.toEMU(width*scaling), Units.toEMU(height*scaling));
+			r1.addBreak();
+			
 		} catch (InvalidFormatException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
