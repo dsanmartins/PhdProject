@@ -44,6 +44,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
+import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -65,6 +68,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -78,10 +82,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-
-import org.eclipse.nebula.jface.gridviewer.*;
-import org.eclipse.nebula.widgets.grid.GridColumn;
-import org.eclipse.nebula.widgets.grid.GridItem;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -102,7 +102,6 @@ import br.ufscar.sas.recommendation.RefactoringRecommendation;
 import br.ufscar.sas.report.Report;
 import br.ufscar.sas.tableviewer.Anomaly;
 import br.ufscar.sas.tableviewer.Data;
-import br.ufscar.sas.tableviewer.EditingAnnotationBelong;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
 import br.ufscar.sas.tableviewer.MappedAnomaly;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
@@ -136,8 +135,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 	List<String> rs = null;
 	//Tree
 	Tree tree = null;
-
-
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -394,7 +391,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 			gc.dispose();
 			item.setHeight(max);
 		}
-
 	}
 
 	private void UIAnnotation(TabFolder tabFolder, String projectName) {
@@ -427,23 +423,17 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		TableViewerColumn column = new TableViewerColumn(viewer, SWT.CENTER);
 		column.getColumn().setText("Element Name");
-		column.getColumn().setWidth(190);
+		column.getColumn().setWidth(250);
 		column.getColumn().setResizable(false);
 
 		TableViewerColumn column2 = new TableViewerColumn(viewer, SWT.CENTER);
-		column2.getColumn().setText("Instance");
+		column2.getColumn().setText("Abstraction");
 		column2.getColumn().setWidth(130);
 		column2.getColumn().setResizable(false);
 
-		TableViewerColumn column3 = new TableViewerColumn(viewer, SWT.CENTER);
-		column3.getColumn().setText("Container");
-		column3.getColumn().setWidth(130);
-		column3.getColumn().setResizable(false);
 
 		EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
-		EditingAnnotationBelong editingBelong = new EditingAnnotationBelong(column3.getViewer());
 		column2.setEditingSupport(editingAnnotation);
-		column3.setEditingSupport(editingBelong);
 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -453,13 +443,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 		//Update combocellviewer
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
-				if (tabFolder.getSelection()[0].getText().equals("Annotating Code"))
+				if (tabFolder.getSelection()[0].getText().equals("Code Elements Annotation"))
 				{
 					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
 					column2.setEditingSupport(editingAnnotation);
-
-					EditingAnnotationBelong editingBelong = new EditingAnnotationBelong(column3.getViewer());
-					column3.setEditingSupport(editingBelong);
 				}
 			}
 		});
@@ -470,92 +457,31 @@ public class MainView extends ViewPart implements IPartListener2 {
 		processAnnotation.setText("Process Annotations");
 
 		processAnnotation.addSelectionListener(new SelectionAdapter() {
+			
 			public void widgetSelected(SelectionEvent e) {
+				
 				try {
-
-					boolean check1 = false;
-					boolean check2 = false;
-					boolean check3 = false;
-					try {
-						QueryClass queryClass = new QueryClass(databaseUrl);
-						check1 = queryClass.selectDifferentBelongToInstance();
-						check2 = queryClass.checkIfBelongsExistAsInstance();
-						check3 = queryClass.checkRecursiveRelations();
-
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					if (check1 == false && check2 == true && check3 == true)
-					{
-						dialog.run(true, true, new IRunnableWithProgress()
+					dialog.run(true, true, new IRunnableWithProgress()
+					{ 
+						public void run(IProgressMonitor monitor) 
 						{ 
-							public void run(IProgressMonitor monitor) 
+							//Creates KDM instance 
+							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+							monitor.beginTask("Creating Structure Package in KDM...",totalUnitsOfWork); 
+							String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
+							CreateKDM ck = new CreateKDM();
+							ck.createKDMFile(projectName); 
+							monitor.done(); 
+							try 
 							{ 
-								//Creates KDM instance 
-								int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
-								monitor.beginTask("Creating Structure Package in KDM...",totalUnitsOfWork); 
-
-								String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
-								CreateKDM ck = new CreateKDM();
-								ck.createKDMFile(projectName); 
-								monitor.done(); 
-								try 
-								{ 
-									refreshProjects(); 
-								}
-								catch (CoreException e) 
-								{
-									e.printStackTrace();
-								} 
-							} 
-						});
-					}
-					else
-					{
-						if (check1 == true && check2 == true && check3 == true)
-							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "Same 'Instances' must have the same 'Container'!");
-						else
-						{
-							if (check1 == false && check2 == false && check3 == true)
-								MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "One or more 'Containers' do not exist as an 'Instance'!");
-							else
-							{
-								if (check1 == true && check2 == false && check3 == true)
-									MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", ""
-											+ "One or more 'Containers' do not exist as an 'Instance'! and \n "
-											+ "Same 'Instances' must have the same 'Container'!");
-								else
-								{
-									if (check1 == false && check2 == false && check3 == false)
-										MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", ""
-												+ "One or more 'Containers' do not exist as an 'Instance'! and \n "
-												+ "There are recursive relations'!");
-									else
-									{
-										if (check1 == false && check2 == true && check3 == false)
-											MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "There are recursive relations'!");
-										else
-										{
-											if (check1 == true && check2 == false && check3 == false)
-												MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", ""
-														+ "Same 'Instances' must have the same 'Container'!, \n "
-														+ "One or more 'Containers' do not exist as an 'Instance'! and \n "
-														+ "There are recursive relations'!");
-											else
-											{
-												if (check1 == true && check2 == true && check3 == false)
-													MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", ""
-															+ "Same 'Instances' must have the same 'Container'!, \n "
-															+ "There are recursive relations'!");
-											}
-										}
-									}
-								}		
+								refreshProjects(); 
 							}
-						}
-					}
+							catch (CoreException e) 
+							{
+								e.printStackTrace();
+							} 
+						} 
+					});
 
 				} catch (InvocationTargetException e1) {
 					// TODO Auto-generated catch block
@@ -566,7 +492,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 				}
 			}
 		});
-
 	}
 
 	private void UIControPanel(TabFolder tabFolder, String projectName) {
