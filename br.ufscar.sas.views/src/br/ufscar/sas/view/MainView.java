@@ -68,7 +68,6 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -467,6 +466,26 @@ public class MainView extends ViewPart implements IPartListener2 {
 						{ 
 							//Creates KDM instance 
 							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
+							
+							try {
+								QueryClass queryClass1 = new QueryClass(databaseUrl);
+								queryClass1.variableBelongsTo();
+								QueryClass queryClass2 = new QueryClass(databaseUrl);
+								queryClass2.fieldBelongsTo();
+								QueryClass queryClass3 = new QueryClass(databaseUrl);
+								queryClass3.methodBelongsTo();
+								QueryClass queryClass4 = new QueryClass(databaseUrl);
+								queryClass4.classBelongsTo();
+							
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							
 							monitor.beginTask("Creating Structure Package in KDM...",totalUnitsOfWork); 
 							String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
 							CreateKDM ck = new CreateKDM();

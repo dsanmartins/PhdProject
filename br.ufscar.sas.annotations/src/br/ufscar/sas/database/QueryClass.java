@@ -469,28 +469,178 @@ public class QueryClass {
 		mydb.closeConnection();
 		return rtn;
 	}
-	
+
 	public void deleteRelation() throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("delete from relation;"); 
 		mydb.closeConnection();
 	}
-	
+
 	public List<String> getActionRelation() throws Exception {
-		
+
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
 		ResultSet rs = mydb.executeQry("select DISTINCT b.annotation, a.from_, (select annotation from summary_annotation where name = a.to_), a.to_, a.modisco_path, a.type_relation\n" + 
 				"from relation a inner join summary_annotation b on a.from_ = b.name \n" + 
 				"where a.to_ in (select name from summary_annotation) \n" + 
 				"order by b.annotation;");		
-		
+
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString()+"|"+rs.getObject(6).toString());
 		}
 		mydb.closeConnection();
 		return lst;	
 	}
-	
+
+	public void variableBelongsTo() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select A.*, \n" + 
+				"       ifnull(METHOD.annotation,'None') As Method, \n" + 
+				"       ifnull(CLASS.annotation,'None') As Class, \n" + 
+				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
+				"from variable_annotation A \n" + 
+				"left join method_annotation METHOD on METHOD.project_name = A.project_name  AND\n" + 
+				"                                      METHOD.class_name  =  A.class_name   AND\n" + 
+				"                                      METHOD.method_name =  A.method_name  AND\n" + 
+				"                                      METHOD.file  = A.file \n" + 
+				"left join class_annotation CLASS on CLASS.project_name = A.project_name  AND\n" + 
+				"                                                  CLASS.name =  A.class_name  AND\n" + 
+				"                                                  CLASS.file =  A.file\n" + 
+				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
+				"                                                        REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';\n" + 
+				"                  ");		
+
+		while (rs.next()) {
+			String projectName = rs.getObject(1).toString();
+			String className = rs.getObject(2).toString();
+			String methodName = rs.getObject(3).toString();
+			String variableName = rs.getObject(4).toString();
+			String file = rs.getObject(5).toString();
+			String methodAnnotation = rs.getObject(8).toString();
+			String classAnnotation = rs.getObject(9).toString();
+			String packageAnnotation = rs.getObject(10).toString();
+
+			if (!methodAnnotation.equals("None")) {
+
+				mydb.executeStmt("update variable_annotation set belongs= '" + methodAnnotation + 
+						"' where project_name = '" + projectName + "' and class_name = '" + className + "' and method_name = '" + methodName + "' and variable_name = '" + variableName + "' and file = '" + file +"';");		
+			}
+			else {
+				if (!classAnnotation.equals("None")) {
+
+					mydb.executeStmt("update variable_annotation set belongs= '" + classAnnotation + 
+							"' where project_name = '" + projectName + "' and class_name = '" + className + "' and method_name = '" + methodName + "' and variable_name = '" + variableName + "' and file = '" + file +"';");		
+				}
+				else {
+					if (!packageAnnotation.equals("None")) {
+
+
+						mydb.executeStmt("update variable_annotation set belongs= '" + packageAnnotation + 
+								"' where project_name = '" + projectName + "' and class_name = '" + className + "' and method_name = '" + methodName + "' and variable_name = '" + variableName + "' and file = '" + file +"';");		
+					}
+				}
+			}
+		}
+		mydb.closeConnection();
+	}
+
+	public void fieldBelongsTo() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select A.*, \n" + 
+				"       ifnull(CLASS.annotation,'None') As Class, \n" + 
+				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
+				"from field_annotation A \n" + 
+				"left join class_annotation CLASS on CLASS.project_name = A.project_name AND\n" + 
+				"                                                             CLASS.name =  A.class_name AND\n" + 
+				"                                                             CLASS.file = A.file \n" + 
+				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
+				"                                                        REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';");		
+		while (rs.next()) {
+
+			String projectName = rs.getObject(1).toString();
+			String className = rs.getObject(2).toString();
+			String fieldName = rs.getObject(3).toString();
+			String file = rs.getObject(4).toString();
+			String classAnnotation = rs.getObject(7).toString();
+			String packageAnnotation = rs.getObject(8).toString();
+
+			if (!classAnnotation.equals("None")) {
+
+				mydb.executeStmt("update field_annotation set belongs= '" + classAnnotation + 
+						"' where project_name = '" + projectName + "' and class_name = '" + className + "' and field_name = '" + fieldName + "' and file = '" + file +"';");		
+			}
+			else {
+				if (!packageAnnotation.equals("None")) {
+
+					mydb.executeStmt("update field_annotation set belongs= '" + packageAnnotation + 
+							"' where project_name = '" + projectName + "' and class_name = '" + className + "' and field_name = '" + fieldName + "' and file = '" + file +"';");		
+				}
+			}
+		}
+		mydb.closeConnection();
+	}
+
+	public void methodBelongsTo() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select A.*, \n" + 
+				"       ifnull(CLASS.annotation,'None') As Class, \n" + 
+				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
+				"from method_annotation A \n" + 
+				"left join class_annotation CLASS on CLASS.project_name = A.project_name  AND\n" + 
+				"                                                         CLASS.name  = A.class_name AND\n" + 
+				"                                                         CLASS.file  = A.file \n" + 
+				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
+				"                                                        REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';");		
+		while (rs.next()) {
+			String projectName = rs.getObject(1).toString();
+			String className = rs.getObject(2).toString();
+			String methodName = rs.getObject(3).toString();
+			String file = rs.getObject(4).toString();
+			String classAnnotation = rs.getObject(7).toString();
+			String packageAnnotation = rs.getObject(8).toString();
+
+			if (!classAnnotation.equals("None")) {
+
+				mydb.executeStmt("update method_annotation set belongs= '" + classAnnotation + 
+						"' where project_name = '" + projectName + "' and class_name = '" + className + "' and method_name = '" + methodName + "' and file = '" + file +"';");		
+			}
+			else {
+				if (!packageAnnotation.equals("None")) {
+
+					mydb.executeStmt("update method_annotation set belongs= '" + packageAnnotation + 
+							"' where project_name = '" + projectName + "' and class_name = '" + className + "' and method_name = '" + methodName + "' and file = '" + file +"';");		
+				}
+			}
+		}
+		mydb.closeConnection();
+	} 
+
+	public void classBelongsTo() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select A.*, \n" + 
+				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
+				"from class_annotation A \n" + 
+				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
+				"                                                         REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';");		
+		while (rs.next()) {
+			String projectName = rs.getObject(1).toString();
+			String className = rs.getObject(2).toString();
+			String file = rs.getObject(3).toString();
+			String packageAnnotation = rs.getObject(6).toString();
+
+			if (!packageAnnotation.equals("None")) {
+
+				mydb.executeStmt("update class_annotation set belongs= '" + packageAnnotation + 
+						"' where project_name = '" + projectName + "' and name = '" + className + "' and file = '" + file +"';");		
+			}
+		}
+		mydb.closeConnection();
+	}
+
+
 }
