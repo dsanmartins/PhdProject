@@ -42,7 +42,6 @@ public class Kdm2Uml {
 
 	public Resource createComponentDiagram(IFile kdm, String uml, String javaProjectName,String mapping ) throws ExecutionException
 	{
-
 		// Refer to an existing transformation via URI
 		URI transformationURI = URI.createURI("platform:/plugin/br.ufscar.sas.m2m/transforms/kdm2uml.qvto");
 

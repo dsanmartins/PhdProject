@@ -1155,9 +1155,9 @@ public class MainView extends ViewPart implements IPartListener2 {
 					}
 
 					if (lstAnnotation.isEmpty())
-						arrData.add(new Data("Class Name", className, pathCode,  rs.get(0), "", "", rs.get(0)));
+						arrData.add(new Data("Class Name", className, pathCode,  rs.get(0), realPackage, "", rs.get(0)));
 					else
-						arrData.add(new Data("Class Name", className, pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], "", "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+						arrData.add(new Data("Class Name", className, pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], realPackage, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
 
 					// Class fields
 					try 

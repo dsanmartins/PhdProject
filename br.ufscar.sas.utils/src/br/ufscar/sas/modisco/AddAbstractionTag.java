@@ -70,12 +70,10 @@ public class AddAbstractionTag {
 		List<String> classes = queryClass.getClassAnnotations();
 		for (String line : classes)
 		{
-			String package_ = line.split(Pattern.quote("|"))[2].split(Pattern.quote("/src/"))[1];
-			String class_ = line.split(Pattern.quote("|"))[1];
-			String abstraction = line.split(Pattern.quote("|"))[3];
-			package_ = package_.replaceAll(class_, "").replaceAll("\\/", ".");
-			package_ = package_.substring(0, package_.length() -1);
-
+			String package_ = line.split(Pattern.quote("|"))[1];
+			String class_ = line.split(Pattern.quote("|"))[2];
+			String abstraction = line.split(Pattern.quote("|"))[4];
+		
 			String path = "";
 			String codeElement = "/codeElement[@xsi:type='code:Package' and @name='XXXX']"; 
 			if (package_.contains("."))

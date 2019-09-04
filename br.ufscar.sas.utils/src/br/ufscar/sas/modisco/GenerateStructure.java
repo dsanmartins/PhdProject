@@ -177,9 +177,9 @@ public class GenerateStructure {
 			for (String data: lst)
 			{
 				String projectName = data.split(Pattern.quote("|"))[0];
-				String className = data.split(Pattern.quote("|"))[1];
-				String file = data.split(Pattern.quote("|"))[2];
-				String annotation = data.split(Pattern.quote("|"))[3];
+				String className = data.split(Pattern.quote("|"))[2];
+				String file = data.split(Pattern.quote("|"))[3];
+				String annotation = data.split(Pattern.quote("|"))[4];
 				String packages = file.split("\\/src/")[1];
 				String packageCode[] = packages.split("\\/");
 				String packagePath = "/codeElement[@xsi:type='code:Package' and @name='";

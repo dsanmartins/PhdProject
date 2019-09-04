@@ -82,15 +82,15 @@ public class EditingAnnotationInstance extends EditingSupport {
 						List <String> rs = queryClass.selectAnnotationClass(projectName, data.getName(), path);
 						if (rs.isEmpty())
 						{
-							queryClass.insertAnnotationClass(projectName, data.getName(), path, newValue);
+							queryClass.insertAnnotationClass(projectName, data.getClassName(), data.getName(), path, newValue);
 							if (newValue.equals("None"))
-								queryClass.updateBelongClass(projectName, data.getName(), path, "None");
+								queryClass.updateBelongClass(projectName,  data.getClassName(), data.getName(), path, "None");
 						}
 						else
 						{
-							queryClass.updateAnnotationClass(projectName, data.getName(), path, newValue);
+							queryClass.updateAnnotationClass(projectName,  data.getClassName(), data.getName(), path, newValue);
 							if (newValue.equals("None"))
-								queryClass.updateBelongClass(projectName, data.getName(), path, "None");
+								queryClass.updateBelongClass(projectName,  data.getClassName(), data.getName(), path, "None");
 						}
 						
 					} catch (Exception e) {
