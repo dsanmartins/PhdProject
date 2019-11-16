@@ -318,7 +318,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		});
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
-		tableViewGroup.setText("Architectural Anomalies");
+		tableViewGroup.setText("Architectural Drifts");
 		tableViewGroup.setBounds(10, 520, 500, 300);
 		tableViewGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
@@ -332,7 +332,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
 		column1.setResizeable(false);
 		column1.setWidth(75);
-		column1.setText("Anomaly");
+		column1.setText("Drift");
 
 		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
 		column2.setResizeable(false);
@@ -652,7 +652,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 
 		Group controlGroup3 = new Group(group, SWT.NONE);
-		controlGroup3.setText("Identified Architectural Anomalies");
+		controlGroup3.setText("Identified Architectural Drifts");
 		controlGroup3.setBounds(10, 480, 450,260);
 		controlGroup3.setLayout(new GridLayout());
 

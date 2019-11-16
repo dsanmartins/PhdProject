@@ -8,7 +8,7 @@
             category="mainview"
             class="br.ufscar.sas.view.MainView"
             id="MainView"
-            name="Identifying AR Anomalies in ASs"
+            name="Identifying AR Drifts in ASs"
             icon="icons/sample.gif">
       </view>
       
@@ -36,7 +36,7 @@
             id="br.ufscar.sas.view.commands.category">
       </category>
       <command
-            name="Architectural Anomalies ASs"
+            name="Architectural Drifts ASs"
             categoryId="br.ufscar.sas.view.commands.category"
             id="br.ufscar.sas.view.commands.ui">
       </command>
@@ -74,7 +74,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
          <perspective
-            name="AR Anomalies ASs"
+            name="AR Drifts ASs"
             icon=""
             class="br.ufscar.sas.view.Perspective"
             id="br.ufscar.sas.view.Perspective">
