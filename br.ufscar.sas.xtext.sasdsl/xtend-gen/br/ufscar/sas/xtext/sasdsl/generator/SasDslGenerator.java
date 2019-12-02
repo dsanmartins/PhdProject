@@ -2506,11 +2506,6 @@ public class SasDslGenerator extends AbstractGenerator {
             }
             _builder.append("\t\t");
             _builder.append("\t");
-            _builder.append("\t");
-            _builder.append("</structureElement>");
-            _builder.newLine();
-            _builder.append("\t\t");
-            _builder.append("\t");
             _builder.append("</structureElement>");
             _builder.newLine();
           }
