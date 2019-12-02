@@ -1420,10 +1420,10 @@ class SasDslGenerator extends AbstractGenerator {
 								«FOR knowledge: controller.knowledge»
 								<structureElement xsi:type="structure:Component" name="«knowledge.name»" stereotype="/0/@extension.0/@stereotype.4" «inAggregatedPath.get(knowledge.name)»>
 									«FOR referenceInput: knowledge.referenceInput»
-									<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5"/>
+									<structureElement xsi:type="structure:Component" name="«referenceInput.name»" stereotype="/0/@extension.0/@stereotype.5" «inAggregatedPath.get(referenceInput.name)»/>
 									«ENDFOR»	
 									«FOR shalt: knowledge.shalt»
-									<structureElement xsi:type="structure:Component" name="«shalt.name»" stereotype="/0/@extension.0/@stereotype.13"/>
+									<structureElement xsi:type="structure:Component" name="«shalt.name»" stereotype="/0/@extension.0/@stereotype.13" «inAggregatedPath.get(shalt.name)»/>
 									«ENDFOR»																											
 								</structureElement>
 								«ENDFOR»
