@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl#getName <em>Name</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl#getDslTypeMC <em>Dsl Type MC</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl#getController <em>Controller</em>}</li>
  * </ul>
  *
@@ -58,6 +59,26 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getDslTypeMC() <em>Dsl Type MC</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDslTypeMC()
+   * @generated
+   * @ordered
+   */
+  protected static final String DSL_TYPE_MC_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDslTypeMC() <em>Dsl Type MC</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDslTypeMC()
+   * @generated
+   * @ordered
+   */
+  protected String dslTypeMC = DSL_TYPE_MC_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getController() <em>Controller</em>}' containment reference list.
@@ -121,6 +142,31 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
    * @generated
    */
   @Override
+  public String getDslTypeMC()
+  {
+    return dslTypeMC;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setDslTypeMC(String newDslTypeMC)
+  {
+    String oldDslTypeMC = dslTypeMC;
+    dslTypeMC = newDslTypeMC;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_MANAGER_CONTROLLER__DSL_TYPE_MC, oldDslTypeMC, dslTypeMC));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<DSLController> getController()
   {
     if (controller == null)
@@ -158,6 +204,8 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
     {
       case SasDslPackage.DSL_MANAGER_CONTROLLER__NAME:
         return getName();
+      case SasDslPackage.DSL_MANAGER_CONTROLLER__DSL_TYPE_MC:
+        return getDslTypeMC();
       case SasDslPackage.DSL_MANAGER_CONTROLLER__CONTROLLER:
         return getController();
     }
@@ -177,6 +225,9 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
     {
       case SasDslPackage.DSL_MANAGER_CONTROLLER__NAME:
         setName((String)newValue);
+        return;
+      case SasDslPackage.DSL_MANAGER_CONTROLLER__DSL_TYPE_MC:
+        setDslTypeMC((String)newValue);
         return;
       case SasDslPackage.DSL_MANAGER_CONTROLLER__CONTROLLER:
         getController().clear();
@@ -199,6 +250,9 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
       case SasDslPackage.DSL_MANAGER_CONTROLLER__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case SasDslPackage.DSL_MANAGER_CONTROLLER__DSL_TYPE_MC:
+        setDslTypeMC(DSL_TYPE_MC_EDEFAULT);
+        return;
       case SasDslPackage.DSL_MANAGER_CONTROLLER__CONTROLLER:
         getController().clear();
         return;
@@ -218,6 +272,8 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
     {
       case SasDslPackage.DSL_MANAGER_CONTROLLER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SasDslPackage.DSL_MANAGER_CONTROLLER__DSL_TYPE_MC:
+        return DSL_TYPE_MC_EDEFAULT == null ? dslTypeMC != null : !DSL_TYPE_MC_EDEFAULT.equals(dslTypeMC);
       case SasDslPackage.DSL_MANAGER_CONTROLLER__CONTROLLER:
         return controller != null && !controller.isEmpty();
     }
@@ -237,6 +293,8 @@ public class DSLManagerControllerImpl extends MinimalEObjectImpl.Container imple
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", dslTypeMC: ");
+    result.append(dslTypeMC);
     result.append(')');
     return result.toString();
   }

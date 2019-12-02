@@ -3928,11 +3928,6 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
                     if ( (LA22_2==11) ) {
                         switch ( input.LA(4) ) {
-                        case 27:
-                            {
-                            alt22=2;
-                            }
-                            break;
                         case 30:
                             {
                             alt22=4;
@@ -3946,6 +3941,11 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
                         case 25:
                             {
                             alt22=3;
+                            }
+                            break;
+                        case 27:
+                            {
+                            alt22=2;
                             }
                             break;
                         default:
@@ -3958,11 +3958,6 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
                     }
                     else if ( (LA22_2==12) ) {
                         switch ( input.LA(4) ) {
-                        case 25:
-                            {
-                            alt22=3;
-                            }
-                            break;
                         case 27:
                             {
                             alt22=2;
@@ -3976,6 +3971,11 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
                         case 31:
                             {
                             alt22=1;
+                            }
+                            break;
+                        case 25:
+                            {
+                            alt22=3;
                             }
                             break;
                         default:
@@ -17387,25 +17387,31 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLManagerController__Group__3__Impl"
-    // InternalSasDsl.g:5655:1: rule__DSLManagerController__Group__3__Impl : ( ruleDSLTypeMC ) ;
+    // InternalSasDsl.g:5655:1: rule__DSLManagerController__Group__3__Impl : ( ( rule__DSLManagerController__DslTypeMCAssignment_3 ) ) ;
     public final void rule__DSLManagerController__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:5659:1: ( ( ruleDSLTypeMC ) )
-            // InternalSasDsl.g:5660:1: ( ruleDSLTypeMC )
+            // InternalSasDsl.g:5659:1: ( ( ( rule__DSLManagerController__DslTypeMCAssignment_3 ) ) )
+            // InternalSasDsl.g:5660:1: ( ( rule__DSLManagerController__DslTypeMCAssignment_3 ) )
             {
-            // InternalSasDsl.g:5660:1: ( ruleDSLTypeMC )
-            // InternalSasDsl.g:5661:2: ruleDSLTypeMC
+            // InternalSasDsl.g:5660:1: ( ( rule__DSLManagerController__DslTypeMCAssignment_3 ) )
+            // InternalSasDsl.g:5661:2: ( rule__DSLManagerController__DslTypeMCAssignment_3 )
             {
-             before(grammarAccess.getDSLManagerControllerAccess().getDSLTypeMCParserRuleCall_3()); 
+             before(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3()); 
+            // InternalSasDsl.g:5662:2: ( rule__DSLManagerController__DslTypeMCAssignment_3 )
+            // InternalSasDsl.g:5662:3: rule__DSLManagerController__DslTypeMCAssignment_3
+            {
             pushFollow(FOLLOW_2);
-            ruleDSLTypeMC();
+            rule__DSLManagerController__DslTypeMCAssignment_3();
 
             state._fsp--;
 
-             after(grammarAccess.getDSLManagerControllerAccess().getDSLTypeMCParserRuleCall_3()); 
+
+            }
+
+             after(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3()); 
 
             }
 
@@ -24741,18 +24747,59 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__DSLManagerController__NameAssignment_1"
 
 
+    // $ANTLR start "rule__DSLManagerController__DslTypeMCAssignment_3"
+    // InternalSasDsl.g:8280:1: rule__DSLManagerController__DslTypeMCAssignment_3 : ( ruleDSLTypeMC ) ;
+    public final void rule__DSLManagerController__DslTypeMCAssignment_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalSasDsl.g:8284:1: ( ( ruleDSLTypeMC ) )
+            // InternalSasDsl.g:8285:2: ( ruleDSLTypeMC )
+            {
+            // InternalSasDsl.g:8285:2: ( ruleDSLTypeMC )
+            // InternalSasDsl.g:8286:3: ruleDSLTypeMC
+            {
+             before(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0()); 
+            pushFollow(FOLLOW_2);
+            ruleDSLTypeMC();
+
+            state._fsp--;
+
+             after(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__DSLManagerController__DslTypeMCAssignment_3"
+
+
     // $ANTLR start "rule__DSLManagerController__ControllerAssignment_5"
-    // InternalSasDsl.g:8280:1: rule__DSLManagerController__ControllerAssignment_5 : ( ruleDSLController ) ;
+    // InternalSasDsl.g:8295:1: rule__DSLManagerController__ControllerAssignment_5 : ( ruleDSLController ) ;
     public final void rule__DSLManagerController__ControllerAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8284:1: ( ( ruleDSLController ) )
-            // InternalSasDsl.g:8285:2: ( ruleDSLController )
+            // InternalSasDsl.g:8299:1: ( ( ruleDSLController ) )
+            // InternalSasDsl.g:8300:2: ( ruleDSLController )
             {
-            // InternalSasDsl.g:8285:2: ( ruleDSLController )
-            // InternalSasDsl.g:8286:3: ruleDSLController
+            // InternalSasDsl.g:8300:2: ( ruleDSLController )
+            // InternalSasDsl.g:8301:3: ruleDSLController
             {
              before(grammarAccess.getDSLManagerControllerAccess().getControllerDSLControllerParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -24783,17 +24830,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__NameAssignment_1"
-    // InternalSasDsl.g:8295:1: rule__DSLController__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8310:1: rule__DSLController__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLController__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8299:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8300:2: ( RULE_ID )
+            // InternalSasDsl.g:8314:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8315:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8300:2: ( RULE_ID )
-            // InternalSasDsl.g:8301:3: RULE_ID
+            // InternalSasDsl.g:8315:2: ( RULE_ID )
+            // InternalSasDsl.g:8316:3: RULE_ID
             {
              before(grammarAccess.getDSLControllerAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -24820,17 +24867,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__MonitorAssignment_3"
-    // InternalSasDsl.g:8310:1: rule__DSLController__MonitorAssignment_3 : ( ruleDSLMonitor ) ;
+    // InternalSasDsl.g:8325:1: rule__DSLController__MonitorAssignment_3 : ( ruleDSLMonitor ) ;
     public final void rule__DSLController__MonitorAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8314:1: ( ( ruleDSLMonitor ) )
-            // InternalSasDsl.g:8315:2: ( ruleDSLMonitor )
+            // InternalSasDsl.g:8329:1: ( ( ruleDSLMonitor ) )
+            // InternalSasDsl.g:8330:2: ( ruleDSLMonitor )
             {
-            // InternalSasDsl.g:8315:2: ( ruleDSLMonitor )
-            // InternalSasDsl.g:8316:3: ruleDSLMonitor
+            // InternalSasDsl.g:8330:2: ( ruleDSLMonitor )
+            // InternalSasDsl.g:8331:3: ruleDSLMonitor
             {
              before(grammarAccess.getDSLControllerAccess().getMonitorDSLMonitorParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -24861,17 +24908,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__AnalyzerAssignment_4"
-    // InternalSasDsl.g:8325:1: rule__DSLController__AnalyzerAssignment_4 : ( ruleDSLAnalyzer ) ;
+    // InternalSasDsl.g:8340:1: rule__DSLController__AnalyzerAssignment_4 : ( ruleDSLAnalyzer ) ;
     public final void rule__DSLController__AnalyzerAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8329:1: ( ( ruleDSLAnalyzer ) )
-            // InternalSasDsl.g:8330:2: ( ruleDSLAnalyzer )
+            // InternalSasDsl.g:8344:1: ( ( ruleDSLAnalyzer ) )
+            // InternalSasDsl.g:8345:2: ( ruleDSLAnalyzer )
             {
-            // InternalSasDsl.g:8330:2: ( ruleDSLAnalyzer )
-            // InternalSasDsl.g:8331:3: ruleDSLAnalyzer
+            // InternalSasDsl.g:8345:2: ( ruleDSLAnalyzer )
+            // InternalSasDsl.g:8346:3: ruleDSLAnalyzer
             {
              before(grammarAccess.getDSLControllerAccess().getAnalyzerDSLAnalyzerParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -24902,17 +24949,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__PlannerAssignment_5"
-    // InternalSasDsl.g:8340:1: rule__DSLController__PlannerAssignment_5 : ( ruleDSLPlanner ) ;
+    // InternalSasDsl.g:8355:1: rule__DSLController__PlannerAssignment_5 : ( ruleDSLPlanner ) ;
     public final void rule__DSLController__PlannerAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8344:1: ( ( ruleDSLPlanner ) )
-            // InternalSasDsl.g:8345:2: ( ruleDSLPlanner )
+            // InternalSasDsl.g:8359:1: ( ( ruleDSLPlanner ) )
+            // InternalSasDsl.g:8360:2: ( ruleDSLPlanner )
             {
-            // InternalSasDsl.g:8345:2: ( ruleDSLPlanner )
-            // InternalSasDsl.g:8346:3: ruleDSLPlanner
+            // InternalSasDsl.g:8360:2: ( ruleDSLPlanner )
+            // InternalSasDsl.g:8361:3: ruleDSLPlanner
             {
              before(grammarAccess.getDSLControllerAccess().getPlannerDSLPlannerParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -24943,17 +24990,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__ExecutorAssignment_6"
-    // InternalSasDsl.g:8355:1: rule__DSLController__ExecutorAssignment_6 : ( ruleDSLExecutor ) ;
+    // InternalSasDsl.g:8370:1: rule__DSLController__ExecutorAssignment_6 : ( ruleDSLExecutor ) ;
     public final void rule__DSLController__ExecutorAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8359:1: ( ( ruleDSLExecutor ) )
-            // InternalSasDsl.g:8360:2: ( ruleDSLExecutor )
+            // InternalSasDsl.g:8374:1: ( ( ruleDSLExecutor ) )
+            // InternalSasDsl.g:8375:2: ( ruleDSLExecutor )
             {
-            // InternalSasDsl.g:8360:2: ( ruleDSLExecutor )
-            // InternalSasDsl.g:8361:3: ruleDSLExecutor
+            // InternalSasDsl.g:8375:2: ( ruleDSLExecutor )
+            // InternalSasDsl.g:8376:3: ruleDSLExecutor
             {
              before(grammarAccess.getDSLControllerAccess().getExecutorDSLExecutorParserRuleCall_6_0()); 
             pushFollow(FOLLOW_2);
@@ -24984,17 +25031,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLController__KnowledgeAssignment_7"
-    // InternalSasDsl.g:8370:1: rule__DSLController__KnowledgeAssignment_7 : ( ruleDSLKnowledge ) ;
+    // InternalSasDsl.g:8385:1: rule__DSLController__KnowledgeAssignment_7 : ( ruleDSLKnowledge ) ;
     public final void rule__DSLController__KnowledgeAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8374:1: ( ( ruleDSLKnowledge ) )
-            // InternalSasDsl.g:8375:2: ( ruleDSLKnowledge )
+            // InternalSasDsl.g:8389:1: ( ( ruleDSLKnowledge ) )
+            // InternalSasDsl.g:8390:2: ( ruleDSLKnowledge )
             {
-            // InternalSasDsl.g:8375:2: ( ruleDSLKnowledge )
-            // InternalSasDsl.g:8376:3: ruleDSLKnowledge
+            // InternalSasDsl.g:8390:2: ( ruleDSLKnowledge )
+            // InternalSasDsl.g:8391:3: ruleDSLKnowledge
             {
              before(grammarAccess.getDSLControllerAccess().getKnowledgeDSLKnowledgeParserRuleCall_7_0()); 
             pushFollow(FOLLOW_2);
@@ -25025,17 +25072,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLMonitor__NameAssignment_1"
-    // InternalSasDsl.g:8385:1: rule__DSLMonitor__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8400:1: rule__DSLMonitor__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLMonitor__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8389:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8390:2: ( RULE_ID )
+            // InternalSasDsl.g:8404:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8405:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8390:2: ( RULE_ID )
-            // InternalSasDsl.g:8391:3: RULE_ID
+            // InternalSasDsl.g:8405:2: ( RULE_ID )
+            // InternalSasDsl.g:8406:3: RULE_ID
             {
              before(grammarAccess.getDSLMonitorAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25062,17 +25109,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLAnalyzer__NameAssignment_1"
-    // InternalSasDsl.g:8400:1: rule__DSLAnalyzer__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8415:1: rule__DSLAnalyzer__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLAnalyzer__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8404:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8405:2: ( RULE_ID )
+            // InternalSasDsl.g:8419:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8420:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8405:2: ( RULE_ID )
-            // InternalSasDsl.g:8406:3: RULE_ID
+            // InternalSasDsl.g:8420:2: ( RULE_ID )
+            // InternalSasDsl.g:8421:3: RULE_ID
             {
              before(grammarAccess.getDSLAnalyzerAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25099,17 +25146,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLPlanner__NameAssignment_1"
-    // InternalSasDsl.g:8415:1: rule__DSLPlanner__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8430:1: rule__DSLPlanner__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLPlanner__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8419:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8420:2: ( RULE_ID )
+            // InternalSasDsl.g:8434:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8435:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8420:2: ( RULE_ID )
-            // InternalSasDsl.g:8421:3: RULE_ID
+            // InternalSasDsl.g:8435:2: ( RULE_ID )
+            // InternalSasDsl.g:8436:3: RULE_ID
             {
              before(grammarAccess.getDSLPlannerAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25136,17 +25183,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLExecutor__NameAssignment_1"
-    // InternalSasDsl.g:8430:1: rule__DSLExecutor__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8445:1: rule__DSLExecutor__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLExecutor__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8434:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8435:2: ( RULE_ID )
+            // InternalSasDsl.g:8449:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8450:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8435:2: ( RULE_ID )
-            // InternalSasDsl.g:8436:3: RULE_ID
+            // InternalSasDsl.g:8450:2: ( RULE_ID )
+            // InternalSasDsl.g:8451:3: RULE_ID
             {
              before(grammarAccess.getDSLExecutorAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25173,17 +25220,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLKnowledge__NameAssignment_1"
-    // InternalSasDsl.g:8445:1: rule__DSLKnowledge__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8460:1: rule__DSLKnowledge__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLKnowledge__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8449:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8450:2: ( RULE_ID )
+            // InternalSasDsl.g:8464:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8465:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8450:2: ( RULE_ID )
-            // InternalSasDsl.g:8451:3: RULE_ID
+            // InternalSasDsl.g:8465:2: ( RULE_ID )
+            // InternalSasDsl.g:8466:3: RULE_ID
             {
              before(grammarAccess.getDSLKnowledgeAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25210,17 +25257,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLKnowledge__ReferenceInputAssignment_3"
-    // InternalSasDsl.g:8460:1: rule__DSLKnowledge__ReferenceInputAssignment_3 : ( ruleDSLReferenceInput ) ;
+    // InternalSasDsl.g:8475:1: rule__DSLKnowledge__ReferenceInputAssignment_3 : ( ruleDSLReferenceInput ) ;
     public final void rule__DSLKnowledge__ReferenceInputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8464:1: ( ( ruleDSLReferenceInput ) )
-            // InternalSasDsl.g:8465:2: ( ruleDSLReferenceInput )
+            // InternalSasDsl.g:8479:1: ( ( ruleDSLReferenceInput ) )
+            // InternalSasDsl.g:8480:2: ( ruleDSLReferenceInput )
             {
-            // InternalSasDsl.g:8465:2: ( ruleDSLReferenceInput )
-            // InternalSasDsl.g:8466:3: ruleDSLReferenceInput
+            // InternalSasDsl.g:8480:2: ( ruleDSLReferenceInput )
+            // InternalSasDsl.g:8481:3: ruleDSLReferenceInput
             {
              before(grammarAccess.getDSLKnowledgeAccess().getReferenceInputDSLReferenceInputParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -25251,17 +25298,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLKnowledge__ShaltAssignment_4"
-    // InternalSasDsl.g:8475:1: rule__DSLKnowledge__ShaltAssignment_4 : ( ruleDSLSelfHealingAlt ) ;
+    // InternalSasDsl.g:8490:1: rule__DSLKnowledge__ShaltAssignment_4 : ( ruleDSLSelfHealingAlt ) ;
     public final void rule__DSLKnowledge__ShaltAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8479:1: ( ( ruleDSLSelfHealingAlt ) )
-            // InternalSasDsl.g:8480:2: ( ruleDSLSelfHealingAlt )
+            // InternalSasDsl.g:8494:1: ( ( ruleDSLSelfHealingAlt ) )
+            // InternalSasDsl.g:8495:2: ( ruleDSLSelfHealingAlt )
             {
-            // InternalSasDsl.g:8480:2: ( ruleDSLSelfHealingAlt )
-            // InternalSasDsl.g:8481:3: ruleDSLSelfHealingAlt
+            // InternalSasDsl.g:8495:2: ( ruleDSLSelfHealingAlt )
+            // InternalSasDsl.g:8496:3: ruleDSLSelfHealingAlt
             {
              before(grammarAccess.getDSLKnowledgeAccess().getShaltDSLSelfHealingAltParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -25292,17 +25339,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLSensor__NameAssignment_1"
-    // InternalSasDsl.g:8490:1: rule__DSLSensor__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8505:1: rule__DSLSensor__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLSensor__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8494:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8495:2: ( RULE_ID )
+            // InternalSasDsl.g:8509:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8510:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8495:2: ( RULE_ID )
-            // InternalSasDsl.g:8496:3: RULE_ID
+            // InternalSasDsl.g:8510:2: ( RULE_ID )
+            // InternalSasDsl.g:8511:3: RULE_ID
             {
              before(grammarAccess.getDSLSensorAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25329,17 +25376,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLEffector__NameAssignment_1"
-    // InternalSasDsl.g:8505:1: rule__DSLEffector__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8520:1: rule__DSLEffector__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLEffector__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8509:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8510:2: ( RULE_ID )
+            // InternalSasDsl.g:8524:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8525:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8510:2: ( RULE_ID )
-            // InternalSasDsl.g:8511:3: RULE_ID
+            // InternalSasDsl.g:8525:2: ( RULE_ID )
+            // InternalSasDsl.g:8526:3: RULE_ID
             {
              before(grammarAccess.getDSLEffectorAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25366,17 +25413,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLReferenceInput__NameAssignment_1"
-    // InternalSasDsl.g:8520:1: rule__DSLReferenceInput__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8535:1: rule__DSLReferenceInput__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLReferenceInput__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8524:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8525:2: ( RULE_ID )
+            // InternalSasDsl.g:8539:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8540:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8525:2: ( RULE_ID )
-            // InternalSasDsl.g:8526:3: RULE_ID
+            // InternalSasDsl.g:8540:2: ( RULE_ID )
+            // InternalSasDsl.g:8541:3: RULE_ID
             {
              before(grammarAccess.getDSLReferenceInputAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25403,17 +25450,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLMeasuredOutput__NameAssignment_1"
-    // InternalSasDsl.g:8535:1: rule__DSLMeasuredOutput__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8550:1: rule__DSLMeasuredOutput__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLMeasuredOutput__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8539:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8540:2: ( RULE_ID )
+            // InternalSasDsl.g:8554:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8555:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8540:2: ( RULE_ID )
-            // InternalSasDsl.g:8541:3: RULE_ID
+            // InternalSasDsl.g:8555:2: ( RULE_ID )
+            // InternalSasDsl.g:8556:3: RULE_ID
             {
              before(grammarAccess.getDSLMeasuredOutputAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25440,17 +25487,17 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DSLSelfHealingAlt__NameAssignment_1"
-    // InternalSasDsl.g:8550:1: rule__DSLSelfHealingAlt__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalSasDsl.g:8565:1: rule__DSLSelfHealingAlt__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__DSLSelfHealingAlt__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSasDsl.g:8554:1: ( ( RULE_ID ) )
-            // InternalSasDsl.g:8555:2: ( RULE_ID )
+            // InternalSasDsl.g:8569:1: ( ( RULE_ID ) )
+            // InternalSasDsl.g:8570:2: ( RULE_ID )
             {
-            // InternalSasDsl.g:8555:2: ( RULE_ID )
-            // InternalSasDsl.g:8556:3: RULE_ID
+            // InternalSasDsl.g:8570:2: ( RULE_ID )
+            // InternalSasDsl.g:8571:3: RULE_ID
             {
              before(grammarAccess.getDSLSelfHealingAltAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -25483,14 +25530,14 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
     static final String dfa_1s = "\13\uffff";
     static final String dfa_2s = "\1\32\1\4\1\13\2\27\6\uffff";
     static final String dfa_3s = "\1\32\1\4\1\14\2\35\6\uffff";
-    static final String dfa_4s = "\5\uffff\1\6\1\1\1\3\1\5\1\2\1\4";
+    static final String dfa_4s = "\5\uffff\1\1\1\3\1\5\1\2\1\4\1\6";
     static final String dfa_5s = "\13\uffff}>";
     static final String[] dfa_6s = {
             "\1\1",
             "\1\2",
             "\1\3\1\4",
-            "\1\11\1\uffff\1\6\1\10\1\7\1\12\1\5",
-            "\1\11\1\uffff\1\6\1\10\1\7\1\12\1\5",
+            "\1\10\1\uffff\1\5\1\7\1\6\1\11\1\12",
+            "\1\10\1\uffff\1\5\1\7\1\6\1\11\1\12",
             "",
             "",
             "",
@@ -25526,14 +25573,14 @@ public class InternalSasDslParser extends AbstractInternalContentAssistParser {
     static final String dfa_7s = "\12\uffff";
     static final String dfa_8s = "\1\33\1\4\1\13\2\31\5\uffff";
     static final String dfa_9s = "\1\33\1\4\1\14\2\36\5\uffff";
-    static final String dfa_10s = "\5\uffff\1\3\1\5\1\2\1\4\1\1";
+    static final String dfa_10s = "\5\uffff\1\5\1\2\1\4\1\1\1\3";
     static final String dfa_11s = "\12\uffff}>";
     static final String[] dfa_12s = {
             "\1\1",
             "\1\2",
             "\1\3\1\4",
-            "\1\11\1\7\1\10\1\uffff\1\6\1\5",
-            "\1\11\1\7\1\10\1\uffff\1\6\1\5",
+            "\1\10\1\6\1\7\1\uffff\1\5\1\11",
+            "\1\10\1\6\1\7\1\uffff\1\5\1\11",
             "",
             "",
             "",

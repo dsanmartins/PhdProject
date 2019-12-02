@@ -2110,13 +2110,25 @@ ruleDSLManagerController returns [EObject current=null]
 		{
 			newLeafNode(otherlv_2, grammarAccess.getDSLManagerControllerAccess().getTypeOfKeyword_2());
 		}
-		{
-			newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getDSLTypeMCParserRuleCall_3());
-		}
-		ruleDSLTypeMC
-		{
-			afterParserOrEnumRuleCall();
-		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0());
+				}
+				lv_dslTypeMC_3_0=ruleDSLTypeMC
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDSLManagerControllerRule());
+					}
+					set(
+						$current,
+						"dslTypeMC",
+						lv_dslTypeMC_3_0,
+						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLTypeMC");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 		otherlv_4='{'
 		{
 			newLeafNode(otherlv_4, grammarAccess.getDSLManagerControllerAccess().getLeftCurlyBracketKeyword_4());

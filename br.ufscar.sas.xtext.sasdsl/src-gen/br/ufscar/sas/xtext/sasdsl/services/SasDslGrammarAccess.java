@@ -1582,19 +1582,20 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cTypeOfKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final RuleCall cDSLTypeMCParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Assignment cDslTypeMCAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDslTypeMCDSLTypeMCParserRuleCall_3_0 = (RuleCall)cDslTypeMCAssignment_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cControllerAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cControllerDSLControllerParserRuleCall_5_0 = (RuleCall)cControllerAssignment_5.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//DSLManagerController:
-		//	'ManagerController' name=ID 'typeOf' DSLTypeMC '{'
+		//	'ManagerController' name=ID 'typeOf' dslTypeMC=DSLTypeMC '{'
 		//	controller+=DSLController+
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'ManagerController' name=ID 'typeOf' DSLTypeMC '{' controller+=DSLController+ '}'
+		//'ManagerController' name=ID 'typeOf' dslTypeMC=DSLTypeMC '{' controller+=DSLController+ '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'ManagerController'
@@ -1609,8 +1610,11 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'typeOf'
 		public Keyword getTypeOfKeyword_2() { return cTypeOfKeyword_2; }
 		
+		//dslTypeMC=DSLTypeMC
+		public Assignment getDslTypeMCAssignment_3() { return cDslTypeMCAssignment_3; }
+		
 		//DSLTypeMC
-		public RuleCall getDSLTypeMCParserRuleCall_3() { return cDSLTypeMCParserRuleCall_3; }
+		public RuleCall getDslTypeMCDSLTypeMCParserRuleCall_3_0() { return cDslTypeMCDSLTypeMCParserRuleCall_3_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
@@ -2247,7 +2251,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLManagerController:
-	//	'ManagerController' name=ID 'typeOf' DSLTypeMC '{'
+	//	'ManagerController' name=ID 'typeOf' dslTypeMC=DSLTypeMC '{'
 	//	controller+=DSLController+
 	//	'}';
 	public DSLManagerControllerElements getDSLManagerControllerAccess() {

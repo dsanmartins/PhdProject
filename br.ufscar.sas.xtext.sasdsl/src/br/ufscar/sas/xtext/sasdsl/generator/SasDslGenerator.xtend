@@ -1394,6 +1394,7 @@ class SasDslGenerator extends AbstractGenerator {
 				<structureElement xsi:type="structure:Subsystem" name="«arch.name»" stereotype="/0/@extension.0/@stereotype.11">
 					«FOR mcontroller: arch.managerController»
 						<structureElement xsi:type="structure:Component" name="«mcontroller.name»" stereotype="/0/@extension.0/@stereotype.7">
+							<attribute tag="type" value="«mcontroller.dslTypeMC»"/>
 							«FOR controller: mcontroller.controller»
 							<structureElement xsi:type="structure:Component" name="«controller.name»" stereotype="/0/@extension.0/@stereotype.8" «outAggregatedPath.get(controller.name)»>
 								«aggregatedPath.get(controller.name)»

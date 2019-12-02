@@ -5658,9 +5658,9 @@ rule__DSLManagerController__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDSLManagerControllerAccess().getDSLTypeMCParserRuleCall_3()); }
-	ruleDSLTypeMC
-	{ after(grammarAccess.getDSLManagerControllerAccess().getDSLTypeMCParserRuleCall_3()); }
+	{ before(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3()); }
+	(rule__DSLManagerController__DslTypeMCAssignment_3)
+	{ after(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3()); }
 )
 ;
 finally {
@@ -8271,6 +8271,21 @@ rule__DSLManagerController__NameAssignment_1
 		{ before(grammarAccess.getDSLManagerControllerAccess().getNameIDTerminalRuleCall_1_0()); }
 		RULE_ID
 		{ after(grammarAccess.getDSLManagerControllerAccess().getNameIDTerminalRuleCall_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DSLManagerController__DslTypeMCAssignment_3
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0()); }
+		ruleDSLTypeMC
+		{ after(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0()); }
 	)
 ;
 finally {

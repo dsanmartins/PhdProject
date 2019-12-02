@@ -89,7 +89,7 @@ DSLManaged:
 
 DSLManagerController:
 	
-	'ManagerController' name=ID  'typeOf' DSLTypeMC '{'
+	'ManagerController' name=ID  'typeOf' dslTypeMC=DSLTypeMC '{'
 		
 		controller += DSLController+
 	

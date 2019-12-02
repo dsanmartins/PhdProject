@@ -238,7 +238,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLManagerController returns DSLManagerController
 	 *
 	 * Constraint:
-	 *     (name=ID controller+=DSLController+)
+	 *     (name=ID dslTypeMC=DSLTypeMC controller+=DSLController+)
 	 */
 	protected void sequence_DSLManagerController(ISerializationContext context, DSLManagerController semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

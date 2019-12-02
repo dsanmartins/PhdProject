@@ -174,6 +174,7 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4(), "rule__DSLManaged__EffectorAssignment_4");
 			builder.put(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5(), "rule__DSLManaged__MeasuredOutputAssignment_5");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getNameAssignment_1(), "rule__DSLManagerController__NameAssignment_1");
+			builder.put(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3(), "rule__DSLManagerController__DslTypeMCAssignment_3");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getControllerAssignment_5(), "rule__DSLManagerController__ControllerAssignment_5");
 			builder.put(grammarAccess.getDSLControllerAccess().getNameAssignment_1(), "rule__DSLController__NameAssignment_1");
 			builder.put(grammarAccess.getDSLControllerAccess().getMonitorAssignment_3(), "rule__DSLController__MonitorAssignment_3");

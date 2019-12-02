@@ -868,9 +868,20 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
+  public EAttribute getDSLManagerController_DslTypeMC()
+  {
+    return (EAttribute)dslManagerControllerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getDSLManagerController_Controller()
   {
-    return (EReference)dslManagerControllerEClass.getEStructuralFeatures().get(1);
+    return (EReference)dslManagerControllerEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1288,6 +1299,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     dslManagerControllerEClass = createEClass(DSL_MANAGER_CONTROLLER);
     createEAttribute(dslManagerControllerEClass, DSL_MANAGER_CONTROLLER__NAME);
+    createEAttribute(dslManagerControllerEClass, DSL_MANAGER_CONTROLLER__DSL_TYPE_MC);
     createEReference(dslManagerControllerEClass, DSL_MANAGER_CONTROLLER__CONTROLLER);
 
     dslControllerEClass = createEClass(DSL_CONTROLLER);
@@ -1434,6 +1446,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     initEClass(dslManagerControllerEClass, DSLManagerController.class, "DSLManagerController", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLManagerController_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLManagerController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDSLManagerController_DslTypeMC(), ecorePackage.getEString(), "dslTypeMC", null, 0, 1, DSLManagerController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLManagerController_Controller(), this.getDSLController(), null, "controller", null, 0, -1, DSLManagerController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslControllerEClass, DSLController.class, "DSLController", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
