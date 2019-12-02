@@ -1429,7 +1429,6 @@ class SasDslGenerator extends AbstractGenerator {
 								«ENDFOR»
 							</structureElement>
 						«ENDFOR»
-						</structureElement>
 					</structureElement>
 					«ENDFOR»
 					«FOR controller: arch.controller»
