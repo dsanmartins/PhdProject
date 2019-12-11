@@ -4588,7 +4588,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLManaged"
-    // InternalSasDsl.g:1973:1: ruleDSLManaged returns [EObject current=null] : (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) ;
+    // InternalSasDsl.g:1973:1: ruleDSLManaged returns [EObject current=null] : (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )* ( (lv_effector_4_0= ruleDSLEffector ) )* ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )* otherlv_6= '}' ) ;
     public final EObject ruleDSLManaged() throws RecognitionException {
         EObject current = null;
 
@@ -4607,11 +4607,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:1979:2: ( (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' ) )
-            // InternalSasDsl.g:1980:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
+            // InternalSasDsl.g:1979:2: ( (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )* ( (lv_effector_4_0= ruleDSLEffector ) )* ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )* otherlv_6= '}' ) )
+            // InternalSasDsl.g:1980:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )* ( (lv_effector_4_0= ruleDSLEffector ) )* ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )* otherlv_6= '}' )
             {
-            // InternalSasDsl.g:1980:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}' )
-            // InternalSasDsl.g:1981:3: otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )+ ( (lv_effector_4_0= ruleDSLEffector ) )+ ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+ otherlv_6= '}'
+            // InternalSasDsl.g:1980:2: (otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )* ( (lv_effector_4_0= ruleDSLEffector ) )* ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )* otherlv_6= '}' )
+            // InternalSasDsl.g:1981:3: otherlv_0= 'Managed' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_sensor_3_0= ruleDSLSensor ) )* ( (lv_effector_4_0= ruleDSLEffector ) )* ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )* otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,31,FOLLOW_3); 
 
@@ -4647,8 +4647,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLManagedAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:2007:3: ( (lv_sensor_3_0= ruleDSLSensor ) )+
-            int cnt33=0;
+            // InternalSasDsl.g:2007:3: ( (lv_sensor_3_0= ruleDSLSensor ) )*
             loop33:
             do {
                 int alt33=2;
@@ -4669,7 +4668,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getSensorDSLSensorParserRuleCall_3_0());
             	    				
-            	    pushFollow(FOLLOW_27);
+            	    pushFollow(FOLLOW_26);
             	    lv_sensor_3_0=ruleDSLSensor();
 
             	    state._fsp--;
@@ -4693,16 +4692,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt33 >= 1 ) break loop33;
-                        EarlyExitException eee =
-                            new EarlyExitException(33, input);
-                        throw eee;
+            	    break loop33;
                 }
-                cnt33++;
             } while (true);
 
-            // InternalSasDsl.g:2026:3: ( (lv_effector_4_0= ruleDSLEffector ) )+
-            int cnt34=0;
+            // InternalSasDsl.g:2026:3: ( (lv_effector_4_0= ruleDSLEffector ) )*
             loop34:
             do {
                 int alt34=2;
@@ -4723,7 +4717,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getEffectorDSLEffectorParserRuleCall_4_0());
             	    				
-            	    pushFollow(FOLLOW_28);
+            	    pushFollow(FOLLOW_27);
             	    lv_effector_4_0=ruleDSLEffector();
 
             	    state._fsp--;
@@ -4747,16 +4741,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt34 >= 1 ) break loop34;
-                        EarlyExitException eee =
-                            new EarlyExitException(34, input);
-                        throw eee;
+            	    break loop34;
                 }
-                cnt34++;
             } while (true);
 
-            // InternalSasDsl.g:2045:3: ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )+
-            int cnt35=0;
+            // InternalSasDsl.g:2045:3: ( (lv_measuredOutput_5_0= ruleDSLMeasuredOutput ) )*
             loop35:
             do {
                 int alt35=2;
@@ -4777,7 +4766,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLManagedAccess().getMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0());
             	    				
-            	    pushFollow(FOLLOW_29);
+            	    pushFollow(FOLLOW_28);
             	    lv_measuredOutput_5_0=ruleDSLMeasuredOutput();
 
             	    state._fsp--;
@@ -4801,12 +4790,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt35 >= 1 ) break loop35;
-                        EarlyExitException eee =
-                            new EarlyExitException(35, input);
-                        throw eee;
+            	    break loop35;
                 }
-                cnt35++;
             } while (true);
 
             otherlv_6=(Token)match(input,13,FOLLOW_2); 
@@ -4906,7 +4891,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             // InternalSasDsl.g:2092:4: (lv_name_1_0= RULE_ID )
             // InternalSasDsl.g:2093:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_30); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_29); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getDSLManagerControllerAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -4926,7 +4911,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,33,FOLLOW_31); 
+            otherlv_2=(Token)match(input,33,FOLLOW_30); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLManagerControllerAccess().getTypeOfKeyword_2());
             		
@@ -4961,7 +4946,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,12,FOLLOW_32); 
+            otherlv_4=(Token)match(input,12,FOLLOW_31); 
 
             			newLeafNode(otherlv_4, grammarAccess.getDSLManagerControllerAccess().getLeftCurlyBracketKeyword_4());
             		
@@ -5272,7 +5257,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,12,FOLLOW_33); 
+            otherlv_2=(Token)match(input,12,FOLLOW_32); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLControllerAccess().getLeftCurlyBracketKeyword_2());
             		
@@ -5298,7 +5283,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getMonitorDSLMonitorParserRuleCall_3_0());
             	    				
-            	    pushFollow(FOLLOW_34);
+            	    pushFollow(FOLLOW_33);
             	    lv_monitor_3_0=ruleDSLMonitor();
 
             	    state._fsp--;
@@ -5352,7 +5337,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getAnalyzerDSLAnalyzerParserRuleCall_4_0());
             	    				
-            	    pushFollow(FOLLOW_35);
+            	    pushFollow(FOLLOW_34);
             	    lv_analyzer_4_0=ruleDSLAnalyzer();
 
             	    state._fsp--;
@@ -5406,7 +5391,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getPlannerDSLPlannerParserRuleCall_5_0());
             	    				
-            	    pushFollow(FOLLOW_36);
+            	    pushFollow(FOLLOW_35);
             	    lv_planner_5_0=ruleDSLPlanner();
 
             	    state._fsp--;
@@ -5460,7 +5445,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getExecutorDSLExecutorParserRuleCall_6_0());
             	    				
-            	    pushFollow(FOLLOW_37);
+            	    pushFollow(FOLLOW_36);
             	    lv_executor_6_0=ruleDSLExecutor();
 
             	    state._fsp--;
@@ -5514,7 +5499,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLControllerAccess().getKnowledgeDSLKnowledgeParserRuleCall_7_0());
             	    				
-            	    pushFollow(FOLLOW_38);
+            	    pushFollow(FOLLOW_37);
             	    lv_knowledge_7_0=ruleDSLKnowledge();
 
             	    state._fsp--;
@@ -6053,7 +6038,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDSLKnowledge"
-    // InternalSasDsl.g:2530:1: ruleDSLKnowledge returns [EObject current=null] : (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' ) ;
+    // InternalSasDsl.g:2530:1: ruleDSLKnowledge returns [EObject current=null] : (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )* ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' ) ;
     public final EObject ruleDSLKnowledge() throws RecognitionException {
         EObject current = null;
 
@@ -6070,11 +6055,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSasDsl.g:2536:2: ( (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' ) )
-            // InternalSasDsl.g:2537:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' )
+            // InternalSasDsl.g:2536:2: ( (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )* ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' ) )
+            // InternalSasDsl.g:2537:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )* ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' )
             {
-            // InternalSasDsl.g:2537:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' )
-            // InternalSasDsl.g:2538:3: otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+ ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}'
+            // InternalSasDsl.g:2537:2: (otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )* ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}' )
+            // InternalSasDsl.g:2538:3: otherlv_0= 'Knowledge' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )* ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )* otherlv_5= '}'
             {
             otherlv_0=(Token)match(input,42,FOLLOW_3); 
 
@@ -6106,12 +6091,11 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,12,FOLLOW_39); 
+            otherlv_2=(Token)match(input,12,FOLLOW_38); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDSLKnowledgeAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalSasDsl.g:2564:3: ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )+
-            int cnt43=0;
+            // InternalSasDsl.g:2564:3: ( (lv_referenceInput_3_0= ruleDSLReferenceInput ) )*
             loop43:
             do {
                 int alt43=2;
@@ -6132,7 +6116,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLKnowledgeAccess().getReferenceInputDSLReferenceInputParserRuleCall_3_0());
             	    				
-            	    pushFollow(FOLLOW_40);
+            	    pushFollow(FOLLOW_38);
             	    lv_referenceInput_3_0=ruleDSLReferenceInput();
 
             	    state._fsp--;
@@ -6156,12 +6140,8 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt43 >= 1 ) break loop43;
-                        EarlyExitException eee =
-                            new EarlyExitException(43, input);
-                        throw eee;
+            	    break loop43;
                 }
-                cnt43++;
             } while (true);
 
             // InternalSasDsl.g:2583:3: ( (lv_shalt_4_0= ruleDSLSelfHealingAlt ) )*
@@ -6185,7 +6165,7 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
 
             	    					newCompositeNode(grammarAccess.getDSLKnowledgeAccess().getShaltDSLSelfHealingAltParserRuleCall_4_0());
             	    				
-            	    pushFollow(FOLLOW_41);
+            	    pushFollow(FOLLOW_39);
             	    lv_shalt_4_0=ruleDSLSelfHealingAlt();
 
             	    state._fsp--;
@@ -6910,21 +6890,19 @@ public class InternalSasDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000020000000L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000002100002000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000002000002000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000180000000000L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000500000000000L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000400000002000L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000001C00000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000004000000000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x000000C000000000L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000018000000000L});
-    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000030000000000L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000060000000000L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000040000002000L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000A00000002000L});
-    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000800000002000L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000580000002000L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000500000002000L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000400000002000L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000001C00000000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000004000000000L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x000000C000000000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000018000000000L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000030000000000L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000060000000000L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000040000002000L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000A00000002000L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000800000002000L});
 
 }

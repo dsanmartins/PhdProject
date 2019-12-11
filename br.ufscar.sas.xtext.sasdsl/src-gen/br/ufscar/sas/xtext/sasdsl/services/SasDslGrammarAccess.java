@@ -1533,13 +1533,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DSLManaged:
 		//	'Managed' name=ID '{'
-		//	sensor+=DSLSensor+
-		//	effector+=DSLEffector+
-		//	measuredOutput+=DSLMeasuredOutput+
+		//	sensor+=DSLSensor*
+		//	effector+=DSLEffector*
+		//	measuredOutput+=DSLMeasuredOutput*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Managed' name=ID '{' sensor+=DSLSensor+ effector+=DSLEffector+ measuredOutput+=DSLMeasuredOutput+ '}'
+		//'Managed' name=ID '{' sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'Managed'
@@ -1554,19 +1554,19 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 		
-		//sensor+=DSLSensor+
+		//sensor+=DSLSensor*
 		public Assignment getSensorAssignment_3() { return cSensorAssignment_3; }
 		
 		//DSLSensor
 		public RuleCall getSensorDSLSensorParserRuleCall_3_0() { return cSensorDSLSensorParserRuleCall_3_0; }
 		
-		//effector+=DSLEffector+
+		//effector+=DSLEffector*
 		public Assignment getEffectorAssignment_4() { return cEffectorAssignment_4; }
 		
 		//DSLEffector
 		public RuleCall getEffectorDSLEffectorParserRuleCall_4_0() { return cEffectorDSLEffectorParserRuleCall_4_0; }
 		
-		//measuredOutput+=DSLMeasuredOutput+
+		//measuredOutput+=DSLMeasuredOutput*
 		public Assignment getMeasuredOutputAssignment_5() { return cMeasuredOutputAssignment_5; }
 		
 		//DSLMeasuredOutput
@@ -1852,12 +1852,12 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DSLKnowledge:
 		//	'Knowledge' name=ID '{'
-		//	referenceInput+=DSLReferenceInput+
+		//	referenceInput+=DSLReferenceInput*
 		//	shalt+=DSLSelfHealingAlt*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Knowledge' name=ID '{' referenceInput+=DSLReferenceInput+ shalt+=DSLSelfHealingAlt* '}'
+		//'Knowledge' name=ID '{' referenceInput+=DSLReferenceInput* shalt+=DSLSelfHealingAlt* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'Knowledge'
@@ -1872,7 +1872,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 		
-		//referenceInput+=DSLReferenceInput+
+		//referenceInput+=DSLReferenceInput*
 		public Assignment getReferenceInputAssignment_3() { return cReferenceInputAssignment_3; }
 		
 		//DSLReferenceInput
@@ -2238,9 +2238,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DSLManaged:
 	//	'Managed' name=ID '{'
-	//	sensor+=DSLSensor+
-	//	effector+=DSLEffector+
-	//	measuredOutput+=DSLMeasuredOutput+
+	//	sensor+=DSLSensor*
+	//	effector+=DSLEffector*
+	//	measuredOutput+=DSLMeasuredOutput*
 	//	'}';
 	public DSLManagedElements getDSLManagedAccess() {
 		return pDSLManaged;
@@ -2330,7 +2330,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DSLKnowledge:
 	//	'Knowledge' name=ID '{'
-	//	referenceInput+=DSLReferenceInput+
+	//	referenceInput+=DSLReferenceInput*
 	//	shalt+=DSLSelfHealingAlt*
 	//	'}';
 	public DSLKnowledgeElements getDSLKnowledgeAccess() {

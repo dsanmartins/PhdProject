@@ -80,9 +80,9 @@ DSLManaged:
 	
 	'Managed' name=ID '{'
 	
-		sensor += DSLSensor+
-		effector += DSLEffector+
-		measuredOutput +=DSLMeasuredOutput+
+		sensor += DSLSensor*
+		effector += DSLEffector*
+		measuredOutput +=DSLMeasuredOutput*
 		
 	'}'
 ;
@@ -139,7 +139,7 @@ DSLKnowledge:
 	
 	'Knowledge' name=ID '{'
 	
-		referenceInput += DSLReferenceInput+
+		referenceInput += DSLReferenceInput*
 		shalt  += DSLSelfHealingAlt*
 	
 	'}'

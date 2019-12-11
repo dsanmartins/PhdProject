@@ -214,7 +214,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLKnowledge returns DSLKnowledge
 	 *
 	 * Constraint:
-	 *     (name=ID referenceInput+=DSLReferenceInput+ shalt+=DSLSelfHealingAlt*)
+	 *     (name=ID referenceInput+=DSLReferenceInput* shalt+=DSLSelfHealingAlt*)
 	 */
 	protected void sequence_DSLKnowledge(ISerializationContext context, DSLKnowledge semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -226,7 +226,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLManaged returns DSLManaged
 	 *
 	 * Constraint:
-	 *     (name=ID sensor+=DSLSensor+ effector+=DSLEffector+ measuredOutput+=DSLMeasuredOutput+)
+	 *     (name=ID sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput*)
 	 */
 	protected void sequence_DSLManaged(ISerializationContext context, DSLManaged semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -2022,7 +2022,7 @@ ruleDSLManaged returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
@@ -2041,7 +2041,7 @@ ruleDSLManaged returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
@@ -2060,7 +2060,7 @@ ruleDSLManaged returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		otherlv_6='}'
 		{
 			newLeafNode(otherlv_6, grammarAccess.getDSLManagedAccess().getRightCurlyBracketKeyword_6());
@@ -2579,7 +2579,7 @@ ruleDSLKnowledge returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{

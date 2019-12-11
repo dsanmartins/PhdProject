@@ -5448,16 +5448,9 @@ rule__DSLManaged__Group__3__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
-		(rule__DSLManaged__SensorAssignment_3)
-		{ after(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
-	)
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
-		(rule__DSLManaged__SensorAssignment_3)*
-		{ after(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
-	)
+	{ before(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
+	(rule__DSLManaged__SensorAssignment_3)*
+	{ after(grammarAccess.getDSLManagedAccess().getSensorAssignment_3()); }
 )
 ;
 finally {
@@ -5482,16 +5475,9 @@ rule__DSLManaged__Group__4__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
-		(rule__DSLManaged__EffectorAssignment_4)
-		{ after(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
-	)
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
-		(rule__DSLManaged__EffectorAssignment_4)*
-		{ after(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
-	)
+	{ before(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
+	(rule__DSLManaged__EffectorAssignment_4)*
+	{ after(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4()); }
 )
 ;
 finally {
@@ -5516,16 +5502,9 @@ rule__DSLManaged__Group__5__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
-		(rule__DSLManaged__MeasuredOutputAssignment_5)
-		{ after(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
-	)
-	(
-		{ before(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
-		(rule__DSLManaged__MeasuredOutputAssignment_5)*
-		{ after(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
-	)
+	{ before(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
+	(rule__DSLManaged__MeasuredOutputAssignment_5)*
+	{ after(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5()); }
 )
 ;
 finally {
@@ -6456,16 +6435,9 @@ rule__DSLKnowledge__Group__3__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
-		(rule__DSLKnowledge__ReferenceInputAssignment_3)
-		{ after(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
-	)
-	(
-		{ before(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
-		(rule__DSLKnowledge__ReferenceInputAssignment_3)*
-		{ after(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
-	)
+	{ before(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
+	(rule__DSLKnowledge__ReferenceInputAssignment_3)*
+	{ after(grammarAccess.getDSLKnowledgeAccess().getReferenceInputAssignment_3()); }
 )
 ;
 finally {
