@@ -3,9 +3,11 @@
  */
 package br.ufscar.sas.xtext.sasdsl.ide;
 
+import br.ufscar.sas.xtext.sasdsl.ide.AbstractSasDslIdeModule;
+
 /**
  * Use this class to register ide components.
  */
 @SuppressWarnings("all")
-public class SasDslIdeModule /* implements AbstractSasDslIdeModule  */{
+public class SasDslIdeModule extends AbstractSasDslIdeModule {
 }

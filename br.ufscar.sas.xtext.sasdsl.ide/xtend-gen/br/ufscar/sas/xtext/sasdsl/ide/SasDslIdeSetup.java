@@ -3,8 +3,12 @@
  */
 package br.ufscar.sas.xtext.sasdsl.ide;
 
+import br.ufscar.sas.xtext.sasdsl.SasDslRuntimeModule;
 import br.ufscar.sas.xtext.sasdsl.SasDslStandaloneSetup;
+import br.ufscar.sas.xtext.sasdsl.ide.SasDslIdeModule;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.eclipse.xtext.util.Modules2;
 
 /**
  * Initialization support for running Xtext languages as language servers.
@@ -13,7 +17,8 @@ import com.google.inject.Injector;
 public class SasDslIdeSetup extends SasDslStandaloneSetup {
   @Override
   public Injector createInjector() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nType mismatch: cannot convert from SasDslIdeModule to Module");
+    SasDslRuntimeModule _sasDslRuntimeModule = new SasDslRuntimeModule();
+    SasDslIdeModule _sasDslIdeModule = new SasDslIdeModule();
+    return Guice.createInjector(Modules2.mixin(_sasDslRuntimeModule, _sasDslIdeModule));
   }
 }
