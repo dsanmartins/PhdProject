@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
+import org.eclipse.modisco.omg.kdm.code.AbstractCodeElement;
 
 import rMSAS.codeModel.CodeModelPackage;
 import rMSAS.codeModel.Delete;

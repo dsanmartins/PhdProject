@@ -19,20 +19,20 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//constraintModel/AbstractCondition"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Move" eSuperTypes="#//architecturalModel/AbstractArchitecturalOperation">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="abstraction" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Create" eSuperTypes="#//architecturalModel/AbstractArchitecturalOperation">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="abstraction" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//architecturalModel/AbstractArchitecturalOperation">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="abstraction" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//structure/AbstractStructureElement"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="codeModel" nsURI="http://www.example.org/rMSAS/codeModel" nsPrefix="codeModel">
@@ -42,21 +42,21 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Move" eSuperTypes="#//codeModel/AbstractCodeOperation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="entity" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Create" eSuperTypes="#//codeModel/AbstractCodeOperation">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="in" lowerBound="1" eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="in" lowerBound="1" eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="entity" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//codeModel/AbstractCodeOperation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="entity" lowerBound="1"
-          eType="ecore:EClass ../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
+          eType="ecore:EClass ../../org.eclipse.modisco.omg.kdm/model/kdm.ecore#//code/AbstractCodeElement"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="constraintModel" nsURI="http://www.example.org/rMSAS/constraintModel"

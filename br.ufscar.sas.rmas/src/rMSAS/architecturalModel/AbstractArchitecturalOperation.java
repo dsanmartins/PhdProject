@@ -32,10 +32,6 @@ public interface AbstractArchitecturalOperation extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
@@ -59,10 +55,6 @@ public interface AbstractArchitecturalOperation extends EObject {
 	 * Returns the value of the '<em><b>Code Operation</b></em>' containment reference list.
 	 * The list contents are of type {@link rMSAS.codeModel.AbstractCodeOperation}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Code Operation</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Code Operation</em>' containment reference list.
 	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getAbstractArchitecturalOperation_CodeOperation()
@@ -74,10 +66,6 @@ public interface AbstractArchitecturalOperation extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Condition</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Condition</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' reference.
 	 * @see #setCondition(AbstractCondition)

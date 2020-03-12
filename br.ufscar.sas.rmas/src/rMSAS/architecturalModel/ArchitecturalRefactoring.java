@@ -30,10 +30,6 @@ public interface ArchitecturalRefactoring extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
@@ -56,10 +52,6 @@ public interface ArchitecturalRefactoring extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Smell</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Smell</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Smell</em>' attribute.
 	 * @see #setSmell(String)
@@ -82,10 +74,6 @@ public interface ArchitecturalRefactoring extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Engine</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Engine</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Engine</em>' attribute.
 	 * @see #setEngine(String)
@@ -108,10 +96,6 @@ public interface ArchitecturalRefactoring extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
@@ -135,10 +119,6 @@ public interface ArchitecturalRefactoring extends EObject {
 	 * Returns the value of the '<em><b>Architectural Operation</b></em>' containment reference list.
 	 * The list contents are of type {@link rMSAS.architecturalModel.AbstractArchitecturalOperation}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Architectural Operation</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Architectural Operation</em>' containment reference list.
 	 * @see rMSAS.architecturalModel.ArchitecturalModelPackage#getArchitecturalRefactoring_ArchitecturalOperation()

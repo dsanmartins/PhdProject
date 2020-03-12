@@ -249,6 +249,15 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="br.ufscar.sas.xtext.sasdsl.SasDsl"
+			class="br.ufscar.sas.xtext.sasdsl.ui.SasDslExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="br.ufscar.sas.xtext.sasdsl.SasDsl.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="br.ufscar.sas.xtext.sasdsl.ui.keyword_SasDsl"/>
+		</page>
+	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
 			class="br.ufscar.sas.xtext.sasdsl.ui.SasDslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"

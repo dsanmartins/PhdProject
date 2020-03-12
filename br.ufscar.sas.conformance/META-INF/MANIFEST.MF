@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: br.ufscar.sas.conformance.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
- org.eclipse.gmt.modisco.omg.kdm,
+ org.eclipse.modisco.omg.kdm,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ocl.pivot,
  org.eclipse.core.resources,

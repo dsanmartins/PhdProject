@@ -2,7 +2,7 @@
  */
 package rMSAS.architecturalModel;
 
-import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
+import org.eclipse.modisco.omg.kdm.structure.AbstractStructureElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,10 +25,6 @@ public interface Create extends AbstractArchitecturalOperation {
 	/**
 	 * Returns the value of the '<em><b>In</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>In</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>In</em>' reference.
 	 * @see #setIn(AbstractStructureElement)
@@ -51,10 +47,6 @@ public interface Create extends AbstractArchitecturalOperation {
 	/**
 	 * Returns the value of the '<em><b>Abstraction</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Abstraction</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Abstraction</em>' attribute.
 	 * @see #setAbstraction(String)

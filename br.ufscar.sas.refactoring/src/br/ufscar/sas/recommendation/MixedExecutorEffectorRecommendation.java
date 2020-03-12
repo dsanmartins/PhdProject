@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.gmt.modisco.omg.kdm.structure.Component;
-import org.eclipse.gmt.modisco.omg.kdm.structure.StructureFactory;
-import org.eclipse.gmt.modisco.omg.kdm.structure.Subsystem;
+import org.eclipse.modisco.omg.kdm.structure.Component;
+import org.eclipse.modisco.omg.kdm.structure.StructureFactory;
+import org.eclipse.modisco.omg.kdm.structure.Subsystem;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 import br.ufscar.sas.query.OCLQuery;

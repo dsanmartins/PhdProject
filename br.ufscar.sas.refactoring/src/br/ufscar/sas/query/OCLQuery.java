@@ -4,9 +4,9 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.gmt.modisco.omg.kdm.structure.Component;
-import org.eclipse.gmt.modisco.omg.kdm.structure.StructureModel;
-import org.eclipse.gmt.modisco.omg.kdm.structure.StructurePackage;
+import org.eclipse.modisco.omg.kdm.structure.Component;
+import org.eclipse.modisco.omg.kdm.structure.StructureModel;
+import org.eclipse.modisco.omg.kdm.structure.StructurePackage;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.OCL;

@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.gmt.modisco.omg.kdm.structure.AbstractStructureElement;
+import org.eclipse.modisco.omg.kdm.structure.AbstractStructureElement;
 
 import rMSAS.architecturalModel.ArchitecturalModelPackage;
 import rMSAS.architecturalModel.Create;

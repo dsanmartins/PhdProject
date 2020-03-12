@@ -2,7 +2,7 @@
  */
 package rMSAS.codeModel;
 
-import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
+import org.eclipse.modisco.omg.kdm.code.AbstractCodeElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,10 +25,6 @@ public interface Delete extends AbstractCodeOperation {
 	/**
 	 * Returns the value of the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>From</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>From</em>' reference.
 	 * @see #setFrom(AbstractCodeElement)
@@ -51,10 +47,6 @@ public interface Delete extends AbstractCodeOperation {
 	/**
 	 * Returns the value of the '<em><b>Entity</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Entity</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Entity</em>' reference.
 	 * @see #setEntity(AbstractCodeElement)

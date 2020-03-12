@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: br.ufscar.sas.refactoring.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
- org.eclipse.gmt.modisco.omg.kdm,
+ org.eclipse.modisco.omg.kdm,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ocl.pivot,
  org.eclipse.core.resources,
@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ocl.xtext.oclstdlib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: br.ufscar.sas.refactoring
-Import-Package: rMSAS.architecturalModel,
+Import-Package: br.ufscar.sas.dataconstraint,
+ org.eclipse.modisco.omg.kdm.structure,
+ rMSAS.architecturalModel,
  rMSAS.architecturalModel.impl,
  rMSAS.architecturalModel.util,
  rMSAS.codeModel,
@@ -22,7 +24,6 @@ Import-Package: rMSAS.architecturalModel,
  rMSAS.codeModel.util,
  rMSAS.constraintModel,
  rMSAS.constraintModel.impl,
- rMSAS.constraintModel.util,
- br.ufscar.sas.dataconstraint
+ rMSAS.constraintModel.util
 Export-Package: br.ufscar.sas.recommendation
 Bundle-ActivationPolicy: lazy

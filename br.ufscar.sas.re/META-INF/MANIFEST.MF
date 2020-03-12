@@ -9,7 +9,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.jdt.core,
- org.eclipse.gmt.modisco.java,
  org.eclipse.modisco.java.discoverer,
  org.eclipse.modisco.infra.discovery.core,
  org.eclipse.equinox.registry

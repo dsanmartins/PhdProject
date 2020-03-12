@@ -18,7 +18,7 @@ Export-Package: rMSAS.architecturalModel,
  rMSAS.constraintModel.impl,
  rMSAS.constraintModel.util
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.gmt.modisco.omg.kdm;visibility:=reexport,
+ org.eclipse.modisco.omg.kdm;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy

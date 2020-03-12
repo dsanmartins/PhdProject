@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/br.ufscar.sas.refactoringmodel/src" modelPluginID="br.ufscar.sas.refactoringmodel"
     modelName="RMSAS" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.gmt.modisco.omg.kdm/model/kdm.genmodel#//kdm"
-    operationReflection="true" importOrganizing="true">
+    usedGenPackages="../../org.eclipse.modisco.omg.kdm/model/kdm.genmodel#//kdm" operationReflection="true"
+    importOrganizing="true">
   <foreignModel>rMSAS.ecore</foreignModel>
   <genPackages prefix="RMSAS" disposableProviderFactory="true" ecorePackage="rMSAS.ecore#/">
     <nestedGenPackages prefix="ArchitecturalModel" disposableProviderFactory="true"

@@ -16,14 +16,14 @@ import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gmt.modisco.infra.query.ModelQuery;
-import org.eclipse.gmt.modisco.infra.query.ModelQuerySet;
-import org.eclipse.gmt.modisco.infra.query.core.AbstractModelQuery;
-import org.eclipse.gmt.modisco.infra.query.core.ModelQuerySetCatalog;
-import org.eclipse.gmt.modisco.infra.query.runtime.ModelQueryResult;
-import org.eclipse.gmt.modisco.omg.kdm.code.ClassUnit;
-import org.eclipse.gmt.modisco.omg.kdm.kdm.KDMModel;
-import org.eclipse.gmt.modisco.omg.kdm.kdm.Segment;
+import org.eclipse.modisco.infra.query.ModelQuery;
+import org.eclipse.modisco.infra.query.ModelQuerySet;
+import org.eclipse.modisco.infra.query.core.AbstractModelQuery;
+import org.eclipse.modisco.infra.query.core.ModelQuerySetCatalog;
+import org.eclipse.modisco.infra.query.runtime.ModelQueryResult;
+import org.eclipse.modisco.omg.kdm.code.ClassUnit;
+import org.eclipse.modisco.omg.kdm.kdm.KDMModel;
+import org.eclipse.modisco.omg.kdm.kdm.Segment;
 
 @SuppressWarnings("deprecation")
 public class OCLQuery {
