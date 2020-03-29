@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
 
 /**
  * Generates code from your model files on save.
@@ -59,7 +59,7 @@ class SasDslGenerator extends AbstractGenerator {
 	var lSensor =  new ArrayList<DSLSensor>();
 	var lMOutput =  new ArrayList<DSLMeasuredOutput>();
 	var lRInput =  new ArrayList<DSLReferenceInput>();
-	var lAlternative =  new ArrayList<DSLSelfHealingAlt>();
+	var lAlternative =  new ArrayList<DSLAlternative>();
 		
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 				
@@ -712,7 +712,22 @@ class SasDslGenerator extends AbstractGenerator {
 											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
 											inAggregatedPath.put(r.analyzer2.name,pathInAggregated)
 										}
-									}	
+									}
+									if (r.executor !== null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.executor.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.executor.name, pathInAggregated)
+										}
+										else
+										{
+											pathInAggregated = "inAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.put(r.executor.name,pathInAggregated)
+										}
+									}								
 									
 									if (r.shalt !== null)
 									{
@@ -808,7 +823,18 @@ class SasDslGenerator extends AbstractGenerator {
 											inAggregatedPath.put(r.shalt.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
 									}
 									
-									
+									if (r.executor !==null)
+									{
+										var pathInAggregated = inAggregatedPath.get(r.executor.name)
+										if (pathInAggregated !== null)
+										{
+											pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+											pathInAggregated = pathInAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '";
+											inAggregatedPath.replace(r.executor.name, pathInAggregated)
+										}
+										else
+											inAggregatedPath.put(r.executor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))	
+									}
 									
 								}
 								rAnalyzer++
@@ -833,6 +859,9 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.shalt !== null)
 															aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation	
+														else
+															if (r.executor !== null)
+																aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation	
 									
 									aggregatedPath.replace(r.analyzer.name, aggregated)
 								}
@@ -855,6 +884,9 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.shalt !== null)
 															aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
+															else
+															if (r.executor !== null)
+																aggregated = "<aggregated from='" + structureElementPath.get(r.analyzer.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation
 									
 									aggregatedPath.put(r.analyzer.name, aggregated)
 								}
@@ -1577,7 +1609,7 @@ class SasDslGenerator extends AbstractGenerator {
 		inv exist_«refInput.name»: Component.allInstances()->exists(c| c.name='«refInput.name»' and c.stereotype->asSequence()->first().name = 'Reference Input')
 		
 		«ENDFOR»	
-		«FOR DSLSelfHealingAlt shalt : lAlternative»
+		«FOR DSLAlternative shalt : lAlternative»
 		context StructureModel
 		inv exist_«shalt.name»: Component.allInstances()->exists(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Self-Healing Alternative')
 		
@@ -1704,7 +1736,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«ENDIF»
 		«ENDFOR»
 		
-		«FOR DSLSelfHealingAlt shalt : lAlternative»
+		«FOR DSLAlternative shalt : lAlternative»
 		«IF shalt.eContainer instanceof DSLKnowledge»
 		«var knowledge = shalt.eContainer as DSLKnowledge»
 		context StructureModel
@@ -1851,6 +1883,17 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRuleAnalyzer.shalt !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.shalt»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«IF dslRuleAnalyzer.executor !== null»
+		«var firstArgument = dslRuleAnalyzer.analyzer»
+		«var secondArgument = dslRuleAnalyzer.executor»
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 

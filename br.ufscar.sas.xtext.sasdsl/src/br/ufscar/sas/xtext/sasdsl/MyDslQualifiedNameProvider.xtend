@@ -14,7 +14,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
 
 class MyDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvider {
 	
@@ -31,7 +31,7 @@ class MyDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvider
 			DSLKnowledge: return QualifiedName.create(obj.name)
 			DSLReferenceInput: return QualifiedName.create(obj.name)
 			DSLMeasuredOutput: return QualifiedName.create(obj.name)
-			DSLSelfHealingAlt: return QualifiedName.create(obj.name)
+			DSLAlternative: return QualifiedName.create(obj.name)
 			default: return super.getFullyQualifiedName(obj)
 		}
 	}

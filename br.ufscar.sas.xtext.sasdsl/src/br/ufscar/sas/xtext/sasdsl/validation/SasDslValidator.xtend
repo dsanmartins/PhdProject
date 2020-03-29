@@ -102,6 +102,8 @@ class SasDslValidator extends AbstractSasDslValidator {
 		val multiMapRuleAnalyzer2Rreference = HashMultimap.create()
 		val multiMapRuleAnalyzer2Planner = HashMultimap.create()
 		val multiMapRuleAnalyzer2Knowledge= HashMultimap.create()
+		val multiMapRuleAnalyzer2Executor= HashMultimap.create()
+		val multiMapRuleAnalyzer2Alternative = HashMultimap.create()
 		
 		val multiMapRulePlanner2Planner = HashMultimap.create()
 		val multiMapRulePlanner2Analyzer = HashMultimap.create()
@@ -147,6 +149,10 @@ class SasDslValidator extends AbstractSasDslValidator {
 					multiMapRuleAnalyzer2Planner.put(r.analyzer.name+r.planner.name,r)	
 				if (r.knowledge !== null)
 					multiMapRuleAnalyzer2Knowledge.put(r.analyzer.name+r.knowledge.name,r)	
+				if (r.executor !== null)
+					multiMapRuleAnalyzer2Executor.put(r.analyzer.name+r.executor.name,r)	
+				if (r.shalt !== null)
+					multiMapRuleAnalyzer2Executor.put(r.analyzer.name+r.shalt.name,r)	
 			}
 			
 			if (r instanceof DSLRulePlanner)
@@ -285,6 +291,27 @@ class SasDslValidator extends AbstractSasDslValidator {
 					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
 			}
 		}
+		
+		for (entry:multiMapRuleAnalyzer2Executor.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
+			}
+		}
+		
+		for (entry:multiMapRuleAnalyzer2Alternative.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
+			}
+		}
+		
 		
 		for (entry:multiMapRulePlanner2Planner.asMap.entrySet)
 		{

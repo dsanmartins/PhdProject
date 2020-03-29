@@ -1,5 +1,6 @@
 package br.ufscar.sas.xtext.sasdsl;
 
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
@@ -10,7 +11,6 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSelfHealingAlt;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
@@ -86,9 +86,9 @@ public class MyDslQualifiedNameProvider extends DefaultDeclarativeQualifiedNameP
       }
     }
     if (!_matched) {
-      if (obj instanceof DSLSelfHealingAlt) {
+      if (obj instanceof DSLAlternative) {
         _matched=true;
-        return QualifiedName.create(((DSLSelfHealingAlt)obj).getName());
+        return QualifiedName.create(((DSLAlternative)obj).getName());
       }
     }
     return super.getFullyQualifiedName(obj);

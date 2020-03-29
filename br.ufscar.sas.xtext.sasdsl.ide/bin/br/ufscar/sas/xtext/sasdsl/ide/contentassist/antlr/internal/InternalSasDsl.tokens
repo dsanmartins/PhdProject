@@ -1,4 +1,5 @@
 ';'=21
+'Alternative'=47
 'Analyzer'=39
 'Architecture'=16
 'Controller'=37
@@ -15,7 +16,6 @@
 'Planner'=40
 'ReferenceInput'=45
 'Rules'=19
-'SelfHealingAlt'=47
 'Sensor'=43
 'Synchronized'=13
 'alternative'=29
