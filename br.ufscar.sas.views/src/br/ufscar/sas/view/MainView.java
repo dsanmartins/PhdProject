@@ -191,7 +191,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group group = new Group(tabFolder, SWT.NONE);
 		Group treeViewGroup = new Group(group, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
-		treeViewGroup.setText("Abstractions Instances");
+		treeViewGroup.setText("Abstraction Instances");
 		treeViewGroup.setBounds(10, 55, 500, 450);
 		treeViewGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
@@ -207,6 +207,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		tree = new Tree(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		tree.setLayout(new FillLayout());
+		tree.setBounds(0, 0, 500, 450);
+		
 
 		List<String> abstractions = null;
 		final Menu menu = new Menu(tree);
@@ -328,6 +330,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		gridTableViewer.getGrid().setLinesVisible(true);
 		gridTableViewer.getGrid().setHeaderVisible(true);
 		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
+		gridTableViewer.getGrid().setBounds(0, 0, 500, 300);
 
 		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
 		column1.setResizeable(false);
@@ -414,10 +417,11 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		viewer = new TableViewer(tableViewGroup, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		final Table table = viewer.getTable();
+		table.setBounds(0, 0, 550, 450);
 
 		TableViewerColumn column0 = new TableViewerColumn(viewer, SWT.CENTER);
 		column0.getColumn().setText("Element");
-		column0.getColumn().setWidth(75);
+		column0.getColumn().setWidth(83);
 		column0.getColumn().setResizable(false);
 
 		TableViewerColumn column = new TableViewerColumn(viewer, SWT.CENTER);
@@ -664,6 +668,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		gridTableViewer.getGrid().setHeaderVisible(true);
 		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
 		gridTableViewer.getGrid().setLayoutData(layoutData);
+		gridTableViewer.getGrid().setBounds(0, 0, 450, 260);
 
 		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
 		column1.setResizeable(true);
