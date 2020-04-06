@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getName <em>Name</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getDslTypeMC <em>Dsl Type MC</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getController <em>Controller</em>}</li>
  * </ul>
  *
@@ -48,28 +47,6 @@ public interface DSLManagerController extends EObject
    * @generated
    */
   void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Dsl Type MC</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Dsl Type MC</em>' attribute.
-   * @see #setDslTypeMC(String)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLManagerController_DslTypeMC()
-   * @model
-   * @generated
-   */
-  String getDslTypeMC();
-
-  /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getDslTypeMC <em>Dsl Type MC</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Dsl Type MC</em>' attribute.
-   * @see #getDslTypeMC()
-   * @generated
-   */
-  void setDslTypeMC(String value);
 
   /**
    * Returns the value of the '<em><b>Controller</b></em>' containment reference list.

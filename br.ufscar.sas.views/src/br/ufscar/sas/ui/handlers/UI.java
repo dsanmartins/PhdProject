@@ -121,27 +121,27 @@ public class UI extends AbstractHandler {
 
 	public String architectureTemplate() {
 
-		return "Architecture TemplateAdaptiveSystem {\n" + 
+		return "Architecture MyAdaptiveSystemArchitecture {\n" + 
 				"	\n" + 
-				"	Managing Managing_1 {\n" + 
+				"	Managing InsertManagingName {\n" + 
 				"		\n" + 
-				"		Controller Controller_1{\n" + 
+				"		Loop InsertLoopName{\n" + 
 				"			\n" + 
-				"			Monitor Monitor_1;\n" + 
-				"			Analyzer Analyzer_1;\n" + 
-				"			Planner Planner_1;\n" + 
-				"			Executor Executor_1;\n" + 
-				"			Knowledge Knowledge_1 {\n" + 
+				"			Monitor InsertMonitorName;\n" + 
+				"			Analyzer InsertAnalyzerName;\n" + 
+				"			Planner InsertPlannerName;\n" + 
+				"			Executor InsertExecutorName;\n" + 
+				"			Knowledge InsertKnowledgeName {\n" + 
 				"				\n" + 
-				"				 ReferenceInput ReferenceInput_1;\n" + 
+				"				 ReferenceInput InsertReferenceInputName;\n" + 
 				"			}\n" + 
 				"		}\n" + 
 				"	}\n" + 
-				"	Managed Managed_1 {\n" + 
+				"	Managed InsertManagedName {\n" + 
 				"				\n" + 
-				"		 Sensor Sensor_1;\n" + 
-				"		 Effector Efector_1;\n" + 
-				"		 MeasuredOutput MeasuredOutput_1;\n" + 
+				"		 Sensor InsertSensorName;\n" + 
+				"		 Effector InsertEffectorName;\n" + 
+				"		 MeasuredOutput InsertMeasuredOutputName;\n" + 
 				"	}\n" + 
 				"}\n" + 
 				"\n" + 

@@ -727,22 +727,13 @@ public interface SasDslPackage extends EPackage
   int DSL_MANAGER_CONTROLLER__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Dsl Type MC</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DSL_MANAGER_CONTROLLER__DSL_TYPE_MC = 1;
-
-  /**
    * The feature id for the '<em><b>Controller</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_MANAGER_CONTROLLER__CONTROLLER = 2;
+  int DSL_MANAGER_CONTROLLER__CONTROLLER = 1;
 
   /**
    * The number of structural features of the '<em>DSL Manager Controller</em>' class.
@@ -751,7 +742,7 @@ public interface SasDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DSL_MANAGER_CONTROLLER_FEATURE_COUNT = 3;
+  int DSL_MANAGER_CONTROLLER_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl <em>DSL Controller</em>}' class.
@@ -1719,17 +1710,6 @@ public interface SasDslPackage extends EPackage
   EAttribute getDSLManagerController_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getDslTypeMC <em>Dsl Type MC</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Dsl Type MC</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getDslTypeMC()
-   * @see #getDSLManagerController()
-   * @generated
-   */
-  EAttribute getDSLManagerController_DslTypeMC();
-
-  /**
    * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController#getController <em>Controller</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2534,14 +2514,6 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EAttribute DSL_MANAGER_CONTROLLER__NAME = eINSTANCE.getDSLManagerController_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Dsl Type MC</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute DSL_MANAGER_CONTROLLER__DSL_TYPE_MC = eINSTANCE.getDSLManagerController_DslTypeMC();
 
     /**
      * The meta object literal for the '<em><b>Controller</b></em>' containment reference list feature.

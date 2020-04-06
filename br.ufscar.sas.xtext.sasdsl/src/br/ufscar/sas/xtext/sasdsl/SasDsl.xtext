@@ -17,12 +17,12 @@ DSLRules:
 
 DSLRuleMController:
 	
-	('mcontroller' mcontroller1 = [DSLManagerController] access=('must-use' | 'must-not-use') 'mcontroller' mcontroller2 = [DSLManagerController] ';') 
+	('LoopManager' mcontroller1 = [DSLManagerController] access=('must-use' | 'must-not-use') 'LoopManager' mcontroller2 = [DSLManagerController] ';') 
 ;
 
 DSLRuleController:
 	
-	('controller' controller1=[DSLController] access=('must-use' | 'must-not-use') 'controller' controller2 = [DSLController] ';') 
+	('Loop' controller1=[DSLController] access=('must-use' | 'must-not-use') 'Loop' controller2 = [DSLController] ';') 
 ;
 
 DSLRuleMonitor:
@@ -90,28 +90,22 @@ DSLManaged:
 
 DSLManagerController:
 	
-	'ManagerController' name=ID  'typeOf' dslTypeMC=DSLTypeMC '{'
+	'LoopManager' name=ID  '{'
 		
 		controller += DSLController+
 	
 	'}'
 ;
 
-DSLTypeMC:
-	
-	'Synchronized'| 'Coordinated' | 'Independent'
-	
-;
-
 DSLController:
 	
-	'Controller' name=ID '{'
+	'Loop' name=ID '{'
 	
 		monitor += DSLMonitor+
 		analyzer += DSLAnalyzer+
-		planner += DSLPlanner+
+		planner += DSLPlanner*
 		executor += DSLExecutor+
-		knowledge += DSLKnowledge+
+		knowledge += DSLKnowledge*
 
 	'}'
 ;

@@ -275,9 +275,9 @@ ruleDSLRuleMController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='mcontroller'
+		otherlv_0='LoopManager'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getDSLRuleMControllerAccess().getMcontrollerKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getDSLRuleMControllerAccess().getLoopManagerKeyword_0());
 		}
 		(
 			(
@@ -319,9 +319,9 @@ ruleDSLRuleMController returns [EObject current=null]
 				)
 			)
 		)
-		otherlv_3='mcontroller'
+		otherlv_3='LoopManager'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getDSLRuleMControllerAccess().getMcontrollerKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getDSLRuleMControllerAccess().getLoopManagerKeyword_3());
 		}
 		(
 			(
@@ -359,9 +359,9 @@ ruleDSLRuleController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='controller'
+		otherlv_0='Loop'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getDSLRuleControllerAccess().getControllerKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getDSLRuleControllerAccess().getLoopKeyword_0());
 		}
 		(
 			(
@@ -403,9 +403,9 @@ ruleDSLRuleController returns [EObject current=null]
 				)
 			)
 		)
-		otherlv_3='controller'
+		otherlv_3='Loop'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getDSLRuleControllerAccess().getControllerKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getDSLRuleControllerAccess().getLoopKeyword_3());
 		}
 		(
 			(
@@ -2152,9 +2152,9 @@ ruleDSLManagerController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='ManagerController'
+		otherlv_0='LoopManager'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getDSLManagerControllerAccess().getManagerControllerKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getDSLManagerControllerAccess().getLoopManagerKeyword_0());
 		}
 		(
 			(
@@ -2174,39 +2174,16 @@ ruleDSLManagerController returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='typeOf'
+		otherlv_2='{'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getDSLManagerControllerAccess().getTypeOfKeyword_2());
+			newLeafNode(otherlv_2, grammarAccess.getDSLManagerControllerAccess().getLeftCurlyBracketKeyword_2());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCDSLTypeMCParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getControllerDSLControllerParserRuleCall_3_0());
 				}
-				lv_dslTypeMC_3_0=ruleDSLTypeMC
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDSLManagerControllerRule());
-					}
-					set(
-						$current,
-						"dslTypeMC",
-						lv_dslTypeMC_3_0,
-						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLTypeMC");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_4='{'
-		{
-			newLeafNode(otherlv_4, grammarAccess.getDSLManagerControllerAccess().getLeftCurlyBracketKeyword_4());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getDSLManagerControllerAccess().getControllerDSLControllerParserRuleCall_5_0());
-				}
-				lv_controller_5_0=ruleDSLController
+				lv_controller_3_0=ruleDSLController
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLManagerControllerRule());
@@ -2214,51 +2191,15 @@ ruleDSLManagerController returns [EObject current=null]
 					add(
 						$current,
 						"controller",
-						lv_controller_5_0,
+						lv_controller_3_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLController");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)+
-		otherlv_6='}'
+		otherlv_4='}'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getDSLManagerControllerAccess().getRightCurlyBracketKeyword_6());
-		}
-	)
-;
-
-// Entry rule entryRuleDSLTypeMC
-entryRuleDSLTypeMC returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getDSLTypeMCRule()); }
-	iv_ruleDSLTypeMC=ruleDSLTypeMC
-	{ $current=$iv_ruleDSLTypeMC.current.getText(); }
-	EOF;
-
-// Rule DSLTypeMC
-ruleDSLTypeMC returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		kw='Synchronized'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLTypeMCAccess().getSynchronizedKeyword_0());
-		}
-		    |
-		kw='Coordinated'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLTypeMCAccess().getCoordinatedKeyword_1());
-		}
-		    |
-		kw='Independent'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getDSLTypeMCAccess().getIndependentKeyword_2());
+			newLeafNode(otherlv_4, grammarAccess.getDSLManagerControllerAccess().getRightCurlyBracketKeyword_4());
 		}
 	)
 ;
@@ -2279,9 +2220,9 @@ ruleDSLController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='Controller'
+		otherlv_0='Loop'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getDSLControllerAccess().getControllerKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getDSLControllerAccess().getLoopKeyword_0());
 		}
 		(
 			(
@@ -2361,7 +2302,7 @@ ruleDSLController returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
@@ -2399,7 +2340,7 @@ ruleDSLController returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		otherlv_8='}'
 		{
 			newLeafNode(otherlv_8, grammarAccess.getDSLControllerAccess().getRightCurlyBracketKeyword_8());

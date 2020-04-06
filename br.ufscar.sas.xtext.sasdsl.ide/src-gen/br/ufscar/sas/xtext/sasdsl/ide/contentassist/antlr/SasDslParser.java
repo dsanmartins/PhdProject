@@ -59,7 +59,6 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_2_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_2_2_0");
 			builder.put(grammarAccess.getDSLRuleExecutorAccess().getAccessAlternatives_3_2_0(), "rule__DSLRuleExecutor__AccessAlternatives_3_2_0");
 			builder.put(grammarAccess.getDSLRuleMOAccess().getAccessAlternatives_2_0(), "rule__DSLRuleMO__AccessAlternatives_2_0");
-			builder.put(grammarAccess.getDSLTypeMCAccess().getAlternatives(), "rule__DSLTypeMC__Alternatives");
 			builder.put(grammarAccess.getArchitectureDefinitionAccess().getGroup(), "rule__ArchitectureDefinition__Group__0");
 			builder.put(grammarAccess.getDSLRuleMControllerAccess().getGroup(), "rule__DSLRuleMController__Group__0");
 			builder.put(grammarAccess.getDSLRuleControllerAccess().getGroup(), "rule__DSLRuleController__Group__0");
@@ -179,8 +178,7 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4(), "rule__DSLManaged__EffectorAssignment_4");
 			builder.put(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5(), "rule__DSLManaged__MeasuredOutputAssignment_5");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getNameAssignment_1(), "rule__DSLManagerController__NameAssignment_1");
-			builder.put(grammarAccess.getDSLManagerControllerAccess().getDslTypeMCAssignment_3(), "rule__DSLManagerController__DslTypeMCAssignment_3");
-			builder.put(grammarAccess.getDSLManagerControllerAccess().getControllerAssignment_5(), "rule__DSLManagerController__ControllerAssignment_5");
+			builder.put(grammarAccess.getDSLManagerControllerAccess().getControllerAssignment_3(), "rule__DSLManagerController__ControllerAssignment_3");
 			builder.put(grammarAccess.getDSLControllerAccess().getNameAssignment_1(), "rule__DSLController__NameAssignment_1");
 			builder.put(grammarAccess.getDSLControllerAccess().getMonitorAssignment_3(), "rule__DSLController__MonitorAssignment_3");
 			builder.put(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_4(), "rule__DSLController__AnalyzerAssignment_4");

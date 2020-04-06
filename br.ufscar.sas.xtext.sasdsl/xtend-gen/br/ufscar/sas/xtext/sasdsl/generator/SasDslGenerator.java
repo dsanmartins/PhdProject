@@ -2353,14 +2353,6 @@ public class SasDslGenerator extends AbstractGenerator {
             _builder.append(_name_1, "\t\t\t\t");
             _builder.append("\" stereotype=\"/0/@extension.0/@stereotype.7\">");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("\t\t");
-            _builder.append("<attribute tag=\"type\" value=\"");
-            String _dslTypeMC = mcontroller.getDslTypeMC();
-            _builder.append(_dslTypeMC, "\t\t\t\t\t");
-            _builder.append("\"/>");
-            _builder.newLineIfNotEmpty();
             {
               EList<DSLController> _controller = mcontroller.getController();
               for(final DSLController controller : _controller) {
