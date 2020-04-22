@@ -141,6 +141,11 @@ public class SasDslAdapterFactory extends AdapterFactoryImpl
         return createDSLControllerAdapter();
       }
       @Override
+      public Adapter caseDSLDomainRule(DSLDomainRule object)
+      {
+        return createDSLDomainRuleAdapter();
+      }
+      @Override
       public Adapter caseDSLMonitor(DSLMonitor object)
       {
         return createDSLMonitorAdapter();
@@ -403,6 +408,21 @@ public class SasDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDSLControllerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule <em>DSL Domain Rule</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule
+   * @generated
+   */
+  public Adapter createDSLDomainRuleAdapter()
   {
     return null;
   }

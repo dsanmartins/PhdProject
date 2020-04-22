@@ -5,6 +5,7 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl#getName <em>Name</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl#getDomain <em>Domain</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl#getMonitor <em>Monitor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLControllerImpl#getPlanner <em>Planner</em>}</li>
@@ -66,6 +68,16 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getDomain() <em>Domain</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDomain()
+   * @generated
+   * @ordered
+   */
+  protected DSLDomainRule domain;
 
   /**
    * The cached value of the '{@link #getMonitor() <em>Monitor</em>}' containment reference list.
@@ -169,6 +181,56 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
    * @generated
    */
   @Override
+  public DSLDomainRule getDomain()
+  {
+    return domain;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetDomain(DSLDomainRule newDomain, NotificationChain msgs)
+  {
+    DSLDomainRule oldDomain = domain;
+    domain = newDomain;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_CONTROLLER__DOMAIN, oldDomain, newDomain);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setDomain(DSLDomainRule newDomain)
+  {
+    if (newDomain != domain)
+    {
+      NotificationChain msgs = null;
+      if (domain != null)
+        msgs = ((InternalEObject)domain).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SasDslPackage.DSL_CONTROLLER__DOMAIN, null, msgs);
+      if (newDomain != null)
+        msgs = ((InternalEObject)newDomain).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SasDslPackage.DSL_CONTROLLER__DOMAIN, null, msgs);
+      msgs = basicSetDomain(newDomain, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_CONTROLLER__DOMAIN, newDomain, newDomain));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<DSLMonitor> getMonitor()
   {
     if (monitor == null)
@@ -248,6 +310,8 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
   {
     switch (featureID)
     {
+      case SasDslPackage.DSL_CONTROLLER__DOMAIN:
+        return basicSetDomain(null, msgs);
       case SasDslPackage.DSL_CONTROLLER__MONITOR:
         return ((InternalEList<?>)getMonitor()).basicRemove(otherEnd, msgs);
       case SasDslPackage.DSL_CONTROLLER__ANALYZER:
@@ -274,6 +338,8 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
     {
       case SasDslPackage.DSL_CONTROLLER__NAME:
         return getName();
+      case SasDslPackage.DSL_CONTROLLER__DOMAIN:
+        return getDomain();
       case SasDslPackage.DSL_CONTROLLER__MONITOR:
         return getMonitor();
       case SasDslPackage.DSL_CONTROLLER__ANALYZER:
@@ -301,6 +367,9 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
     {
       case SasDslPackage.DSL_CONTROLLER__NAME:
         setName((String)newValue);
+        return;
+      case SasDslPackage.DSL_CONTROLLER__DOMAIN:
+        setDomain((DSLDomainRule)newValue);
         return;
       case SasDslPackage.DSL_CONTROLLER__MONITOR:
         getMonitor().clear();
@@ -339,6 +408,9 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
       case SasDslPackage.DSL_CONTROLLER__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case SasDslPackage.DSL_CONTROLLER__DOMAIN:
+        setDomain((DSLDomainRule)null);
+        return;
       case SasDslPackage.DSL_CONTROLLER__MONITOR:
         getMonitor().clear();
         return;
@@ -370,6 +442,8 @@ public class DSLControllerImpl extends MinimalEObjectImpl.Container implements D
     {
       case SasDslPackage.DSL_CONTROLLER__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SasDslPackage.DSL_CONTROLLER__DOMAIN:
+        return domain != null;
       case SasDslPackage.DSL_CONTROLLER__MONITOR:
         return monitor != null && !monitor.isEmpty();
       case SasDslPackage.DSL_CONTROLLER__ANALYZER:

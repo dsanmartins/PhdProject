@@ -171,6 +171,13 @@ public class SasDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SasDslPackage.DSL_DOMAIN_RULE:
+      {
+        DSLDomainRule dslDomainRule = (DSLDomainRule)theEObject;
+        T result = caseDSLDomainRule(dslDomainRule);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SasDslPackage.DSL_MONITOR:
       {
         DSLMonitor dslMonitor = (DSLMonitor)theEObject;
@@ -449,6 +456,22 @@ public class SasDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDSLController(DSLController object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>DSL Domain Rule</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>DSL Domain Rule</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDSLDomainRule(DSLDomainRule object)
   {
     return null;
   }

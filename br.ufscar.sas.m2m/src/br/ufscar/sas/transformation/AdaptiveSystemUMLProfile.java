@@ -48,13 +48,13 @@ public class AdaptiveSystemUMLProfile {
 		final Stereotype knowledge = sasProfile.createOwnedStereotype( "Knowledge",false );
 		final Stereotype referenceInput = sasProfile.createOwnedStereotype( "Reference Input",false );
 		final Stereotype measuredOutput = sasProfile.createOwnedStereotype( "Measured Output",false );
-		final Stereotype clManager = sasProfile.createOwnedStereotype( "CL Manager",false );
-		final Stereotype cl = sasProfile.createOwnedStereotype( "Control Loop",false );
+		final Stereotype clManager = sasProfile.createOwnedStereotype( "Loop Manager",false );
+		final Stereotype cl = sasProfile.createOwnedStereotype( "Loop",false );
 		final Stereotype sensor = sasProfile.createOwnedStereotype( "Sensor",false );
 		final Stereotype effector = sasProfile.createOwnedStereotype( "Effector",false );
 		final Stereotype managedSubsystem = sasProfile.createOwnedStereotype( "Managing Subsystem",false );
 		final Stereotype managingSubsystem = sasProfile.createOwnedStereotype( "Managed Subsystem",false );
-		final Stereotype selfHealingAlt = sasProfile.createOwnedStereotype( "Self-Healing Alternative",false );
+		final Stereotype selfHealingAlt = sasProfile.createOwnedStereotype( "Alternative",false );
 		
 		monitor.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );
 		analyzer.createExtension(referenceMetaclass( umlMetamodel, sasProfile, UMLPackage.Literals.PACKAGE.getName() ), true );

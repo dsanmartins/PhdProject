@@ -17,12 +17,12 @@ DSLRules:
 
 DSLRuleMController:
 	
-	('LoopManager' mcontroller1 = [DSLManagerController] access=('must-use' | 'must-not-use') 'LoopManager' mcontroller2 = [DSLManagerController] ';') 
+	('loopManager' mcontroller1 = [DSLManagerController] access=('must-use' | 'must-not-use') 'loopManager' mcontroller2 = [DSLManagerController] ';') 
 ;
 
 DSLRuleController:
 	
-	('Loop' controller1=[DSLController] access=('must-use' | 'must-not-use') 'Loop' controller2 = [DSLController] ';') 
+	('loop' controller1=[DSLController] access=('must-use' | 'must-not-use') 'loop' controller2 = [DSLController] ';') 
 ;
 
 DSLRuleMonitor:
@@ -99,7 +99,7 @@ DSLManagerController:
 
 DSLController:
 	
-	'Loop' name=ID '{'
+	'Loop' name=ID (domain = DSLDomainRule)? '{'
 	
 		monitor += DSLMonitor+
 		analyzer += DSLAnalyzer+
@@ -108,6 +108,11 @@ DSLController:
 		knowledge += DSLKnowledge*
 
 	'}'
+;
+
+DSLDomainRule:
+	
+	value= (ID | 'withDomainRules')
 ;
 
 DSLMonitor:

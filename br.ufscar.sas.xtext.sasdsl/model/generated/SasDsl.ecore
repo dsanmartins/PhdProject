@@ -81,6 +81,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLController">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//DSLDomainRule"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="monitor" upperBound="-1"
         eType="#//DSLMonitor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyzer" upperBound="-1"
@@ -91,6 +93,9 @@
         eType="#//DSLExecutor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="knowledge" upperBound="-1"
         eType="#//DSLKnowledge" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DSLDomainRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLMonitor">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

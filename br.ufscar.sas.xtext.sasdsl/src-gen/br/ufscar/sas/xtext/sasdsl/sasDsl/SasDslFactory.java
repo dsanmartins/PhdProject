@@ -141,6 +141,15 @@ public interface SasDslFactory extends EFactory
   DSLController createDSLController();
 
   /**
+   * Returns a new object of class '<em>DSL Domain Rule</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DSL Domain Rule</em>'.
+   * @generated
+   */
+  DSLDomainRule createDSLDomainRule();
+
+  /**
    * Returns a new object of class '<em>DSL Monitor</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

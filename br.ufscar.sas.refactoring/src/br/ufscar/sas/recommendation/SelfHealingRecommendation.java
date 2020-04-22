@@ -30,10 +30,10 @@ public class SelfHealingRecommendation {
 
 		ArchitecturalModelFactory factoryArch =   ArchitecturalModelFactory.eINSTANCE;
 		ArchitecturalRefactoring model = factoryArch.createArchitecturalRefactoring();
-		model.setDescription("Recommendation of refactoring for Obscured Self-Healing Alternatives Smell");
+		model.setDescription("Recommendation refactoring for Obscure Alternatives Drift");
 		model.setEngine("Set your transformation language");
 		model.setName(rule);
-		model.setSmell("Obscured Self-Healing Alternatives");
+		model.setSmell("Obscure Alternatives");
 
 		OCLQuery oclQuery = new OCLQuery();
 		Move archMove = factoryArch.createMove();
@@ -89,7 +89,7 @@ public class SelfHealingRecommendation {
 			archMove.setTo(null);
 
 
-		archMove.setDescription("Move Self Healing Abstraction to Knowledge Abstraction");
+		archMove.setDescription("Move Alternative Abstraction to Knowledge Abstraction");
 		model.getArchitecturalOperation().add(archMove);
 
 		CodeModelFactory factoryCode = CodeModelFactory.eINSTANCE;

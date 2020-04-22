@@ -4,8 +4,10 @@
 package br.ufscar.sas.xtext.sasdsl.generator
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
@@ -31,7 +33,6 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
 
 /**
  * Generates code from your model files on save.
@@ -72,7 +73,7 @@ class SasDslGenerator extends AbstractGenerator {
 	}
 	
 	def createPath(ArchitectureDefinition architecture){
-		
+	
 		depth.clear();
 		depth.add(0,0)
 		depth.add(1,0)
@@ -1413,13 +1414,13 @@ class SasDslGenerator extends AbstractGenerator {
 			     <stereotype name="Knowledge" type="structure:Component"/>
 			     <stereotype name="Reference Input" type="structure:Component"/>
 			     <stereotype name="Measured Output" type="structure:Component"/>
-			     <stereotype name="Control Loop Manager" type="structure:Component"/>
-			     <stereotype name="Control Loop" type="structure:Component"/>
+			     <stereotype name="Loop Manager" type="structure:Component"/>
+			     <stereotype name="Loop" type="structure:Component"/>
 			     <stereotype name="Sensor" type="structure:Component"/>
 			     <stereotype name="Effector" type="structure:Component"/>
 			     <stereotype name="Managing Subsystem" type="structure:Subsystem"/>
 			     <stereotype name="Managed Subsystem" type="structure:Subsystem"/>
-			     <stereotype name="Self-Healing Alternative" type="structure:Component"/>
+			     <stereotype name="Alternative" type="structure:Component"/>
 			</extension>
 			<model xsi:type="structure:StructureModel" name="ArchitecturalView_">
 				«FOR arch : architectureDefinition.managing»
@@ -1528,6 +1529,19 @@ class SasDslGenerator extends AbstractGenerator {
 	}
 	
 	def compile2(ArchitectureDefinition architectureDefinition){
+	
+		var resource = architectureDefinition.eResource
+		for (sc : resource.allContents.filter(typeof(DSLController)).toIterable)
+		{
+			var dslDomain = sc.eContents.filter(DSLDomainRule).toList
+			for (domain: dslDomain)
+			{
+				System.out.println(sc.name + " " + domain.value)
+			}
+			
+			
+			
+		}
 		
 		'''
 	import 'http://www.eclipse.org/MoDisco/kdm/core'
@@ -1555,12 +1569,12 @@ class SasDslGenerator extends AbstractGenerator {
 		«ENDFOR»	
 		«FOR DSLManagerController mcontroller : lMController»
 		context StructureModel
-		inv exist_«mcontroller.name»: Component.allInstances()->exists(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')
+		inv exist_«mcontroller.name»: Component.allInstances()->exists(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')
 		
 		«ENDFOR»	
 		«FOR DSLController controller : lController»
 		context StructureModel
-		inv exist_«controller.name»: Component.allInstances()->exists(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Control Loop')
+		inv exist_«controller.name»: Component.allInstances()->exists(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Loop')
 		
 		«ENDFOR»	
 		«FOR DSLMonitor monitor : lMonitor»
@@ -1610,7 +1624,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«ENDFOR»	
 		«FOR DSLAlternative shalt : lAlternative»
 		context StructureModel
-		inv exist_«shalt.name»: Component.allInstances()->exists(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Self-Healing Alternative')
+		inv exist_«shalt.name»: Component.allInstances()->exists(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Alternative')
 		
 		«ENDFOR»	
 	--------------------------------------------------------
@@ -1635,7 +1649,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF mcontroller.eContainer instanceof DSLManaging»
 		«var managing = mcontroller.eContainer as DSLManaging»
 		context StructureModel
-		inv composite_«mcontroller.name»: Component.allInstances()->select(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
+		inv composite_«mcontroller.name»: Component.allInstances()->select(c| c.name='«mcontroller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')->
 										  exists(d|d.oclContainer().oclAsType(Subsystem).name='«managing.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managing Subsystem')
 		«ENDIF»
 		«ENDFOR»
@@ -1644,13 +1658,13 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF controller.eContainer instanceof DSLManaging»
 		«var managing = controller.eContainer as DSLManaging»
 		context StructureModel
-		inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
+		inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')->
 										 exists(d|d.oclContainer().oclAsType(Subsystem).name='«managing.name»' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = 'Managing Subsystem')
 		«ELSEIF controller.eContainer instanceof DSLManagerController»
 		«var mcontroller = controller.eContainer as DSLManagerController»
 		context StructureModel
-				inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'CL Manager')->
-												 exists(d|d.oclContainer().oclAsType(Subsystem).name='«mcontroller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'CL Manager')
+				inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')->
+												 exists(d|d.oclContainer().oclAsType(Subsystem).name='«mcontroller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop Manager')
 		«ENDIF»
 		«ENDFOR»	
 		
@@ -1659,7 +1673,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«var controller = monitor.eContainer as DSLController»
 		context StructureModel
 		inv composite_«monitor.name»: Component.allInstances()->select(c| c.name='«monitor.name»' and c.stereotype->asSequence()->first().name = 'Monitor')->
-									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop')
 		«ENDIF»
 		«ENDFOR»
 			
@@ -1668,7 +1682,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«var controller = analyzer.eContainer as DSLController»
 		context StructureModel
 		inv composite_«analyzer.name»: Component.allInstances()->select(c| c.name='«analyzer.name»' and c.stereotype->asSequence()->first().name = 'Analyzer')->
-									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop')
 		«ENDIF»
 		«ENDFOR»
 			
@@ -1677,7 +1691,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«var controller = planner.eContainer as DSLController»
 		context StructureModel
 		inv composite_«planner.name»: Component.allInstances()->select(c| c.name='«planner.name»' and c.stereotype->asSequence()->first().name = 'Planner')->
-									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop')
 		«ENDIF»
 		«ENDFOR»	
 		
@@ -1686,7 +1700,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«var controller = executor.eContainer as DSLController»
 		context StructureModel
 		inv composite_«executor.name»: Component.allInstances()->select(c| c.name='«executor.name»' and c.stereotype->asSequence()->first().name = 'Executor')->
-									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop')
 		«ENDIF»
 		«ENDFOR»	
 		
@@ -1695,7 +1709,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«var controller = knowledge.eContainer as DSLController»
 		context StructureModel
 		inv composite_«knowledge.name»: Component.allInstances()->select(c| c.name='«knowledge.name»' and c.stereotype->asSequence()->first().name = 'Knowledge')->
-									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Control Loop')
+									  exists(d|d.oclContainer().oclAsType(Component).name='«controller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop')
 		«ENDIF»
 		«ENDFOR»	
 		
@@ -1739,14 +1753,14 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF shalt.eContainer instanceof DSLKnowledge»
 		«var knowledge = shalt.eContainer as DSLKnowledge»
 		context StructureModel
-		inv composite_«shalt.name»: Component.allInstances()->select(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Self-Healing Alternative')->
+		inv composite_«shalt.name»: Component.allInstances()->select(c| c.name='«shalt.name»' and c.stereotype->asSequence()->first().name = 'Alternative')->
 									    exists(d|d.oclContainer().oclAsType(Component).name='«knowledge.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Knowledge')
 		«ENDIF»
 		«ENDFOR»	
 	
 		--------------------------------------------------------
 		-- Check access rules of adaptive system abstractions --
-		--------------------------------------------------------
+		-------------------------------------------------------
 		
 		«var rules = architectureDefinition.rules»
 		«FOR DSLRules dslRule: rules»

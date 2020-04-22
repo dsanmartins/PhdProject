@@ -10,7 +10,10 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
@@ -26,10 +29,12 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 import br.ufscar.sas.xtext.sasdsl.validation.AbstractSasDslValidator;
 import com.google.common.base.Objects;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
@@ -42,6 +47,8 @@ import org.eclipse.xtext.validation.Check;
 @SuppressWarnings("all")
 public class SasDslValidator extends AbstractSasDslValidator {
   protected static final String ISSUE_CODE_PREFIX = "br.ufscar.abstractions.rules.";
+  
+  protected static final String ISSUE_CODE_PREFIX_2 = "br.ufscar.abstractions.names.";
   
   public static final String DUCPLICATE_MCONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMController");
   
@@ -56,6 +63,8 @@ public class SasDslValidator extends AbstractSasDslValidator {
   public static final String DUCPLICATE_EXECUTOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameExecutor");
   
   public static final String DUCPLICATE_RULES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateRules");
+  
+  public static final String DUCPLICATE_NAMES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateNames");
   
   @Check
   public void checkInMControllerRuleNotAccessTheSame(final DSLRuleMController dslRuleMController) {
@@ -144,6 +153,186 @@ public class SasDslValidator extends AbstractSasDslValidator {
   @Check
   public void checkNoDuplicateControllers(final ArchitectureDefinition r) {
     this.checkNoDuplicateRules(r.getRules());
+  }
+  
+  @Check
+  public void checkNoDuplicateAbstractions(final ArchitectureDefinition r) {
+    this.checkNoDuplicateManaging(r.getManaging());
+    this.checkNoDuplicateManaged(r.getManaged());
+  }
+  
+  private void checkNoDuplicateManaged(final EList<DSLManaged> managed) {
+    final ArrayListMultimap<String, EObject> multiMapAbstraction = ArrayListMultimap.<String, EObject>create();
+    for (final DSLManaged m : managed) {
+      {
+        multiMapAbstraction.put(m.getName(), m);
+        final EList<DSLSensor> sensor = m.getSensor();
+        for (final DSLSensor s : sensor) {
+          multiMapAbstraction.put(s.getName(), s);
+        }
+        final EList<DSLEffector> effector = m.getEffector();
+        for (final DSLEffector e : effector) {
+          multiMapAbstraction.put(e.getName(), e);
+        }
+        final EList<DSLMeasuredOutput> measuredOutput = m.getMeasuredOutput();
+        for (final DSLMeasuredOutput mo : measuredOutput) {
+          multiMapAbstraction.put(mo.getName(), mo);
+        }
+      }
+    }
+    final BiConsumer<String, Collection<EObject>> _function = (String k, Collection<EObject> v) -> {
+      final Collection<EObject> values = v;
+      int _size = values.size();
+      boolean _greaterThan = (_size > 1);
+      if (_greaterThan) {
+        for (final EObject abs : values) {
+          {
+            if ((abs instanceof DSLManaged)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaged_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLSensor)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLSensor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLEffector)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLEffector_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLMeasuredOutput)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMeasuredOutput_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+          }
+        }
+      }
+    };
+    multiMapAbstraction.asMap().forEach(_function);
+  }
+  
+  private void checkNoDuplicateManaging(final EList<DSLManaging> managing) {
+    final ArrayListMultimap<String, EObject> multiMapAbstraction = ArrayListMultimap.<String, EObject>create();
+    for (final DSLManaging m : managing) {
+      {
+        multiMapAbstraction.put(m.getName(), m);
+        final EList<DSLManagerController> mcontroller = m.getManagerController();
+        for (final DSLManagerController mc : mcontroller) {
+          {
+            multiMapAbstraction.put(mc.getName(), mc);
+            final EList<DSLController> controller = mc.getController();
+            for (final DSLController c : controller) {
+              {
+                multiMapAbstraction.put(c.getName(), c);
+                final EList<DSLMonitor> monitor = c.getMonitor();
+                for (final DSLMonitor mo : monitor) {
+                  multiMapAbstraction.put(mo.getName(), mo);
+                }
+                final EList<DSLAnalyzer> analyzer = c.getAnalyzer();
+                for (final DSLAnalyzer a : analyzer) {
+                  multiMapAbstraction.put(a.getName(), a);
+                }
+                final EList<DSLPlanner> planner = c.getPlanner();
+                for (final DSLPlanner p : planner) {
+                  multiMapAbstraction.put(p.getName(), p);
+                }
+                final EList<DSLExecutor> executor = c.getExecutor();
+                for (final DSLExecutor e : executor) {
+                  multiMapAbstraction.put(e.getName(), e);
+                }
+                final EList<DSLKnowledge> knowledge = c.getKnowledge();
+                for (final DSLKnowledge k : knowledge) {
+                  {
+                    multiMapAbstraction.put(k.getName(), k);
+                    final EList<DSLAlternative> alternative = k.getShalt();
+                    for (final DSLAlternative al : alternative) {
+                      multiMapAbstraction.put(al.getName(), al);
+                    }
+                    final EList<DSLReferenceInput> refInput = k.getReferenceInput();
+                    for (final DSLReferenceInput re : refInput) {
+                      multiMapAbstraction.put(re.getName(), re);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        final EList<DSLController> controller = m.getController();
+        for (final DSLController c : controller) {
+          {
+            multiMapAbstraction.put(c.getName(), c);
+            final EList<DSLMonitor> monitor = c.getMonitor();
+            for (final DSLMonitor mo : monitor) {
+              multiMapAbstraction.put(mo.getName(), mo);
+            }
+            final EList<DSLAnalyzer> analyzer = c.getAnalyzer();
+            for (final DSLAnalyzer a : analyzer) {
+              multiMapAbstraction.put(a.getName(), a);
+            }
+            final EList<DSLPlanner> planner = c.getPlanner();
+            for (final DSLPlanner p : planner) {
+              multiMapAbstraction.put(p.getName(), p);
+            }
+            final EList<DSLExecutor> executor = c.getExecutor();
+            for (final DSLExecutor e : executor) {
+              multiMapAbstraction.put(e.getName(), e);
+            }
+            final EList<DSLKnowledge> knowledge = c.getKnowledge();
+            for (final DSLKnowledge k : knowledge) {
+              {
+                multiMapAbstraction.put(k.getName(), k);
+                final EList<DSLAlternative> alternative = k.getShalt();
+                for (final DSLAlternative al : alternative) {
+                  multiMapAbstraction.put(al.getName(), k);
+                }
+                final EList<DSLReferenceInput> refInput = k.getReferenceInput();
+                for (final DSLReferenceInput re : refInput) {
+                  multiMapAbstraction.put(re.getName(), re);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    final BiConsumer<String, Collection<EObject>> _function = (String k, Collection<EObject> v) -> {
+      final Collection<EObject> values = v;
+      int _size = values.size();
+      boolean _greaterThan = (_size > 1);
+      if (_greaterThan) {
+        for (final EObject abs : values) {
+          {
+            if ((abs instanceof DSLMonitor)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMonitor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLAnalyzer)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAnalyzer_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLPlanner)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLPlanner_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLExecutor)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLExecutor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLManaging)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaging_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLKnowledge)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLKnowledge_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLReferenceInput)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLReferenceInput_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLManagerController)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManagerController_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLController)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLController_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+            if ((abs instanceof DSLAlternative)) {
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAlternative_Name(), SasDslValidator.DUCPLICATE_NAMES);
+            }
+          }
+        }
+      }
+    };
+    multiMapAbstraction.asMap().forEach(_function);
   }
   
   private void checkNoDuplicateRules(final EList<DSLRules> rules) {

@@ -7,6 +7,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
@@ -134,6 +135,13 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   private EClass dslControllerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass dslDomainRuleEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -912,7 +920,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLController_Monitor()
+  public EReference getDSLController_Domain()
   {
     return (EReference)dslControllerEClass.getEStructuralFeatures().get(1);
   }
@@ -923,7 +931,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLController_Analyzer()
+  public EReference getDSLController_Monitor()
   {
     return (EReference)dslControllerEClass.getEStructuralFeatures().get(2);
   }
@@ -934,7 +942,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLController_Planner()
+  public EReference getDSLController_Analyzer()
   {
     return (EReference)dslControllerEClass.getEStructuralFeatures().get(3);
   }
@@ -945,7 +953,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLController_Executor()
+  public EReference getDSLController_Planner()
   {
     return (EReference)dslControllerEClass.getEStructuralFeatures().get(4);
   }
@@ -956,9 +964,42 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLController_Knowledge()
+  public EReference getDSLController_Executor()
   {
     return (EReference)dslControllerEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDSLController_Knowledge()
+  {
+    return (EReference)dslControllerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getDSLDomainRule()
+  {
+    return dslDomainRuleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDSLDomainRule_Value()
+  {
+    return (EAttribute)dslDomainRuleEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1304,11 +1345,15 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     dslControllerEClass = createEClass(DSL_CONTROLLER);
     createEAttribute(dslControllerEClass, DSL_CONTROLLER__NAME);
+    createEReference(dslControllerEClass, DSL_CONTROLLER__DOMAIN);
     createEReference(dslControllerEClass, DSL_CONTROLLER__MONITOR);
     createEReference(dslControllerEClass, DSL_CONTROLLER__ANALYZER);
     createEReference(dslControllerEClass, DSL_CONTROLLER__PLANNER);
     createEReference(dslControllerEClass, DSL_CONTROLLER__EXECUTOR);
     createEReference(dslControllerEClass, DSL_CONTROLLER__KNOWLEDGE);
+
+    dslDomainRuleEClass = createEClass(DSL_DOMAIN_RULE);
+    createEAttribute(dslDomainRuleEClass, DSL_DOMAIN_RULE__VALUE);
 
     dslMonitorEClass = createEClass(DSL_MONITOR);
     createEAttribute(dslMonitorEClass, DSL_MONITOR__NAME);
@@ -1451,11 +1496,15 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     initEClass(dslControllerEClass, DSLController.class, "DSLController", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLController_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLController_Domain(), this.getDSLDomainRule(), null, "domain", null, 0, 1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLController_Monitor(), this.getDSLMonitor(), null, "monitor", null, 0, -1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLController_Analyzer(), this.getDSLAnalyzer(), null, "analyzer", null, 0, -1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLController_Planner(), this.getDSLPlanner(), null, "planner", null, 0, -1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLController_Executor(), this.getDSLExecutor(), null, "executor", null, 0, -1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLController_Knowledge(), this.getDSLKnowledge(), null, "knowledge", null, 0, -1, DSLController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(dslDomainRuleEClass, DSLDomainRule.class, "DSLDomainRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDSLDomainRule_Value(), ecorePackage.getEString(), "value", null, 0, 1, DSLDomainRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslMonitorEClass, DSLMonitor.class, "DSLMonitor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLMonitor_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLMonitor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -7,6 +7,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
@@ -64,6 +65,9 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case SasDslPackage.DSL_CONTROLLER:
 				sequence_DSLController(context, (DSLController) semanticObject); 
+				return; 
+			case SasDslPackage.DSL_DOMAIN_RULE:
+				sequence_DSLDomainRule(context, (DSLDomainRule) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_EFFECTOR:
 				sequence_DSLEffector(context, (DSLEffector) semanticObject); 
@@ -179,6 +183,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         domain=DSLDomainRule? 
 	 *         monitor+=DSLMonitor+ 
 	 *         analyzer+=DSLAnalyzer+ 
 	 *         planner+=DSLPlanner* 
@@ -187,6 +192,18 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_DSLController(ISerializationContext context, DSLController semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DSLDomainRule returns DSLDomainRule
+	 *
+	 * Constraint:
+	 *     (value=ID | value='withDomainRules')
+	 */
+	protected void sequence_DSLDomainRule(ISerializationContext context, DSLDomainRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

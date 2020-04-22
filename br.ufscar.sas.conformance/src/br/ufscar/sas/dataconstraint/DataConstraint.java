@@ -54,14 +54,14 @@ public class DataConstraint {
 		if ((Integer) rs1.getObject(1) == 0 && (Integer) rs2.getObject(1)==0)
 		{
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
-					+ "values(1,'smell','Scattered Reference Input','This smell arises when Reference Inputs do not have a dedicated Knowledge to store them.','composite','Reference Input','Knowledge')");
+					+ "values(1,'drift','Scattered Reference Input','This smell arises when Reference Inputs do not have a dedicated Knowledge to store them.','composite','Reference Input','Knowledge')");
 			mydb.executeStmt("insert into mapping(id, _key) values(1,'composite_ReferenceInput')");
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
-					+ "values(2,'smell','Mixed Executors and Effectors','This smell occurs when Executors and Effectors are not evident in the architecture of the AS.','exist','Effector','null')");
+					+ "values(2,'drift','Mixed Executors and Effectors','This smell occurs when Executors and Effectors are not evident in the architecture of the AS.','exist','Effector','null')");
 			mydb.executeStmt("insert into mapping(id, _key) values(2,'exist_Effector')");
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
-					+ "values(3,'smell','Obscured Self-Healing Alternatives','This smell arises when the set of alternatives of a self-healing system is not implemented as a first class entities.','exist','Self-Healing Alternative','null')");
-			mydb.executeStmt("insert into mapping(id, _key) values(3,'composite_SelfHealingAlt')");
+					+ "values(3,'drift','Obscure Alternatives','This drift arises when the set of alternatives is not implemented as a first class entities.','exist','Alternative','null')");
+			mydb.executeStmt("insert into mapping(id, _key) values(3,'composite_Alternative')");
 		}
 		mydb.closeConnection();
 	}

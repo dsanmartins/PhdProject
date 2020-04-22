@@ -190,7 +190,7 @@ public class Uml2PlantUML {
 		String style = "skinparam node {\n" + 
 						"\n" + 
 					   "	backgroundColor<<Reference Input>> #3498db\n" + 
-					   "	backgroundColor<<Self-Healing Alternative>> #3498db\n" + 
+					   "	backgroundColor<<Alternative>> #3498db\n" + 
 					   "	backgroundColor<<Measured Output>> #3498db\n" + 
 					   "	backgroundColor<<Executor>> #3498db\n" + 
 					   "	backgroundColor<<Sensor>> #3498db\n" + 
@@ -199,7 +199,7 @@ public class Uml2PlantUML {
 					   "	backgroundColor<<Planner>> #3498db\n" + 
 					   "	backgroundColor<<Effector>> #3498db\n" + 
 					   "	FontColor<<Reference Input>> white\n" + 
-					   "	FontColor<<Self-Healing Alternative>> white\n" + 
+					   "	FontColor<<Alternative>> white\n" + 
 					   "	FontColor<<Measured Output>> white\n" + 
 					   "	FontColor<<Executor>> white\n" + 
 					   "	FontColor<<Sensor>> white\n" + 

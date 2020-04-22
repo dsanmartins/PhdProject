@@ -4,6 +4,7 @@
 package br.ufscar.sas.xtext.sasdsl.validation
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
@@ -13,9 +14,23 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage
+import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.HashMultimap
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.validation.Check
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
 
 /**
  * This class contains custom validation rules. 
@@ -25,6 +40,7 @@ import org.eclipse.xtext.validation.Check
 class SasDslValidator extends AbstractSasDslValidator {
 	
 	protected static val ISSUE_CODE_PREFIX = "br.ufscar.abstractions.rules.";
+	protected static val ISSUE_CODE_PREFIX_2 = "br.ufscar.abstractions.names.";
 	public static val DUCPLICATE_MCONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMController"
 	public static val DUCPLICATE_CONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameController"
 	public static val DUCPLICATE_MONITOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMonitor"
@@ -32,6 +48,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	public static val DUCPLICATE_PLANNER_ACCESS = ISSUE_CODE_PREFIX + "AccessSamePlanner"
 	public static val DUCPLICATE_EXECUTOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameExecutor"
 	public static val DUCPLICATE_RULES = ISSUE_CODE_PREFIX + "DuplicateRules"
+	public static val DUCPLICATE_NAMES = ISSUE_CODE_PREFIX + "DuplicateNames"
 
 
 	@Check
@@ -85,6 +102,153 @@ class SasDslValidator extends AbstractSasDslValidator {
 	@Check def void checkNoDuplicateControllers(ArchitectureDefinition r){
 		
 		checkNoDuplicateRules(r.rules)
+	}
+	
+	@Check def void checkNoDuplicateAbstractions(ArchitectureDefinition r){
+		
+		checkNoDuplicateManaging(r.managing)
+		checkNoDuplicateManaged(r.managed)
+	}
+	
+	def private void checkNoDuplicateManaged(EList<DSLManaged> managed){
+	
+		val multiMapAbstraction = ArrayListMultimap.create()
+		for (m:managed)
+		{
+			multiMapAbstraction.put(m.name,m)
+			val sensor = m.sensor
+			for (s:sensor)
+		    	multiMapAbstraction.put(s.name,s)
+		    val effector = m.effector
+			for (e:effector)
+		    	multiMapAbstraction.put(e.name,e)
+		    val measuredOutput = m.measuredOutput
+		    for (mo:measuredOutput)
+		    	multiMapAbstraction.put(mo.name,mo)
+		
+		}
+		
+			multiMapAbstraction.asMap.forEach[k, v| 
+		
+			val values = v
+			if (values.size > 1 )
+			{
+				for (abs:values)
+				{
+					if (abs instanceof DSLManaged)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaged_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLSensor)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLSensor_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLEffector)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLEffector_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLMeasuredOutput)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMeasuredOutput_Name, DUCPLICATE_NAMES)
+				}
+			}
+		]	
+	}
+		
+	def private void checkNoDuplicateManaging(EList<DSLManaging> managing){
+		
+		val multiMapAbstraction = ArrayListMultimap.create()
+		for (m:managing)
+		{
+			multiMapAbstraction.put(m.name,m)
+			val mcontroller = m.managerController
+		    for (mc:mcontroller)
+		    {
+		    	multiMapAbstraction.put(mc.name,mc)
+		    	val controller = mc.controller
+		    	for (c:controller )
+		    	{
+		    		multiMapAbstraction.put(c.name,c)
+		    		val monitor = c.monitor
+		    		for (mo:monitor)
+		    			multiMapAbstraction.put(mo.name,mo)
+		    		val analyzer = c.analyzer
+		    		for (a:analyzer)
+		    			multiMapAbstraction.put(a.name,a)
+		    		val planner = c.planner
+		    		for (p:planner)
+		    			multiMapAbstraction.put(p.name,p)
+		    		val executor = c.executor
+		    		for (e:executor)
+		    			multiMapAbstraction.put(e.name,e)
+		    		val knowledge = c.knowledge
+		    		for (k:knowledge)
+		    		{
+		    			multiMapAbstraction.put(k.name,k)
+		    			val alternative = k.shalt;
+		    			for (al:alternative)
+		    				multiMapAbstraction.put(al.name,al)
+		    			val refInput = k.referenceInput;
+		    			for (re:refInput)
+		    				multiMapAbstraction.put(re.name,re)
+		    		}	
+		    	}
+		    }
+		    
+		    val controller = m.controller
+		    for (c:controller )
+		    {
+		    	multiMapAbstraction.put(c.name,c)
+		    	val monitor = c.monitor
+		    	for (mo:monitor)
+		    		multiMapAbstraction.put(mo.name,mo)
+		    	val analyzer = c.analyzer
+		    	for (a:analyzer)
+		    		multiMapAbstraction.put(a.name,a)
+		    	val planner = c.planner
+		    	for (p:planner)
+		    		multiMapAbstraction.put(p.name,p)
+		    	val executor = c.executor
+		    	for (e:executor)
+		    		multiMapAbstraction.put(e.name,e)
+		    	val knowledge = c.knowledge
+		    	for (k:knowledge)
+		    	{
+		    		multiMapAbstraction.put(k.name,k)
+		    		val alternative = k.shalt;
+		    		for (al:alternative)
+		    			multiMapAbstraction.put(al.name,k)
+		    		val refInput = k.referenceInput;
+		    		for (re:refInput)
+		    			multiMapAbstraction.put(re.name,re)
+		    	}	
+		    }
+		}
+		
+		
+		multiMapAbstraction.asMap.forEach[k, v| 
+		
+			val values = v
+			if (values.size > 1 )
+			{
+				for (abs:values)
+				{
+					if (abs instanceof DSLMonitor)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMonitor_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLAnalyzer)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAnalyzer_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLPlanner)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLPlanner_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLExecutor)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLExecutor_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLManaging)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaging_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLKnowledge)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLKnowledge_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLReferenceInput)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLReferenceInput_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLManagerController)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManagerController_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLController)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLController_Name, DUCPLICATE_NAMES)
+					if (abs instanceof DSLAlternative)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAlternative_Name, DUCPLICATE_NAMES)
+				}
+			}
+		]
 	}
 	
 	def private void checkNoDuplicateRules(EList<DSLRules> rules){

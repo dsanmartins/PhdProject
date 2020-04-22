@@ -14,7 +14,9 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -40,10 +42,23 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.TreeViewerEditor;
+import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
@@ -111,6 +126,8 @@ import br.ufscar.sas.transformation.ComputeModelDiff;
 import br.ufscar.sas.transformation.Kdm2Uml;
 import br.ufscar.sas.transformation.OpenComponentDiagram;
 import br.ufscar.sas.transformation.Uml2PlantUML;
+import br.ufscar.sas.treeviewer.TreeModel;
+import br.ufscar.sas.treeviewer.TreeProvider;
 
 public class MainView extends ViewPart implements IPartListener2 {
 
@@ -132,8 +149,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 	static String databaseUrl = "";
 	//Resultset
 	List<String> rs = null;
-	//Tree
-	Tree tree = null;
+
+
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -204,35 +221,51 @@ public class MainView extends ViewPart implements IPartListener2 {
 		label1.setText("Project Name: " + projectName);
 		label1.setBounds(15, 3, 300, 20);
 
+		TreeViewer treeViewer = new TreeViewer(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		treeViewer.setContentProvider(new TreeProvider());
+		treeViewer.getTree().setHeaderVisible(true);
+		treeViewer.getTree().setLinesVisible(true);
+		treeViewer.getTree().setBounds(0, 0, 500, 450);
 
-		tree = new Tree(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		tree.setLayout(new FillLayout());
-		tree.setBounds(0, 0, 500, 450);
-		
 
-		List<String> abstractions = null;
-		final Menu menu = new Menu(tree);
-		tree.setMenu(menu);
-
-		try 
-		{
-			QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-			abstractions = queryClass.getAbstractions();
-			for (String abstraction : abstractions)
-			{
-				TreeItem item = new TreeItem(tree,0);
-				item.setText(abstraction);
-				String child = this.searchForChild(abstraction);
-				if (child != null)
-				{
-					TreeItem itemChild = new TreeItem(item, 0);
-					itemChild.setText(child);
-				}
+		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(
+				treeViewer, new FocusCellOwnerDrawHighlighter(treeViewer));
+		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
+				treeViewer) {
+			@Override
+			protected boolean isEditorActivationEvent(
+					ColumnViewerEditorActivationEvent event) {
+				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
+						|| (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR)
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		};
+
+		int feature = ColumnViewerEditor.TABBING_HORIZONTAL
+				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+				| ColumnViewerEditor.TABBING_VERTICAL
+				| ColumnViewerEditor.KEYBOARD_ACTIVATION;
+
+		TreeViewerEditor.create(treeViewer, focusCellManager, actSupport, feature);
+		final TextCellEditor textCellEditor = new TextCellEditor(treeViewer.getTree());
+
+		TreeViewerColumn viewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
+		viewerColumn.getColumn().setWidth(300);
+		viewerColumn.getColumn().setText("Abstractions");
+		viewerColumn.setLabelProvider(createColumnLabelProvider());
+		viewerColumn.setEditingSupport(createEditingSupportFor(treeViewer, textCellEditor));
+
+		try {
+			treeViewer.setInput(getParentAbstactions());
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
 
+		Tree tree = treeViewer.getTree();
+		final Menu menu = new Menu(tree);
+		tree.setMenu(menu);
 
 		menu.addListener(SWT.Show, new Listener() {
 			public void handleEvent(Event event) {
@@ -315,9 +348,23 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 						}
 					});
+
+
+					MenuItem menuItem3 = new MenuItem(menu, SWT.PUSH);
+					menuItem3.setText("Edit Name");
+					menuItem3.addSelectionListener(new SelectionAdapter() {
+
+
+
+					});
+
+
+
+
 				}
 			}
 		});
+
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
 		tableViewGroup.setText("Architectural Drifts");
@@ -395,6 +442,44 @@ public class MainView extends ViewPart implements IPartListener2 {
 		}
 	}
 
+	private ColumnLabelProvider createColumnLabelProvider() {
+		return new ColumnLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				return ((TreeModel) element).getParent();
+			}
+
+		};
+	}
+
+
+	private EditingSupport createEditingSupportFor(final TreeViewer viewer, final TextCellEditor textCellEditor) {
+		return new EditingSupport(viewer) {
+			@Override
+			protected boolean canEdit(Object element) {
+				return false;
+			}
+
+			@Override
+			protected CellEditor getCellEditor(Object element) {
+				return textCellEditor;
+			}
+
+			@Override
+			protected Object getValue(Object element) {
+				return ((TreeModel) element).getParent() + "";
+			}
+
+			@Override
+			protected void setValue(Object element, Object value) {
+				((TreeModel) element).setParent( (String) value);
+				viewer.update(element, null);
+			}
+		};
+	}
+
 	private void UIAnnotation(TabFolder tabFolder, String projectName) {
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
 		tab1.setText("Code Elements Annotation");
@@ -460,9 +545,9 @@ public class MainView extends ViewPart implements IPartListener2 {
 		processAnnotation.setText("Process Annotations");
 
 		processAnnotation.addSelectionListener(new SelectionAdapter() {
-			
+
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				try {
 					dialog.run(true, true, new IRunnableWithProgress()
 					{ 
@@ -470,7 +555,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						{ 
 							//Creates KDM instance 
 							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
-							
+
 							try {
 								QueryClass queryClass1 = new QueryClass(databaseUrl);
 								queryClass1.variableBelongsTo();
@@ -480,7 +565,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								queryClass3.methodBelongsTo();
 								QueryClass queryClass4 = new QueryClass(databaseUrl);
 								queryClass4.classBelongsTo();
-							
+
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -488,8 +573,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
-							
+
+
 							monitor.beginTask("Creating Structure Package in KDM...",totalUnitsOfWork); 
 							String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
 							CreateKDM ck = new CreateKDM();
@@ -1317,5 +1402,34 @@ public class MainView extends ViewPart implements IPartListener2 {
 				return instance.split(Pattern.quote("|"))[1];
 
 		return null;
+	}
+
+	private TreeModel getParentAbstactions() throws Exception{
+
+		QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
+		List<String> abstractions = queryClass.getAbstractions();
+		List<String> instances = queryClass.selectInstance(1);
+
+		TreeModel treeModel = new TreeModel("root");
+		TreeModel treeModelRoot = treeModel;
+
+		for (String abs:abstractions) {
+
+			treeModel.addAbstraction(abs);
+			treeModel = treeModel.getChild(abs);
+			List<TreeModel> temp = treeModel.getChildren();
+			Predicate<String> strAbs = str -> str.split(Pattern.quote("|"))[0].equals(abs);
+			List<String> filteredInstance = instances.stream().filter(strAbs).collect(Collectors.toList());
+
+			for (int i = 0; i< filteredInstance.size() ; i++)
+				filteredInstance.set(i, filteredInstance.get(i).split(Pattern.quote("|"))[1]);	
+
+			for (int i=0; i< filteredInstance.size(); i++)
+				temp.add(new TreeModel(filteredInstance.get(i)));
+
+			treeModel.setChildren(temp);
+			treeModel = treeModelRoot;
+		}
+		return treeModel;
 	}
 }

@@ -275,7 +275,7 @@ ruleDSLRuleMController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='LoopManager'
+		otherlv_0='loopManager'
 		{
 			newLeafNode(otherlv_0, grammarAccess.getDSLRuleMControllerAccess().getLoopManagerKeyword_0());
 		}
@@ -319,7 +319,7 @@ ruleDSLRuleMController returns [EObject current=null]
 				)
 			)
 		)
-		otherlv_3='LoopManager'
+		otherlv_3='loopManager'
 		{
 			newLeafNode(otherlv_3, grammarAccess.getDSLRuleMControllerAccess().getLoopManagerKeyword_3());
 		}
@@ -359,7 +359,7 @@ ruleDSLRuleController returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='Loop'
+		otherlv_0='loop'
 		{
 			newLeafNode(otherlv_0, grammarAccess.getDSLRuleControllerAccess().getLoopKeyword_0());
 		}
@@ -403,7 +403,7 @@ ruleDSLRuleController returns [EObject current=null]
 				)
 			)
 		)
-		otherlv_3='Loop'
+		otherlv_3='loop'
 		{
 			newLeafNode(otherlv_3, grammarAccess.getDSLRuleControllerAccess().getLoopKeyword_3());
 		}
@@ -2242,16 +2242,35 @@ ruleDSLController returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='{'
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getDomainDSLDomainRuleParserRuleCall_2_0());
+				}
+				lv_domain_2_0=ruleDSLDomainRule
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
+					}
+					set(
+						$current,
+						"domain",
+						lv_domain_2_0,
+						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLDomainRule");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		otherlv_3='{'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getDSLControllerAccess().getLeftCurlyBracketKeyword_2());
+			newLeafNode(otherlv_3, grammarAccess.getDSLControllerAccess().getLeftCurlyBracketKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLControllerAccess().getMonitorDSLMonitorParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getMonitorDSLMonitorParserRuleCall_4_0());
 				}
-				lv_monitor_3_0=ruleDSLMonitor
+				lv_monitor_4_0=ruleDSLMonitor
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
@@ -2259,7 +2278,7 @@ ruleDSLController returns [EObject current=null]
 					add(
 						$current,
 						"monitor",
-						lv_monitor_3_0,
+						lv_monitor_4_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLMonitor");
 					afterParserOrEnumRuleCall();
 				}
@@ -2268,9 +2287,9 @@ ruleDSLController returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLControllerAccess().getAnalyzerDSLAnalyzerParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getAnalyzerDSLAnalyzerParserRuleCall_5_0());
 				}
-				lv_analyzer_4_0=ruleDSLAnalyzer
+				lv_analyzer_5_0=ruleDSLAnalyzer
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
@@ -2278,7 +2297,7 @@ ruleDSLController returns [EObject current=null]
 					add(
 						$current,
 						"analyzer",
-						lv_analyzer_4_0,
+						lv_analyzer_5_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAnalyzer");
 					afterParserOrEnumRuleCall();
 				}
@@ -2287,9 +2306,9 @@ ruleDSLController returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLControllerAccess().getPlannerDSLPlannerParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getPlannerDSLPlannerParserRuleCall_6_0());
 				}
-				lv_planner_5_0=ruleDSLPlanner
+				lv_planner_6_0=ruleDSLPlanner
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
@@ -2297,7 +2316,7 @@ ruleDSLController returns [EObject current=null]
 					add(
 						$current,
 						"planner",
-						lv_planner_5_0,
+						lv_planner_6_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLPlanner");
 					afterParserOrEnumRuleCall();
 				}
@@ -2306,9 +2325,9 @@ ruleDSLController returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLControllerAccess().getExecutorDSLExecutorParserRuleCall_6_0());
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getExecutorDSLExecutorParserRuleCall_7_0());
 				}
-				lv_executor_6_0=ruleDSLExecutor
+				lv_executor_7_0=ruleDSLExecutor
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
@@ -2316,7 +2335,7 @@ ruleDSLController returns [EObject current=null]
 					add(
 						$current,
 						"executor",
-						lv_executor_6_0,
+						lv_executor_7_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLExecutor");
 					afterParserOrEnumRuleCall();
 				}
@@ -2325,9 +2344,9 @@ ruleDSLController returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLControllerAccess().getKnowledgeDSLKnowledgeParserRuleCall_7_0());
+					newCompositeNode(grammarAccess.getDSLControllerAccess().getKnowledgeDSLKnowledgeParserRuleCall_8_0());
 				}
-				lv_knowledge_7_0=ruleDSLKnowledge
+				lv_knowledge_8_0=ruleDSLKnowledge
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLControllerRule());
@@ -2335,16 +2354,64 @@ ruleDSLController returns [EObject current=null]
 					add(
 						$current,
 						"knowledge",
-						lv_knowledge_7_0,
+						lv_knowledge_8_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLKnowledge");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_8='}'
+		otherlv_9='}'
 		{
-			newLeafNode(otherlv_8, grammarAccess.getDSLControllerAccess().getRightCurlyBracketKeyword_8());
+			newLeafNode(otherlv_9, grammarAccess.getDSLControllerAccess().getRightCurlyBracketKeyword_9());
 		}
+	)
+;
+
+// Entry rule entryRuleDSLDomainRule
+entryRuleDSLDomainRule returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDSLDomainRuleRule()); }
+	iv_ruleDSLDomainRule=ruleDSLDomainRule
+	{ $current=$iv_ruleDSLDomainRule.current; }
+	EOF;
+
+// Rule DSLDomainRule
+ruleDSLDomainRule returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_value_0_1=RULE_ID
+				{
+					newLeafNode(lv_value_0_1, grammarAccess.getDSLDomainRuleAccess().getValueIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDSLDomainRuleRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"value",
+						lv_value_0_1,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+				    |
+				lv_value_0_2='withDomainRules'
+				{
+					newLeafNode(lv_value_0_2, grammarAccess.getDSLDomainRuleAccess().getValueWithDomainRulesKeyword_0_1());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDSLDomainRuleRule());
+					}
+					setWithLastConsumed($current, "value", lv_value_0_2, null);
+				}
+			)
+		)
 	)
 ;
 

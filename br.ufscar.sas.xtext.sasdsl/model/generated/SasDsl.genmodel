@@ -76,11 +76,15 @@
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLController">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLController/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/domain"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/monitor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/analyzer"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/planner"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/executor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLController/knowledge"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DSLDomainRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLDomainRule/value"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLMonitor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLMonitor/name"/>
