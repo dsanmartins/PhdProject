@@ -51,10 +51,13 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.TreeViewerEditor;
@@ -221,17 +224,14 @@ public class MainView extends ViewPart implements IPartListener2 {
 		label1.setText("Project Name: " + projectName);
 		label1.setBounds(15, 3, 300, 20);
 
-		TreeViewer treeViewer = new TreeViewer(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		TreeViewer treeViewer = new TreeViewer(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
 		treeViewer.setContentProvider(new TreeProvider());
 		treeViewer.getTree().setHeaderVisible(true);
 		treeViewer.getTree().setLinesVisible(true);
 		treeViewer.getTree().setBounds(0, 0, 500, 450);
 
-
-		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(
-				treeViewer, new FocusCellOwnerDrawHighlighter(treeViewer));
-		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
-				treeViewer) {
+		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(treeViewer, new FocusCellOwnerDrawHighlighter(treeViewer));
+		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(	treeViewer) {
 			@Override
 			protected boolean isEditorActivationEvent(
 					ColumnViewerEditorActivationEvent event) {
@@ -250,11 +250,66 @@ public class MainView extends ViewPart implements IPartListener2 {
 		TreeViewerEditor.create(treeViewer, focusCellManager, actSupport, feature);
 		final TextCellEditor textCellEditor = new TextCellEditor(treeViewer.getTree());
 
+
 		TreeViewerColumn viewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
 		viewerColumn.getColumn().setWidth(300);
 		viewerColumn.getColumn().setText("Abstractions");
 		viewerColumn.setLabelProvider(createColumnLabelProvider());
-		viewerColumn.setEditingSupport(createEditingSupportFor(treeViewer, textCellEditor));
+		viewerColumn.setEditingSupport(new EditingSupport(treeViewer) {
+
+			protected boolean canEdit(Object element) {
+
+				return true;
+			}
+
+			protected CellEditor getCellEditor(Object element) {
+				return textCellEditor;
+			}
+
+			protected Object getValue(Object element) {
+
+				TreeModel model = (TreeModel) element;
+				if (!model.getParent().equals("root"))
+				{
+					System.out.println(model.getNodeName());
+					return model.getNodeName();
+				}
+				else 
+					return null;
+			}
+
+			protected void setValue(Object element, Object value) {
+				
+				TreeModel model = (TreeModel) element;
+
+				if (!model.getParent().equals("root"))
+				{
+					((TreeModel) element).setNodeName((String) value);
+					treeViewer.update(element, null);
+				}
+			}
+				
+		});
+
+		treeViewer.addDoubleClickListener( new IDoubleClickListener()
+		{
+			@Override
+			public void doubleClick( DoubleClickEvent event )
+			{
+				ISelection selection = event.getSelection();
+
+				if( selection instanceof ITreeSelection )
+				{
+					System.out.println(selection);
+					TreePath[] paths= ((ITreeSelection)selection).getPathsFor(selection);
+
+					for (int i= 0; i < paths.length; i++)       
+						treeViewer.setExpandedState(paths[i], !treeViewer.getExpandedState(paths[i]));
+				}
+			}
+
+		});
+
 
 		try {
 			treeViewer.setInput(getParentAbstactions());
@@ -266,7 +321,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 		Tree tree = treeViewer.getTree();
 		final Menu menu = new Menu(tree);
 		tree.setMenu(menu);
-
 		menu.addListener(SWT.Show, new Listener() {
 			public void handleEvent(Event event) {
 				MenuItem[] menuItems = menu.getItems();
@@ -358,9 +412,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 					});
 
-
-
-
 				}
 			}
 		});
@@ -448,35 +499,9 @@ public class MainView extends ViewPart implements IPartListener2 {
 			@Override
 			public String getText(Object element) {
 
-				return ((TreeModel) element).getParent();
+				return ((TreeModel) element).getNodeName();
 			}
 
-		};
-	}
-
-
-	private EditingSupport createEditingSupportFor(final TreeViewer viewer, final TextCellEditor textCellEditor) {
-		return new EditingSupport(viewer) {
-			@Override
-			protected boolean canEdit(Object element) {
-				return false;
-			}
-
-			@Override
-			protected CellEditor getCellEditor(Object element) {
-				return textCellEditor;
-			}
-
-			@Override
-			protected Object getValue(Object element) {
-				return ((TreeModel) element).getParent() + "";
-			}
-
-			@Override
-			protected void setValue(Object element, Object value) {
-				((TreeModel) element).setParent( (String) value);
-				viewer.update(element, null);
-			}
 		};
 	}
 
@@ -1393,29 +1418,18 @@ public class MainView extends ViewPart implements IPartListener2 {
 		return databaseUrl;
 	}
 
-	private String searchForChild(String parent) throws Exception
-	{
-		QueryClass queryClass = new QueryClass(databaseUrl);
-		List<String> instances = queryClass.selectInstance(1);
-		for (String instance: instances)
-			if (instance.split(Pattern.quote("|"))[0].equals(parent))
-				return instance.split(Pattern.quote("|"))[1];
-
-		return null;
-	}
-
 	private TreeModel getParentAbstactions() throws Exception{
 
 		QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
 		List<String> abstractions = queryClass.getAbstractions();
 		List<String> instances = queryClass.selectInstance(1);
 
-		TreeModel treeModel = new TreeModel("root");
+		TreeModel treeModel = new TreeModel("root", null);
 		TreeModel treeModelRoot = treeModel;
 
 		for (String abs:abstractions) {
 
-			treeModel.addAbstraction(abs);
+			treeModel.addAbstraction(abs, "root");
 			treeModel = treeModel.getChild(abs);
 			List<TreeModel> temp = treeModel.getChildren();
 			Predicate<String> strAbs = str -> str.split(Pattern.quote("|"))[0].equals(abs);
@@ -1425,7 +1439,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 				filteredInstance.set(i, filteredInstance.get(i).split(Pattern.quote("|"))[1]);	
 
 			for (int i=0; i< filteredInstance.size(); i++)
-				temp.add(new TreeModel(filteredInstance.get(i)));
+				temp.add(new TreeModel(filteredInstance.get(i),filteredInstance.get(i).split(Pattern.quote("_"))[0]));
 
 			treeModel.setChildren(temp);
 			treeModel = treeModelRoot;

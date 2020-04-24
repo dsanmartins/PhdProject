@@ -7,11 +7,13 @@ import java.lang.NumberFormatException;
 public class TreeModel {
 
 	
-	private String parentName; 
+	private String parentName;
+	private String nodeName; 
 	private List<TreeModel> children;
 	
-	public TreeModel(String parentName) {
+	public TreeModel(String nodeName, String parentName) {
 		
+		this.nodeName = nodeName;
 		this.parentName = parentName;
 		children = new ArrayList<TreeModel>();
 	}
@@ -21,7 +23,7 @@ public class TreeModel {
 		for (int i =0; i<  children.size(); i++) {
 			
 			TreeModel child = children.get(i);
-			if (child.getParent().equals(abs) ) {
+			if (child.getNodeName().equals(abs) ) {
 				return child;
 			}
 		}
@@ -30,23 +32,28 @@ public class TreeModel {
 	
 	public void addChildren()
 	{
-		String child = parentName + "_" + checkNumber(); 
-		children.add(new TreeModel(child));
-	}
-	
-	public void setParent(String parent) {
-		
-		this.parentName = parent;
-	}
-	
-	public void addAbstraction(String abstraction)
-	{
-		children.add(new TreeModel(abstraction));
+		String child = nodeName + "_" + checkNumber(); 
+		children.add(new TreeModel(child, "root"));
 	}
 	
 	public String getParent() {
 		
 		return parentName;
+	}
+	
+	public void setNodeName(String nodeName) {
+		
+		this.nodeName = nodeName;
+	}
+	
+	public void addAbstraction(String abstraction, String root)
+	{
+		children.add(new TreeModel(abstraction,root));
+	}
+	
+	public String getNodeName() {
+		
+		return nodeName;
 	}
 	
 	public List<TreeModel> getChildren(){
@@ -63,7 +70,7 @@ public class TreeModel {
 		
 		for (TreeModel child: children)
 		{
-			if (child.getParent().equals(childName))
+			if (child.getNodeName().equals(childName))
 				return children.remove(child);
 		
 		}
@@ -80,7 +87,7 @@ public class TreeModel {
 		{
 			for (TreeModel child:children) {
 				
-				String lastCharacter = child.getParent().substring(child.getParent().length(), 1);
+				String lastCharacter = child.getNodeName().substring(child.getNodeName().length(), 1);
 				try {
 					
 					lastNumber = Integer.valueOf(lastCharacter);
