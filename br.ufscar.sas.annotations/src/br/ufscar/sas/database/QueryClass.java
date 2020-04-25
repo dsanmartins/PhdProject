@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-
-
 public class QueryClass {
 
 	String projectName;
@@ -34,8 +31,9 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS method_annotation (project_name text, class_name text, method_name text,file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS variable_annotation (project_name text, class_name text, method_name text, variable_name, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");
-		mydb.executeStmt("create table IF NOT EXISTS instances (id INTEGER PRIMARY KEY AUTOINCREMENT, abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
+		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS relation (from_ text, to_ text, modisco_path text, type_relation text) ");
+		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch integer)");
 		mydb.executeStmt("CREATE VIEW IF NOT EXISTS annotations(annotation,belongs)  AS " +
 				"    select T.A, T.B from (\n" + 
 				"        select annotation A ,belongs B from package_annotation \n" + 
@@ -59,6 +57,8 @@ public class QueryClass {
 				"UNION ALL\n" + 
 				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name || '.' ||variable_name) name, annotation from variable_annotation where annotation <> 'None';");
 		mydb.executeStmt("delete from abstractions"); 
+		mydb.executeStmt("delete from domain_rules"); 
+		mydb.executeStmt("REINDEX 'domain_rules';");
 		mydb.executeStmt("delete from relation"); 
 		mydb.closeConnection();
 	}
@@ -83,6 +83,31 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
+	public void populateDomainRules() throws SQLException, Exception
+	{
+		SqliteDb mydb = new SqliteDb(dbDriver,url);                  
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.closeConnection();
+	}
+
 	private List<String> resultSetToArrayList1(ResultSet rs) throws SQLException {
 
 		List<String> list = new ArrayList<String>();
@@ -103,6 +128,30 @@ public class QueryClass {
 		lst = this.resultSetToArrayList1(rs);
 		mydb.closeConnection();
 		return lst;
+	}
+
+	public boolean checkAbstractionExist(String abs) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select annotation from instances where annotation='" + abs + "';");	
+		if (rs.next() == false) {
+
+			return false;
+		}
+
+		else {
+
+			mydb.closeConnection();
+			return true;
+		}
+	}
+
+	public void UpdateInstance(String newValue, String oldValue) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update instances set  annotation= '" + newValue + 
+				"' where annotation = '" + oldValue + "';");		
+		mydb.closeConnection();
 	}
 
 	public List<String> selectAnnotationPackage(String projectName, String name, String file) throws Exception {
@@ -209,6 +258,7 @@ public class QueryClass {
 				"' where project_name = '" + projectName + "' and class_name = '" + className + "' and field_name = '" + name + "' and file = '" + file + "';");		
 		mydb.closeConnection();
 	}
+
 	public List<String> selectAnnotationMethod(String projectName, String className, String methodName, String file) throws Exception {
 
 		List<String> lst = new ArrayList<String>();
@@ -519,7 +569,7 @@ public class QueryClass {
 			values.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() + "|" + rs.getObject(3).toString()+ "|" + rs.getObject(4).toString()+ "|" + rs.getObject(5).toString()+ "|" + 
 					rs.getObject(8).toString()+ "|" + rs.getObject(9).toString()+ "|" + rs.getObject(10).toString());
 
-		
+
 		for (String line: values) {
 			if (!line.split(Pattern.quote("|"))[5].equals("None")) {
 				mydb.executeStmt("update variable_annotation set belongs= '" + line.split(Pattern.quote("|"))[5] + 
@@ -640,5 +690,15 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
+	public List<String> getDomainRules() throws Exception{
 
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select rowid, abstraction1, access_type, abstraction2, switch from domain_rules;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
 }

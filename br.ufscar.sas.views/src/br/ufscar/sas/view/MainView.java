@@ -120,10 +120,13 @@ import br.ufscar.sas.report.Report;
 import br.ufscar.sas.tableviewer.Anomaly;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
+import br.ufscar.sas.tableviewer.EditingRulesInstance;
 import br.ufscar.sas.tableviewer.MappedAnomaly;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
+import br.ufscar.sas.tableviewer.TableLabelRuleProvider;
+import br.ufscar.sas.tableviewer.TableMetaData;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
 import br.ufscar.sas.transformation.ComputeModelDiff;
 import br.ufscar.sas.transformation.Kdm2Uml;
@@ -146,14 +149,14 @@ public class MainView extends ViewPart implements IPartListener2 {
 	TableViewer viewer;
 	//TreeViewer
 	TreeViewer treeViewer;
+	//
+	TableViewer viewerRules;
 	// Data
 	ArrayList<Data> arrData = new ArrayList<Data>();
 	//Database Path
 	static String databaseUrl = "";
 	//Resultset
 	List<String> rs = null;
-
-
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -171,6 +174,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 				QueryClass queryClass = new QueryClass(databaseUrl);
 				queryClass.createTables(); 
 				queryClass.populateAbstractions(); 
+				queryClass.populateDomainRules();
 
 				DataConstraint dataConstraint = new DataConstraint(databaseUrl);
 				dataConstraint.createTables();
@@ -197,9 +201,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 		this.UIAnnotation(tabFolder, projectName);
 		//Tab3
 		this.UIControPanel(tabFolder, projectName);
-		// this.UIArchitecturalRefactoring(tabFolder, projectName);
 		// Tab4
+		// this.UIArchitecturalRefactoring(tabFolder, projectName);
+		// Tab5
 		// this.UICodeGenerator(tabFolder, projectName);
+		// Tab6
+		this.UIDomainRules(tabFolder, projectName);
 
 		tabFolder.setSelection(1);
 	}
@@ -229,6 +236,106 @@ public class MainView extends ViewPart implements IPartListener2 {
 		treeViewer.getTree().setHeaderVisible(true);
 		treeViewer.getTree().setLinesVisible(true);
 		treeViewer.getTree().setBounds(0, 0, 500, 450);
+
+		Tree tree = treeViewer.getTree();
+		final Menu menu = new Menu(tree);
+		tree.setMenu(menu);
+		menu.addListener(SWT.Show, new Listener() {
+			public void handleEvent(Event event) {
+				MenuItem[] menuItems = menu.getItems();
+				for (int i = 0; i < menuItems.length; i++) {
+					menuItems[i].dispose();
+				}
+				TreeItem[] treeItems = tree.getSelection();
+				for (int i = 0; i < treeItems.length; i++) {
+
+					MenuItem menuItem1 = new MenuItem(menu, SWT.PUSH);
+					menuItem1.setText("Add Instance");
+					menuItem1.addSelectionListener(new SelectionAdapter() {
+
+						public void widgetSelected(SelectionEvent e) {
+
+							TreeItem treeItem = null;
+
+							if (tree.getSelection()[0].getItemCount() == 0)	{
+
+
+								if (tree.getSelection()[0].getParentItem() == null) {
+									treeItem = new TreeItem(tree.getSelection()[0],0);
+									treeItem.setText(tree.getSelection()[0].getText() + "_" + 1);
+								}
+
+							}
+							else{
+
+								TreeItem[] items = tree.getSelection()[0].getItems();
+								int max = 0;
+								for (int i=0; i< items.length; i++)
+								{ 
+									String abs = items[i].getText();
+									if (Character.isDigit(abs.charAt(abs.length()-1)))
+									{
+										int val = Integer.valueOf(abs.substring(abs.length()-1));
+										if (val> max)
+											max = val;
+									}
+								}
+
+								int number = max;
+								number = number + 1;
+								treeItem = new TreeItem(tree.getSelection()[0],0);
+								treeItem.setText(tree.getSelection()[0].getText() + "_" + number);
+
+							}
+
+							try {
+
+								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
+								queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText());
+
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							tree.getSelection()[0].setExpanded(true);
+						}	
+					});
+
+					MenuItem menuItem2 = new MenuItem(menu, SWT.PUSH);
+					menuItem2.setText("Remove Instance");
+					menuItem2.addSelectionListener(new SelectionAdapter() {
+						public void widgetSelected(SelectionEvent e) {
+
+							TreeItem[] items = tree.getSelection()[0].getItems();
+							String text = items[items.length-1].getText();
+
+
+							try {
+								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
+								boolean rtn = queryClass.isUsingData(items[items.length-1].getText());
+								if (rtn == false)
+								{
+									items[items.length-1].dispose();
+									queryClass.deleteInstance(text);
+								}
+								else
+									MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "It can not be delete because it is already in use!");
+
+
+
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+						}
+					});
+
+				}
+			}
+		});
+
 
 		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(treeViewer, new FocusCellOwnerDrawHighlighter(treeViewer));
 		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(	treeViewer) {
@@ -270,41 +377,43 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 				TreeModel model = (TreeModel) element;
 				if (!model.getParent().equals("root"))
-				{
-					System.out.println(model.getNodeName());
 					return model.getNodeName();
-				}
+
 				else 
 					return null;
 			}
 
 			protected void setValue(Object element, Object value) {
-				
+
+				QueryClass queryClass = null;
+				boolean check = false;
 				TreeModel model = (TreeModel) element;
+				try
+				{
+					queryClass = new QueryClass(MainView.getDatabaseUrl());
+					check = queryClass.checkAbstractionExist((String) value);
+
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 
 				if (!model.getParent().equals("root"))
 				{
-					((TreeModel) element).setNodeName((String) value);
-					treeViewer.update(element, null);
-				}
-			}
-				
-		});
+					if (!check)
+					{
+						try
+						{
+							queryClass = new QueryClass(MainView.getDatabaseUrl());
+							queryClass.UpdateInstance((String) value, model.getNodeName());
 
-		treeViewer.addDoubleClickListener( new IDoubleClickListener()
-		{
-			@Override
-			public void doubleClick( DoubleClickEvent event )
-			{
-				ISelection selection = event.getSelection();
-
-				if( selection instanceof ITreeSelection )
-				{
-					System.out.println(selection);
-					TreePath[] paths= ((ITreeSelection)selection).getPathsFor(selection);
-
-					for (int i= 0; i < paths.length; i++)       
-						treeViewer.setExpandedState(paths[i], !treeViewer.getExpandedState(paths[i]));
+						}catch(Exception ex) {
+							ex.printStackTrace();
+						}
+						model.setNodeName((String) value);
+						treeViewer.update(element, null);
+					}
+					else
+						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The abstraction name already exist!");
 				}
 			}
 
@@ -317,104 +426,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
-		Tree tree = treeViewer.getTree();
-		final Menu menu = new Menu(tree);
-		tree.setMenu(menu);
-		menu.addListener(SWT.Show, new Listener() {
-			public void handleEvent(Event event) {
-				MenuItem[] menuItems = menu.getItems();
-				for (int i = 0; i < menuItems.length; i++) {
-					menuItems[i].dispose();
-				}
-				TreeItem[] treeItems = tree.getSelection();
-				for (int i = 0; i < treeItems.length; i++) {
-
-					MenuItem menuItem1 = new MenuItem(menu, SWT.PUSH);
-					menuItem1.setText("Add Instance");
-					menuItem1.addSelectionListener(new SelectionAdapter() {
-						public void widgetSelected(SelectionEvent e) {
-							if (tree.getSelection()[0].getItemCount() == 0)
-							{
-								if (tree.getSelection()[0].getParentItem() == null)
-								{
-									TreeItem treeItem = new TreeItem(tree.getSelection()[0],0);
-									treeItem.setText(tree.getSelection()[0].getText() + "_" + 1);
-									try {
-
-										QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-										queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText());
-									} catch (Exception e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-
-								}
-							}
-							else
-							{
-								TreeItem[] items = tree.getSelection()[0].getItems();
-								int number = Integer.valueOf((items[items.length-1]).getText().split(Pattern.quote("_"))[1]);
-								number = number + 1;
-								TreeItem treeItem = new TreeItem(tree.getSelection()[0],0);
-								treeItem.setText(tree.getSelection()[0].getText() + "_" + number);
-
-								try {
-
-									QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-									queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText());
-								} catch (Exception e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-
-							}
-							tree.getSelection()[0].setExpanded(true);
-						}
-					});
-
-					MenuItem menuItem2 = new MenuItem(menu, SWT.PUSH);
-					menuItem2.setText("Remove Instance");
-					menuItem2.addSelectionListener(new SelectionAdapter() {
-						public void widgetSelected(SelectionEvent e) {
-
-							TreeItem[] items = tree.getSelection()[0].getItems();
-							String text = items[items.length-1].getText();
-
-
-							try {
-								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-								boolean rtn = queryClass.isUsingData(items[items.length-1].getText());
-								if (rtn == false)
-								{
-									items[items.length-1].dispose();
-									queryClass.deleteInstance(text);
-								}
-								else
-									MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "It can not be delete because it is already in use!");
-
-
-
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-
-						}
-					});
-
-
-					MenuItem menuItem3 = new MenuItem(menu, SWT.PUSH);
-					menuItem3.setText("Edit Name");
-					menuItem3.addSelectionListener(new SelectionAdapter() {
-
-
-
-					});
-
-				}
-			}
-		});
 
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
@@ -491,18 +502,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 			gc.dispose();
 			item.setHeight(max);
 		}
-	}
-
-	private ColumnLabelProvider createColumnLabelProvider() {
-		return new ColumnLabelProvider() {
-
-			@Override
-			public String getText(Object element) {
-
-				return ((TreeModel) element).getNodeName();
-			}
-
-		};
 	}
 
 	private void UIAnnotation(TabFolder tabFolder, String projectName) {
@@ -1094,6 +1093,112 @@ public class MainView extends ViewPart implements IPartListener2 {
 		});
 
 		tab1.setControl(group);
+	}
+
+	private void UIDomainRules(TabFolder tabFolder, String projectName) {
+
+		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
+		tab1.setText("Domain Rules");
+		Group group = new Group(tabFolder, SWT.NONE);
+
+		Group controlGroup = new Group(group, SWT.NONE);
+		controlGroup.setText("Control");
+		controlGroup.setBounds(10, 0, 500, 50);
+
+		Label label1 = new Label(controlGroup, SWT.NONE);
+		label1.setText("Project Name: " + projectName);
+		label1.setBounds(15, 3, 300, 20);
+
+		Group tableViewGroup = new Group(group, SWT.NONE);
+		tableViewGroup.setText("Predefined Rules of Adaptive Systems Domain");
+		tableViewGroup.setBounds(10, 55, 550, 450);
+		tableViewGroup.setLayout(new FillLayout());
+		tab1.setControl(group);
+
+		viewerRules = new TableViewer(tableViewGroup, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		final Table table = viewerRules.getTable();
+		table.setBounds(0, 0, 550, 450);
+
+		TableViewerColumn column0 = new TableViewerColumn(viewerRules, SWT.CENTER);
+		column0.getColumn().setText("Id");
+		column0.getColumn().setWidth(30);
+		column0.getColumn().setResizable(false);
+
+		TableViewerColumn column1 = new TableViewerColumn(viewerRules, SWT.CENTER);
+		column1.getColumn().setText("Abstraction (From)");
+		column1.getColumn().setWidth(155);
+		column1.getColumn().setResizable(false);
+
+		TableViewerColumn column2 = new TableViewerColumn(viewerRules, SWT.CENTER);
+		column2.getColumn().setText("Type of Access");
+		column2.getColumn().setWidth(130);
+		column2.getColumn().setResizable(false);
+
+		TableViewerColumn column3= new TableViewerColumn(viewerRules, SWT.CENTER);
+		column3.getColumn().setText("Abstraction (To) ");
+		column3.getColumn().setWidth(155);
+		column3.getColumn().setResizable(false);
+
+		TableViewerColumn column4 = new TableViewerColumn(viewerRules, SWT.CENTER);
+		column4.getColumn().setText("On/Off ");
+		column4.getColumn().setWidth(15);
+		column4.getColumn().setResizable(false);
+
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+
+		EditingRulesInstance editingRule = new EditingRulesInstance(column4.getViewer());
+		column4.setEditingSupport(editingRule);
+
+		viewerRules.setContentProvider(new ArrayContentProvider());
+		viewerRules.setLabelProvider(new TableLabelRuleProvider());
+
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
+				if (tabFolder.getSelection()[0].getText().equals("Domain Rules"))
+				{
+					EditingRulesInstance editingRule = new EditingRulesInstance(column4.getViewer());
+					column4.setEditingSupport(editingRule);
+				}
+			}
+		});
+
+		QueryClass queryClass=null;
+		List<String> rules = null;
+
+		try {
+			queryClass = new QueryClass(MainView.getDatabaseUrl());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			rules = queryClass.getDomainRules();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		List<TableMetaData> ruleContainer = new ArrayList<TableMetaData>();
+		
+		for (String rule :rules )
+			ruleContainer.add(new TableMetaData(Integer.valueOf(rule.split(Pattern.quote("|"))[0]), rule.split(Pattern.quote("|"))[1], rule.split(Pattern.quote("|"))[3],
+					rule.split(Pattern.quote("|"))[2],Boolean.valueOf(rule.split(Pattern.quote("|"))[4])));
+
+		viewerRules.setInput(ruleContainer);
+
+	}
+
+	private ColumnLabelProvider createColumnLabelProvider() {
+		return new ColumnLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				return ((TreeModel) element).getNodeName();
+			}
+
+		};
 	}
 
 	public void moveFile(String in, String out) {
