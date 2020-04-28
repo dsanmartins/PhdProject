@@ -3,34 +3,38 @@
  */
 package br.ufscar.sas.xtext.sasdsl.validation
 
+import br.ufscar.sas.database.QueryClass
+import br.ufscar.sas.view.MainView
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLDomainRule
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.HashMultimap
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.validation.Check
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput
 
 /**
  * This class contains custom validation rules. 
@@ -99,12 +103,14 @@ class SasDslValidator extends AbstractSasDslValidator {
 				error("Executors cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUCPLICATE_EXECUTOR_ACCESS)
 	}
 	
-	@Check def void checkNoDuplicateControllers(ArchitectureDefinition r){
+	@Check 
+	def void checkNoDuplicateControllers(ArchitectureDefinition r){
 		
 		checkNoDuplicateRules(r.rules)
 	}
 	
-	@Check def void checkNoDuplicateAbstractions(ArchitectureDefinition r){
+	@Check 
+	def void checkNoDuplicateAbstractions(ArchitectureDefinition r){
 		
 		checkNoDuplicateManaging(r.managing)
 		checkNoDuplicateManaged(r.managed)
@@ -260,6 +266,8 @@ class SasDslValidator extends AbstractSasDslValidator {
 		val multiMapRuleMonitor2Analyzer = HashMultimap.create()
 		val multiMapRuleMonitor2Sensor = HashMultimap.create()
 		val multiMapRuleMonitor2Knowledge = HashMultimap.create() 
+		val multiMapRuleMonitor2Planner = HashMultimap.create()
+		val multiMapRuleMonitor2Executor = HashMultimap.create()
 		 
 		val multiMapRuleAnalyzer2Analyzer = HashMultimap.create()
 		val multiMapRuleAnalyzer2Monitor = HashMultimap.create()
@@ -273,11 +281,16 @@ class SasDslValidator extends AbstractSasDslValidator {
 		val multiMapRulePlanner2Analyzer = HashMultimap.create()
 		val multiMapRulePlanner2Executor= HashMultimap.create()
 		val multiMapRulePlanner2Knowledge= HashMultimap.create()
+		val multiMapRulePlanner2Monitor= HashMultimap.create()
+		val multiMapRulePlanner2Alternative= HashMultimap.create()
 		
 		val multiMapRuleExecutor2Executor = HashMultimap.create()
 		val multiMapRuleExecutor2Planner = HashMultimap.create()
 		val multiMapRuleExecutor2Effector = HashMultimap.create()
 		val multiMapRuleExecutor2Knowledge = HashMultimap.create()
+		val multiMapRuleExecutor2Monitor = HashMultimap.create()
+		val multiMapRuleExecutor2Analyzer = HashMultimap.create()
+		
 		
 		val multiMapRuleSensor = HashMultimap.create()
 		
@@ -299,7 +312,11 @@ class SasDslValidator extends AbstractSasDslValidator {
 				if (r.sensor !== null)
 					multiMapRuleMonitor2Sensor.put(r.monitor.name+r.sensor.name,r)
 				if (r.knowledge !== null)	
-					multiMapRuleMonitor2Knowledge.put(r.monitor.name+r.knowledge.name,r)	
+					multiMapRuleMonitor2Knowledge.put(r.monitor.name+r.knowledge.name,r)	 
+				if (r.planner !== null)	
+					multiMapRuleMonitor2Planner.put(r.monitor.name+r.planner.name,r)	
+				if (r.executor !== null)	
+					multiMapRuleMonitor2Executor.put(r.monitor.name+r.executor.name,r)	
 			}
 			if (r instanceof DSLRuleAnalyzer)
 			{
@@ -329,6 +346,10 @@ class SasDslValidator extends AbstractSasDslValidator {
 					multiMapRulePlanner2Executor.put(r.planner.name+r.executor.name,r)	
 				if (r.knowledge !== null)
 					multiMapRulePlanner2Knowledge.put(r.planner.name+r.knowledge.name,r)	
+				if (r.monitor !== null)
+					multiMapRulePlanner2Monitor.put(r.planner.name+r.monitor.name,r)	
+				if (r.shalt !== null)
+					multiMapRulePlanner2Alternative.put(r.planner.name+r.shalt.name,r)	
 			}
 			if (r instanceof DSLRuleExecutor)
 			{
@@ -340,6 +361,10 @@ class SasDslValidator extends AbstractSasDslValidator {
 					multiMapRuleExecutor2Knowledge.put(r.executor.name+r.knowledge.name,r)	
 				if (r.executor2 !== null)
 					multiMapRuleExecutor2Planner.put(r.executor.name+r.executor2.name,r)	
+				if (r.monitor !== null)
+					multiMapRuleExecutor2Monitor.put(r.executor.name+r.monitor.name,r)	
+				if (r.analyzer !== null)
+					multiMapRuleExecutor2Analyzer.put(r.executor.name+r.analyzer.name,r)	
 			}
 			if (r instanceof DSLRuleMO)
 				multiMapRuleSensor.put(r.sensor.name+r.measured.name,r)
@@ -372,6 +397,26 @@ class SasDslValidator extends AbstractSasDslValidator {
 				
 				for (d:duplicates)
 					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2, DUCPLICATE_RULES)
+			}
+		}
+		
+		for (entry:multiMapRuleMonitor2Planner.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Planner, DUCPLICATE_RULES)
+			}
+		}
+		
+		for (entry:multiMapRuleMonitor2Executor.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Executor, DUCPLICATE_RULES)
 			}
 		}
 		
@@ -487,6 +532,16 @@ class SasDslValidator extends AbstractSasDslValidator {
 			}
 		}
 		
+		for (entry:multiMapRulePlanner2Monitor.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Monitor, DUCPLICATE_RULES)
+			}
+		}
+		
 		for (entry:multiMapRulePlanner2Analyzer.asMap.entrySet)
 		{
 			val duplicates = entry.value
@@ -507,6 +562,16 @@ class SasDslValidator extends AbstractSasDslValidator {
 			}
 		}
 		
+		for (entry:multiMapRulePlanner2Alternative.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Shalt, DUCPLICATE_RULES)
+			}
+		}
+		
 		for (entry:multiMapRulePlanner2Executor.asMap.entrySet)
 		{
 			val duplicates = entry.value
@@ -524,6 +589,26 @@ class SasDslValidator extends AbstractSasDslValidator {
 				
 				for (d:duplicates)
 					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUCPLICATE_RULES)
+			}
+		}
+		
+		for (entry:multiMapRuleExecutor2Monitor.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Monitor, DUCPLICATE_RULES)
+			}
+		}
+		
+		for (entry:multiMapRuleExecutor2Analyzer.asMap.entrySet)
+		{
+			val duplicates = entry.value
+			if (duplicates.size > 1){
+				
+				for (d:duplicates)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer, DUCPLICATE_RULES)
 			}
 		}
 		
@@ -566,4 +651,292 @@ class SasDslValidator extends AbstractSasDslValidator {
 			}
 		}
 	}
+
+	@Check
+	def checkNotAccessMonitor2Planner(DSLRuleMonitor dslRuleMonitor){
+		
+		var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Monitor","Planner");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleMonitor.planner !== null && dslRuleMonitor.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleMonitor_Planner)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessMonitor2Executor(DSLRuleMonitor dslRuleMonitor){
+		
+		var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Monitor","Executor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleMonitor.executor !== null && dslRuleMonitor.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleMonitor_Executor)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessAnalyzer2Monitor(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Analyzer","Monitor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleAnalyzer.monitor !== null && dslRuleAnalyzer.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Monitor)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessPlanner2Monitor(DSLRulePlanner dslRulePlanner){
+		
+		var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Planner","Monitor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRulePlanner.monitor !== null && dslRulePlanner.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRulePlanner_Monitor)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessPlanner2Analyzer(DSLRulePlanner dslRulePlanner){
+		
+		var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Planner","Analyzer");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRulePlanner.analyzer !== null && dslRulePlanner.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRulePlanner_Analyzer)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessExecutor2Monitor(DSLRuleExecutor dslRuleExecutor){
+		
+		var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Executor","Monitor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleExecutor.monitor !== null && dslRuleExecutor.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleExecutor_Monitor)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessExecutor2Analyzer(DSLRuleExecutor dslRuleExecutor){
+		
+		var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Executor","Analyzer");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleExecutor.analyzer !== null && dslRuleExecutor.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessExecutor2Planner(DSLRuleExecutor dslRuleExecutor){
+		
+		var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Executor","Planner");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleExecutor.planner !== null && dslRuleExecutor.access.equals("must-use") )
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleExecutor_Planner)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessKnowledge2Monitor(DSLRuleKnowledge dslRuleKnowledge){
+		
+		var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Knowledge","Monitor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleKnowledge.monitor !== null && dslRuleKnowledge.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleKnowledge_Monitor)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessKnowledge2Analyzer(DSLRuleKnowledge dslRuleKnowledge){
+		
+		var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Knowledge","Analyzer");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleKnowledge.analyzer !== null && dslRuleKnowledge.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleKnowledge_Analyzer)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessKnowledge2Planner(DSLRuleKnowledge dslRuleKnowledge){
+		
+		var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Knowledge","Planner");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleKnowledge.planner !== null  && dslRuleKnowledge.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleKnowledge_Planner)
+		}	
+
+	}
+	
+	@Check
+	def checkNotAccessKnowledge2Executor(DSLRuleKnowledge dslRuleKnowledge){
+		
+		var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Knowledge","Executor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleKnowledge.executor !== null && dslRuleKnowledge.access.equals("must-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleKnowledge_Executor)
+		}	
+
+	}
+
+	@Check
+	def checkAccessMonitor2Planner(DSLRuleMonitor dslRuleMonitor){
+		
+		var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Monitor","Analyzer");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleMonitor.analyzer !== null && dslRuleMonitor.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleMonitor_Analyzer)
+			
+		}	
+		
+	}
+	
+	@Check
+	def checkAccessAnalyzer2Planner(DSLRuleMonitor dslRuleAnalyzer){
+		
+		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Analyzer","Planner");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleAnalyzer.planner !== null && dslRuleAnalyzer.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Planner)
+			
+		}	
+		
+	}
+	
+	@Check
+	def checkAccessPlanner2Executor(DSLRulePlanner dslRulePlanner){
+		
+		var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Planner","Executor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRulePlanner.executor !== null && dslRulePlanner.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRulePlanner_Executor)
+			
+		}	
+	}
+	
+	@Check
+	def checkAccessMonitor2Knowledge(DSLRuleMonitor dslRuleMonitor){
+		
+		var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Monitor","Knowledge");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleMonitor.knowledge !== null && dslRuleMonitor.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleMonitor_Knowledge)
+			
+		}	
+	}
+	
+	@Check
+	def checkAccessAnalyzer2Knowledge(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Analyzer","Knowledge");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleAnalyzer.knowledge !== null && dslRuleAnalyzer.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Knowledge)
+			
+		}	
+	}
+	
+	@Check
+	def checkAccessPlanner2Knowledge(DSLRulePlanner dslRulePlanner){
+		
+		var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Planner","Knowledge");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRulePlanner.knowledge !== null && dslRulePlanner.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRulePlanner_Knowledge)
+			
+		}	
+	}
+	
+	@Check
+	def checkAccessExecutor2Knowledge(DSLRuleExecutor dslRuleExecutor){
+		
+		var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Executor","Knowledge");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleExecutor.knowledge !== null && dslRuleExecutor.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleExecutor_Knowledge)
+			
+		}	
+	}
+	
 }

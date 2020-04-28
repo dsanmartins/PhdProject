@@ -12,7 +12,7 @@ ArchitectureDefinition:
 	
 DSLRules:
 	
-	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController
+	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController | DSLRuleKnowledge
 ;
 
 DSLRuleMController:
@@ -27,38 +27,52 @@ DSLRuleController:
 
 DSLRuleMonitor:
 	
-	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor = [DSLSensor] ';') |
-	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2 = [DSLMonitor] ';') |
 	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'analyzer' analyzer = [DSLAnalyzer] ';') | 
-	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'monitor' monitor2 = [DSLMonitor] ';')
+	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
+	( 'monitor' monitor=[DSLMonitor] access=('must-use' | 'must-not-use') 'sensor' sensor = [DSLSensor] ';') 
 ;
 
 DSLRuleAnalyzer:
 	
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'monitor' monitor = [DSLMonitor] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference = [DSLReferenceInput] ';') |
 	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'analyzer' analyzer2 = [DSLAnalyzer] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'alternative' shalt = [DSLAlternative] ';') |
-	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') 
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'reference-input' rreference = [DSLReferenceInput] ';') |
+	('analyzer' analyzer=[DSLAnalyzer] access=('must-use' | 'must-not-use') 'alternative' shalt = [DSLAlternative] ';') 
+	
 ;
 
 DSLRulePlanner:
 	
-	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
+	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'monitor' monitor = [DSLMonitor] ';') |
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'analyzer' analyzer = [DSLAnalyzer] ';') |
-	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') |
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'planner' planner2 = [DSLPlanner] ';') |
+	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') |
+	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
 	('planner' planner=[DSLPlanner] access=('must-use' | 'must-not-use') 'alternative' shalt = [DSLAlternative] ';')
 ;
 
 DSLRuleExecutor:
 		
-	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector = [DSLEffector] ';') |
-	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |
+	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'monitor' monitor = [DSLMonitor] ';') |	
+	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'analyzer' analyzer = [DSLAnalyzer] ';') |
+	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |	
+	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2 = [DSLExecutor] ';') |
 	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'knowledge' knowledge = [DSLKnowledge] ';') |
-	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'executor' executor2 = [DSLExecutor] ';') 
+	('executor' executor=[DSLExecutor] access=('must-use' | 'must-not-use') 'effector' effector = [DSLEffector] ';') 
+;
+
+DSLRuleKnowledge:
+	
+	('knowledge' knowledge=[DSLKnowledge] access=('must-use' | 'must-not-use') 'monitor' monitor = [DSLMonitor] ';') |	
+	('knowledge' knowledge=[DSLKnowledge] access=('must-use' | 'must-not-use') 'analyzer' analyzer = [DSLAnalyzer] ';') |
+	('knowledge' knowledge=[DSLKnowledge] access=('must-use' | 'must-not-use') 'planner' planner = [DSLPlanner] ';') |	
+	('knowledge' knowledge=[DSLKnowledge] access=('must-use' | 'must-not-use') 'executor' executor = [DSLExecutor] ';') 
 ;
 
 DSLRuleMO:

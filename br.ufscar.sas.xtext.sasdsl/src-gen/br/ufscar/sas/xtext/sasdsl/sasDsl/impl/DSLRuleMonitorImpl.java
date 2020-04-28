@@ -4,8 +4,10 @@
 package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLExecutor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMonitor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLPlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
@@ -26,10 +28,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getMonitor <em>Monitor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getSensor <em>Sensor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getKnowledge <em>Knowledge</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getMonitor2 <em>Monitor2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getAnalyzer <em>Analyzer</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getPlanner <em>Planner</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getKnowledge <em>Knowledge</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleMonitorImpl#getSensor <em>Sensor</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,24 +51,14 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
   protected DSLMonitor monitor;
 
   /**
-   * The cached value of the '{@link #getSensor() <em>Sensor</em>}' reference.
+   * The cached value of the '{@link #getMonitor2() <em>Monitor2</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSensor()
+   * @see #getMonitor2()
    * @generated
    * @ordered
    */
-  protected DSLSensor sensor;
-
-  /**
-   * The cached value of the '{@link #getKnowledge() <em>Knowledge</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getKnowledge()
-   * @generated
-   * @ordered
-   */
-  protected DSLKnowledge knowledge;
+  protected DSLMonitor monitor2;
 
   /**
    * The cached value of the '{@link #getAnalyzer() <em>Analyzer</em>}' reference.
@@ -77,14 +71,44 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
   protected DSLAnalyzer analyzer;
 
   /**
-   * The cached value of the '{@link #getMonitor2() <em>Monitor2</em>}' reference.
+   * The cached value of the '{@link #getPlanner() <em>Planner</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMonitor2()
+   * @see #getPlanner()
    * @generated
    * @ordered
    */
-  protected DSLMonitor monitor2;
+  protected DSLPlanner planner;
+
+  /**
+   * The cached value of the '{@link #getExecutor() <em>Executor</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExecutor()
+   * @generated
+   * @ordered
+   */
+  protected DSLExecutor executor;
+
+  /**
+   * The cached value of the '{@link #getKnowledge() <em>Knowledge</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKnowledge()
+   * @generated
+   * @ordered
+   */
+  protected DSLKnowledge knowledge;
+
+  /**
+   * The cached value of the '{@link #getSensor() <em>Sensor</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSensor()
+   * @generated
+   * @ordered
+   */
+  protected DSLSensor sensor;
 
   /**
    * <!-- begin-user-doc -->
@@ -158,19 +182,19 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * @generated
    */
   @Override
-  public DSLSensor getSensor()
+  public DSLMonitor getMonitor2()
   {
-    if (sensor != null && sensor.eIsProxy())
+    if (monitor2 != null && monitor2.eIsProxy())
     {
-      InternalEObject oldSensor = (InternalEObject)sensor;
-      sensor = (DSLSensor)eResolveProxy(oldSensor);
-      if (sensor != oldSensor)
+      InternalEObject oldMonitor2 = (InternalEObject)monitor2;
+      monitor2 = (DSLMonitor)eResolveProxy(oldMonitor2);
+      if (monitor2 != oldMonitor2)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__SENSOR, oldSensor, sensor));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__MONITOR2, oldMonitor2, monitor2));
       }
     }
-    return sensor;
+    return monitor2;
   }
 
   /**
@@ -178,9 +202,9 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * <!-- end-user-doc -->
    * @generated
    */
-  public DSLSensor basicGetSensor()
+  public DSLMonitor basicGetMonitor2()
   {
-    return sensor;
+    return monitor2;
   }
 
   /**
@@ -189,57 +213,12 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * @generated
    */
   @Override
-  public void setSensor(DSLSensor newSensor)
+  public void setMonitor2(DSLMonitor newMonitor2)
   {
-    DSLSensor oldSensor = sensor;
-    sensor = newSensor;
+    DSLMonitor oldMonitor2 = monitor2;
+    monitor2 = newMonitor2;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__SENSOR, oldSensor, sensor));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLKnowledge getKnowledge()
-  {
-    if (knowledge != null && knowledge.eIsProxy())
-    {
-      InternalEObject oldKnowledge = (InternalEObject)knowledge;
-      knowledge = (DSLKnowledge)eResolveProxy(oldKnowledge);
-      if (knowledge != oldKnowledge)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE, oldKnowledge, knowledge));
-      }
-    }
-    return knowledge;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLKnowledge basicGetKnowledge()
-  {
-    return knowledge;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setKnowledge(DSLKnowledge newKnowledge)
-  {
-    DSLKnowledge oldKnowledge = knowledge;
-    knowledge = newKnowledge;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE, oldKnowledge, knowledge));
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__MONITOR2, oldMonitor2, monitor2));
   }
 
   /**
@@ -293,19 +272,19 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * @generated
    */
   @Override
-  public DSLMonitor getMonitor2()
+  public DSLPlanner getPlanner()
   {
-    if (monitor2 != null && monitor2.eIsProxy())
+    if (planner != null && planner.eIsProxy())
     {
-      InternalEObject oldMonitor2 = (InternalEObject)monitor2;
-      monitor2 = (DSLMonitor)eResolveProxy(oldMonitor2);
-      if (monitor2 != oldMonitor2)
+      InternalEObject oldPlanner = (InternalEObject)planner;
+      planner = (DSLPlanner)eResolveProxy(oldPlanner);
+      if (planner != oldPlanner)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__MONITOR2, oldMonitor2, monitor2));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__PLANNER, oldPlanner, planner));
       }
     }
-    return monitor2;
+    return planner;
   }
 
   /**
@@ -313,9 +292,9 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * <!-- end-user-doc -->
    * @generated
    */
-  public DSLMonitor basicGetMonitor2()
+  public DSLPlanner basicGetPlanner()
   {
-    return monitor2;
+    return planner;
   }
 
   /**
@@ -324,12 +303,147 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
    * @generated
    */
   @Override
-  public void setMonitor2(DSLMonitor newMonitor2)
+  public void setPlanner(DSLPlanner newPlanner)
   {
-    DSLMonitor oldMonitor2 = monitor2;
-    monitor2 = newMonitor2;
+    DSLPlanner oldPlanner = planner;
+    planner = newPlanner;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__MONITOR2, oldMonitor2, monitor2));
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__PLANNER, oldPlanner, planner));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLExecutor getExecutor()
+  {
+    if (executor != null && executor.eIsProxy())
+    {
+      InternalEObject oldExecutor = (InternalEObject)executor;
+      executor = (DSLExecutor)eResolveProxy(oldExecutor);
+      if (executor != oldExecutor)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__EXECUTOR, oldExecutor, executor));
+      }
+    }
+    return executor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLExecutor basicGetExecutor()
+  {
+    return executor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setExecutor(DSLExecutor newExecutor)
+  {
+    DSLExecutor oldExecutor = executor;
+    executor = newExecutor;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__EXECUTOR, oldExecutor, executor));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLKnowledge getKnowledge()
+  {
+    if (knowledge != null && knowledge.eIsProxy())
+    {
+      InternalEObject oldKnowledge = (InternalEObject)knowledge;
+      knowledge = (DSLKnowledge)eResolveProxy(oldKnowledge);
+      if (knowledge != oldKnowledge)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE, oldKnowledge, knowledge));
+      }
+    }
+    return knowledge;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLKnowledge basicGetKnowledge()
+  {
+    return knowledge;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setKnowledge(DSLKnowledge newKnowledge)
+  {
+    DSLKnowledge oldKnowledge = knowledge;
+    knowledge = newKnowledge;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE, oldKnowledge, knowledge));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLSensor getSensor()
+  {
+    if (sensor != null && sensor.eIsProxy())
+    {
+      InternalEObject oldSensor = (InternalEObject)sensor;
+      sensor = (DSLSensor)eResolveProxy(oldSensor);
+      if (sensor != oldSensor)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_MONITOR__SENSOR, oldSensor, sensor));
+      }
+    }
+    return sensor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLSensor basicGetSensor()
+  {
+    return sensor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setSensor(DSLSensor newSensor)
+  {
+    DSLSensor oldSensor = sensor;
+    sensor = newSensor;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_MONITOR__SENSOR, oldSensor, sensor));
   }
 
   /**
@@ -345,18 +459,24 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR:
         if (resolve) return getMonitor();
         return basicGetMonitor();
-      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
-        if (resolve) return getSensor();
-        return basicGetSensor();
-      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
-        if (resolve) return getKnowledge();
-        return basicGetKnowledge();
-      case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
-        if (resolve) return getAnalyzer();
-        return basicGetAnalyzer();
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
         if (resolve) return getMonitor2();
         return basicGetMonitor2();
+      case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
+        if (resolve) return getAnalyzer();
+        return basicGetAnalyzer();
+      case SasDslPackage.DSL_RULE_MONITOR__PLANNER:
+        if (resolve) return getPlanner();
+        return basicGetPlanner();
+      case SasDslPackage.DSL_RULE_MONITOR__EXECUTOR:
+        if (resolve) return getExecutor();
+        return basicGetExecutor();
+      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
+        if (resolve) return getKnowledge();
+        return basicGetKnowledge();
+      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
+        if (resolve) return getSensor();
+        return basicGetSensor();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -374,17 +494,23 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR:
         setMonitor((DSLMonitor)newValue);
         return;
-      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
-        setSensor((DSLSensor)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
-        setKnowledge((DSLKnowledge)newValue);
+      case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
+        setMonitor2((DSLMonitor)newValue);
         return;
       case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
         setAnalyzer((DSLAnalyzer)newValue);
         return;
-      case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
-        setMonitor2((DSLMonitor)newValue);
+      case SasDslPackage.DSL_RULE_MONITOR__PLANNER:
+        setPlanner((DSLPlanner)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__EXECUTOR:
+        setExecutor((DSLExecutor)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
+        setKnowledge((DSLKnowledge)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
+        setSensor((DSLSensor)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -403,17 +529,23 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR:
         setMonitor((DSLMonitor)null);
         return;
-      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
-        setSensor((DSLSensor)null);
-        return;
-      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
-        setKnowledge((DSLKnowledge)null);
+      case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
+        setMonitor2((DSLMonitor)null);
         return;
       case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
         setAnalyzer((DSLAnalyzer)null);
         return;
-      case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
-        setMonitor2((DSLMonitor)null);
+      case SasDslPackage.DSL_RULE_MONITOR__PLANNER:
+        setPlanner((DSLPlanner)null);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__EXECUTOR:
+        setExecutor((DSLExecutor)null);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
+        setKnowledge((DSLKnowledge)null);
+        return;
+      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
+        setSensor((DSLSensor)null);
         return;
     }
     super.eUnset(featureID);
@@ -431,14 +563,18 @@ public class DSLRuleMonitorImpl extends DSLRulesImpl implements DSLRuleMonitor
     {
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR:
         return monitor != null;
-      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
-        return sensor != null;
-      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
-        return knowledge != null;
-      case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
-        return analyzer != null;
       case SasDslPackage.DSL_RULE_MONITOR__MONITOR2:
         return monitor2 != null;
+      case SasDslPackage.DSL_RULE_MONITOR__ANALYZER:
+        return analyzer != null;
+      case SasDslPackage.DSL_RULE_MONITOR__PLANNER:
+        return planner != null;
+      case SasDslPackage.DSL_RULE_MONITOR__EXECUTOR:
+        return executor != null;
+      case SasDslPackage.DSL_RULE_MONITOR__KNOWLEDGE:
+        return knowledge != null;
+      case SasDslPackage.DSL_RULE_MONITOR__SENSOR:
+        return sensor != null;
     }
     return super.eIsSet(featureID);
   }

@@ -14,10 +14,12 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor <em>Monitor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getSensor <em>Sensor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getKnowledge <em>Knowledge</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor2 <em>Monitor2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getAnalyzer <em>Analyzer</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getPlanner <em>Planner</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getKnowledge <em>Knowledge</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getSensor <em>Sensor</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor()
@@ -49,48 +51,26 @@ public interface DSLRuleMonitor extends DSLRules
   void setMonitor(DSLMonitor value);
 
   /**
-   * Returns the value of the '<em><b>Sensor</b></em>' reference.
+   * Returns the value of the '<em><b>Monitor2</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Sensor</em>' reference.
-   * @see #setSensor(DSLSensor)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Sensor()
+   * @return the value of the '<em>Monitor2</em>' reference.
+   * @see #setMonitor2(DSLMonitor)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Monitor2()
    * @model
    * @generated
    */
-  DSLSensor getSensor();
+  DSLMonitor getMonitor2();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getSensor <em>Sensor</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor2 <em>Monitor2</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Sensor</em>' reference.
-   * @see #getSensor()
+   * @param value the new value of the '<em>Monitor2</em>' reference.
+   * @see #getMonitor2()
    * @generated
    */
-  void setSensor(DSLSensor value);
-
-  /**
-   * Returns the value of the '<em><b>Knowledge</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Knowledge</em>' reference.
-   * @see #setKnowledge(DSLKnowledge)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Knowledge()
-   * @model
-   * @generated
-   */
-  DSLKnowledge getKnowledge();
-
-  /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getKnowledge <em>Knowledge</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Knowledge</em>' reference.
-   * @see #getKnowledge()
-   * @generated
-   */
-  void setKnowledge(DSLKnowledge value);
+  void setMonitor2(DSLMonitor value);
 
   /**
    * Returns the value of the '<em><b>Analyzer</b></em>' reference.
@@ -115,25 +95,91 @@ public interface DSLRuleMonitor extends DSLRules
   void setAnalyzer(DSLAnalyzer value);
 
   /**
-   * Returns the value of the '<em><b>Monitor2</b></em>' reference.
+   * Returns the value of the '<em><b>Planner</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Monitor2</em>' reference.
-   * @see #setMonitor2(DSLMonitor)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Monitor2()
+   * @return the value of the '<em>Planner</em>' reference.
+   * @see #setPlanner(DSLPlanner)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Planner()
    * @model
    * @generated
    */
-  DSLMonitor getMonitor2();
+  DSLPlanner getPlanner();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getMonitor2 <em>Monitor2</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getPlanner <em>Planner</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Monitor2</em>' reference.
-   * @see #getMonitor2()
+   * @param value the new value of the '<em>Planner</em>' reference.
+   * @see #getPlanner()
    * @generated
    */
-  void setMonitor2(DSLMonitor value);
+  void setPlanner(DSLPlanner value);
+
+  /**
+   * Returns the value of the '<em><b>Executor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Executor</em>' reference.
+   * @see #setExecutor(DSLExecutor)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Executor()
+   * @model
+   * @generated
+   */
+  DSLExecutor getExecutor();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getExecutor <em>Executor</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Executor</em>' reference.
+   * @see #getExecutor()
+   * @generated
+   */
+  void setExecutor(DSLExecutor value);
+
+  /**
+   * Returns the value of the '<em><b>Knowledge</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Knowledge</em>' reference.
+   * @see #setKnowledge(DSLKnowledge)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Knowledge()
+   * @model
+   * @generated
+   */
+  DSLKnowledge getKnowledge();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getKnowledge <em>Knowledge</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Knowledge</em>' reference.
+   * @see #getKnowledge()
+   * @generated
+   */
+  void setKnowledge(DSLKnowledge value);
+
+  /**
+   * Returns the value of the '<em><b>Sensor</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Sensor</em>' reference.
+   * @see #setSensor(DSLSensor)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleMonitor_Sensor()
+   * @model
+   * @generated
+   */
+  DSLSensor getSensor();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor#getSensor <em>Sensor</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Sensor</em>' reference.
+   * @see #getSensor()
+   * @generated
+   */
+  void setSensor(DSLSensor value);
 
 } // DSLRuleMonitor

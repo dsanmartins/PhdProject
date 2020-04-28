@@ -6,6 +6,9 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 
+import br.ufscar.sas.database.QueryClass;
+import br.ufscar.sas.view.MainView;
+
 public class EditingRulesInstance extends EditingSupport{
 
 	private CheckboxCellEditor cellEditor;
@@ -37,7 +40,18 @@ public class EditingRulesInstance extends EditingSupport{
 	@Override
 	protected void setValue(Object element, Object value) {
 		// TODO Auto-generated method stub
-		((TableMetaData) element).setIsSelected(Boolean.valueOf((boolean) value));
+		TableMetaData tableMetaData = (TableMetaData) element;
+		tableMetaData.setIsSelected(Boolean.valueOf((boolean) value));
+		
+		try {
+			QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
+			queryClass.updateRuleState(tableMetaData.getId(), (boolean) value);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
         getViewer().update(element, null);
 		
 	}

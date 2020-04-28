@@ -47,17 +47,12 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.TreeViewerEditor;
@@ -118,6 +113,11 @@ import br.ufscar.sas.parser.VariableVisitor;
 import br.ufscar.sas.recommendation.RefactoringRecommendation;
 import br.ufscar.sas.report.Report;
 import br.ufscar.sas.tableviewer.Anomaly;
+import br.ufscar.sas.tableviewer.ColumnLabelProviderFifth;
+import br.ufscar.sas.tableviewer.ColumnLabelProviderFirst;
+import br.ufscar.sas.tableviewer.ColumnLabelProviderFourth;
+import br.ufscar.sas.tableviewer.ColumnLabelProviderSecond;
+import br.ufscar.sas.tableviewer.ColumnLabelProviderThird;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
 import br.ufscar.sas.tableviewer.EditingRulesInstance;
@@ -125,7 +125,6 @@ import br.ufscar.sas.tableviewer.MappedAnomaly;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
-import br.ufscar.sas.tableviewer.TableLabelRuleProvider;
 import br.ufscar.sas.tableviewer.TableMetaData;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
 import br.ufscar.sas.transformation.ComputeModelDiff;
@@ -174,7 +173,9 @@ public class MainView extends ViewPart implements IPartListener2 {
 				QueryClass queryClass = new QueryClass(databaseUrl);
 				queryClass.createTables(); 
 				queryClass.populateAbstractions(); 
-				queryClass.populateDomainRules();
+				List<String> lstDomainRules = queryClass.getDomainRules();
+				if (lstDomainRules.size() == 0)
+					queryClass.populateDomainRules();
 
 				DataConstraint dataConstraint = new DataConstraint(databaseUrl);
 				dataConstraint.createTables();
@@ -1111,47 +1112,53 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
 		tableViewGroup.setText("Predefined Rules of Adaptive Systems Domain");
-		tableViewGroup.setBounds(10, 55, 550, 450);
+		tableViewGroup.setBounds(10, 55, 550, 530);
 		tableViewGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
 
 		viewerRules = new TableViewer(tableViewGroup, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		final Table table = viewerRules.getTable();
-		table.setBounds(0, 0, 550, 450);
+		table.setBounds(0, 0, 550, 500);
 
 		TableViewerColumn column0 = new TableViewerColumn(viewerRules, SWT.CENTER);
 		column0.getColumn().setText("Id");
 		column0.getColumn().setWidth(30);
 		column0.getColumn().setResizable(false);
+		column0.setLabelProvider(new ColumnLabelProviderFirst());
 
 		TableViewerColumn column1 = new TableViewerColumn(viewerRules, SWT.CENTER);
 		column1.getColumn().setText("Abstraction (From)");
 		column1.getColumn().setWidth(155);
 		column1.getColumn().setResizable(false);
+		column1.setLabelProvider(new ColumnLabelProviderSecond());
 
 		TableViewerColumn column2 = new TableViewerColumn(viewerRules, SWT.CENTER);
 		column2.getColumn().setText("Type of Access");
 		column2.getColumn().setWidth(130);
 		column2.getColumn().setResizable(false);
+		column2.setLabelProvider(new ColumnLabelProviderThird());
 
 		TableViewerColumn column3= new TableViewerColumn(viewerRules, SWT.CENTER);
 		column3.getColumn().setText("Abstraction (To) ");
 		column3.getColumn().setWidth(155);
 		column3.getColumn().setResizable(false);
+		column3.setLabelProvider(new ColumnLabelProviderFourth());
 
-		TableViewerColumn column4 = new TableViewerColumn(viewerRules, SWT.CENTER);
+		
+		TableViewerColumn column4 = new TableViewerColumn(viewerRules, SWT.CENTER | SWT.CHECK);
 		column4.getColumn().setText("On/Off ");
 		column4.getColumn().setWidth(15);
 		column4.getColumn().setResizable(false);
+		column4.setLabelProvider(new ColumnLabelProviderFifth());
 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-
+		
 		EditingRulesInstance editingRule = new EditingRulesInstance(column4.getViewer());
 		column4.setEditingSupport(editingRule);
 
 		viewerRules.setContentProvider(new ArrayContentProvider());
-		viewerRules.setLabelProvider(new TableLabelRuleProvider());
+	
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
@@ -1184,7 +1191,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		for (String rule :rules )
 			ruleContainer.add(new TableMetaData(Integer.valueOf(rule.split(Pattern.quote("|"))[0]), rule.split(Pattern.quote("|"))[1], rule.split(Pattern.quote("|"))[3],
 					rule.split(Pattern.quote("|"))[2],Boolean.valueOf(rule.split(Pattern.quote("|"))[4])));
-
+		
 		viewerRules.setInput(ruleContainer);
 
 	}

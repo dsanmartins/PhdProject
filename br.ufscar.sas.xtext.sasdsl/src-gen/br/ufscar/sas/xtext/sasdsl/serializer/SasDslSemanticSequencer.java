@@ -21,6 +21,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
@@ -107,6 +108,9 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case SasDslPackage.DSL_RULE_EXECUTOR:
 				sequence_DSLRuleExecutor(context, (DSLRuleExecutor) semanticObject); 
+				return; 
+			case SasDslPackage.DSL_RULE_KNOWLEDGE:
+				sequence_DSLRuleKnowledge(context, (DSLRuleKnowledge) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_RULE_MCONTROLLER:
 				sequence_DSLRuleMController(context, (DSLRuleMController) semanticObject); 
@@ -371,13 +375,13 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') monitor=[DSLMonitor|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') rreference=[DSLReferenceInput|ID]) | 
 	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') analyzer2=[DSLAnalyzer|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') shalt=[DSLAlternative|ID]) | 
-	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID])
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') rreference=[DSLReferenceInput|ID]) | 
+	 *         (analyzer=[DSLAnalyzer|ID] (access='must-use' | access='must-not-use') shalt=[DSLAlternative|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleAnalyzer(ISerializationContext context, DSLRuleAnalyzer semanticObject) {
@@ -405,13 +409,33 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') effector=[DSLEffector|ID]) | 
+	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') monitor=[DSLMonitor|ID]) | 
+	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') analyzer=[DSLAnalyzer|ID]) | 
 	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
+	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') executor2=[DSLExecutor|ID]) | 
 	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
-	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') executor2=[DSLExecutor|ID])
+	 *         (executor=[DSLExecutor|ID] (access='must-use' | access='must-not-use') effector=[DSLEffector|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleExecutor(ISerializationContext context, DSLRuleExecutor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DSLRules returns DSLRuleKnowledge
+	 *     DSLRuleKnowledge returns DSLRuleKnowledge
+	 *
+	 * Constraint:
+	 *     (
+	 *         (knowledge=[DSLKnowledge|ID] (access='must-use' | access='must-not-use') monitor=[DSLMonitor|ID]) | 
+	 *         (knowledge=[DSLKnowledge|ID] (access='must-use' | access='must-not-use') analyzer=[DSLAnalyzer|ID]) | 
+	 *         (knowledge=[DSLKnowledge|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
+	 *         (knowledge=[DSLKnowledge|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID])
+	 *     )
+	 */
+	protected void sequence_DSLRuleKnowledge(ISerializationContext context, DSLRuleKnowledge semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -449,10 +473,12 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') sensor=[DSLSensor|ID]) | 
-	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
+	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') monitor2=[DSLMonitor|ID]) | 
 	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') analyzer=[DSLAnalyzer|ID]) | 
-	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') monitor2=[DSLMonitor|ID])
+	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') planner=[DSLPlanner|ID]) | 
+	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID]) | 
+	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
+	 *         (monitor=[DSLMonitor|ID] (access='must-use' | access='must-not-use') sensor=[DSLSensor|ID])
 	 *     )
 	 */
 	protected void sequence_DSLRuleMonitor(ISerializationContext context, DSLRuleMonitor semanticObject) {
@@ -467,10 +493,11 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
+	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') monitor=[DSLMonitor|ID]) | 
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') analyzer=[DSLAnalyzer|ID]) | 
-	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID]) | 
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') planner2=[DSLPlanner|ID]) | 
+	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') executor=[DSLExecutor|ID]) | 
+	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') knowledge=[DSLKnowledge|ID]) | 
 	 *         (planner=[DSLPlanner|ID] (access='must-use' | access='must-not-use') shalt=[DSLAlternative|ID])
 	 *     )
 	 */

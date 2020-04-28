@@ -14,10 +14,12 @@ package br.ufscar.sas.xtext.sasdsl.sasDsl;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor <em>Executor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getEffector <em>Effector</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getMonitor <em>Monitor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getAnalyzer <em>Analyzer</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getPlanner <em>Planner</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getKnowledge <em>Knowledge</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor2 <em>Executor2</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getKnowledge <em>Knowledge</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getEffector <em>Effector</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor()
@@ -49,26 +51,48 @@ public interface DSLRuleExecutor extends DSLRules
   void setExecutor(DSLExecutor value);
 
   /**
-   * Returns the value of the '<em><b>Effector</b></em>' reference.
+   * Returns the value of the '<em><b>Monitor</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Effector</em>' reference.
-   * @see #setEffector(DSLEffector)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Effector()
+   * @return the value of the '<em>Monitor</em>' reference.
+   * @see #setMonitor(DSLMonitor)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Monitor()
    * @model
    * @generated
    */
-  DSLEffector getEffector();
+  DSLMonitor getMonitor();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getEffector <em>Effector</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getMonitor <em>Monitor</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Effector</em>' reference.
-   * @see #getEffector()
+   * @param value the new value of the '<em>Monitor</em>' reference.
+   * @see #getMonitor()
    * @generated
    */
-  void setEffector(DSLEffector value);
+  void setMonitor(DSLMonitor value);
+
+  /**
+   * Returns the value of the '<em><b>Analyzer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Analyzer</em>' reference.
+   * @see #setAnalyzer(DSLAnalyzer)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Analyzer()
+   * @model
+   * @generated
+   */
+  DSLAnalyzer getAnalyzer();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getAnalyzer <em>Analyzer</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Analyzer</em>' reference.
+   * @see #getAnalyzer()
+   * @generated
+   */
+  void setAnalyzer(DSLAnalyzer value);
 
   /**
    * Returns the value of the '<em><b>Planner</b></em>' reference.
@@ -93,6 +117,28 @@ public interface DSLRuleExecutor extends DSLRules
   void setPlanner(DSLPlanner value);
 
   /**
+   * Returns the value of the '<em><b>Executor2</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Executor2</em>' reference.
+   * @see #setExecutor2(DSLExecutor)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Executor2()
+   * @model
+   * @generated
+   */
+  DSLExecutor getExecutor2();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor2 <em>Executor2</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Executor2</em>' reference.
+   * @see #getExecutor2()
+   * @generated
+   */
+  void setExecutor2(DSLExecutor value);
+
+  /**
    * Returns the value of the '<em><b>Knowledge</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -115,25 +161,25 @@ public interface DSLRuleExecutor extends DSLRules
   void setKnowledge(DSLKnowledge value);
 
   /**
-   * Returns the value of the '<em><b>Executor2</b></em>' reference.
+   * Returns the value of the '<em><b>Effector</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Executor2</em>' reference.
-   * @see #setExecutor2(DSLExecutor)
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Executor2()
+   * @return the value of the '<em>Effector</em>' reference.
+   * @see #setEffector(DSLEffector)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLRuleExecutor_Effector()
    * @model
    * @generated
    */
-  DSLExecutor getExecutor2();
+  DSLEffector getEffector();
 
   /**
-   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getExecutor2 <em>Executor2</em>}' reference.
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor#getEffector <em>Effector</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Executor2</em>' reference.
-   * @see #getExecutor2()
+   * @param value the new value of the '<em>Effector</em>' reference.
+   * @see #getEffector()
    * @generated
    */
-  void setExecutor2(DSLExecutor value);
+  void setEffector(DSLEffector value);
 
 } // DSLRuleExecutor

@@ -135,6 +135,14 @@ public class SasDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SasDslPackage.DSL_RULE_KNOWLEDGE:
+      {
+        DSLRuleKnowledge dslRuleKnowledge = (DSLRuleKnowledge)theEObject;
+        T result = caseDSLRuleKnowledge(dslRuleKnowledge);
+        if (result == null) result = caseDSLRules(dslRuleKnowledge);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SasDslPackage.DSL_RULE_MO:
       {
         DSLRuleMO dslRuleMO = (DSLRuleMO)theEObject;
@@ -376,6 +384,22 @@ public class SasDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDSLRuleExecutor(DSLRuleExecutor object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>DSL Rule Knowledge</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>DSL Rule Knowledge</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDSLRuleKnowledge(DSLRuleKnowledge object)
   {
     return null;
   }

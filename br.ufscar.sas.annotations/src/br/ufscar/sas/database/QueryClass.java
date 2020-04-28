@@ -33,7 +33,7 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS relation (from_ text, to_ text, modisco_path text, type_relation text) ");
-		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch integer)");
+		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch text)");
 		mydb.executeStmt("CREATE VIEW IF NOT EXISTS annotations(annotation,belongs)  AS " +
 				"    select T.A, T.B from (\n" + 
 				"        select annotation A ,belongs B from package_annotation \n" + 
@@ -57,8 +57,6 @@ public class QueryClass {
 				"UNION ALL\n" + 
 				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name || '.' ||variable_name) name, annotation from variable_annotation where annotation <> 'None';");
 		mydb.executeStmt("delete from abstractions"); 
-		mydb.executeStmt("delete from domain_rules"); 
-		mydb.executeStmt("REINDEX 'domain_rules';");
 		mydb.executeStmt("delete from relation"); 
 		mydb.closeConnection();
 	}
@@ -86,25 +84,25 @@ public class QueryClass {
 	public void populateDomainRules() throws SQLException, Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);                  
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
-		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '0x2192','Planner', 1);");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u219B','Planner', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u219B','Executor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Analyzer', '\u219B','Monitor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u219B','Monitor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u219B','Analyzer', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Executor', '\u219B','Monitor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Executor', '\u219B','Analyzer', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Executor', '\u219B','Planner', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Knowledge', '\u219B','Monitor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Knowledge', '\u219B','Analyzer', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Knowledge', '\u219B','Planner', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Knowledge', '\u219B','Executor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u2192','Analyzer', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u2192','Knowledge', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Analyzer', '\u2192','Planner', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Analyzer', '\u2192','Knowledge', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u2192','Executor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u2192','Knowledge', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Executor', '\u2192','Knowledge', 'true');");
 		mydb.closeConnection();
 	}
 
@@ -136,6 +134,7 @@ public class QueryClass {
 		ResultSet rs = mydb.executeQry("select annotation from instances where annotation='" + abs + "';");	
 		if (rs.next() == false) {
 
+			mydb.closeConnection();
 			return false;
 		}
 
@@ -331,6 +330,13 @@ public class QueryClass {
 				"' where project_name = '" + projectName + "' and class_name = '" + 
 				className + "' and method_name = '" + methodName + "' and variable_name = '" +
 				name + "' and file = '" + file + "';");		
+		mydb.closeConnection();
+	}
+
+	public void updateRuleState(int id, boolean value) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update domain_rules set switch= '" + value + "' where rowid = '" + id + "';");		
 		mydb.closeConnection();
 	}
 
@@ -700,5 +706,18 @@ public class QueryClass {
 		}
 		mydb.closeConnection();
 		return lst;
+	}
+
+	public List<String> ruleIsActive(String abstraction1, String abstraction2) throws Exception {
+
+		List<String> lstRule = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select rowid, switch from domain_rules where abstraction1='" + abstraction1 + "' and abstraction2='" + abstraction2 + "' ;");	
+		while (rs.next()) {
+			lstRule.add(String.valueOf(rs.getObject(1)));
+			lstRule.add((String) rs.getObject(2));
+		}
+		mydb.closeConnection();
+		return lstRule;
 	}
 }

@@ -96,6 +96,15 @@ public interface SasDslFactory extends EFactory
   DSLRuleExecutor createDSLRuleExecutor();
 
   /**
+   * Returns a new object of class '<em>DSL Rule Knowledge</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DSL Rule Knowledge</em>'.
+   * @generated
+   */
+  DSLRuleKnowledge createDSLRuleKnowledge();
+
+  /**
    * Returns a new object of class '<em>DSL Rule MO</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
 
 /**
  * Generates code from your model files on save.
@@ -532,6 +533,37 @@ class SasDslGenerator extends AbstractGenerator {
 									inAggregatedPath.put(r.monitor2.name,pathInAggregated)
 								}
 							}
+							if (r.planner !== null)
+							{	
+								var pathInAggregated = inAggregatedPath.get(r.planner.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.planner.name, pathInAggregated)
+								}
+								else
+								{
+									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.put(r.planner.name,pathInAggregated)
+								}
+							}
+							
+							if (r.executor !== null)
+							{	
+								var pathInAggregated = inAggregatedPath.get(r.executor.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.executor.name, pathInAggregated)
+								}
+								else
+								{
+									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.put(r.executor.name,pathInAggregated)
+								}
+							}
 						}
 						else
 						{
@@ -589,6 +621,33 @@ class SasDslGenerator extends AbstractGenerator {
 									inAggregatedPath.put(r.monitor2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
 							}
 							
+							if (r.planner !==null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.planner.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.planner.name, pathInAggregated)
+								}
+								else
+									inAggregatedPath.put(r.planner.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+							}
+							
+							if (r.executor !==null)
+							{
+								var pathInAggregated = inAggregatedPath.get(r.executor.name)
+								if (pathInAggregated !== null)
+								{
+									pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+									pathInAggregated = pathInAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									inAggregatedPath.replace(r.executor.name, pathInAggregated)
+								}
+								else
+									inAggregatedPath.put(r.executor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+							}
+							
+							
 						}
 						rMonitor++
 						
@@ -606,6 +665,13 @@ class SasDslGenerator extends AbstractGenerator {
 									else
 										if (r.monitor2 !== null)
 											aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.monitor2.name) + "'" + relation
+											else
+												if (r.planner !== null)
+													aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+												else
+													if (r.executor !== null)
+														aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation	
+													
 							
 							aggregatedPath.replace(r.monitor.name, aggregated)
 						}
@@ -622,6 +688,13 @@ class SasDslGenerator extends AbstractGenerator {
 									else
 										if (r.monitor2 !== null)
 											aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.monitor2.name) + "'" + relation
+										else
+											if (r.planner !== null)
+												aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.planner.name) + "'" + relation
+											else
+												if (r.executor !== null)
+													aggregated = "<aggregated from='" + structureElementPath.get(r.monitor.name) +"' to='" + structureElementPath.get(r.executor.name) + "'" + relation		
+												
 							
 							aggregatedPath.put(r.monitor.name, aggregated)
 						}
@@ -979,6 +1052,22 @@ class SasDslGenerator extends AbstractGenerator {
 													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
 													inAggregatedPath.put(r.shalt.name,pathInAggregated)
 												}
+											}	  
+											
+											if (r.monitor !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.put(r.monitor.name,pathInAggregated)
+												}
 											}	
 										}
 										else
@@ -1047,6 +1136,19 @@ class SasDslGenerator extends AbstractGenerator {
 													inAggregatedPath.put(r.shalt.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
 											}
 											
+											if (r.monitor !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.shalt.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '";
+													inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.monitor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
+											}
+											
 										}
 										rPlanner++
 										
@@ -1067,6 +1169,9 @@ class SasDslGenerator extends AbstractGenerator {
 														else
 															if (r.shalt !== null)
 																aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
+															else
+																if (r.monitor !== null)
+																	aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation
 												
 												
 											aggregatedPath.replace(r.planner.name, aggregated)
@@ -1087,6 +1192,9 @@ class SasDslGenerator extends AbstractGenerator {
 														else
 															if (r.shalt !== null)
 																aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.shalt.name) + "'" + relation
+															else
+																if (r.monitor !== null)
+																	aggregated = "<aggregated from='" + structureElementPath.get(r.planner.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation
 															
 											aggregatedPath.put(r.planner.name, aggregated)
 										}
@@ -1162,6 +1270,38 @@ class SasDslGenerator extends AbstractGenerator {
 													inAggregatedPath.put(r.executor2.name,pathInAggregated)
 												}
 											}	
+											
+											if (r.monitor !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.executor2.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.put(r.monitor.name,pathInAggregated)
+												}
+											}	
+											
+											if (r.analyzer !== null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.executor2.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+												}
+												else
+												{
+													pathInAggregated = "inAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.put(r.analyzer.name,pathInAggregated)
+												}
+											}	
 										}
 										else
 										{
@@ -1215,6 +1355,32 @@ class SasDslGenerator extends AbstractGenerator {
 												}
 												else
 													inAggregatedPath.put(r.executor2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))									
+											}		
+											
+											if (r.monitor !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.monitor.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.monitor.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.monitor.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))									
+											}		
+											
+											if (r.analyzer !==null)
+											{
+												var pathInAggregated = inAggregatedPath.get(r.analyzer.name)
+												if (pathInAggregated !== null)
+												{
+													pathInAggregated = pathInAggregated.substring(0,pathInAggregated.length-1)
+													pathInAggregated = pathInAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '";
+													inAggregatedPath.replace(r.analyzer.name, pathInAggregated)
+												}
+												else
+													inAggregatedPath.put(r.analyzer.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))									
 											}							
 										}
 										rExecutor++
@@ -1233,6 +1399,12 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.executor2 !==null)
 															aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.executor2.name) + "'" + relation
+														else
+															if (r.monitor !==null)
+																aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation
+															else
+																if (r.analyzer !==null)
+																	aggregated = aggregated + "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation
 															
 											aggregatedPath.replace(r.executor.name, aggregated)
 										}
@@ -1249,6 +1421,13 @@ class SasDslGenerator extends AbstractGenerator {
 													else
 														if (r.executor2 !== null)
 															aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.executor2.name) + "'" + relation
+														else
+															if (r.monitor !== null)
+																aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.monitor.name) + "'" + relation														
+															else
+																if (r.analyzer !== null)
+																	aggregated = "<aggregated from='" + structureElementPath.get(r.executor.name) +"' to='" + structureElementPath.get(r.analyzer.name) + "'" + relation	
+															
 											aggregatedPath.put(r.executor.name, aggregated)
 										}
 								}
@@ -1814,6 +1993,28 @@ class SasDslGenerator extends AbstractGenerator {
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
 		«ENDIF»
 		«ENDIF»
+		«IF dslRuleMonitor.planner !== null»
+		«var firstArgument = dslRuleMonitor.monitor»
+		«var secondArgument = dslRuleMonitor.planner»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«IF dslRuleMonitor.executor !== null»
+		«var firstArgument = dslRuleMonitor.monitor»
+		«var secondArgument = dslRuleMonitor.executor»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
 		«IF dslRuleMonitor.monitor2 !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.monitor2»
@@ -1939,6 +2140,17 @@ class SasDslGenerator extends AbstractGenerator {
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
 		«ENDIF»
 		«ENDIF»
+		«IF dslRulePlanner.monitor !== null»
+		«var firstArgument = dslRulePlanner.planner»
+		«var secondArgument = dslRulePlanner.monitor»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
 		«IF dslRulePlanner.shalt !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.shalt»
@@ -1996,6 +2208,28 @@ class SasDslGenerator extends AbstractGenerator {
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
 		«ENDIF»
 		«ENDIF»
+		«IF dslRuleExecutor.monitor !== null»
+		«var firstArgument = dslRuleExecutor.executor»
+		«var secondArgument = dslRuleExecutor.monitor»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«IF dslRuleExecutor.analyzer !== null»
+		«var firstArgument = dslRuleExecutor.executor»
+		«var secondArgument = dslRuleExecutor.analyzer»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
 		«IF dslRuleExecutor.effector !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.effector»
@@ -2031,8 +2265,53 @@ class SasDslGenerator extends AbstractGenerator {
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
 		«ENDIF»
 		«ENDIF»
+		«ELSEIF dslRule instanceof DSLRuleKnowledge»
+		«var dslRuleKnowledge = dslRule as DSLRuleKnowledge»
+		«IF dslRuleKnowledge.monitor !== null»
+		«var firstArgument = dslRuleKnowledge.knowledge»
+		«var secondArgument = dslRuleKnowledge.monitor»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
 		«ENDIF»
-		
+		«ENDIF»
+		«IF dslRuleKnowledge.analyzer !== null»
+		«var firstArgument = dslRuleKnowledge.knowledge»
+		«var secondArgument = dslRuleKnowledge.analyzer»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«IF dslRuleKnowledge.planner !== null»
+		«var firstArgument = dslRuleKnowledge.knowledge»
+		«var secondArgument = dslRuleKnowledge.planner»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«IF dslRuleKnowledge.executor !== null»
+		«var firstArgument = dslRuleKnowledge.knowledge»
+		«var secondArgument = dslRuleKnowledge.executor»
+		«IF dslRule.access.equals("must-use")»
+		context StructureModel
+		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		«ELSEIF dslRule.access.equals("must-not-use")»
+		context StructureModel
+		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		«ENDIF»
+		«ENDIF»
+		«ENDIF»
 		«ENDFOR»
 	endpackage
 		'''

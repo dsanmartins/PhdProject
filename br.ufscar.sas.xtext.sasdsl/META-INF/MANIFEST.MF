@@ -26,4 +26,6 @@ Export-Package: br.ufscar.sas.xtext.sasdsl.validation,
  br.ufscar.sas.xtext.sasdsl.parser.antlr,
  br.ufscar.sas.xtext.sasdsl.scoping,
  br.ufscar.sas.xtext.sasdsl.parser.antlr.internal
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j, 
+ br.ufscar.sas.database,
+ br.ufscar.sas.view

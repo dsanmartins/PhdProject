@@ -29,13 +29,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getAnalyzer <em>Analyzer</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getKnowledge <em>Knowledge</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getMonitor <em>Monitor</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getPlanner <em>Planner</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getRreference <em>Rreference</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getAnalyzer2 <em>Analyzer2</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getShalt <em>Shalt</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getPlanner <em>Planner</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getExecutor <em>Executor</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getKnowledge <em>Knowledge</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getRreference <em>Rreference</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleAnalyzerImpl#getShalt <em>Shalt</em>}</li>
  * </ul>
  *
  * @generated
@@ -53,16 +53,6 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
   protected DSLAnalyzer analyzer;
 
   /**
-   * The cached value of the '{@link #getKnowledge() <em>Knowledge</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getKnowledge()
-   * @generated
-   * @ordered
-   */
-  protected DSLKnowledge knowledge;
-
-  /**
    * The cached value of the '{@link #getMonitor() <em>Monitor</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -71,26 +61,6 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @ordered
    */
   protected DSLMonitor monitor;
-
-  /**
-   * The cached value of the '{@link #getPlanner() <em>Planner</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPlanner()
-   * @generated
-   * @ordered
-   */
-  protected DSLPlanner planner;
-
-  /**
-   * The cached value of the '{@link #getRreference() <em>Rreference</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRreference()
-   * @generated
-   * @ordered
-   */
-  protected DSLReferenceInput rreference;
 
   /**
    * The cached value of the '{@link #getAnalyzer2() <em>Analyzer2</em>}' reference.
@@ -103,14 +73,14 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
   protected DSLAnalyzer analyzer2;
 
   /**
-   * The cached value of the '{@link #getShalt() <em>Shalt</em>}' reference.
+   * The cached value of the '{@link #getPlanner() <em>Planner</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getShalt()
+   * @see #getPlanner()
    * @generated
    * @ordered
    */
-  protected DSLAlternative shalt;
+  protected DSLPlanner planner;
 
   /**
    * The cached value of the '{@link #getExecutor() <em>Executor</em>}' reference.
@@ -121,6 +91,36 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @ordered
    */
   protected DSLExecutor executor;
+
+  /**
+   * The cached value of the '{@link #getKnowledge() <em>Knowledge</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKnowledge()
+   * @generated
+   * @ordered
+   */
+  protected DSLKnowledge knowledge;
+
+  /**
+   * The cached value of the '{@link #getRreference() <em>Rreference</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRreference()
+   * @generated
+   * @ordered
+   */
+  protected DSLReferenceInput rreference;
+
+  /**
+   * The cached value of the '{@link #getShalt() <em>Shalt</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getShalt()
+   * @generated
+   * @ordered
+   */
+  protected DSLAlternative shalt;
 
   /**
    * <!-- begin-user-doc -->
@@ -194,51 +194,6 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
-  public DSLKnowledge getKnowledge()
-  {
-    if (knowledge != null && knowledge.eIsProxy())
-    {
-      InternalEObject oldKnowledge = (InternalEObject)knowledge;
-      knowledge = (DSLKnowledge)eResolveProxy(oldKnowledge);
-      if (knowledge != oldKnowledge)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE, oldKnowledge, knowledge));
-      }
-    }
-    return knowledge;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLKnowledge basicGetKnowledge()
-  {
-    return knowledge;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setKnowledge(DSLKnowledge newKnowledge)
-  {
-    DSLKnowledge oldKnowledge = knowledge;
-    knowledge = newKnowledge;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE, oldKnowledge, knowledge));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public DSLMonitor getMonitor()
   {
     if (monitor != null && monitor.eIsProxy())
@@ -276,96 +231,6 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
     monitor = newMonitor;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__MONITOR, oldMonitor, monitor));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLPlanner getPlanner()
-  {
-    if (planner != null && planner.eIsProxy())
-    {
-      InternalEObject oldPlanner = (InternalEObject)planner;
-      planner = (DSLPlanner)eResolveProxy(oldPlanner);
-      if (planner != oldPlanner)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__PLANNER, oldPlanner, planner));
-      }
-    }
-    return planner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLPlanner basicGetPlanner()
-  {
-    return planner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setPlanner(DSLPlanner newPlanner)
-  {
-    DSLPlanner oldPlanner = planner;
-    planner = newPlanner;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__PLANNER, oldPlanner, planner));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public DSLReferenceInput getRreference()
-  {
-    if (rreference != null && rreference.eIsProxy())
-    {
-      InternalEObject oldRreference = (InternalEObject)rreference;
-      rreference = (DSLReferenceInput)eResolveProxy(oldRreference);
-      if (rreference != oldRreference)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE, oldRreference, rreference));
-      }
-    }
-    return rreference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DSLReferenceInput basicGetRreference()
-  {
-    return rreference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setRreference(DSLReferenceInput newRreference)
-  {
-    DSLReferenceInput oldRreference = rreference;
-    rreference = newRreference;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE, oldRreference, rreference));
   }
 
   /**
@@ -419,19 +284,19 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
-  public DSLAlternative getShalt()
+  public DSLPlanner getPlanner()
   {
-    if (shalt != null && shalt.eIsProxy())
+    if (planner != null && planner.eIsProxy())
     {
-      InternalEObject oldShalt = (InternalEObject)shalt;
-      shalt = (DSLAlternative)eResolveProxy(oldShalt);
-      if (shalt != oldShalt)
+      InternalEObject oldPlanner = (InternalEObject)planner;
+      planner = (DSLPlanner)eResolveProxy(oldPlanner);
+      if (planner != oldPlanner)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__PLANNER, oldPlanner, planner));
       }
     }
-    return shalt;
+    return planner;
   }
 
   /**
@@ -439,9 +304,9 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * <!-- end-user-doc -->
    * @generated
    */
-  public DSLAlternative basicGetShalt()
+  public DSLPlanner basicGetPlanner()
   {
-    return shalt;
+    return planner;
   }
 
   /**
@@ -450,12 +315,12 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
-  public void setShalt(DSLAlternative newShalt)
+  public void setPlanner(DSLPlanner newPlanner)
   {
-    DSLAlternative oldShalt = shalt;
-    shalt = newShalt;
+    DSLPlanner oldPlanner = planner;
+    planner = newPlanner;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__PLANNER, oldPlanner, planner));
   }
 
   /**
@@ -509,6 +374,141 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
    * @generated
    */
   @Override
+  public DSLKnowledge getKnowledge()
+  {
+    if (knowledge != null && knowledge.eIsProxy())
+    {
+      InternalEObject oldKnowledge = (InternalEObject)knowledge;
+      knowledge = (DSLKnowledge)eResolveProxy(oldKnowledge);
+      if (knowledge != oldKnowledge)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE, oldKnowledge, knowledge));
+      }
+    }
+    return knowledge;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLKnowledge basicGetKnowledge()
+  {
+    return knowledge;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setKnowledge(DSLKnowledge newKnowledge)
+  {
+    DSLKnowledge oldKnowledge = knowledge;
+    knowledge = newKnowledge;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE, oldKnowledge, knowledge));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLReferenceInput getRreference()
+  {
+    if (rreference != null && rreference.eIsProxy())
+    {
+      InternalEObject oldRreference = (InternalEObject)rreference;
+      rreference = (DSLReferenceInput)eResolveProxy(oldRreference);
+      if (rreference != oldRreference)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE, oldRreference, rreference));
+      }
+    }
+    return rreference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLReferenceInput basicGetRreference()
+  {
+    return rreference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setRreference(DSLReferenceInput newRreference)
+  {
+    DSLReferenceInput oldRreference = rreference;
+    rreference = newRreference;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE, oldRreference, rreference));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLAlternative getShalt()
+  {
+    if (shalt != null && shalt.eIsProxy())
+    {
+      InternalEObject oldShalt = (InternalEObject)shalt;
+      shalt = (DSLAlternative)eResolveProxy(oldShalt);
+      if (shalt != oldShalt)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+      }
+    }
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DSLAlternative basicGetShalt()
+  {
+    return shalt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setShalt(DSLAlternative newShalt)
+  {
+    DSLAlternative oldShalt = shalt;
+    shalt = newShalt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_RULE_ANALYZER__SHALT, oldShalt, shalt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -516,27 +516,27 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER:
         if (resolve) return getAnalyzer();
         return basicGetAnalyzer();
-      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
-        if (resolve) return getKnowledge();
-        return basicGetKnowledge();
       case SasDslPackage.DSL_RULE_ANALYZER__MONITOR:
         if (resolve) return getMonitor();
         return basicGetMonitor();
-      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
-        if (resolve) return getPlanner();
-        return basicGetPlanner();
-      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
-        if (resolve) return getRreference();
-        return basicGetRreference();
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         if (resolve) return getAnalyzer2();
         return basicGetAnalyzer2();
-      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
-        if (resolve) return getShalt();
-        return basicGetShalt();
+      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
+        if (resolve) return getPlanner();
+        return basicGetPlanner();
       case SasDslPackage.DSL_RULE_ANALYZER__EXECUTOR:
         if (resolve) return getExecutor();
         return basicGetExecutor();
+      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
+        if (resolve) return getKnowledge();
+        return basicGetKnowledge();
+      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
+        if (resolve) return getRreference();
+        return basicGetRreference();
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        if (resolve) return getShalt();
+        return basicGetShalt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -554,26 +554,26 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER:
         setAnalyzer((DSLAnalyzer)newValue);
         return;
-      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
-        setKnowledge((DSLKnowledge)newValue);
-        return;
       case SasDslPackage.DSL_RULE_ANALYZER__MONITOR:
         setMonitor((DSLMonitor)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
-        setPlanner((DSLPlanner)newValue);
-        return;
-      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
-        setRreference((DSLReferenceInput)newValue);
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         setAnalyzer2((DSLAnalyzer)newValue);
         return;
-      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
-        setShalt((DSLAlternative)newValue);
+      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
+        setPlanner((DSLPlanner)newValue);
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__EXECUTOR:
         setExecutor((DSLExecutor)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
+        setKnowledge((DSLKnowledge)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
+        setRreference((DSLReferenceInput)newValue);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        setShalt((DSLAlternative)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -592,26 +592,26 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER:
         setAnalyzer((DSLAnalyzer)null);
         return;
-      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
-        setKnowledge((DSLKnowledge)null);
-        return;
       case SasDslPackage.DSL_RULE_ANALYZER__MONITOR:
         setMonitor((DSLMonitor)null);
-        return;
-      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
-        setPlanner((DSLPlanner)null);
-        return;
-      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
-        setRreference((DSLReferenceInput)null);
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         setAnalyzer2((DSLAnalyzer)null);
         return;
-      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
-        setShalt((DSLAlternative)null);
+      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
+        setPlanner((DSLPlanner)null);
         return;
       case SasDslPackage.DSL_RULE_ANALYZER__EXECUTOR:
         setExecutor((DSLExecutor)null);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
+        setKnowledge((DSLKnowledge)null);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
+        setRreference((DSLReferenceInput)null);
+        return;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        setShalt((DSLAlternative)null);
         return;
     }
     super.eUnset(featureID);
@@ -629,20 +629,20 @@ public class DSLRuleAnalyzerImpl extends DSLRulesImpl implements DSLRuleAnalyzer
     {
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER:
         return analyzer != null;
-      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
-        return knowledge != null;
       case SasDslPackage.DSL_RULE_ANALYZER__MONITOR:
         return monitor != null;
-      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
-        return planner != null;
-      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
-        return rreference != null;
       case SasDslPackage.DSL_RULE_ANALYZER__ANALYZER2:
         return analyzer2 != null;
-      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
-        return shalt != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__PLANNER:
+        return planner != null;
       case SasDslPackage.DSL_RULE_ANALYZER__EXECUTOR:
         return executor != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__KNOWLEDGE:
+        return knowledge != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__RREFERENCE:
+        return rreference != null;
+      case SasDslPackage.DSL_RULE_ANALYZER__SHALT:
+        return shalt != null;
     }
     return super.eIsSet(featureID);
   }

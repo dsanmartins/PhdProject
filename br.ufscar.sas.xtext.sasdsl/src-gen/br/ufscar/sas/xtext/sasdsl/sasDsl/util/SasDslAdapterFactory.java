@@ -116,6 +116,11 @@ public class SasDslAdapterFactory extends AdapterFactoryImpl
         return createDSLRuleExecutorAdapter();
       }
       @Override
+      public Adapter caseDSLRuleKnowledge(DSLRuleKnowledge object)
+      {
+        return createDSLRuleKnowledgeAdapter();
+      }
+      @Override
       public Adapter caseDSLRuleMO(DSLRuleMO object)
       {
         return createDSLRuleMOAdapter();
@@ -333,6 +338,21 @@ public class SasDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDSLRuleExecutorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge <em>DSL Rule Knowledge</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
+   * @generated
+   */
+  public Adapter createDSLRuleKnowledgeAdapter()
   {
     return null;
   }

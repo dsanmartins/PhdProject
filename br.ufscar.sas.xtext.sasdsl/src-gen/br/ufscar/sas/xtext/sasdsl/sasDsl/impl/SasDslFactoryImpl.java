@@ -73,6 +73,7 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
       case SasDslPackage.DSL_RULE_ANALYZER: return createDSLRuleAnalyzer();
       case SasDslPackage.DSL_RULE_PLANNER: return createDSLRulePlanner();
       case SasDslPackage.DSL_RULE_EXECUTOR: return createDSLRuleExecutor();
+      case SasDslPackage.DSL_RULE_KNOWLEDGE: return createDSLRuleKnowledge();
       case SasDslPackage.DSL_RULE_MO: return createDSLRuleMO();
       case SasDslPackage.DSL_MANAGING: return createDSLManaging();
       case SasDslPackage.DSL_MANAGED: return createDSLManaged();
@@ -188,6 +189,18 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
   {
     DSLRuleExecutorImpl dslRuleExecutor = new DSLRuleExecutorImpl();
     return dslRuleExecutor;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DSLRuleKnowledge createDSLRuleKnowledge()
+  {
+    DSLRuleKnowledgeImpl dslRuleKnowledge = new DSLRuleKnowledgeImpl();
+    return dslRuleKnowledge;
   }
 
   /**
