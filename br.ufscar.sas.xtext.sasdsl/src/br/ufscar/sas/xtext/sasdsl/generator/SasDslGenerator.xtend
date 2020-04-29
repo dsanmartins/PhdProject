@@ -21,6 +21,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
@@ -29,12 +30,11 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
-import java.util.HashSet
 
 /**
  * Generates code from your model files on save.
@@ -85,10 +85,7 @@ class SasDslGenerator extends AbstractGenerator {
 	var lDomainAnalyzerKnowledge = new ArrayList<DSLKnowledge>
 	var lDomainPlannerKnowledge = new ArrayList<DSLKnowledge>
 	var lDomainExecutorKnowledge = new ArrayList<DSLKnowledge>
-	
-	
-	
-		
+			
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 				
 		for (e : resource.allContents.toIterable.filter(ArchitectureDefinition))
@@ -98,7 +95,7 @@ class SasDslGenerator extends AbstractGenerator {
 			fsa.generateFile("Constraints.ocl", e.compile2)
 		}
 	}
-	
+		
 	def createPath(ArchitectureDefinition architecture){
 	
 		depth.clear();
@@ -107,7 +104,21 @@ class SasDslGenerator extends AbstractGenerator {
 		depth.add(2,0)
 		depth.add(3,0)
 		depth.add(4,0)
-		
+	    lManaging.clear();
+	    lManaged.clear();
+	    lMController.clear(); 
+	    lController.clear();
+	    lMonitor.clear();
+	    lAnalyzer.clear();
+	    lPlanner.clear();
+	    lExecutor.clear();
+	    lEffector.clear();
+	    lKnowledge.clear();
+	    lSensor.clear();
+	    lRInput .clear();
+	    lAlternative.clear();
+	
+	
 		var managing = architecture.managing
 		for (var i=0; i< managing.size; i++){
 			
@@ -2474,188 +2485,229 @@ class SasDslGenerator extends AbstractGenerator {
 		--------------------------------------------------------
 		------------------ Domain rules section ----------------
 		--------------------------------------------------------
-		
+
 		«var hSPlanner = new HashSet<DSLPlanner>(lPlanner)»
 		«var check1 = hSPlanner.removeAll(lDomainMonitorPlanner)»
-		«FOR DSLMonitor dslMonitor: lMonitor»
+		«FOR DSLMonitor dslMonitor: lMonitor» 
+		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner»
 		context StructureModel
 		inv not_access_«dslMonitor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslPlanner.name»')
 		
 		«ENDFOR»
+		«ENDIF»
 		«ENDFOR»
 		«var hsExecutor = new HashSet<DSLExecutor>(lExecutor)»
 		«var check2 = hsExecutor.removeAll(lDomainMonitorExecutor)»
 		«FOR DSLMonitor dslMonitor: lMonitor»
+		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor»
 		context StructureModel
 		inv not_access_«dslMonitor.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslExecutor.name»')
 		
-		«ENDFOR»		
+		«ENDFOR»
+		«ENDIF»		
 		«ENDFOR»
 		«var hsMonitor = new HashSet<DSLMonitor>(lMonitor)»
 		«var check3 = hsMonitor.removeAll(lDomainAnalyzerMonitor)»
 		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor»
 		context StructureModel
 		inv not_access_«dslAnalyzer.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslMonitor.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»	
+		«ENDIF»				
 		«ENDFOR»		
 		«var hsExecutor1 = new HashSet<DSLExecutor>(lExecutor)»
 		«var check4 = hsExecutor1.removeAll(lDomainAnalyzerExecutor)»
 		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor1»
 		context StructureModel
 		inv not_access_«dslAnalyzer.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslExecutor.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»
+		«ENDIF»						
 		«ENDFOR»
 		«var hsMonitor1 = new HashSet<DSLMonitor>(lMonitor)»
 		«var check5 = hsMonitor1.removeAll(lDomainPlannerMonitor)»
 		«FOR DSLPlanner dslPlanner: lPlanner»
+		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor1»
 		context StructureModel
 		inv not_access_«dslPlanner.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslMonitor.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»	
+		«ENDIF»					
 		«ENDFOR»
 		«var hsAnalyzer = new HashSet<DSLAnalyzer>(lAnalyzer)»
 		«var check6  = hsAnalyzer.removeAll(lDomainPlannerAnalyzer)»
 		«FOR DSLPlanner dslPlanner: lPlanner»
+		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslANalyzer: hsAnalyzer»
 		context StructureModel
 		inv not_access_«dslPlanner.name»_«dslANalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslANalyzer.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»	
+		«ENDIF»						
 		«ENDFOR»
 		«var hsMonitor2 = new HashSet<DSLMonitor>(lMonitor)»
 		«var check7 = hsMonitor2.removeAll(lDomainExecutorMonitor)»
 		«FOR DSLExecutor dslExecutor: lExecutor»
+		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor2»
 		context StructureModel
 		inv not_access_«dslExecutor.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslMonitor.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»
+		«ENDIF»				
 		«ENDFOR»	
 		«var hsAnalyzer1 = new HashSet<DSLAnalyzer>(lAnalyzer)»
 		«var check8 = hsAnalyzer1.removeAll(lDomainExecutorAnalyzer)»
 		«FOR DSLExecutor dslExecutor: lExecutor»
+		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer1»
 		context StructureModel
 		inv not_access_«dslExecutor.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslAnalyzer.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»
+		«ENDIF»					
 		«ENDFOR»	
 		«var hSPlanner1 = new HashSet<DSLPlanner>(lPlanner)»
 		«var check9 = hSPlanner1.removeAll(lDomainExecutorPlanner)»
 		«FOR DSLExecutor dslExecutor: lExecutor»
+		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner1»
 		context StructureModel
 		inv not_access_«dslExecutor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslPlanner.name»')
 		
-		«ENDFOR»				
+		«ENDFOR»	
+		«ENDIF»				
 		«ENDFOR»
 		«var hsMonitor3 = new HashSet<DSLMonitor>(lMonitor)»
 		«var check10 = hsMonitor3.removeAll(lDomainKnowledgeMonitor)»
 		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor3»
 		context StructureModel
 		inv not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
 		
-		«ENDFOR»						
+		«ENDFOR»	
+		«ENDIF»						
 		«ENDFOR»				
 		«var hsAnalyzer2 = new HashSet<DSLAnalyzer>(lAnalyzer)»
 		«var check11 = hsAnalyzer2.removeAll(lDomainKnowledgeAnalyzer)»
 		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer2»
 		context StructureModel
 		inv not_access_«dslKnowledge.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslAnalyzer.name»')
 
-		«ENDFOR»				
+		«ENDFOR»
+		«ENDIF»					
 		«ENDFOR»	
 		«var hSPlanner3 = new HashSet<DSLPlanner>(lPlanner)»
 		«var check12 = hSPlanner3.removeAll(lDomainKnowledgePlanner)»
 		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner3»
 		context StructureModel
 		inv not_access_«dslKnowledge.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslPlanner.name»')
 
-		«ENDFOR»						
+		«ENDFOR»
+		«ENDIF»							
 		«ENDFOR»				
 		«var hsExecutor2= new HashSet<DSLExecutor>(lExecutor)»
 		«var check13 = hsExecutor2.removeAll(lDomainKnowledgeExecutor)»
 		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor2»
 		context StructureModel
 		inv not_access_«dslKnowledge.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslExecutor.name»')
 
-		«ENDFOR»						
+		«ENDFOR»
+		«ENDIF»							
 		«ENDFOR»		
 		«var hsAnalyzer4= new HashSet<DSLAnalyzer>(lAnalyzer)»
 		«var check14 = hsAnalyzer4.removeAll(lDomainMonitorAnalyzer)»
 		«FOR DSLMonitor dslMonitor: lMonitor»
+		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer4»
 		context StructureModel
 		inv access_«dslMonitor.name»_«dslAnalyzer.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslAnalyzer.name»') 
 
-		«ENDFOR»								
+		«ENDFOR»
+		«ENDIF»										
 		«ENDFOR»		
 		«var hsPlanner4= new HashSet<DSLPlanner>(lPlanner)»
 		«var check15 = hsPlanner4.removeAll(lDomainAnalyzerPlanner)»
 		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hsPlanner4»
 		context StructureModel
-		inv not_access_«DSLAnalyzer.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslPlanner.name»')
+		inv access_«dslAnalyzer.name»_«dslPlanner.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslPlanner.name»') 
 
-		«ENDFOR»										
+		«ENDFOR»
+		«ENDIF»										
 		«ENDFOR»		
 		«var hdExecutor4= new HashSet<DSLExecutor>(lExecutor)»
 		«var check16 = hdExecutor4.removeAll(lDomainPlannerExecutor)»
 		«FOR DSLPlanner dslPlanner: lPlanner»
+		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hdExecutor4»
 		context StructureModel
-		inv not_access_«dslPlanner.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslExecutor.name»')
+		inv access_«dslPlanner.name»_«dslExecutor.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslExecutor.name»') 
 
-		«ENDFOR»												
+		«ENDFOR»
+		«ENDIF»													
 		«ENDFOR»		
 		«var hsKnowledge3= new HashSet<DSLKnowledge>(lKnowledge)»
 		«var check17 = hsKnowledge3.removeAll(lDomainMonitorKnowledge)»
 		«FOR DSLMonitor dslMonitor: lMonitor»
+		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge3»
 		context StructureModel
-		inv not_access_«dslMonitor.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslKnowledge.name»')
+		inv access_«dslMonitor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslKnowledge.name»') 
 
-		«ENDFOR»														
+		«ENDFOR»
+		«ENDIF»																
 		«ENDFOR»				
 		«var hsKnowledge4= new HashSet<DSLKnowledge>(lKnowledge)»
 		«var check18 = hsKnowledge4.removeAll(lDomainAnalyzerKnowledge)»
 		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge4»
 		context StructureModel
-		inv not_access_«dslAnalyzer.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslKnowledge.name»')
+		inv access_«dslAnalyzer.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslKnowledge.name»') 
 
-		«ENDFOR»														
+		«ENDFOR»		
+		«ENDIF»														
 		«ENDFOR»				
 		«var hsKnowledge5= new HashSet<DSLKnowledge>(lKnowledge)»
 		«var check19 = hsKnowledge5.removeAll(lDomainPlannerKnowledge)»
 		«FOR DSLPlanner dslPlanner: lPlanner»
+		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge5»
 		context StructureModel
-		inv not_access_«dslPlanner.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslKnowledge.name»')
+		inv access_«dslPlanner.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslKnowledge.name»') 
 
-		«ENDFOR»														
+		«ENDFOR»	
+		«ENDIF»															
 		«ENDFOR»			
 		«var hsKnowledge6= new HashSet<DSLKnowledge>(lKnowledge)»
 		«var check20 = hsKnowledge6.removeAll(lDomainExecutorKnowledge)»
 		«FOR DSLExecutor dslExecutor: lExecutor»
+		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge6»
 		context StructureModel
-		inv not_access_«dslExecutor.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslKnowledge.name»')
+		inv access_«dslExecutor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslKnowledge.name»') 
 		
-		«ENDFOR»												
+		«ENDFOR»
+		«ENDIF»														
 		«ENDFOR»
 	endpackage
 		'''
 	}
+	
 }
