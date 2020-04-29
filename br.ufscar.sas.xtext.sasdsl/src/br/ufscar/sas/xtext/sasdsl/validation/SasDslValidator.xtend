@@ -865,6 +865,21 @@ class SasDslValidator extends AbstractSasDslValidator {
 	}
 	
 	@Check
+	def checkAccessAnalyzer2Executor(DSLRuleMonitor dslRuleAnalyzer){
+		
+		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
+		if (!dslDomain.isEmpty)
+		{
+			val queryClass = new QueryClass(MainView.getDatabaseUrl())
+			val rule = queryClass.ruleIsActive("Analyzer","Executor");
+			if (Boolean.valueOf(rule.get(1))) 
+				if (dslRuleAnalyzer.executor !== null && dslRuleAnalyzer.access.equals("must-not-use"))
+					warning("The rule is violating the domain rule number  " + rule.get(0), SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Executor)
+		}	
+		
+	}
+	
+	@Check
 	def checkAccessPlanner2Executor(DSLRulePlanner dslRulePlanner){
 		
 		var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList

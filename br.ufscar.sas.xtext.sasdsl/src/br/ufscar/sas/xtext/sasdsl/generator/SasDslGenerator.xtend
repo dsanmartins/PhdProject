@@ -34,6 +34,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
+import java.util.HashSet
 
 /**
  * Generates code from your model files on save.
@@ -42,26 +43,51 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge
  */
 class SasDslGenerator extends AbstractGenerator {
 
-	var structureElementPath = new HashMap<String,String>();
-	var outAggregatedPath = new HashMap<String,String>();
-	var inAggregatedPath = new HashMap<String,String>();
-	var aggregatedPath = new HashMap<String,String>();
+	var structureElementPath = new HashMap<String,String>()
+	var outAggregatedPath = new HashMap<String,String>()
+	var inAggregatedPath = new HashMap<String,String>()
+	var aggregatedPath = new HashMap<String,String>()
 
-	var depth = newArrayList(5);
-	var lManaging = new ArrayList<DSLManaging>();
-	var lManaged =  new ArrayList<DSLManaged>();
-	var lMController =  new ArrayList<DSLManagerController>();
-	var lController =  new ArrayList<DSLController>();
-	var lMonitor =  new ArrayList<DSLMonitor>();
-	var lAnalyzer =  new ArrayList<DSLAnalyzer>();
-	var lPlanner =  new ArrayList<DSLPlanner>();
-	var lExecutor =  new ArrayList<DSLExecutor>();
-	var lEffector =  new ArrayList<DSLEffector>();
-	var lKnowledge =  new ArrayList<DSLKnowledge>();
-	var lSensor =  new ArrayList<DSLSensor>();
-	var lMOutput =  new ArrayList<DSLMeasuredOutput>();
-	var lRInput =  new ArrayList<DSLReferenceInput>();
-	var lAlternative =  new ArrayList<DSLAlternative>();
+	var depth = newArrayList(5)
+	var lManaging = new ArrayList<DSLManaging>()
+	var lManaged =  new ArrayList<DSLManaged>()
+	var lMController =  new ArrayList<DSLManagerController>()
+	var lController =  new ArrayList<DSLController>()
+	var lMonitor =  new ArrayList<DSLMonitor>()
+	var lAnalyzer =  new ArrayList<DSLAnalyzer>()
+	var lPlanner =  new ArrayList<DSLPlanner>()
+	var lExecutor =  new ArrayList<DSLExecutor>()
+	var lEffector =  new ArrayList<DSLEffector>()
+	var lKnowledge =  new ArrayList<DSLKnowledge>()
+	var lSensor =  new ArrayList<DSLSensor>()
+	var lMOutput =  new ArrayList<DSLMeasuredOutput>()
+	var lRInput =  new ArrayList<DSLReferenceInput>()
+	var lAlternative =  new ArrayList<DSLAlternative>()
+	
+	var lDomainMonitorPlanner = new ArrayList<DSLPlanner>()
+	var lDomainMonitorExecutor = new ArrayList<DSLExecutor>()
+	var lDomainAnalyzerMonitor = new ArrayList<DSLMonitor>()
+	var lDomainAnalyzerExecutor = new ArrayList<DSLExecutor>()
+	var lDomainPlannerMonitor = new ArrayList<DSLMonitor>()
+	var lDomainPlannerAnalyzer = new ArrayList<DSLAnalyzer>()
+	var lDomainExecutorMonitor = new ArrayList<DSLMonitor>()
+	var lDomainExecutorAnalyzer = new ArrayList<DSLAnalyzer>()
+	var lDomainExecutorPlanner = new ArrayList<DSLPlanner>()
+	var lDomainKnowledgeMonitor = new ArrayList<DSLMonitor>()
+	var lDomainKnowledgeAnalyzer= new ArrayList<DSLAnalyzer>()
+	var lDomainKnowledgePlanner = new ArrayList<DSLPlanner>()
+	var lDomainKnowledgeExecutor = new ArrayList<DSLExecutor>()
+	
+	var lDomainMonitorAnalyzer = new ArrayList<DSLAnalyzer>
+	var lDomainAnalyzerPlanner = new ArrayList<DSLPlanner>
+	var lDomainPlannerExecutor = new ArrayList<DSLExecutor>
+	var lDomainMonitorKnowledge = new ArrayList<DSLKnowledge>
+	var lDomainAnalyzerKnowledge = new ArrayList<DSLKnowledge>
+	var lDomainPlannerKnowledge = new ArrayList<DSLKnowledge>
+	var lDomainExecutorKnowledge = new ArrayList<DSLKnowledge>
+	
+	
+	
 		
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 				
@@ -1708,19 +1734,6 @@ class SasDslGenerator extends AbstractGenerator {
 	}
 	
 	def compile2(ArchitectureDefinition architectureDefinition){
-	
-		var resource = architectureDefinition.eResource
-		for (sc : resource.allContents.filter(typeof(DSLController)).toIterable)
-		{
-			var dslDomain = sc.eContents.filter(DSLDomainRule).toList
-			for (domain: dslDomain)
-			{
-				System.out.println(sc.name + " " + domain.value)
-			}
-			
-			
-			
-		}
 		
 		'''
 	import 'http://www.eclipse.org/MoDisco/kdm/core'
@@ -1842,7 +1855,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«ELSEIF controller.eContainer instanceof DSLManagerController»
 		«var mcontroller = controller.eContainer as DSLManagerController»
 		context StructureModel
-				inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')->
+		inv composite_«controller.name»: Component.allInstances()->select(c| c.name='«controller.name»' and c.stereotype->asSequence()->first().name = 'Loop Manager')->
 												 exists(d|d.oclContainer().oclAsType(Subsystem).name='«mcontroller.name»' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = 'Loop Manager')
 		«ENDIF»
 		«ENDFOR»	
@@ -1939,7 +1952,7 @@ class SasDslGenerator extends AbstractGenerator {
 	
 		--------------------------------------------------------
 		-- Check access rules of adaptive system abstractions --
-		-------------------------------------------------------
+		--------------------------------------------------------
 		
 		«var rules = architectureDefinition.rules»
 		«FOR DSLRules dslRule: rules»
@@ -1951,9 +1964,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleController»
@@ -1964,9 +1979,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleMonitor»
@@ -1977,9 +1994,15 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainMonitorAnalyzer.add(dslRuleMonitor.analyzer)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.knowledge !== null»
@@ -1988,31 +2011,49 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainMonitorKnowledge.add(dslRuleMonitor.knowledge)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.planner !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.planner»
+		«var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainMonitorPlanner.add(dslRuleMonitor.planner)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.executor !== null»
 		«var firstArgument = dslRuleMonitor.monitor»
 		«var secondArgument = dslRuleMonitor.executor»
+		«var dslDomain = dslRuleMonitor.monitor.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainMonitorExecutor.add(dslRuleMonitor.executor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.monitor2 !== null»
@@ -2021,9 +2062,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleMonitor.sensor !== null»
@@ -2032,9 +2075,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleAnalyzer»
@@ -2042,12 +2087,18 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRuleAnalyzer.monitor !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.monitor»
+		«var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainAnalyzerMonitor.add(dslRuleAnalyzer.monitor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.knowledge !== null»
@@ -2056,9 +2107,15 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainAnalyzerKnowledge.add(dslRuleAnalyzer.knowledge)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.rreference !== null»
@@ -2067,9 +2124,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.planner !== null»
@@ -2078,9 +2137,15 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainAnalyzerPlanner.add(dslRuleAnalyzer.planner)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.analyzer2 !== null»
@@ -2089,9 +2154,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.shalt !== null»
@@ -2100,20 +2167,28 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleAnalyzer.executor !== null»
 		«var firstArgument = dslRuleAnalyzer.analyzer»
 		«var secondArgument = dslRuleAnalyzer.executor»
+		«var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainAnalyzerExecutor.add(dslRuleAnalyzer.executor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRulePlanner»
@@ -2121,12 +2196,18 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRulePlanner.analyzer !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.analyzer»
+		«var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainPlannerAnalyzer.add(dslRulePlanner.analyzer)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.planner2 !== null»
@@ -2135,20 +2216,28 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.monitor !== null»
 		«var firstArgument = dslRulePlanner.planner»
 		«var secondArgument = dslRulePlanner.monitor»
+		«var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainPlannerMonitor.add(dslRulePlanner.monitor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.shalt !== null»
@@ -2157,9 +2246,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.executor !== null»
@@ -2168,9 +2259,15 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainPlannerExecutor.add(dslRulePlanner.executor)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRulePlanner.knowledge !== null»
@@ -2179,9 +2276,15 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRulePlanner.planner.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainPlannerKnowledge.add(dslRulePlanner.knowledge)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleExecutor»
@@ -2192,42 +2295,66 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
+		«var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainExecutorKnowledge.add(dslRuleExecutor.knowledge)»
+		«ENDIF»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.planner !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.planner»
+		«var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainExecutorPlanner.add(dslRuleExecutor.planner)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.monitor !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.monitor»
+		«var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainExecutorMonitor.add(dslRuleExecutor.monitor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.analyzer !== null»
 		«var firstArgument = dslRuleExecutor.executor»
 		«var secondArgument = dslRuleExecutor.analyzer»
+		«var dslDomain = dslRuleExecutor.executor.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainExecutorAnalyzer.add(dslRuleExecutor.analyzer)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.effector !== null»
@@ -2236,9 +2363,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleExecutor.executor2 !== null»
@@ -2247,9 +2376,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleMO»
@@ -2260,9 +2391,11 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRule.access.equals("must-use")»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ELSEIF dslRule instanceof DSLRuleKnowledge»
@@ -2270,48 +2403,257 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF dslRuleKnowledge.monitor !== null»
 		«var firstArgument = dslRuleKnowledge.knowledge»
 		«var secondArgument = dslRuleKnowledge.monitor»
+		«var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainKnowledgeMonitor.add(dslRuleKnowledge.monitor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleKnowledge.analyzer !== null»
 		«var firstArgument = dslRuleKnowledge.knowledge»
 		«var secondArgument = dslRuleKnowledge.analyzer»
+		«var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainKnowledgeAnalyzer.add(dslRuleKnowledge.analyzer)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleKnowledge.planner !== null»
 		«var firstArgument = dslRuleKnowledge.knowledge»
 		«var secondArgument = dslRuleKnowledge.planner»
+		«var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainKnowledgePlanner.add(dslRuleKnowledge.planner)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«IF dslRuleKnowledge.executor !== null»
 		«var firstArgument = dslRuleKnowledge.knowledge»
+		«var dslDomain = dslRuleKnowledge.knowledge.eContainer.eContents.filter(DSLDomainRule).toList»
 		«var secondArgument = dslRuleKnowledge.executor»
 		«IF dslRule.access.equals("must-use")»
+		«IF !dslDomain.isEmpty»
+		«var add = lDomainKnowledgeExecutor.add(dslRuleKnowledge.executor)»
+		«ENDIF»
 		context StructureModel
 		inv access_«firstArgument.name»_«secondArgument.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»') 
+		
 		«ELSEIF dslRule.access.equals("must-not-use")»
 		context StructureModel
 		inv not_access_«firstArgument.name»_«secondArgument.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«firstArgument.name»' and c.to.name='«secondArgument.name»')
+		
 		«ENDIF»
 		«ENDIF»
 		«ENDIF»
+		«ENDFOR»
+		
+		--------------------------------------------------------
+		------------------ Domain rules section ----------------
+		--------------------------------------------------------
+		
+		«var hSPlanner = new HashSet<DSLPlanner>(lPlanner)»
+		«var check1 = hSPlanner.removeAll(lDomainMonitorPlanner)»
+		«FOR DSLMonitor dslMonitor: lMonitor»
+		«FOR DSLPlanner dslPlanner: hSPlanner»
+		context StructureModel
+		inv not_access_«dslMonitor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslPlanner.name»')
+		
+		«ENDFOR»
+		«ENDFOR»
+		«var hsExecutor = new HashSet<DSLExecutor>(lExecutor)»
+		«var check2 = hsExecutor.removeAll(lDomainMonitorExecutor)»
+		«FOR DSLMonitor dslMonitor: lMonitor»
+		«FOR DSLExecutor dslExecutor: hsExecutor»
+		context StructureModel
+		inv not_access_«dslMonitor.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslExecutor.name»')
+		
+		«ENDFOR»		
+		«ENDFOR»
+		«var hsMonitor = new HashSet<DSLMonitor>(lMonitor)»
+		«var check3 = hsMonitor.removeAll(lDomainAnalyzerMonitor)»
+		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«FOR DSLMonitor dslMonitor: hsMonitor»
+		context StructureModel
+		inv not_access_«dslAnalyzer.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslMonitor.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»		
+		«var hsExecutor1 = new HashSet<DSLExecutor>(lExecutor)»
+		«var check4 = hsExecutor1.removeAll(lDomainAnalyzerExecutor)»
+		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«FOR DSLExecutor dslExecutor: hsExecutor1»
+		context StructureModel
+		inv not_access_«dslAnalyzer.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslExecutor.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»
+		«var hsMonitor1 = new HashSet<DSLMonitor>(lMonitor)»
+		«var check5 = hsMonitor1.removeAll(lDomainPlannerMonitor)»
+		«FOR DSLPlanner dslPlanner: lPlanner»
+		«FOR DSLMonitor dslMonitor: hsMonitor1»
+		context StructureModel
+		inv not_access_«dslPlanner.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslMonitor.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»
+		«var hsAnalyzer = new HashSet<DSLAnalyzer>(lAnalyzer)»
+		«var check6  = hsAnalyzer.removeAll(lDomainPlannerAnalyzer)»
+		«FOR DSLPlanner dslPlanner: lPlanner»
+		«FOR DSLAnalyzer dslANalyzer: hsAnalyzer»
+		context StructureModel
+		inv not_access_«dslPlanner.name»_«dslANalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslANalyzer.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»
+		«var hsMonitor2 = new HashSet<DSLMonitor>(lMonitor)»
+		«var check7 = hsMonitor2.removeAll(lDomainExecutorMonitor)»
+		«FOR DSLExecutor dslExecutor: lExecutor»
+		«FOR DSLMonitor dslMonitor: hsMonitor2»
+		context StructureModel
+		inv not_access_«dslExecutor.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslMonitor.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»	
+		«var hsAnalyzer1 = new HashSet<DSLAnalyzer>(lAnalyzer)»
+		«var check8 = hsAnalyzer1.removeAll(lDomainExecutorAnalyzer)»
+		«FOR DSLExecutor dslExecutor: lExecutor»
+		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer1»
+		context StructureModel
+		inv not_access_«dslExecutor.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslAnalyzer.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»	
+		«var hSPlanner1 = new HashSet<DSLPlanner>(lPlanner)»
+		«var check9 = hSPlanner1.removeAll(lDomainExecutorPlanner)»
+		«FOR DSLExecutor dslExecutor: lExecutor»
+		«FOR DSLPlanner dslPlanner: hSPlanner1»
+		context StructureModel
+		inv not_access_«dslExecutor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslPlanner.name»')
+		
+		«ENDFOR»				
+		«ENDFOR»
+		«var hsMonitor3 = new HashSet<DSLMonitor>(lMonitor)»
+		«var check10 = hsMonitor3.removeAll(lDomainKnowledgeMonitor)»
+		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«FOR DSLMonitor dslMonitor: hsMonitor3»
+		context StructureModel
+		inv not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
+		
+		«ENDFOR»						
+		«ENDFOR»				
+		«var hsAnalyzer2 = new HashSet<DSLAnalyzer>(lAnalyzer)»
+		«var check11 = hsAnalyzer2.removeAll(lDomainKnowledgeAnalyzer)»
+		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer2»
+		context StructureModel
+		inv not_access_«dslKnowledge.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslAnalyzer.name»')
+
+		«ENDFOR»				
+		«ENDFOR»	
+		«var hSPlanner3 = new HashSet<DSLPlanner>(lPlanner)»
+		«var check12 = hSPlanner3.removeAll(lDomainKnowledgePlanner)»
+		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«FOR DSLPlanner dslPlanner: hSPlanner3»
+		context StructureModel
+		inv not_access_«dslKnowledge.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslPlanner.name»')
+
+		«ENDFOR»						
+		«ENDFOR»				
+		«var hsExecutor2= new HashSet<DSLExecutor>(lExecutor)»
+		«var check13 = hsExecutor2.removeAll(lDomainKnowledgeExecutor)»
+		«FOR DSLKnowledge dslKnowledge: lKnowledge»
+		«FOR DSLExecutor dslExecutor: hsExecutor2»
+		context StructureModel
+		inv not_access_«dslKnowledge.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslExecutor.name»')
+
+		«ENDFOR»						
+		«ENDFOR»		
+		«var hsAnalyzer4= new HashSet<DSLAnalyzer>(lAnalyzer)»
+		«var check14 = hsAnalyzer4.removeAll(lDomainMonitorAnalyzer)»
+		«FOR DSLMonitor dslMonitor: lMonitor»
+		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer4»
+		context StructureModel
+		inv access_«dslMonitor.name»_«dslAnalyzer.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslAnalyzer.name»') 
+
+		«ENDFOR»								
+		«ENDFOR»		
+		«var hsPlanner4= new HashSet<DSLPlanner>(lPlanner)»
+		«var check15 = hsPlanner4.removeAll(lDomainAnalyzerPlanner)»
+		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«FOR DSLPlanner dslPlanner: hsPlanner4»
+		context StructureModel
+		inv not_access_«DSLAnalyzer.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslPlanner.name»')
+
+		«ENDFOR»										
+		«ENDFOR»		
+		«var hdExecutor4= new HashSet<DSLExecutor>(lExecutor)»
+		«var check16 = hdExecutor4.removeAll(lDomainPlannerExecutor)»
+		«FOR DSLPlanner dslPlanner: lPlanner»
+		«FOR DSLExecutor dslExecutor: hdExecutor4»
+		context StructureModel
+		inv not_access_«dslPlanner.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslExecutor.name»')
+
+		«ENDFOR»												
+		«ENDFOR»		
+		«var hsKnowledge3= new HashSet<DSLKnowledge>(lKnowledge)»
+		«var check17 = hsKnowledge3.removeAll(lDomainMonitorKnowledge)»
+		«FOR DSLMonitor dslMonitor: lMonitor»
+		«FOR DSLKnowledge dslKnowledge: hsKnowledge3»
+		context StructureModel
+		inv not_access_«dslMonitor.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslKnowledge.name»')
+
+		«ENDFOR»														
+		«ENDFOR»				
+		«var hsKnowledge4= new HashSet<DSLKnowledge>(lKnowledge)»
+		«var check18 = hsKnowledge4.removeAll(lDomainAnalyzerKnowledge)»
+		«FOR DSLAnalyzer dslAnalyzer: lAnalyzer»
+		«FOR DSLKnowledge dslKnowledge: hsKnowledge4»
+		context StructureModel
+		inv not_access_«dslAnalyzer.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslKnowledge.name»')
+
+		«ENDFOR»														
+		«ENDFOR»				
+		«var hsKnowledge5= new HashSet<DSLKnowledge>(lKnowledge)»
+		«var check19 = hsKnowledge5.removeAll(lDomainPlannerKnowledge)»
+		«FOR DSLPlanner dslPlanner: lPlanner»
+		«FOR DSLKnowledge dslKnowledge: hsKnowledge5»
+		context StructureModel
+		inv not_access_«dslPlanner.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslKnowledge.name»')
+
+		«ENDFOR»														
+		«ENDFOR»			
+		«var hsKnowledge6= new HashSet<DSLKnowledge>(lKnowledge)»
+		«var check20 = hsKnowledge6.removeAll(lDomainExecutorKnowledge)»
+		«FOR DSLExecutor dslExecutor: lExecutor»
+		«FOR DSLKnowledge dslKnowledge: hsKnowledge6»
+		context StructureModel
+		inv not_access_«dslExecutor.name»_«dslKnowledge.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslKnowledge.name»')
+		
+		«ENDFOR»												
 		«ENDFOR»
 	endpackage
 		'''

@@ -1305,6 +1305,30 @@ public class SasDslValidator extends AbstractSasDslValidator {
   }
   
   @Check
+  public void checkAccessAnalyzer2Executor(final DSLRuleMonitor dslRuleAnalyzer) {
+    try {
+      List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+      boolean _isEmpty = dslDomain.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        String _databaseUrl = MainView.getDatabaseUrl();
+        final QueryClass queryClass = new QueryClass(_databaseUrl);
+        final List<String> rule = queryClass.ruleIsActive("Analyzer", "Executor");
+        Boolean _valueOf = Boolean.valueOf(rule.get(1));
+        if ((_valueOf).booleanValue()) {
+          if (((dslRuleAnalyzer.getExecutor() != null) && dslRuleAnalyzer.getAccess().equals("must-not-use"))) {
+            String _get = rule.get(0);
+            String _plus = ("The rule is violating the domain rule number  " + _get);
+            this.warning(_plus, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Executor());
+          }
+        }
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Check
   public void checkAccessPlanner2Executor(final DSLRulePlanner dslRulePlanner) {
     try {
       List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));

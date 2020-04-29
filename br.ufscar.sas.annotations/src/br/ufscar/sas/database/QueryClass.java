@@ -87,6 +87,7 @@ public class QueryClass {
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u219B','Planner', 'true');");
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Monitor', '\u219B','Executor', 'true');");
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Analyzer', '\u219B','Monitor', 'true');");
+		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Analyzer', '\u219B','Executor', 'true');");
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u219B','Monitor', 'true');");
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Planner', '\u219B','Analyzer', 'true');");
 		mydb.executeStmt("insert into domain_rules(abstraction1, access_type, abstraction2, switch) values ('Executor', '\u219B','Monitor', 'true');");
