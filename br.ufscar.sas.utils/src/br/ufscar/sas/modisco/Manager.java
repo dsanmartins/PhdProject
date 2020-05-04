@@ -662,20 +662,20 @@ public class Manager   {
 	public String getStereotype(String name) {
 
 		switch (name) {
-		case "Monitor" : return "/0/@extension.0/@stereotype.0";
-		case "Analyzer" : return "/0/@extension.0/@stereotype.1";
-		case "Planner" : return "/0/@extension.0/@stereotype.2";
-		case "Executor" : return "/0/@extension.0/@stereotype.3";
-		case "Knowledge" : return "/0/@extension.0/@stereotype.4";
-		case "ReferenceInput" : return "/0/@extension.0/@stereotype.5";
-		case "MeasuredOutput" : return "/0/@extension.0/@stereotype.6";
-		case "LoopManager" : return "/0/@extension.0/@stereotype.7";
-		case "Loop" : return "/0/@extension.0/@stereotype.8";
-		case "Sensor" : return "/0/@extension.0/@stereotype.9";
-		case "Effector" : return "/0/@extension.0/@stereotype.10";
-		case "Managing" : return "/0/@extension.0/@stereotype.11";
-		case "Managed" : return "/0/@extension.0/@stereotype.12";
-		case "Alternative" : return "/0/@extension.0/@stereotype.13";
+		case "monitor" : return "/0/@extension.0/@stereotype.0";
+		case "analyzer" : return "/0/@extension.0/@stereotype.1";
+		case "planner" : return "/0/@extension.0/@stereotype.2";
+		case "executor" : return "/0/@extension.0/@stereotype.3";
+		case "knowledge" : return "/0/@extension.0/@stereotype.4";
+		case "referenceinput" : return "/0/@extension.0/@stereotype.5";
+		case "measuredoutput" : return "/0/@extension.0/@stereotype.6";
+		case "loopmanager" : return "/0/@extension.0/@stereotype.7";
+		case "loop" : return "/0/@extension.0/@stereotype.8";
+		case "sensor" : return "/0/@extension.0/@stereotype.9";
+		case "effector" : return "/0/@extension.0/@stereotype.10";
+		case "managing" : return "/0/@extension.0/@stereotype.11";
+		case "managed" : return "/0/@extension.0/@stereotype.12";
+		case "alternative" : return "/0/@extension.0/@stereotype.13";
 		default: return "";
 		}
 	}

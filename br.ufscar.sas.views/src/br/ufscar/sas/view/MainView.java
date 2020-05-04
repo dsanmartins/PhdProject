@@ -263,9 +263,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 								if (tree.getSelection()[0].getParentItem() == null) {
 									treeItem = new TreeItem(tree.getSelection()[0],0);
-									treeItem.setText(tree.getSelection()[0].getText() + "_" + 1);
+									treeItem.setText(tree.getSelection()[0].getText().toLowerCase() + "_" + 1);
 								}
-
 							}
 							else{
 
@@ -285,14 +284,14 @@ public class MainView extends ViewPart implements IPartListener2 {
 								int number = max;
 								number = number + 1;
 								treeItem = new TreeItem(tree.getSelection()[0],0);
-								treeItem.setText(tree.getSelection()[0].getText() + "_" + number);
+								treeItem.setText(tree.getSelection()[0].getText().toLowerCase() + "_" + number);
 
 							}
 
 							try {
 
 								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-								queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText());
+								queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText().toLowerCase());
 
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
@@ -300,6 +299,15 @@ public class MainView extends ViewPart implements IPartListener2 {
 							}
 
 							tree.getSelection()[0].setExpanded(true);
+							try {
+								treeViewer.getTree().clearAll(true);
+								
+								treeViewer.setInput(getParentAbstactions());
+							} catch (Exception e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+
 						}	
 					});
 

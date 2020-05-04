@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -161,6 +162,10 @@ public class SasDslGenerator extends AbstractGenerator {
     this.lSensor.clear();
     this.lRInput.clear();
     this.lAlternative.clear();
+    this.outAggregatedPath.clear();
+    this.inAggregatedPath.clear();
+    this.structureElementPath.clear();
+    this.aggregatedPath.clear();
     EList<DSLManaging> managing = architecture.getManaging();
     for (int i = 0; (i < managing.size()); i++) {
       {
@@ -268,7 +273,7 @@ public class SasDslGenerator extends AbstractGenerator {
                     EList<DSLAlternative> selfHeal = kno.getShalt();
                     for (int s = 0; (s < selfHeal.size()); s++) {
                       {
-                        Integer level4 = this.depth.get(3);
+                        Integer level4 = this.depth.get(4);
                         DSLAlternative r = selfHeal.get(s);
                         this.structureElementPath.put(r.getName(), ((((((((((((("//@model.1/@structureElement." + level0) + 
                           "/") + "@structureElement.") + level1) + 
@@ -284,6 +289,7 @@ public class SasDslGenerator extends AbstractGenerator {
                     this.depth.set(3, level3);
                   }
                 }
+                this.depth.set(3, Integer.valueOf(0));
                 level2++;
                 this.depth.set(2, level2);
               }
@@ -475,9 +481,12 @@ public class SasDslGenerator extends AbstractGenerator {
           if ((r instanceof DSLRuleController)) {
             String pathAggregated = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName());
             if ((pathAggregated != null)) {
-              int _length = pathAggregated.length();
+              int _length = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName()).split(Pattern.quote("//")).length;
               int _minus = (_length - 1);
-              pathAggregated = pathAggregated.substring(0, _minus);
+              rController = _minus;
+              int _length_1 = pathAggregated.length();
+              int _minus_1 = (_length_1 - 1);
+              pathAggregated = pathAggregated.substring(0, _minus_1);
               String _get = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
               String _plus = (pathAggregated + _get);
               String _plus_1 = (_plus + "/@aggregated.");
@@ -490,9 +499,9 @@ public class SasDslGenerator extends AbstractGenerator {
               if (_tripleNotEquals) {
                 String pathInAggregated = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
                 if ((pathInAggregated != null)) {
-                  int _length_1 = pathInAggregated.length();
-                  int _minus_1 = (_length_1 - 1);
-                  pathInAggregated = pathInAggregated.substring(0, _minus_1);
+                  int _length_2 = pathInAggregated.length();
+                  int _minus_2 = (_length_2 - 1);
+                  pathInAggregated = pathInAggregated.substring(0, _minus_2);
                   String _get_1 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
                   String _plus_4 = (pathInAggregated + _get_1);
                   String _plus_5 = (_plus_4 + "/@aggregated.");
@@ -523,9 +532,9 @@ public class SasDslGenerator extends AbstractGenerator {
               if (_tripleNotEquals_1) {
                 String pathInAggregated_1 = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
                 if ((pathInAggregated_1 != null)) {
-                  int _length_2 = pathInAggregated_1.length();
-                  int _minus_2 = (_length_2 - 1);
-                  pathInAggregated_1 = pathInAggregated_1.substring(0, _minus_2);
+                  int _length_3 = pathInAggregated_1.length();
+                  int _minus_3 = (_length_3 - 1);
+                  pathInAggregated_1 = pathInAggregated_1.substring(0, _minus_3);
                   String _get_4 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
                   String _plus_16 = (pathInAggregated_1 + _get_4);
                   String _plus_17 = (_plus_16 + "/@aggregated.");
@@ -573,9 +582,12 @@ public class SasDslGenerator extends AbstractGenerator {
             if ((r instanceof DSLRuleMonitor)) {
               String pathAggregated_1 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
               if ((pathAggregated_1 != null)) {
-                int _length_3 = pathAggregated_1.length();
-                int _minus_3 = (_length_3 - 1);
-                pathAggregated_1 = pathAggregated_1.substring(0, _minus_3);
+                int _length_4 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName()).split(Pattern.quote("//")).length;
+                int _minus_4 = (_length_4 - 1);
+                rMonitor = _minus_4;
+                int _length_5 = pathAggregated_1.length();
+                int _minus_5 = (_length_5 - 1);
+                pathAggregated_1 = pathAggregated_1.substring(0, _minus_5);
                 String _get_9 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                 String _plus_30 = (pathAggregated_1 + _get_9);
                 String _plus_31 = (_plus_30 + "/@aggregated.");
@@ -588,9 +600,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_4) {
                   String pathInAggregated_2 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
                   if ((pathInAggregated_2 != null)) {
-                    int _length_4 = pathInAggregated_2.length();
-                    int _minus_4 = (_length_4 - 1);
-                    pathInAggregated_2 = pathInAggregated_2.substring(0, _minus_4);
+                    int _length_6 = pathInAggregated_2.length();
+                    int _minus_6 = (_length_6 - 1);
+                    pathInAggregated_2 = pathInAggregated_2.substring(0, _minus_6);
                     String _get_10 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_34 = (pathInAggregated_2 + _get_10);
                     String _plus_35 = (_plus_34 + "/@aggregated.");
@@ -613,9 +625,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_5) {
                   String pathInAggregated_3 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
                   if ((pathInAggregated_3 != null)) {
-                    int _length_5 = pathInAggregated_3.length();
-                    int _minus_5 = (_length_5 - 1);
-                    pathInAggregated_3 = pathInAggregated_3.substring(0, _minus_5);
+                    int _length_7 = pathInAggregated_3.length();
+                    int _minus_7 = (_length_7 - 1);
+                    pathInAggregated_3 = pathInAggregated_3.substring(0, _minus_7);
                     String _get_12 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_42 = (pathInAggregated_3 + _get_12);
                     String _plus_43 = (_plus_42 + "/@aggregated.");
@@ -638,9 +650,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_6) {
                   String pathInAggregated_4 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
                   if ((pathInAggregated_4 != null)) {
-                    int _length_6 = pathInAggregated_4.length();
-                    int _minus_6 = (_length_6 - 1);
-                    pathInAggregated_4 = pathInAggregated_4.substring(0, _minus_6);
+                    int _length_8 = pathInAggregated_4.length();
+                    int _minus_8 = (_length_8 - 1);
+                    pathInAggregated_4 = pathInAggregated_4.substring(0, _minus_8);
                     String _get_14 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_50 = (pathInAggregated_4 + _get_14);
                     String _plus_51 = (_plus_50 + "/@aggregated.");
@@ -663,9 +675,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_7) {
                   String pathInAggregated_5 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
                   if ((pathInAggregated_5 != null)) {
-                    int _length_7 = pathInAggregated_5.length();
-                    int _minus_7 = (_length_7 - 1);
-                    pathInAggregated_5 = pathInAggregated_5.substring(0, _minus_7);
+                    int _length_9 = pathInAggregated_5.length();
+                    int _minus_9 = (_length_9 - 1);
+                    pathInAggregated_5 = pathInAggregated_5.substring(0, _minus_9);
                     String _get_16 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_58 = (pathInAggregated_5 + _get_16);
                     String _plus_59 = (_plus_58 + "/@aggregated.");
@@ -680,6 +692,7 @@ public class SasDslGenerator extends AbstractGenerator {
                     String _plus_64 = (_plus_63 + Integer.valueOf(rMonitor));
                     String _plus_65 = (_plus_64 + " \'");
                     pathInAggregated_5 = _plus_65;
+                    System.out.println(pathInAggregated_5);
                     this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
                   }
                 }
@@ -688,9 +701,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_8) {
                   String pathInAggregated_6 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
                   if ((pathInAggregated_6 != null)) {
-                    int _length_8 = pathInAggregated_6.length();
-                    int _minus_8 = (_length_8 - 1);
-                    pathInAggregated_6 = pathInAggregated_6.substring(0, _minus_8);
+                    int _length_10 = pathInAggregated_6.length();
+                    int _minus_10 = (_length_10 - 1);
+                    pathInAggregated_6 = pathInAggregated_6.substring(0, _minus_10);
                     String _get_18 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_66 = (pathInAggregated_6 + _get_18);
                     String _plus_67 = (_plus_66 + "/@aggregated.");
@@ -713,9 +726,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_9) {
                   String pathInAggregated_7 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
                   if ((pathInAggregated_7 != null)) {
-                    int _length_9 = pathInAggregated_7.length();
-                    int _minus_9 = (_length_9 - 1);
-                    pathInAggregated_7 = pathInAggregated_7.substring(0, _minus_9);
+                    int _length_11 = pathInAggregated_7.length();
+                    int _minus_11 = (_length_11 - 1);
+                    pathInAggregated_7 = pathInAggregated_7.substring(0, _minus_11);
                     String _get_20 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_74 = (pathInAggregated_7 + _get_20);
                     String _plus_75 = (_plus_74 + "/@aggregated.");
@@ -746,9 +759,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_10) {
                   String pathInAggregated_8 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
                   if ((pathInAggregated_8 != null)) {
-                    int _length_10 = pathInAggregated_8.length();
-                    int _minus_10 = (_length_10 - 1);
-                    pathInAggregated_8 = pathInAggregated_8.substring(0, _minus_10);
+                    int _length_12 = pathInAggregated_8.length();
+                    int _minus_12 = (_length_12 - 1);
+                    pathInAggregated_8 = pathInAggregated_8.substring(0, _minus_12);
                     String _get_23 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_86 = (pathInAggregated_8 + _get_23);
                     String _plus_87 = (_plus_86 + "/@aggregated.");
@@ -765,9 +778,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_11) {
                   String pathInAggregated_9 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
                   if ((pathInAggregated_9 != null)) {
-                    int _length_11 = pathInAggregated_9.length();
-                    int _minus_11 = (_length_11 - 1);
-                    pathInAggregated_9 = pathInAggregated_9.substring(0, _minus_11);
+                    int _length_13 = pathInAggregated_9.length();
+                    int _minus_13 = (_length_13 - 1);
+                    pathInAggregated_9 = pathInAggregated_9.substring(0, _minus_13);
                     String _get_24 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_90 = (pathInAggregated_9 + _get_24);
                     String _plus_91 = (_plus_90 + "/@aggregated.");
@@ -784,9 +797,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_12) {
                   String pathInAggregated_10 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
                   if ((pathInAggregated_10 != null)) {
-                    int _length_12 = pathInAggregated_10.length();
-                    int _minus_12 = (_length_12 - 1);
-                    pathInAggregated_10 = pathInAggregated_10.substring(0, _minus_12);
+                    int _length_14 = pathInAggregated_10.length();
+                    int _minus_14 = (_length_14 - 1);
+                    pathInAggregated_10 = pathInAggregated_10.substring(0, _minus_14);
                     String _get_25 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_94 = (pathInAggregated_10 + _get_25);
                     String _plus_95 = (_plus_94 + "/@aggregated.");
@@ -803,9 +816,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_13) {
                   String pathInAggregated_11 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
                   if ((pathInAggregated_11 != null)) {
-                    int _length_13 = pathInAggregated_11.length();
-                    int _minus_13 = (_length_13 - 1);
-                    pathInAggregated_11 = pathInAggregated_11.substring(0, _minus_13);
+                    int _length_15 = pathInAggregated_11.length();
+                    int _minus_15 = (_length_15 - 1);
+                    pathInAggregated_11 = pathInAggregated_11.substring(0, _minus_15);
                     String _get_26 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_98 = (pathInAggregated_11 + _get_26);
                     String _plus_99 = (_plus_98 + "/@aggregated.");
@@ -822,9 +835,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_14) {
                   String pathInAggregated_12 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
                   if ((pathInAggregated_12 != null)) {
-                    int _length_14 = pathInAggregated_12.length();
-                    int _minus_14 = (_length_14 - 1);
-                    pathInAggregated_12 = pathInAggregated_12.substring(0, _minus_14);
+                    int _length_16 = pathInAggregated_12.length();
+                    int _minus_16 = (_length_16 - 1);
+                    pathInAggregated_12 = pathInAggregated_12.substring(0, _minus_16);
                     String _get_27 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_102 = (pathInAggregated_12 + _get_27);
                     String _plus_103 = (_plus_102 + "/@aggregated.");
@@ -841,9 +854,9 @@ public class SasDslGenerator extends AbstractGenerator {
                 if (_tripleNotEquals_15) {
                   String pathInAggregated_13 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
                   if ((pathInAggregated_13 != null)) {
-                    int _length_15 = pathInAggregated_13.length();
-                    int _minus_15 = (_length_15 - 1);
-                    pathInAggregated_13 = pathInAggregated_13.substring(0, _minus_15);
+                    int _length_17 = pathInAggregated_13.length();
+                    int _minus_17 = (_length_17 - 1);
+                    pathInAggregated_13 = pathInAggregated_13.substring(0, _minus_17);
                     String _get_28 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                     String _plus_106 = (pathInAggregated_13 + _get_28);
                     String _plus_107 = (_plus_106 + "/@aggregated.");
@@ -856,7 +869,6 @@ public class SasDslGenerator extends AbstractGenerator {
                   }
                 }
               }
-              rMonitor++;
               String aggregated_1 = this.aggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
               if ((aggregated_1 != null)) {
                 DSLAnalyzer _analyzer_2 = ((DSLRuleMonitor)r).getAnalyzer();
@@ -1021,9 +1033,12 @@ public class SasDslGenerator extends AbstractGenerator {
               if ((r instanceof DSLRuleAnalyzer)) {
                 String pathAggregated_2 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                 if ((pathAggregated_2 != null)) {
-                  int _length_16 = pathAggregated_2.length();
-                  int _minus_16 = (_length_16 - 1);
-                  pathAggregated_2 = pathAggregated_2.substring(0, _minus_16);
+                  int _length_18 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName()).split(Pattern.quote("//")).length;
+                  int _minus_18 = (_length_18 - 1);
+                  rAnalyzer = _minus_18;
+                  int _length_19 = pathAggregated_2.length();
+                  int _minus_19 = (_length_19 - 1);
+                  pathAggregated_2 = pathAggregated_2.substring(0, _minus_19);
                   String _get_53 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                   String _plus_170 = (pathAggregated_2 + _get_53);
                   String _plus_171 = (_plus_170 + "/@aggregated.");
@@ -1036,9 +1051,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_28) {
                     String pathInAggregated_14 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
                     if ((pathInAggregated_14 != null)) {
-                      int _length_17 = pathInAggregated_14.length();
-                      int _minus_17 = (_length_17 - 1);
-                      pathInAggregated_14 = pathInAggregated_14.substring(0, _minus_17);
+                      int _length_20 = pathInAggregated_14.length();
+                      int _minus_20 = (_length_20 - 1);
+                      pathInAggregated_14 = pathInAggregated_14.substring(0, _minus_20);
                       String _get_54 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_174 = (pathInAggregated_14 + _get_54);
                       String _plus_175 = (_plus_174 + "/@aggregated.");
@@ -1061,9 +1076,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_29) {
                     String pathInAggregated_15 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
                     if ((pathInAggregated_15 != null)) {
-                      int _length_18 = pathInAggregated_15.length();
-                      int _minus_18 = (_length_18 - 1);
-                      pathInAggregated_15 = pathInAggregated_15.substring(0, _minus_18);
+                      int _length_21 = pathInAggregated_15.length();
+                      int _minus_21 = (_length_21 - 1);
+                      pathInAggregated_15 = pathInAggregated_15.substring(0, _minus_21);
                       String _get_56 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_182 = (pathInAggregated_15 + _get_56);
                       String _plus_183 = (_plus_182 + "/@aggregated.");
@@ -1086,9 +1101,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_30) {
                     String pathInAggregated_16 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
                     if ((pathInAggregated_16 != null)) {
-                      int _length_19 = pathInAggregated_16.length();
-                      int _minus_19 = (_length_19 - 1);
-                      pathInAggregated_16 = pathInAggregated_16.substring(0, _minus_19);
+                      int _length_22 = pathInAggregated_16.length();
+                      int _minus_22 = (_length_22 - 1);
+                      pathInAggregated_16 = pathInAggregated_16.substring(0, _minus_22);
                       String _get_58 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_190 = (pathInAggregated_16 + _get_58);
                       String _plus_191 = (_plus_190 + "/@aggregated.");
@@ -1111,9 +1126,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_31) {
                     String pathInAggregated_17 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
                     if ((pathInAggregated_17 != null)) {
-                      int _length_20 = pathInAggregated_17.length();
-                      int _minus_20 = (_length_20 - 1);
-                      pathInAggregated_17 = pathInAggregated_17.substring(0, _minus_20);
+                      int _length_23 = pathInAggregated_17.length();
+                      int _minus_23 = (_length_23 - 1);
+                      pathInAggregated_17 = pathInAggregated_17.substring(0, _minus_23);
                       String _get_60 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_198 = (pathInAggregated_17 + _get_60);
                       String _plus_199 = (_plus_198 + "/@aggregated.");
@@ -1136,9 +1151,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_32) {
                     String pathInAggregated_18 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
                     if ((pathInAggregated_18 != null)) {
-                      int _length_21 = pathInAggregated_18.length();
-                      int _minus_21 = (_length_21 - 1);
-                      pathInAggregated_18 = pathInAggregated_18.substring(0, _minus_21);
+                      int _length_24 = pathInAggregated_18.length();
+                      int _minus_24 = (_length_24 - 1);
+                      pathInAggregated_18 = pathInAggregated_18.substring(0, _minus_24);
                       String _get_62 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_206 = (pathInAggregated_18 + _get_62);
                       String _plus_207 = (_plus_206 + "/@aggregated.");
@@ -1161,9 +1176,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_33) {
                     String pathInAggregated_19 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
                     if ((pathInAggregated_19 != null)) {
-                      int _length_22 = pathInAggregated_19.length();
-                      int _minus_22 = (_length_22 - 1);
-                      pathInAggregated_19 = pathInAggregated_19.substring(0, _minus_22);
+                      int _length_25 = pathInAggregated_19.length();
+                      int _minus_25 = (_length_25 - 1);
+                      pathInAggregated_19 = pathInAggregated_19.substring(0, _minus_25);
                       String _get_64 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_214 = (pathInAggregated_19 + _get_64);
                       String _plus_215 = (_plus_214 + "/@aggregated.");
@@ -1186,9 +1201,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_34) {
                     String pathInAggregated_20 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
                     if ((pathInAggregated_20 != null)) {
-                      int _length_23 = pathInAggregated_20.length();
-                      int _minus_23 = (_length_23 - 1);
-                      pathInAggregated_20 = pathInAggregated_20.substring(0, _minus_23);
+                      int _length_26 = pathInAggregated_20.length();
+                      int _minus_26 = (_length_26 - 1);
+                      pathInAggregated_20 = pathInAggregated_20.substring(0, _minus_26);
                       String _get_66 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_222 = (pathInAggregated_20 + _get_66);
                       String _plus_223 = (_plus_222 + "/@aggregated.");
@@ -1219,9 +1234,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_35) {
                     String pathInAggregated_21 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
                     if ((pathInAggregated_21 != null)) {
-                      int _length_24 = pathInAggregated_21.length();
-                      int _minus_24 = (_length_24 - 1);
-                      pathInAggregated_21 = pathInAggregated_21.substring(0, _minus_24);
+                      int _length_27 = pathInAggregated_21.length();
+                      int _minus_27 = (_length_27 - 1);
+                      pathInAggregated_21 = pathInAggregated_21.substring(0, _minus_27);
                       String _get_69 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_234 = (pathInAggregated_21 + _get_69);
                       String _plus_235 = (_plus_234 + "/@aggregated.");
@@ -1238,9 +1253,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_36) {
                     String pathInAggregated_22 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
                     if ((pathInAggregated_22 != null)) {
-                      int _length_25 = pathInAggregated_22.length();
-                      int _minus_25 = (_length_25 - 1);
-                      pathInAggregated_22 = pathInAggregated_22.substring(0, _minus_25);
+                      int _length_28 = pathInAggregated_22.length();
+                      int _minus_28 = (_length_28 - 1);
+                      pathInAggregated_22 = pathInAggregated_22.substring(0, _minus_28);
                       String _get_70 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_238 = (pathInAggregated_22 + _get_70);
                       String _plus_239 = (_plus_238 + "/@aggregated.");
@@ -1257,9 +1272,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_37) {
                     String pathInAggregated_23 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
                     if ((pathInAggregated_23 != null)) {
-                      int _length_26 = pathInAggregated_23.length();
-                      int _minus_26 = (_length_26 - 1);
-                      pathInAggregated_23 = pathInAggregated_23.substring(0, _minus_26);
+                      int _length_29 = pathInAggregated_23.length();
+                      int _minus_29 = (_length_29 - 1);
+                      pathInAggregated_23 = pathInAggregated_23.substring(0, _minus_29);
                       String _get_71 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_242 = (pathInAggregated_23 + _get_71);
                       String _plus_243 = (_plus_242 + "/@aggregated.");
@@ -1276,9 +1291,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_38) {
                     String pathInAggregated_24 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
                     if ((pathInAggregated_24 != null)) {
-                      int _length_27 = pathInAggregated_24.length();
-                      int _minus_27 = (_length_27 - 1);
-                      pathInAggregated_24 = pathInAggregated_24.substring(0, _minus_27);
+                      int _length_30 = pathInAggregated_24.length();
+                      int _minus_30 = (_length_30 - 1);
+                      pathInAggregated_24 = pathInAggregated_24.substring(0, _minus_30);
                       String _get_72 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_246 = (pathInAggregated_24 + _get_72);
                       String _plus_247 = (_plus_246 + "/@aggregated.");
@@ -1295,9 +1310,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_39) {
                     String pathInAggregated_25 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
                     if ((pathInAggregated_25 != null)) {
-                      int _length_28 = pathInAggregated_25.length();
-                      int _minus_28 = (_length_28 - 1);
-                      pathInAggregated_25 = pathInAggregated_25.substring(0, _minus_28);
+                      int _length_31 = pathInAggregated_25.length();
+                      int _minus_31 = (_length_31 - 1);
+                      pathInAggregated_25 = pathInAggregated_25.substring(0, _minus_31);
                       String _get_73 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_250 = (pathInAggregated_25 + _get_73);
                       String _plus_251 = (_plus_250 + "/@aggregated.");
@@ -1314,9 +1329,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_40) {
                     String pathInAggregated_26 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
                     if ((pathInAggregated_26 != null)) {
-                      int _length_29 = pathInAggregated_26.length();
-                      int _minus_29 = (_length_29 - 1);
-                      pathInAggregated_26 = pathInAggregated_26.substring(0, _minus_29);
+                      int _length_32 = pathInAggregated_26.length();
+                      int _minus_32 = (_length_32 - 1);
+                      pathInAggregated_26 = pathInAggregated_26.substring(0, _minus_32);
                       String _get_74 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_254 = (pathInAggregated_26 + _get_74);
                       String _plus_255 = (_plus_254 + "/@aggregated.");
@@ -1333,9 +1348,9 @@ public class SasDslGenerator extends AbstractGenerator {
                   if (_tripleNotEquals_41) {
                     String pathInAggregated_27 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
                     if ((pathInAggregated_27 != null)) {
-                      int _length_30 = pathInAggregated_27.length();
-                      int _minus_30 = (_length_30 - 1);
-                      pathInAggregated_27 = pathInAggregated_27.substring(0, _minus_30);
+                      int _length_33 = pathInAggregated_27.length();
+                      int _minus_33 = (_length_33 - 1);
+                      pathInAggregated_27 = pathInAggregated_27.substring(0, _minus_33);
                       String _get_75 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                       String _plus_258 = (pathInAggregated_27 + _get_75);
                       String _plus_259 = (_plus_258 + "/@aggregated.");
@@ -1348,7 +1363,6 @@ public class SasDslGenerator extends AbstractGenerator {
                     }
                   }
                 }
-                rAnalyzer++;
                 String aggregated_2 = this.aggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                 if ((aggregated_2 != null)) {
                   DSLMonitor _monitor_2 = ((DSLRuleAnalyzer)r).getMonitor();
@@ -1539,9 +1553,12 @@ public class SasDslGenerator extends AbstractGenerator {
                 if ((r instanceof DSLRulePlanner)) {
                   String pathAggregated_3 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
                   if ((pathAggregated_3 != null)) {
-                    int _length_31 = pathAggregated_3.length();
-                    int _minus_31 = (_length_31 - 1);
-                    pathAggregated_3 = pathAggregated_3.substring(0, _minus_31);
+                    int _length_34 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName()).split(Pattern.quote("//")).length;
+                    int _minus_34 = (_length_34 - 1);
+                    rPlanner = _minus_34;
+                    int _length_35 = pathAggregated_3.length();
+                    int _minus_35 = (_length_35 - 1);
+                    pathAggregated_3 = pathAggregated_3.substring(0, _minus_35);
                     String _get_104 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                     String _plus_332 = (pathAggregated_3 + _get_104);
                     String _plus_333 = (_plus_332 + "/@aggregated.");
@@ -1554,9 +1571,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_56) {
                       String pathInAggregated_28 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
                       if ((pathInAggregated_28 != null)) {
-                        int _length_32 = pathInAggregated_28.length();
-                        int _minus_32 = (_length_32 - 1);
-                        pathInAggregated_28 = pathInAggregated_28.substring(0, _minus_32);
+                        int _length_36 = pathInAggregated_28.length();
+                        int _minus_36 = (_length_36 - 1);
+                        pathInAggregated_28 = pathInAggregated_28.substring(0, _minus_36);
                         String _get_105 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_336 = (pathInAggregated_28 + _get_105);
                         String _plus_337 = (_plus_336 + "/@aggregated.");
@@ -1579,9 +1596,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_57) {
                       String pathInAggregated_29 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
                       if ((pathInAggregated_29 != null)) {
-                        int _length_33 = pathInAggregated_29.length();
-                        int _minus_33 = (_length_33 - 1);
-                        pathInAggregated_29 = pathInAggregated_29.substring(0, _minus_33);
+                        int _length_37 = pathInAggregated_29.length();
+                        int _minus_37 = (_length_37 - 1);
+                        pathInAggregated_29 = pathInAggregated_29.substring(0, _minus_37);
                         String _get_107 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_344 = (pathInAggregated_29 + _get_107);
                         String _plus_345 = (_plus_344 + "/@aggregated.");
@@ -1604,9 +1621,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_58) {
                       String pathInAggregated_30 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
                       if ((pathInAggregated_30 != null)) {
-                        int _length_34 = pathInAggregated_30.length();
-                        int _minus_34 = (_length_34 - 1);
-                        pathInAggregated_30 = pathInAggregated_30.substring(0, _minus_34);
+                        int _length_38 = pathInAggregated_30.length();
+                        int _minus_38 = (_length_38 - 1);
+                        pathInAggregated_30 = pathInAggregated_30.substring(0, _minus_38);
                         String _get_109 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_352 = (pathInAggregated_30 + _get_109);
                         String _plus_353 = (_plus_352 + "/@aggregated.");
@@ -1629,9 +1646,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_59) {
                       String pathInAggregated_31 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
                       if ((pathInAggregated_31 != null)) {
-                        int _length_35 = pathInAggregated_31.length();
-                        int _minus_35 = (_length_35 - 1);
-                        pathInAggregated_31 = pathInAggregated_31.substring(0, _minus_35);
+                        int _length_39 = pathInAggregated_31.length();
+                        int _minus_39 = (_length_39 - 1);
+                        pathInAggregated_31 = pathInAggregated_31.substring(0, _minus_39);
                         String _get_111 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_360 = (pathInAggregated_31 + _get_111);
                         String _plus_361 = (_plus_360 + "/@aggregated.");
@@ -1654,9 +1671,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_60) {
                       String pathInAggregated_32 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
                       if ((pathInAggregated_32 != null)) {
-                        int _length_36 = pathInAggregated_32.length();
-                        int _minus_36 = (_length_36 - 1);
-                        pathInAggregated_32 = pathInAggregated_32.substring(0, _minus_36);
+                        int _length_40 = pathInAggregated_32.length();
+                        int _minus_40 = (_length_40 - 1);
+                        pathInAggregated_32 = pathInAggregated_32.substring(0, _minus_40);
                         String _get_113 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_368 = (pathInAggregated_32 + _get_113);
                         String _plus_369 = (_plus_368 + "/@aggregated.");
@@ -1679,9 +1696,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_61) {
                       String pathInAggregated_33 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
                       if ((pathInAggregated_33 != null)) {
-                        int _length_37 = pathInAggregated_33.length();
-                        int _minus_37 = (_length_37 - 1);
-                        pathInAggregated_33 = pathInAggregated_33.substring(0, _minus_37);
+                        int _length_41 = pathInAggregated_33.length();
+                        int _minus_41 = (_length_41 - 1);
+                        pathInAggregated_33 = pathInAggregated_33.substring(0, _minus_41);
                         String _get_115 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_376 = (pathInAggregated_33 + _get_115);
                         String _plus_377 = (_plus_376 + "/@aggregated.");
@@ -1712,9 +1729,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_62) {
                       String pathInAggregated_34 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
                       if ((pathInAggregated_34 != null)) {
-                        int _length_38 = pathInAggregated_34.length();
-                        int _minus_38 = (_length_38 - 1);
-                        pathInAggregated_34 = pathInAggregated_34.substring(0, _minus_38);
+                        int _length_42 = pathInAggregated_34.length();
+                        int _minus_42 = (_length_42 - 1);
+                        pathInAggregated_34 = pathInAggregated_34.substring(0, _minus_42);
                         String _get_118 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_388 = (pathInAggregated_34 + _get_118);
                         String _plus_389 = (_plus_388 + "/@aggregated.");
@@ -1731,9 +1748,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_63) {
                       String pathInAggregated_35 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
                       if ((pathInAggregated_35 != null)) {
-                        int _length_39 = pathInAggregated_35.length();
-                        int _minus_39 = (_length_39 - 1);
-                        pathInAggregated_35 = pathInAggregated_35.substring(0, _minus_39);
+                        int _length_43 = pathInAggregated_35.length();
+                        int _minus_43 = (_length_43 - 1);
+                        pathInAggregated_35 = pathInAggregated_35.substring(0, _minus_43);
                         String _get_119 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_392 = (pathInAggregated_35 + _get_119);
                         String _plus_393 = (_plus_392 + "/@aggregated.");
@@ -1750,9 +1767,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_64) {
                       String pathInAggregated_36 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
                       if ((pathInAggregated_36 != null)) {
-                        int _length_40 = pathInAggregated_36.length();
-                        int _minus_40 = (_length_40 - 1);
-                        pathInAggregated_36 = pathInAggregated_36.substring(0, _minus_40);
+                        int _length_44 = pathInAggregated_36.length();
+                        int _minus_44 = (_length_44 - 1);
+                        pathInAggregated_36 = pathInAggregated_36.substring(0, _minus_44);
                         String _get_120 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_396 = (pathInAggregated_36 + _get_120);
                         String _plus_397 = (_plus_396 + "/@aggregated.");
@@ -1769,9 +1786,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_65) {
                       String pathInAggregated_37 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
                       if ((pathInAggregated_37 != null)) {
-                        int _length_41 = pathInAggregated_37.length();
-                        int _minus_41 = (_length_41 - 1);
-                        pathInAggregated_37 = pathInAggregated_37.substring(0, _minus_41);
+                        int _length_45 = pathInAggregated_37.length();
+                        int _minus_45 = (_length_45 - 1);
+                        pathInAggregated_37 = pathInAggregated_37.substring(0, _minus_45);
                         String _get_121 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_400 = (pathInAggregated_37 + _get_121);
                         String _plus_401 = (_plus_400 + "/@aggregated.");
@@ -1788,9 +1805,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_66) {
                       String pathInAggregated_38 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
                       if ((pathInAggregated_38 != null)) {
-                        int _length_42 = pathInAggregated_38.length();
-                        int _minus_42 = (_length_42 - 1);
-                        pathInAggregated_38 = pathInAggregated_38.substring(0, _minus_42);
+                        int _length_46 = pathInAggregated_38.length();
+                        int _minus_46 = (_length_46 - 1);
+                        pathInAggregated_38 = pathInAggregated_38.substring(0, _minus_46);
                         String _get_122 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_404 = (pathInAggregated_38 + _get_122);
                         String _plus_405 = (_plus_404 + "/@aggregated.");
@@ -1807,9 +1824,9 @@ public class SasDslGenerator extends AbstractGenerator {
                     if (_tripleNotEquals_67) {
                       String pathInAggregated_39 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
                       if ((pathInAggregated_39 != null)) {
-                        int _length_43 = pathInAggregated_39.length();
-                        int _minus_43 = (_length_43 - 1);
-                        pathInAggregated_39 = pathInAggregated_39.substring(0, _minus_43);
+                        int _length_47 = pathInAggregated_39.length();
+                        int _minus_47 = (_length_47 - 1);
+                        pathInAggregated_39 = pathInAggregated_39.substring(0, _minus_47);
                         String _get_123 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                         String _plus_408 = (pathInAggregated_39 + _get_123);
                         String _plus_409 = (_plus_408 + "/@aggregated.");
@@ -1822,7 +1839,6 @@ public class SasDslGenerator extends AbstractGenerator {
                       }
                     }
                   }
-                  rPlanner++;
                   String aggregated_3 = this.aggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
                   if ((aggregated_3 != null)) {
                     DSLAnalyzer _analyzer_6 = ((DSLRulePlanner)r).getAnalyzer();
@@ -1987,9 +2003,12 @@ public class SasDslGenerator extends AbstractGenerator {
                   if ((r instanceof DSLRuleExecutor)) {
                     String pathAggregated_4 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                     if ((pathAggregated_4 != null)) {
-                      int _length_44 = pathAggregated_4.length();
-                      int _minus_44 = (_length_44 - 1);
-                      pathAggregated_4 = pathAggregated_4.substring(0, _minus_44);
+                      int _length_48 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName()).split(Pattern.quote("//")).length;
+                      int _minus_48 = (_length_48 - 1);
+                      rExecutor = _minus_48;
+                      int _length_49 = pathAggregated_4.length();
+                      int _minus_49 = (_length_49 - 1);
+                      pathAggregated_4 = pathAggregated_4.substring(0, _minus_49);
                       String _get_148 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                       String _plus_472 = (pathAggregated_4 + _get_148);
                       String _plus_473 = (_plus_472 + "/@aggregated.");
@@ -2002,9 +2021,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_80) {
                         String pathInAggregated_40 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
                         if ((pathInAggregated_40 != null)) {
-                          int _length_45 = pathInAggregated_40.length();
-                          int _minus_45 = (_length_45 - 1);
-                          pathInAggregated_40 = pathInAggregated_40.substring(0, _minus_45);
+                          int _length_50 = pathInAggregated_40.length();
+                          int _minus_50 = (_length_50 - 1);
+                          pathInAggregated_40 = pathInAggregated_40.substring(0, _minus_50);
                           String _get_149 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_476 = (pathInAggregated_40 + _get_149);
                           String _plus_477 = (_plus_476 + "/@aggregated.");
@@ -2027,9 +2046,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_81) {
                         String pathInAggregated_41 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
                         if ((pathInAggregated_41 != null)) {
-                          int _length_46 = pathInAggregated_41.length();
-                          int _minus_46 = (_length_46 - 1);
-                          pathInAggregated_41 = pathInAggregated_41.substring(0, _minus_46);
+                          int _length_51 = pathInAggregated_41.length();
+                          int _minus_51 = (_length_51 - 1);
+                          pathInAggregated_41 = pathInAggregated_41.substring(0, _minus_51);
                           String _get_151 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_484 = (pathInAggregated_41 + _get_151);
                           String _plus_485 = (_plus_484 + "/@aggregated.");
@@ -2052,9 +2071,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_82) {
                         String pathInAggregated_42 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
                         if ((pathInAggregated_42 != null)) {
-                          int _length_47 = pathInAggregated_42.length();
-                          int _minus_47 = (_length_47 - 1);
-                          pathInAggregated_42 = pathInAggregated_42.substring(0, _minus_47);
+                          int _length_52 = pathInAggregated_42.length();
+                          int _minus_52 = (_length_52 - 1);
+                          pathInAggregated_42 = pathInAggregated_42.substring(0, _minus_52);
                           String _get_153 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_492 = (pathInAggregated_42 + _get_153);
                           String _plus_493 = (_plus_492 + "/@aggregated.");
@@ -2077,9 +2096,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_83) {
                         String pathInAggregated_43 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
                         if ((pathInAggregated_43 != null)) {
-                          int _length_48 = pathInAggregated_43.length();
-                          int _minus_48 = (_length_48 - 1);
-                          pathInAggregated_43 = pathInAggregated_43.substring(0, _minus_48);
+                          int _length_53 = pathInAggregated_43.length();
+                          int _minus_53 = (_length_53 - 1);
+                          pathInAggregated_43 = pathInAggregated_43.substring(0, _minus_53);
                           String _get_155 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_500 = (pathInAggregated_43 + _get_155);
                           String _plus_501 = (_plus_500 + "/@aggregated.");
@@ -2102,9 +2121,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_84) {
                         String pathInAggregated_44 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
                         if ((pathInAggregated_44 != null)) {
-                          int _length_49 = pathInAggregated_44.length();
-                          int _minus_49 = (_length_49 - 1);
-                          pathInAggregated_44 = pathInAggregated_44.substring(0, _minus_49);
+                          int _length_54 = pathInAggregated_44.length();
+                          int _minus_54 = (_length_54 - 1);
+                          pathInAggregated_44 = pathInAggregated_44.substring(0, _minus_54);
                           String _get_157 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_508 = (pathInAggregated_44 + _get_157);
                           String _plus_509 = (_plus_508 + "/@aggregated.");
@@ -2127,9 +2146,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_85) {
                         String pathInAggregated_45 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
                         if ((pathInAggregated_45 != null)) {
-                          int _length_50 = pathInAggregated_45.length();
-                          int _minus_50 = (_length_50 - 1);
-                          pathInAggregated_45 = pathInAggregated_45.substring(0, _minus_50);
+                          int _length_55 = pathInAggregated_45.length();
+                          int _minus_55 = (_length_55 - 1);
+                          pathInAggregated_45 = pathInAggregated_45.substring(0, _minus_55);
                           String _get_159 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_516 = (pathInAggregated_45 + _get_159);
                           String _plus_517 = (_plus_516 + "/@aggregated.");
@@ -2160,9 +2179,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_86) {
                         String pathInAggregated_46 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
                         if ((pathInAggregated_46 != null)) {
-                          int _length_51 = pathInAggregated_46.length();
-                          int _minus_51 = (_length_51 - 1);
-                          pathInAggregated_46 = pathInAggregated_46.substring(0, _minus_51);
+                          int _length_56 = pathInAggregated_46.length();
+                          int _minus_56 = (_length_56 - 1);
+                          pathInAggregated_46 = pathInAggregated_46.substring(0, _minus_56);
                           String _get_162 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_528 = (pathInAggregated_46 + _get_162);
                           String _plus_529 = (_plus_528 + "/@aggregated.");
@@ -2179,9 +2198,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_87) {
                         String pathInAggregated_47 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
                         if ((pathInAggregated_47 != null)) {
-                          int _length_52 = pathInAggregated_47.length();
-                          int _minus_52 = (_length_52 - 1);
-                          pathInAggregated_47 = pathInAggregated_47.substring(0, _minus_52);
+                          int _length_57 = pathInAggregated_47.length();
+                          int _minus_57 = (_length_57 - 1);
+                          pathInAggregated_47 = pathInAggregated_47.substring(0, _minus_57);
                           String _get_163 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_532 = (pathInAggregated_47 + _get_163);
                           String _plus_533 = (_plus_532 + "/@aggregated.");
@@ -2198,9 +2217,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_88) {
                         String pathInAggregated_48 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
                         if ((pathInAggregated_48 != null)) {
-                          int _length_53 = pathInAggregated_48.length();
-                          int _minus_53 = (_length_53 - 1);
-                          pathInAggregated_48 = pathInAggregated_48.substring(0, _minus_53);
+                          int _length_58 = pathInAggregated_48.length();
+                          int _minus_58 = (_length_58 - 1);
+                          pathInAggregated_48 = pathInAggregated_48.substring(0, _minus_58);
                           String _get_164 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_536 = (pathInAggregated_48 + _get_164);
                           String _plus_537 = (_plus_536 + "/@aggregated.");
@@ -2217,9 +2236,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_89) {
                         String pathInAggregated_49 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
                         if ((pathInAggregated_49 != null)) {
-                          int _length_54 = pathInAggregated_49.length();
-                          int _minus_54 = (_length_54 - 1);
-                          pathInAggregated_49 = pathInAggregated_49.substring(0, _minus_54);
+                          int _length_59 = pathInAggregated_49.length();
+                          int _minus_59 = (_length_59 - 1);
+                          pathInAggregated_49 = pathInAggregated_49.substring(0, _minus_59);
                           String _get_165 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_540 = (pathInAggregated_49 + _get_165);
                           String _plus_541 = (_plus_540 + "/@aggregated.");
@@ -2236,9 +2255,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_90) {
                         String pathInAggregated_50 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getMonitor().getName());
                         if ((pathInAggregated_50 != null)) {
-                          int _length_55 = pathInAggregated_50.length();
-                          int _minus_55 = (_length_55 - 1);
-                          pathInAggregated_50 = pathInAggregated_50.substring(0, _minus_55);
+                          int _length_60 = pathInAggregated_50.length();
+                          int _minus_60 = (_length_60 - 1);
+                          pathInAggregated_50 = pathInAggregated_50.substring(0, _minus_60);
                           String _get_166 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_544 = (pathInAggregated_50 + _get_166);
                           String _plus_545 = (_plus_544 + "/@aggregated.");
@@ -2255,9 +2274,9 @@ public class SasDslGenerator extends AbstractGenerator {
                       if (_tripleNotEquals_91) {
                         String pathInAggregated_51 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
                         if ((pathInAggregated_51 != null)) {
-                          int _length_56 = pathInAggregated_51.length();
-                          int _minus_56 = (_length_56 - 1);
-                          pathInAggregated_51 = pathInAggregated_51.substring(0, _minus_56);
+                          int _length_61 = pathInAggregated_51.length();
+                          int _minus_61 = (_length_61 - 1);
+                          pathInAggregated_51 = pathInAggregated_51.substring(0, _minus_61);
                           String _get_167 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                           String _plus_548 = (pathInAggregated_51 + _get_167);
                           String _plus_549 = (_plus_548 + "/@aggregated.");
@@ -2270,7 +2289,6 @@ public class SasDslGenerator extends AbstractGenerator {
                         }
                       }
                     }
-                    rExecutor++;
                     String aggregated_4 = this.aggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                     if ((aggregated_4 != null)) {
                       DSLPlanner _planner_10 = ((DSLRuleExecutor)r).getPlanner();
@@ -2435,9 +2453,12 @@ public class SasDslGenerator extends AbstractGenerator {
                     if ((r instanceof DSLRuleMO)) {
                       String pathAggregated_5 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
                       if ((pathAggregated_5 != null)) {
-                        int _length_57 = pathAggregated_5.length();
-                        int _minus_57 = (_length_57 - 1);
-                        pathAggregated_5 = pathAggregated_5.substring(0, _minus_57);
+                        int _length_62 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName()).split(Pattern.quote("//")).length;
+                        int _minus_62 = (_length_62 - 1);
+                        rMO = _minus_62;
+                        int _length_63 = pathAggregated_5.length();
+                        int _minus_63 = (_length_63 - 1);
+                        pathAggregated_5 = pathAggregated_5.substring(0, _minus_63);
                         String _get_192 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
                         String _plus_612 = (pathAggregated_5 + _get_192);
                         String _plus_613 = (_plus_612 + "/@aggregated.");
@@ -2450,9 +2471,9 @@ public class SasDslGenerator extends AbstractGenerator {
                         if (_tripleNotEquals_104) {
                           String pathInAggregated_52 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
                           if ((pathInAggregated_52 != null)) {
-                            int _length_58 = pathInAggregated_52.length();
-                            int _minus_58 = (_length_58 - 1);
-                            pathInAggregated_52 = pathInAggregated_52.substring(0, _minus_58);
+                            int _length_64 = pathInAggregated_52.length();
+                            int _minus_64 = (_length_64 - 1);
+                            pathInAggregated_52 = pathInAggregated_52.substring(0, _minus_64);
                             String _get_193 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
                             String _plus_616 = (pathInAggregated_52 + _get_193);
                             String _plus_617 = (_plus_616 + "/@aggregated.");
@@ -2483,9 +2504,9 @@ public class SasDslGenerator extends AbstractGenerator {
                         if (_tripleNotEquals_105) {
                           String pathInAggregated_53 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
                           if ((pathInAggregated_53 != null)) {
-                            int _length_59 = pathInAggregated_53.length();
-                            int _minus_59 = (_length_59 - 1);
-                            pathInAggregated_53 = pathInAggregated_53.substring(0, _minus_59);
+                            int _length_65 = pathInAggregated_53.length();
+                            int _minus_65 = (_length_65 - 1);
+                            pathInAggregated_53 = pathInAggregated_53.substring(0, _minus_65);
                             String _get_196 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
                             String _plus_628 = (pathInAggregated_53 + _get_196);
                             String _plus_629 = (_plus_628 + "/@aggregated.");
@@ -2498,7 +2519,6 @@ public class SasDslGenerator extends AbstractGenerator {
                           }
                         }
                       }
-                      rMO++;
                       String aggregated_5 = this.aggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
                       if ((aggregated_5 != null)) {
                         DSLSensor _sensor_4 = ((DSLRuleMO)r).getSensor();
@@ -2533,9 +2553,12 @@ public class SasDslGenerator extends AbstractGenerator {
                       if ((r instanceof DSLRuleMController)) {
                         String pathAggregated_6 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1());
                         if ((pathAggregated_6 != null)) {
-                          int _length_60 = pathAggregated_6.length();
-                          int _minus_60 = (_length_60 - 1);
-                          pathAggregated_6 = pathAggregated_6.substring(0, _minus_60);
+                          int _length_66 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName()).split(Pattern.quote("//")).length;
+                          int _minus_66 = (_length_66 - 1);
+                          rMController = _minus_66;
+                          int _length_67 = pathAggregated_6.length();
+                          int _minus_67 = (_length_67 - 1);
+                          pathAggregated_6 = pathAggregated_6.substring(0, _minus_67);
                           String _get_201 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
                           String _plus_642 = (pathAggregated_6 + _get_201);
                           String _plus_643 = (_plus_642 + "/@aggregated.");
@@ -2548,9 +2571,9 @@ public class SasDslGenerator extends AbstractGenerator {
                           if (_tripleNotEquals_108) {
                             String pathInAggregated_54 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
                             if ((pathInAggregated_54 != null)) {
-                              int _length_61 = pathInAggregated_54.length();
-                              int _minus_61 = (_length_61 - 1);
-                              pathInAggregated_54 = pathInAggregated_54.substring(0, _minus_61);
+                              int _length_68 = pathInAggregated_54.length();
+                              int _minus_68 = (_length_68 - 1);
+                              pathInAggregated_54 = pathInAggregated_54.substring(0, _minus_68);
                               String _get_202 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
                               String _plus_646 = (pathInAggregated_54 + _get_202);
                               String _plus_647 = (_plus_646 + "/@aggregated.");
@@ -2581,9 +2604,9 @@ public class SasDslGenerator extends AbstractGenerator {
                           if (_tripleNotEquals_109) {
                             String pathInAggregated_55 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
                             if ((pathInAggregated_55 != null)) {
-                              int _length_62 = pathInAggregated_55.length();
-                              int _minus_62 = (_length_62 - 1);
-                              pathInAggregated_55 = pathInAggregated_55.substring(0, _minus_62);
+                              int _length_69 = pathInAggregated_55.length();
+                              int _minus_69 = (_length_69 - 1);
+                              pathInAggregated_55 = pathInAggregated_55.substring(0, _minus_69);
                               String _get_205 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
                               String _plus_658 = (pathInAggregated_55 + _get_205);
                               String _plus_659 = (_plus_658 + "/@aggregated.");
@@ -2596,7 +2619,6 @@ public class SasDslGenerator extends AbstractGenerator {
                             }
                           }
                         }
-                        rMController++;
                         String aggregated_6 = this.aggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName());
                         if ((aggregated_6 != null)) {
                           DSLManagerController _mcontroller2_2 = ((DSLRuleMController)r).getMcontroller2();
@@ -6361,7 +6383,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_327 = dslMonitor.getName();
                 _builder.append(_name_327, "\t");
                 _builder.append("_");
@@ -6401,7 +6423,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_331 = dslMonitor_1.getName();
                 _builder.append(_name_331, "\t");
                 _builder.append("_");
@@ -6441,7 +6463,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_335 = dslAnalyzer.getName();
                 _builder.append(_name_335, "\t");
                 _builder.append("_");
@@ -6481,7 +6503,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_339 = dslAnalyzer_1.getName();
                 _builder.append(_name_339, "\t");
                 _builder.append("_");
@@ -6521,7 +6543,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_343 = dslPlanner_1.getName();
                 _builder.append(_name_343, "\t");
                 _builder.append("_");
@@ -6561,7 +6583,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_347 = dslPlanner_2.getName();
                 _builder.append(_name_347, "\t");
                 _builder.append("_");
@@ -6601,7 +6623,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_351 = dslExecutor_2.getName();
                 _builder.append(_name_351, "\t");
                 _builder.append("_");
@@ -6641,7 +6663,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_355 = dslExecutor_3.getName();
                 _builder.append(_name_355, "\t");
                 _builder.append("_");
@@ -6681,7 +6703,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_359 = dslExecutor_4.getName();
                 _builder.append(_name_359, "\t");
                 _builder.append("_");
@@ -6721,7 +6743,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_domain_not_access_");
                 String _name_363 = dslKnowledge.getName();
                 _builder.append(_name_363, "\t");
                 _builder.append("_");
@@ -6761,7 +6783,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_367 = dslKnowledge_1.getName();
                 _builder.append(_name_367, "\t");
                 _builder.append("_");
@@ -6800,7 +6822,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_371 = dslKnowledge_2.getName();
                 _builder.append(_name_371, "\t");
                 _builder.append("_");
@@ -6839,7 +6861,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_375 = dslKnowledge_3.getName();
                 _builder.append(_name_375, "\t");
                 _builder.append("_");
@@ -6878,7 +6900,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_379 = dslMonitor_6.getName();
                 _builder.append(_name_379, "\t");
                 _builder.append("_");
@@ -6917,7 +6939,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_383 = dslAnalyzer_5.getName();
                 _builder.append(_name_383, "\t");
                 _builder.append("_");
@@ -6956,7 +6978,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_387 = dslPlanner_6.getName();
                 _builder.append(_name_387, "\t");
                 _builder.append("_");
@@ -6995,7 +7017,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_391 = dslMonitor_7.getName();
                 _builder.append(_name_391, "\t");
                 _builder.append("_");
@@ -7034,7 +7056,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_395 = dslAnalyzer_6.getName();
                 _builder.append(_name_395, "\t");
                 _builder.append("_");
@@ -7073,7 +7095,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_399 = dslPlanner_7.getName();
                 _builder.append(_name_399, "\t");
                 _builder.append("_");
@@ -7112,7 +7134,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv access_");
+                _builder.append("inv domain_access_");
                 String _name_403 = dslExecutor_7.getName();
                 _builder.append(_name_403, "\t");
                 _builder.append("_");

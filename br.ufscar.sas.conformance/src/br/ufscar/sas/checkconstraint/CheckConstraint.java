@@ -147,9 +147,39 @@ public class CheckConstraint {
 									e.printStackTrace();
 								}								
 							}
+							else {
+								if (type.equals("domain")) {
+									
+									if (key.split(Pattern.quote("_"))[1].equals("not")) {
+										
+										System.out.println(key);
+										String abstraction2 = key.split(Pattern.quote("_"))[5] + "_" + key.split(Pattern.quote("_"))[6];
+										abstraction =  key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
+										try {
+											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}							
+										
+									}
+									else
+									{
+										String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
+										abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
+										try {
+											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}				
+									}
+								}
+							}
 						}
 					}
-
 				}
 			}
 			catch (InvalidValueException e)
@@ -196,12 +226,41 @@ public class CheckConstraint {
 									e.printStackTrace();
 								}								
 							}
+							else {
+								if (type.equals("domain")) {
+									
+									if (key.split(Pattern.quote("_"))[1].equals("not")) {
+										
+										String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
+										abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
+										try {
+											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+										} catch (Exception e4) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}							
+										
+									}
+									else
+									{
+										String abstraction2 = key.split(Pattern.quote("_"))[5] + "_" + key.split(Pattern.quote("_"))[6];
+										abstraction =  key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
+										try {
+											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+										} catch (Exception e5) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}				
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}	
-
 	}
 
 	public void checkDrifts(IFile currentArchitecturePath, IFile plannedArchitecturePath) throws SQLException {
@@ -391,6 +450,12 @@ public class CheckConstraint {
 
 		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
 		return dataConstraint.getAccessAbstractions();
+	}
+	
+	public List<Integer> getDomainAbstractions() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getDomainAbstractions();
 	}
 
 	public List<Integer> getUntestedValues() throws Exception{

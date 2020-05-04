@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import java.util.regex.Pattern
 
 /**
  * Generates code from your model files on save.
@@ -116,9 +117,13 @@ class SasDslGenerator extends AbstractGenerator {
 	    lKnowledge.clear();
 	    lSensor.clear();
 	    lRInput .clear();
-	    lAlternative.clear();
-	
-	
+	    lAlternative.clear(); 
+	    outAggregatedPath.clear();
+	    inAggregatedPath.clear();
+	    structureElementPath.clear();
+	    aggregatedPath.clear();
+	    
+	    
 		var managing = architecture.managing
 		for (var i=0; i< managing.size; i++){
 			
@@ -228,7 +233,7 @@ class SasDslGenerator extends AbstractGenerator {
 						var selfHeal = kno.shalt
 						for (var s = 0; s< selfHeal.size; s++ )
 						{
-							var level4 = depth.get(3);
+							var level4 = depth.get(4);
 							var r = selfHeal.get(s)
 							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
@@ -243,6 +248,8 @@ class SasDslGenerator extends AbstractGenerator {
 						level3++
 						depth.set(3,level3)
 					}
+					
+					depth.set(3,0)
 
 					level2++
 					depth.set(2,level2)
@@ -445,6 +452,9 @@ class SasDslGenerator extends AbstractGenerator {
 					var pathAggregated = outAggregatedPath.get(r.controller1.name)
 					if (pathAggregated !== null)
 					{
+						
+						rController = outAggregatedPath.get(r.controller1.name).split(Pattern.quote("//")).length-1
+						
 						pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 						pathAggregated = pathAggregated + structureElementPath.get(r.controller1.name) + "/@aggregated."+rController + " '"
 						outAggregatedPath.replace(r.controller1.name,pathAggregated)
@@ -506,6 +516,8 @@ class SasDslGenerator extends AbstractGenerator {
 						var pathAggregated = outAggregatedPath.get(r.monitor.name)
 						if (pathAggregated !== null)
 						{
+							rMonitor = outAggregatedPath.get(r.monitor.name).split(Pattern.quote("//")).length-1
+									
 							pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 							pathAggregated = pathAggregated + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '"
 							outAggregatedPath.replace(r.monitor.name,pathAggregated)
@@ -567,6 +579,7 @@ class SasDslGenerator extends AbstractGenerator {
 								else
 								{
 									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
+									System.out.println(pathInAggregated)
 									inAggregatedPath.put(r.monitor2.name,pathInAggregated)
 								}
 							}
@@ -686,7 +699,7 @@ class SasDslGenerator extends AbstractGenerator {
 							
 							
 						}
-						rMonitor++
+						
 						
 						var aggregated = aggregatedPath.get(r.monitor.name); 
 						if (aggregated !== null)
@@ -745,6 +758,9 @@ class SasDslGenerator extends AbstractGenerator {
 								var pathAggregated = outAggregatedPath.get(r.analyzer.name)
 								if (pathAggregated !== null)
 								{
+									
+									rAnalyzer = outAggregatedPath.get(r.analyzer.name).split(Pattern.quote("//")).length-1
+									
 									pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 									pathAggregated = pathAggregated + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '"
 									outAggregatedPath.replace(r.analyzer.name,pathAggregated)
@@ -948,7 +964,6 @@ class SasDslGenerator extends AbstractGenerator {
 									}
 									
 								}
-								rAnalyzer++
 								
 								var aggregated = aggregatedPath.get(r.analyzer.name); 
 								if (aggregated !== null)
@@ -1010,6 +1025,8 @@ class SasDslGenerator extends AbstractGenerator {
 										var pathAggregated = outAggregatedPath.get(r.planner.name)
 										if (pathAggregated !== null)
 										{
+											rPlanner = outAggregatedPath.get(r.planner.name).split(Pattern.quote("//")).length-1										
+																						
 											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 											pathAggregated = pathAggregated + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '"
 											outAggregatedPath.replace(r.planner.name,pathAggregated)
@@ -1187,8 +1204,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}
 											
 										}
-										rPlanner++
-										
+							
 										var aggregated = aggregatedPath.get(r.planner.name); 
 										if (aggregated !== null)
 										{
@@ -1243,6 +1259,9 @@ class SasDslGenerator extends AbstractGenerator {
 										var pathAggregated = outAggregatedPath.get(r.executor.name)
 										if (pathAggregated !== null)
 										{
+											
+											rExecutor = outAggregatedPath.get(r.executor.name).split(Pattern.quote("//")).length-1		
+											
 											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 											pathAggregated = pathAggregated + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '"
 											outAggregatedPath.replace(r.executor.name,pathAggregated)
@@ -1420,8 +1439,7 @@ class SasDslGenerator extends AbstractGenerator {
 													inAggregatedPath.put(r.analyzer.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))									
 											}							
 										}
-										rExecutor++
-										
+																				
 										var aggregated = aggregatedPath.get(r.executor.name); 
 										if (aggregated !== null)
 										{
@@ -1475,6 +1493,9 @@ class SasDslGenerator extends AbstractGenerator {
 										var pathAggregated = outAggregatedPath.get(r.sensor.name)
 										if (pathAggregated !== null)
 										{
+											rMO = outAggregatedPath.get(r.sensor.name).split(Pattern.quote("//")).length-1		
+											
+											
 											pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 											pathAggregated = pathAggregated + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '"
 											outAggregatedPath.replace(r.sensor.name,pathAggregated)
@@ -1512,8 +1533,7 @@ class SasDslGenerator extends AbstractGenerator {
 													inAggregatedPath.put(r.measured.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))												
 											}			
 										}
-										rMO++
-										
+																				
 										var aggregated = aggregatedPath.get(r.sensor.name); 
 										if (aggregated !== null)
 										{
@@ -1537,6 +1557,8 @@ class SasDslGenerator extends AbstractGenerator {
 											var pathAggregated = outAggregatedPath.get(r.mcontroller1)
 											if (pathAggregated !== null)
 											{
+												rMController = outAggregatedPath.get(r.mcontroller1.name).split(Pattern.quote("//")).length-1		
+												
 												pathAggregated = pathAggregated.substring(0,pathAggregated.length-1)
 												pathAggregated = pathAggregated + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '"
 												outAggregatedPath.replace(r.mcontroller1.name,pathAggregated)
@@ -1575,7 +1597,7 @@ class SasDslGenerator extends AbstractGenerator {
 														inAggregatedPath.put(r.mcontroller2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
 												}
 											}
-											rMController++
+					
 											var aggregated = aggregatedPath.get(r.mcontroller1.name); 
 											if (aggregated !== null)
 											{
@@ -1599,7 +1621,7 @@ class SasDslGenerator extends AbstractGenerator {
 					}
 				}
 			}	
-		}
+		}	
 	}
 	
 	def compile(ArchitectureDefinition architectureDefinition){
@@ -2492,7 +2514,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner»
 		context StructureModel
-		inv not_access_«dslMonitor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslPlanner.name»')
+		inv domain_not_access_«dslMonitor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslPlanner.name»')
 		
 		«ENDFOR»
 		«ENDIF»
@@ -2503,7 +2525,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor»
 		context StructureModel
-		inv not_access_«dslMonitor.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslExecutor.name»')
+		inv domain_not_access_«dslMonitor.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslExecutor.name»')
 		
 		«ENDFOR»
 		«ENDIF»		
@@ -2514,7 +2536,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor»
 		context StructureModel
-		inv not_access_«dslAnalyzer.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslMonitor.name»')
+		inv domain_not_access_«dslAnalyzer.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslMonitor.name»')
 		
 		«ENDFOR»	
 		«ENDIF»				
@@ -2525,7 +2547,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor1»
 		context StructureModel
-		inv not_access_«dslAnalyzer.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslExecutor.name»')
+		inv domain_not_access_«dslAnalyzer.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslExecutor.name»')
 		
 		«ENDFOR»
 		«ENDIF»						
@@ -2536,7 +2558,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor1»
 		context StructureModel
-		inv not_access_«dslPlanner.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslMonitor.name»')
+		inv domain_not_access_«dslPlanner.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslMonitor.name»')
 		
 		«ENDFOR»	
 		«ENDIF»					
@@ -2547,7 +2569,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslANalyzer: hsAnalyzer»
 		context StructureModel
-		inv not_access_«dslPlanner.name»_«dslANalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslANalyzer.name»')
+		inv domain_not_access_«dslPlanner.name»_«dslANalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslANalyzer.name»')
 		
 		«ENDFOR»	
 		«ENDIF»						
@@ -2558,7 +2580,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor2»
 		context StructureModel
-		inv not_access_«dslExecutor.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslMonitor.name»')
+		inv domain_not_access_«dslExecutor.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslMonitor.name»')
 		
 		«ENDFOR»
 		«ENDIF»				
@@ -2569,7 +2591,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer1»
 		context StructureModel
-		inv not_access_«dslExecutor.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslAnalyzer.name»')
+		inv domain_not_access_«dslExecutor.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslAnalyzer.name»')
 		
 		«ENDFOR»
 		«ENDIF»					
@@ -2580,7 +2602,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner1»
 		context StructureModel
-		inv not_access_«dslExecutor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslPlanner.name»')
+		inv domain_not_access_«dslExecutor.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslPlanner.name»')
 		
 		«ENDFOR»	
 		«ENDIF»				
@@ -2591,7 +2613,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor3»
 		context StructureModel
-		inv not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
+		inv domain_domain_not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
 		
 		«ENDFOR»	
 		«ENDIF»						
@@ -2602,7 +2624,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer2»
 		context StructureModel
-		inv not_access_«dslKnowledge.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslAnalyzer.name»')
+		inv domain_not_access_«dslKnowledge.name»_«dslAnalyzer.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslAnalyzer.name»')
 
 		«ENDFOR»
 		«ENDIF»					
@@ -2613,7 +2635,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hSPlanner3»
 		context StructureModel
-		inv not_access_«dslKnowledge.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslPlanner.name»')
+		inv domain_not_access_«dslKnowledge.name»_«dslPlanner.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslPlanner.name»')
 
 		«ENDFOR»
 		«ENDIF»							
@@ -2624,7 +2646,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hsExecutor2»
 		context StructureModel
-		inv not_access_«dslKnowledge.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslExecutor.name»')
+		inv domain_not_access_«dslKnowledge.name»_«dslExecutor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslExecutor.name»')
 
 		«ENDFOR»
 		«ENDIF»							
@@ -2635,7 +2657,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLAnalyzer dslAnalyzer: hsAnalyzer4»
 		context StructureModel
-		inv access_«dslMonitor.name»_«dslAnalyzer.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslAnalyzer.name»') 
+		inv domain_access_«dslMonitor.name»_«dslAnalyzer.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslAnalyzer.name»') 
 
 		«ENDFOR»
 		«ENDIF»										
@@ -2646,7 +2668,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLPlanner dslPlanner: hsPlanner4»
 		context StructureModel
-		inv access_«dslAnalyzer.name»_«dslPlanner.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslPlanner.name»') 
+		inv domain_access_«dslAnalyzer.name»_«dslPlanner.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslPlanner.name»') 
 
 		«ENDFOR»
 		«ENDIF»										
@@ -2657,7 +2679,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLExecutor dslExecutor: hdExecutor4»
 		context StructureModel
-		inv access_«dslPlanner.name»_«dslExecutor.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslExecutor.name»') 
+		inv domain_access_«dslPlanner.name»_«dslExecutor.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslExecutor.name»') 
 
 		«ENDFOR»
 		«ENDIF»													
@@ -2668,7 +2690,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslMonitor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge3»
 		context StructureModel
-		inv access_«dslMonitor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslKnowledge.name»') 
+		inv domain_access_«dslMonitor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslMonitor.name»' and c.to.name='«dslKnowledge.name»') 
 
 		«ENDFOR»
 		«ENDIF»																
@@ -2679,7 +2701,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslAnalyzer.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge4»
 		context StructureModel
-		inv access_«dslAnalyzer.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslKnowledge.name»') 
+		inv domain_access_«dslAnalyzer.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslAnalyzer.name»' and c.to.name='«dslKnowledge.name»') 
 
 		«ENDFOR»		
 		«ENDIF»														
@@ -2690,7 +2712,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslPlanner.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge5»
 		context StructureModel
-		inv access_«dslPlanner.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslKnowledge.name»') 
+		inv domain_access_«dslPlanner.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslPlanner.name»' and c.to.name='«dslKnowledge.name»') 
 
 		«ENDFOR»	
 		«ENDIF»															
@@ -2701,7 +2723,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslExecutor.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLKnowledge dslKnowledge: hsKnowledge6»
 		context StructureModel
-		inv access_«dslExecutor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslKnowledge.name»') 
+		inv domain_access_«dslExecutor.name»_«dslKnowledge.name»: AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslExecutor.name»' and c.to.name='«dslKnowledge.name»') 
 		
 		«ENDFOR»
 		«ENDIF»														

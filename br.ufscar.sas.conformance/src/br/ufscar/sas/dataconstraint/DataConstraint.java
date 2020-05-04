@@ -28,18 +28,22 @@ public class DataConstraint {
 		mydb.executeStmt("create table IF NOT EXISTS existence (project_name text, abstraction text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS composite (project_name text, abstraction text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS access (project_name text, abstraction1 text, abstraction2 text, result integer) ");
-		mydb.executeStmt("create table IF NOT EXISTS drifts (project_name text, component integer, subsystem integer, association integer) ");
+		mydb.executeStmt("create table IF NOT EXISTS domain (project_name text, abstraction1 text, abstraction2 text, result integer) ");
+		mydb.executeStmt("create table IF NOT EXISTS drifts (project_name text, component integer, subsystem integer, association integer, domain integer) ");
 		mydb.executeStmt("create table IF NOT EXISTS existence_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS composite_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS access_rules (project_name text, _key text, rule text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS domain_rules (project_name text, _key text, rule text, result integer)");
 		mydb.executeStmt("create table IF NOT EXISTS architectural_anomaly (id integer, anomaly_type text, name text, description text, constraint_type text, _from text, _to text)");
 		mydb.executeStmt("create table IF NOT EXISTS mapping(id integer, _key text)");
 		mydb.executeStmt("delete from existence"); 
 		mydb.executeStmt("delete from composite"); 
 		mydb.executeStmt("delete from access");
+		mydb.executeStmt("delete from domain"); 
 		mydb.executeStmt("delete from existence_rules"); 
 		mydb.executeStmt("delete from composite_rules"); 
 		mydb.executeStmt("delete from access_rules"); 
+		mydb.executeStmt("delete from domain_rules"); 
 		mydb.executeStmt("delete from drifts"); 
 		mydb.closeConnection();
 		this.insertAnomalies();
@@ -54,10 +58,10 @@ public class DataConstraint {
 		if ((Integer) rs1.getObject(1) == 0 && (Integer) rs2.getObject(1)==0)
 		{
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
-					+ "values(1,'drift','Scattered Reference Input','This smell arises when Reference Inputs do not have a dedicated Knowledge to store them.','composite','Reference Input','Knowledge')");
+					+ "values(1,'drift','Scattered Reference Input','This drift arises when Reference Inputs do not have a dedicated Knowledge to store them.','composite','Reference Input','Knowledge')");
 			mydb.executeStmt("insert into mapping(id, _key) values(1,'composite_ReferenceInput')");
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
-					+ "values(2,'drift','Mixed Executors and Effectors','This smell occurs when Executors and Effectors are not evident in the architecture of the AS.','exist','Effector','null')");
+					+ "values(2,'drift','Mixed Executors and Effectors','This drift occurs when Executors and Effectors are not evident in the architecture of the AS.','exist','Effector','null')");
 			mydb.executeStmt("insert into mapping(id, _key) values(2,'exist_Effector')");
 			mydb.executeStmt("insert into architectural_anomaly(id, anomaly_type, name, description, constraint_type, _from, _to) "
 					+ "values(3,'drift','Obscure Alternatives','This drift arises when the set of alternatives is not implemented as a first class entities.','exist','Alternative','null')");
@@ -126,6 +130,22 @@ public class DataConstraint {
 		mydb.closeConnection();
 	}
 
+	public void insertDomain(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into domain(project_name, abstraction1, abstraction2, result) values"
+				+ " ('" + projectName + "','" +   abstraction1 + "','"  +   abstraction2 + "',"+ result + ");"); 
+		mydb.closeConnection();
+	}
+
+	public void insertDomainRules(String projectName, String key, String rule, int result) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into domain_rules(project_name, _key, rule, result) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.closeConnection();
+	}
+	
 	public void insertDrifts(String projectName, int nComponent, int nSubsystem, int nAssociation) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -152,6 +172,19 @@ public class DataConstraint {
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select _key, rule, result from access_rules;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+","+rs.getObject(2).toString()+","+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+
+	}
+	
+	public List<String> getDomainRules() throws Exception{
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, rule, result from domain_rules;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+","+rs.getObject(2).toString()+","+rs.getObject(3).toString());
 		}
@@ -209,6 +242,18 @@ public class DataConstraint {
 		mydb.closeConnection();
 		return lst;
 	}
+	
+	public List<Integer> getDomainAbstractions() throws Exception{
+
+		List<Integer> lst = new ArrayList<Integer>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A.false, B.total from "
+				+ "(select count(*) as false from domain where result = 0) as A, "
+				+ "(select count(*) as total from domain) as B;\n" );
+		lst = resultSetToArrayList(rs);
+		mydb.closeConnection();
+		return lst;
+	}
 
 	private List<Integer> resultSetToArrayList(ResultSet rs) throws SQLException {
 
@@ -227,10 +272,11 @@ public class DataConstraint {
 
 		List<Integer> lst = new ArrayList<Integer>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select component, subsystem, association from drifts");
+		ResultSet rs = mydb.executeQry("select component, subsystem, association, domain from drifts");
 		lst.add((Integer)rs.getObject(1));
 		lst.add((Integer)rs.getObject(2));
 		lst.add((Integer)rs.getObject(3));
+		lst.add((Integer)rs.getObject(4));
 		mydb.closeConnection();
 		return lst;
 
@@ -263,6 +309,9 @@ public class DataConstraint {
 				"    UNION ALL\n" + 
 				"    select * \n" + 
 				"    from access_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"    select * \n" + 
+				"    from domain_rules  where result = 0\n" + 
 				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id ;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
@@ -282,6 +331,8 @@ public class DataConstraint {
 				"	select * from existence_rules  where result = 0\n" + 
 				"    UNION ALL\n" + 
 				"	select * from access_rules  where result = 0\n" + 
+				"    UNION ALL\n" + 
+				"	select * from domain_rules  where result = 0\n" + 
 				") A  inner join mapping B  ON A._key LIKE  B._key || '%' inner join architectural_anomaly C on  C.id = B.id ;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
