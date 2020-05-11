@@ -6743,7 +6743,7 @@ public class SasDslGenerator extends AbstractGenerator {
                 _builder.append("context StructureModel");
                 _builder.newLine();
                 _builder.append("\t");
-                _builder.append("inv domain_domain_not_access_");
+                _builder.append("inv domain_not_access_");
                 String _name_363 = dslKnowledge.getName();
                 _builder.append(_name_363, "\t");
                 _builder.append("_");

@@ -152,12 +152,11 @@ public class CheckConstraint {
 									
 									if (key.split(Pattern.quote("_"))[1].equals("not")) {
 										
-										System.out.println(key);
 										String abstraction2 = key.split(Pattern.quote("_"))[5] + "_" + key.split(Pattern.quote("_"))[6];
 										abstraction =  key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
 										try {
-											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
-											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomain(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomainRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 										} catch (Exception e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -169,8 +168,8 @@ public class CheckConstraint {
 										String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
 										abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
 										try {
-											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
-											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomain(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomainRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 										} catch (Exception e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -234,8 +233,8 @@ public class CheckConstraint {
 										String abstraction2 = key.split(Pattern.quote("_"))[4] + "_" + key.split(Pattern.quote("_"))[5];
 										abstraction =  key.split(Pattern.quote("_"))[2] + "_" + key.split(Pattern.quote("_"))[3];
 										try {
-											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
-											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomain(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomainRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 										} catch (Exception e4) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -247,8 +246,8 @@ public class CheckConstraint {
 										String abstraction2 = key.split(Pattern.quote("_"))[5] + "_" + key.split(Pattern.quote("_"))[6];
 										abstraction =  key.split(Pattern.quote("_"))[3] + "_" + key.split(Pattern.quote("_"))[4];
 										try {
-											dataConstraint.insertAccess(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
-											dataConstraint.insertAccessRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomain(projectName.replaceAll("\\/", ""), abstraction, abstraction2, (check.booleanValue() ? 1 : 0 ));
+											dataConstraint.insertDomainRules(projectName.replaceAll("\\/", ""), key, expressionInOCL.getBody().replaceAll("\'","") , (check.booleanValue() ? 1 : 0 ));
 										} catch (Exception e5) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();

@@ -2613,7 +2613,7 @@ class SasDslGenerator extends AbstractGenerator {
 		«IF !dslKnowledge.eContainer.eContents.filter(DSLDomainRule).toList.empty»
 		«FOR DSLMonitor dslMonitor: hsMonitor3»
 		context StructureModel
-		inv domain_domain_not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
+		inv domain_not_access_«dslKnowledge.name»_«dslMonitor.name»: not AggregatedRelationship.allInstances()->exists(c| c.from.name='«dslKnowledge.name»' and c.to.name='«dslMonitor.name»')
 		
 		«ENDFOR»	
 		«ENDIF»						

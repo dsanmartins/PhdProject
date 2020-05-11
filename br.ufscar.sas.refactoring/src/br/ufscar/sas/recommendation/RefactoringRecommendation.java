@@ -20,7 +20,7 @@ public class RefactoringRecommendation {
 		Resource kdmInResource = resourceSet.getResource(URI.createURI(kdmPath.getFullPath().toString()), true);	
 		
 		DataConstraint dataConstraint = new DataConstraint(projectUrl);
-		List<String> anomalies =  dataConstraint.getAnomaliesIdentified();
+		List<String> anomalies =  dataConstraint.getAnomaliesIdentifiedExistence();
 		if (!anomalies.isEmpty()) {
 			for (String anomaly: anomalies) {
 

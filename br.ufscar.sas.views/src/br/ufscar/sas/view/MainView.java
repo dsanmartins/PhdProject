@@ -121,11 +121,11 @@ import br.ufscar.sas.tableviewer.ColumnLabelProviderThird;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
 import br.ufscar.sas.tableviewer.EditingRulesInstance;
-import br.ufscar.sas.tableviewer.MappedAnomaly;
-import br.ufscar.sas.tableviewer.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
 import br.ufscar.sas.tableviewer.TableMetaData;
+import br.ufscar.sas.tableviewer.result.MappedAnomaly;
+import br.ufscar.sas.tableviewer.result.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
 import br.ufscar.sas.transformation.ComputeModelDiff;
 import br.ufscar.sas.transformation.Kdm2Uml;
@@ -681,126 +681,146 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group controlGroup2 = new Group(group, SWT.NONE);
 		controlGroup2.setText("Check Constraints");
-		controlGroup2.setBounds(10, 200, 450,260);
+		controlGroup2.setBounds(10, 200, 450,340);
 
 		Label lblExistence =  new Label(controlGroup2, SWT.NONE);
 		lblExistence.setText("Lack of abstractions:");
 		lblExistence.setBounds(15, 15, 150, 20);
+		
+		Label lblComposite =  new Label(controlGroup2, SWT.NONE);
+		lblComposite.setText("Wrong composition:");
+		lblComposite.setBounds(15, 60, 150, 20);
+		
+		Label lblAccess =  new Label(controlGroup2, SWT.NONE);
+		lblAccess.setText("Lack of relations:");
+		lblAccess.setBounds(15, 105, 150, 20);
+
+		Label lblDomain =  new Label(controlGroup2, SWT.NONE);
+		lblDomain.setText("Lack of Domain:");
+		lblDomain.setBounds(15, 145, 150, 20);
 
 		Text txtExistence =  new Text(controlGroup2, SWT.NONE);
 		txtExistence.setText("0");
 		txtExistence.setBounds(151, 15, 30, 20);
 		txtExistence.setEditable(false);
+		
+		Text txtComposition =  new Text(controlGroup2, SWT.NONE);
+		txtComposition.setText("0");
+		txtComposition.setBounds(151, 60, 30, 20);
+		txtComposition.setEditable(false);
+		
+		Text txtAccess =  new Text(controlGroup2, SWT.NONE);
+		txtAccess.setText("0");
+		txtAccess.setBounds(151, 105, 30, 20);
+		txtAccess.setEditable(false);
+		
+		Text txtDomain =  new Text(controlGroup2, SWT.NONE);
+		txtDomain.setText("0");
+		txtDomain.setBounds(151, 145, 30, 20);
+		txtDomain.setEditable(false);
+		
+		Text txtExistenceRule =  new Text(controlGroup2, SWT.NONE);
+		txtExistenceRule.setText("0");
+		txtExistenceRule.setBounds(310, 15, 30, 20);
+		txtExistenceRule.setEditable(false);
+		
+		Text txtCompositionRule =  new Text(controlGroup2, SWT.NONE);
+		txtCompositionRule.setText("0");
+		txtCompositionRule.setBounds(310, 60, 30, 20);
+		txtCompositionRule.setEditable(false);
+		
+		Text txtAccessRule =  new Text(controlGroup2, SWT.NONE);
+		txtAccessRule.setText("0");
+		txtAccessRule.setBounds(310, 105, 30, 20);
+		txtAccessRule.setEditable(false);
+		
+		Text txtDomainRule =  new Text(controlGroup2, SWT.NONE);
+		txtDomainRule.setText("0");
+		txtDomainRule.setBounds(310, 145, 30, 20);
+		txtDomainRule.setEditable(false);
 
 		Label lblInfo1 =  new Label(controlGroup2, SWT.NONE);
 		lblInfo1.setText(", after applying");
 		lblInfo1.setBounds(200, 15, 150, 20);
 
-		Text txtExistenceRule =  new Text(controlGroup2, SWT.NONE);
-		txtExistenceRule.setText("0");
-		txtExistenceRule.setBounds(310, 15, 30, 20);
-		txtExistenceRule.setEditable(false);
+		Label lblInfo2 =  new Label(controlGroup2, SWT.NONE);
+		lblInfo2.setText(", after applying");
+		lblInfo2.setBounds(200, 60, 150, 20);
+		
+		Label lblInfo3 =  new Label(controlGroup2, SWT.NONE);
+		lblInfo3.setText(", after applying");
+		lblInfo3.setBounds(200, 105, 150, 20);
+		
+		Label lblInfo4 =  new Label(controlGroup2, SWT.NONE);
+		lblInfo4.setText(", after applying");
+		lblInfo4.setBounds(200, 145, 150, 20);
 
 		Label lblInfoRule =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule.setText("rules.");
 		lblInfoRule.setBounds(350, 15, 150, 20);
-
-		Label lblComposite =  new Label(controlGroup2, SWT.NONE);
-		lblComposite.setText("Wrong composition:");
-		lblComposite.setBounds(15, 60, 150, 20);
-
-		Text txtComposition =  new Text(controlGroup2, SWT.NONE);
-		txtComposition.setText("0");
-		txtComposition.setBounds(151, 60, 30, 20);
-		txtComposition.setEditable(false);
-
-		Label lblInfo2 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo2.setText(", after applying");
-		lblInfo2.setBounds(200, 60, 150, 20);
-
-		Text txtCompositionRule =  new Text(controlGroup2, SWT.NONE);
-		txtCompositionRule.setText("0");
-		txtCompositionRule.setBounds(310, 60, 30, 20);
-		txtCompositionRule.setEditable(false);
-
+		
 		Label lblInfoRule2 =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule2.setText("rules.");
 		lblInfoRule2.setBounds(350, 60, 150, 20);
 
-		Label lblAccess =  new Label(controlGroup2, SWT.NONE);
-		lblAccess.setText("Lack of relations:");
-		lblAccess.setBounds(15, 105, 150, 20);
-
-		Text txtAccess =  new Text(controlGroup2, SWT.NONE);
-		txtAccess.setText("0");
-		txtAccess.setBounds(151, 105, 30, 20);
-		txtAccess.setEditable(false);
-
-		Label lblInfo3 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo3.setText(", after applying");
-		lblInfo3.setBounds(200, 105, 150, 20);
-
-		Text txtAccessRule =  new Text(controlGroup2, SWT.NONE);
-		txtAccessRule.setText("0");
-		txtAccessRule.setBounds(310, 105, 30, 20);
-		txtAccessRule.setEditable(false);
-
+		
 		Label lblInfoRule3 =  new Label(controlGroup2, SWT.NONE);
 		lblInfoRule3.setText("rules.");
 		lblInfoRule3.setBounds(350, 105, 150, 20);
+		
+		Label lblInfoRule4 =  new Label(controlGroup2, SWT.NONE);
+		lblInfoRule4.setText("rules.");
+		lblInfoRule4.setBounds(350, 145, 150, 20);
 
 		Label lblDrifts1 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts1.setText("Untested abstractions");
-		lblDrifts1.setBounds(50, 145, 150, 20);
+		lblDrifts1.setBounds(50, 185, 150, 20);
 
 		Text txtDrifts1 =  new Text(controlGroup2, SWT.NONE);
 		txtDrifts1.setText("0");
-		txtDrifts1.setBounds(110, 175, 30, 20);
+		txtDrifts1.setBounds(110, 215, 30, 20);
 		txtDrifts1.setEditable(false);
 
 		Label lblDrifts2 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts2.setText("Untested relations");
-		lblDrifts2.setBounds(300, 145, 150, 20);
+		lblDrifts2.setBounds(300, 185, 150, 20);
 
 		Text txtDrifts2 =  new Text(controlGroup2, SWT.NONE);
 		txtDrifts2.setText("0");
-		txtDrifts2.setBounds(350, 175, 30, 20);
+		txtDrifts2.setBounds(350, 215, 30, 20);
 		txtDrifts2.setEditable(false);
 
 		Button checkConstraint = new Button(controlGroup2, SWT.NONE);
 		checkConstraint.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-		checkConstraint.setBounds(10, 200, 60, 25);
+		checkConstraint.setBounds(10, 240, 60, 25);
 		checkConstraint.setText("Check");
+		checkConstraint.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED)); 
+		checkConstraint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 
 
+		//************* Grid for checking abstraction existence *************
 		Group controlGroup3 = new Group(group, SWT.NONE);
-		controlGroup3.setText("Identified Architectural Drifts");
-		controlGroup3.setBounds(10, 480, 450,260);
+		controlGroup3.setText("Architectural Drifts: Existence Rules");
+		controlGroup3.setBounds(10, 560, 450,260);
 		controlGroup3.setLayout(new GridLayout());
-
-		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		layoutData.minimumWidth = 300;
-		GridTableViewer gridTableViewer = new GridTableViewer(controlGroup3, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		gridTableViewer.setUseHashlookup(true);
-		gridTableViewer.getGrid().setLinesVisible(true);
-		gridTableViewer.getGrid().setHeaderVisible(true);
-		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
-		gridTableViewer.getGrid().setLayoutData(layoutData);
-		gridTableViewer.getGrid().setBounds(0, 0, 450, 260);
-
-		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column1.setResizeable(true);
-		column1.setWidth(215);
-		column1.setText("Rule");
-
-		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column2.setResizeable(false);
-		column2.setWidth(235);
-		column2.setWordWrap(true);
-		column2.setText("Name");
-
-		gridTableViewer.setContentProvider(new ArrayContentProvider());
-		gridTableViewer.setLabelProvider(new TableLabelAnomalyMappedProvider());
+		
+		//************* Grid for checking abstraction composition *************
+		Group controlGroup4 = new Group(group, SWT.NONE);
+		controlGroup4.setText("Architectural Drifts: Composite Rules");
+		controlGroup4.setBounds(470, 0, 450,260);
+		controlGroup4.setLayout(new GridLayout());
+		
+		//************* Grid for checking abstraction access *************
+		Group controlGroup5 = new Group(group, SWT.NONE);
+		controlGroup5.setText("Architectural Drifts: Access Rules");
+		controlGroup5.setBounds(470, 280, 450,260);
+		controlGroup5.setLayout(new GridLayout());
+		
+		//************* Grid for checking abstraction domain *************
+		Group controlGroup6 = new Group(group, SWT.NONE);
+		controlGroup6.setText("Architectural Drifts: Domain Rules");
+		controlGroup6.setBounds(470, 560, 450,260);
+		controlGroup6.setLayout(new GridLayout());
 
 		Button generateRecommendation = new Button(controlGroup3, SWT.NONE);
 		generateRecommendation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
@@ -890,20 +910,29 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 			}
 		});
+		
+		GridTableViewer grid1 = this.createGrid(controlGroup3);
+		GridTableViewer grid2 = this.createGrid(controlGroup4);
+		GridTableViewer grid3 = this.createGrid(controlGroup5);
+		GridTableViewer grid4 = this.createGrid(controlGroup6);
 
 		checkConstraint.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 
 				CheckConstraint checkConstraintMethod = new CheckConstraint(workspacePath, projectName);
-				List<MappedAnomaly> anomalyObject = new ArrayList<MappedAnomaly>();
-
+				
 				if (constraintPath.exists() && kdmCurrent.exists()) {
+					
+					List<MappedAnomaly> anomalyObject1 = new ArrayList<MappedAnomaly>();
+					List<MappedAnomaly> anomalyObject2 = new ArrayList<MappedAnomaly>();
+					List<MappedAnomaly> anomalyObject3 = new ArrayList<MappedAnomaly>();
+					List<MappedAnomaly> anomalyObject4 = new ArrayList<MappedAnomaly>();
 
 					try {
 						dialog.run(true, true, new IRunnableWithProgress() {
 							public void run(IProgressMonitor monitor) {
 								int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
-								monitor.beginTask("Verifying constraints....", totalUnitsOfWork);
+								monitor.beginTask("Verifying architectural drifts of ASs....", totalUnitsOfWork);
 
 								try {
 									checkConstraintMethod.checkConstraint(kdmCurrent, constraintPath);
@@ -919,9 +948,22 @@ public class MainView extends ViewPart implements IPartListener2 {
 								}
 								try {
 									DataConstraint queryClass = new DataConstraint(databaseUrl);
-									List<String> lstAnomaly= queryClass.getAnomaliesIdentified();
+									List<String> lstAnomaly= queryClass.getAnomaliesIdentifiedExistence();
 									for (String anomaly :lstAnomaly )
-										anomalyObject.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1]));
+										anomalyObject1.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));
+								
+									lstAnomaly= queryClass.getAnomaliesIdentifiedComposition();
+									for (String anomaly :lstAnomaly )
+										anomalyObject2.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));							
+									
+									lstAnomaly= queryClass.getAnomaliesIdentifiedAccess();
+									for (String anomaly :lstAnomaly )
+										anomalyObject3.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));						
+									
+									lstAnomaly= queryClass.getAnomaliesIdentifiedDomain();
+									for (String anomaly :lstAnomaly )
+										anomalyObject4.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));
+									
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -959,6 +1001,14 @@ public class MainView extends ViewPart implements IPartListener2 {
 						e3.printStackTrace();
 					}
 					try {
+						final List<Integer> lstValues = checkConstraintMethod.getDomainAbstractions();
+						txtDomain.setText(lstValues.get(0).toString());
+						txtDomainRule.setText(lstValues.get(1).toString());
+					} catch (Exception e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					try {
 						final List<Integer> lstValues = checkConstraintMethod.getUntestedValues();
 						int value = lstValues.get(0) + lstValues.get(1);
 						txtDrifts1.setText(String.valueOf(value));
@@ -967,7 +1017,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
-					gridTableViewer.setInput(anomalyObject);
+					
+					grid1.setInput(anomalyObject1);
+					grid2.setInput(anomalyObject2);
+					grid3.setInput(anomalyObject3);
+					grid4.setInput(anomalyObject4);
+					
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The model was checked against ocl restrictions.");
 				}
 				else {
@@ -975,7 +1030,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 				}
 			}
 		});
-
 
 		btnFCA.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -1103,7 +1157,35 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		tab1.setControl(group);
 	}
+	
+	private GridTableViewer createGrid(Group control) {
+		
+		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		layoutData.minimumWidth = 300;
+		GridTableViewer gridTableViewer = new GridTableViewer(control, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
+		gridTableViewer.setUseHashlookup(true);
+		gridTableViewer.getGrid().setLinesVisible(true);
+		gridTableViewer.getGrid().setHeaderVisible(true);
+		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
+		gridTableViewer.getGrid().setLayoutData(layoutData);
+		gridTableViewer.getGrid().setBounds(0, 0, 450, 250);
 
+		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column1.setResizeable(true);
+		column1.setWidth(215);
+		column1.setText("Rule");
+
+		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		column2.setResizeable(false);
+		column2.setWidth(235);
+		column2.setWordWrap(true);
+		column2.setText("Name");
+
+		gridTableViewer.setContentProvider(new ArrayContentProvider());
+		gridTableViewer.setLabelProvider(new TableLabelAnomalyMappedProvider());		
+		return gridTableViewer;
+	}
+	
 	private void UIDomainRules(TabFolder tabFolder, String projectName) {
 
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class DataConstraint {
@@ -145,7 +146,7 @@ public class DataConstraint {
 				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
 		mydb.closeConnection();
 	}
-	
+
 	public void insertDrifts(String projectName, int nComponent, int nSubsystem, int nAssociation) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -179,7 +180,7 @@ public class DataConstraint {
 		return lst;
 
 	}
-	
+
 	public List<String> getDomainRules() throws Exception{
 
 		List<String> lst = new ArrayList<String>();
@@ -242,7 +243,7 @@ public class DataConstraint {
 		mydb.closeConnection();
 		return lst;
 	}
-	
+
 	public List<Integer> getDomainAbstractions() throws Exception{
 
 		List<Integer> lst = new ArrayList<Integer>();
@@ -294,32 +295,74 @@ public class DataConstraint {
 		return lst;
 	}
 
-	public List<String> getAnomaliesIdentified() throws Exception
+	public List<String> getAnomaliesIdentifiedExistence() throws Exception
 	{
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select A._key, ifnull(C.name,'Please Set it up')\n" + 
+		ResultSet rs = mydb.executeQry("select A._key,CASE A.result WHEN 0 THEN ifnull(C.name,'Please Set it up') ELSE '' END, A.result \n" + 
 				"from\n" + 
 				"(\n" + 
-				"    select *\n" + 
-				"    from composite_rules  where result = 0\n" + 
-				"    UNION ALL\n" + 
 				"    select * \n" + 
-				"    from existence_rules  where result = 0\n" + 
-				"    UNION ALL\n" + 
-				"    select * \n" + 
-				"    from access_rules  where result = 0\n" + 
-				"    UNION ALL\n" + 
-				"    select * \n" + 
-				"    from domain_rules  where result = 0\n" + 
-				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id ;");		
+				"    from existence_rules  \n" + 
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString());
+			lst.add(this.setTextExist(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
 		}
 		mydb.closeConnection();
 		return lst;
 	}
-	
+
+	public List<String> getAnomaliesIdentifiedComposition() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A._key, CASE A.result WHEN 0 THEN ifnull(C.name,'Please Set it up') ELSE '' END, A.result \n" + 
+				"from\n" + 
+				"(\n" + 
+				"    select * \n" + 
+				"    from composite_rules  \n" + 
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+		while (rs.next()) {
+			lst.add(this.setTextComposition(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+
+	public List<String> getAnomaliesIdentifiedAccess() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A._key, CASE A.result WHEN 0 THEN ifnull(C.name,'Please Set it up') ELSE '' END, A.result \n" + 
+				"from\n" + 
+				"(\n" + 
+				"    select * \n" + 
+				"    from access_rules  \n" + 
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+		while (rs.next()) {
+			lst.add(this.setTextAccess(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+
+	public List<String> getAnomaliesIdentifiedDomain() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select A._key, CASE A.result WHEN 0 THEN ifnull(C.name,'Please Set it up') ELSE '' END, A.result \n" + 
+				"from\n" + 
+				"(\n" + 
+				"    select * \n" + 
+				"    from domain_rules  \n" + 
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+		while (rs.next()) {
+			lst.add(this.setTextDomain(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+
 	public List<String> getAnomaliesIdentifiedReport() throws Exception
 	{
 		List<String> lst = new ArrayList<String>();
@@ -339,5 +382,64 @@ public class DataConstraint {
 		}
 		mydb.closeConnection();
 		return lst;
+	}
+
+	private String setTextExist(String text) {
+
+		String part1 = text.split(Pattern.quote("_"))[0];
+		String part2 = text.split(Pattern.quote("_"))[1];
+		String part3 = text.split(Pattern.quote("_"))[2];
+		return part1.toUpperCase()+ " " + part2+"_" + part3;
+	}
+
+	private String setTextComposition(String text) {
+
+		String part2 = text.split(Pattern.quote("_"))[1];
+		String part3 = text.split(Pattern.quote("_"))[2];
+		return "ISCOMPOSING " + part2+"_" + part3;
+	}
+
+	private String setTextAccess(String text) {
+
+		if (text.split(Pattern.quote("_")).length == 5)
+		{
+			String part2 = text.split(Pattern.quote("_"))[1];
+			String part3 = text.split(Pattern.quote("_"))[2];
+			String part4 = text.split(Pattern.quote("_"))[3];
+			String part5 = text.split(Pattern.quote("_"))[4];
+			return part2 + "_"+ part3 + " MUST-USE " + part4 + "_"+ part5;
+
+		}			
+		else 
+		{
+			String part3 = text.split(Pattern.quote("_"))[2];
+			String part4 = text.split(Pattern.quote("_"))[3];
+			String part5 = text.split(Pattern.quote("_"))[4];
+			String part6 = text.split(Pattern.quote("_"))[5];
+			return part3 + "_"+ part4 + " MUST-NOT-USE " + part5 + "_"+ part6;
+		}
+
+	}
+
+	private String setTextDomain(String text) {
+
+		if (text.split(Pattern.quote("_")).length == 6)
+		{
+			String part3 = text.split(Pattern.quote("_"))[2];
+			String part4 = text.split(Pattern.quote("_"))[3];
+			String part5 = text.split(Pattern.quote("_"))[4];
+			String part6 = text.split(Pattern.quote("_"))[5];
+			return part3 + "_"+ part4 + " MUST-USE " + part5 + "_"+ part6;
+
+		}			
+		else 
+		{
+			String part4 = text.split(Pattern.quote("_"))[3];
+			String part5 = text.split(Pattern.quote("_"))[4];
+			String part6 = text.split(Pattern.quote("_"))[5];
+			String part7 = text.split(Pattern.quote("_"))[6];
+			return part4 + "_"+ part5 + " MUST-NOT-USE " + part6 + "_"+ part7;
+		}
+
 	}
 }
