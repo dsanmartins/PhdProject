@@ -463,4 +463,16 @@ public class CheckConstraint {
 		return dataConstraint.getUntestedValues();
 	}
 
+	public String getTotalViolations() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getTotalViolations();
+	}
+	
+	public String getTotalPassed() throws Exception{
+
+		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);
+		return dataConstraint.getTotalPassed();
+	}
+	
 }

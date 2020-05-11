@@ -63,6 +63,7 @@ import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
@@ -94,6 +95,12 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.experimental.chart.swt.ChartComposite;
+import org.jfree.util.Rotation;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -301,7 +308,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 							tree.getSelection()[0].setExpanded(true);
 							try {
 								treeViewer.getTree().clearAll(true);
-								
+
 								treeViewer.setInput(getParentAbstactions());
 							} catch (Exception e2) {
 								// TODO Auto-generated catch block
@@ -680,97 +687,87 @@ public class MainView extends ViewPart implements IPartListener2 {
 		btnFCA.setText("Show");
 
 		Group controlGroup2 = new Group(group, SWT.NONE);
-		controlGroup2.setText("Check Constraints");
+		controlGroup2.setText("Check Architectural Drifts of ASs");
 		controlGroup2.setBounds(10, 200, 450,340);
 
-		Label lblExistence =  new Label(controlGroup2, SWT.NONE);
-		lblExistence.setText("Lack of abstractions:");
-		lblExistence.setBounds(15, 15, 150, 20);
-		
-		Label lblComposite =  new Label(controlGroup2, SWT.NONE);
-		lblComposite.setText("Wrong composition:");
-		lblComposite.setBounds(15, 60, 150, 20);
-		
-		Label lblAccess =  new Label(controlGroup2, SWT.NONE);
-		lblAccess.setText("Lack of relations:");
-		lblAccess.setBounds(15, 105, 150, 20);
-
-		Label lblDomain =  new Label(controlGroup2, SWT.NONE);
-		lblDomain.setText("Lack of Domain:");
-		lblDomain.setBounds(15, 145, 150, 20);
+		final Color orange = new Color(Display.getCurrent(), 255,0,0);
 
 		Text txtExistence =  new Text(controlGroup2, SWT.NONE);
 		txtExistence.setText("0");
-		txtExistence.setBounds(151, 15, 30, 20);
+		txtExistence.setBounds(10, 15, 30, 20);
 		txtExistence.setEditable(false);
-		
-		Text txtComposition =  new Text(controlGroup2, SWT.NONE);
-		txtComposition.setText("0");
-		txtComposition.setBounds(151, 60, 30, 20);
-		txtComposition.setEditable(false);
-		
-		Text txtAccess =  new Text(controlGroup2, SWT.NONE);
-		txtAccess.setText("0");
-		txtAccess.setBounds(151, 105, 30, 20);
-		txtAccess.setEditable(false);
-		
-		Text txtDomain =  new Text(controlGroup2, SWT.NONE);
-		txtDomain.setText("0");
-		txtDomain.setBounds(151, 145, 30, 20);
-		txtDomain.setEditable(false);
-		
+		txtExistence.setForeground(orange); 
+
+		Label of1 =  new Label(controlGroup2, SWT.NONE);
+		of1.setText("of");
+		of1.setBounds(45, 15, 30, 20);
+
 		Text txtExistenceRule =  new Text(controlGroup2, SWT.NONE);
 		txtExistenceRule.setText("0");
-		txtExistenceRule.setBounds(310, 15, 30, 20);
+		txtExistenceRule.setBounds(70, 15, 30, 20);
 		txtExistenceRule.setEditable(false);
-		
+
+		Text txtComposition =  new Text(controlGroup2, SWT.NONE);
+		txtComposition.setText("0");
+		txtComposition.setBounds(10, 60, 30, 20);
+		txtComposition.setEditable(false);
+		txtComposition.setForeground(orange); 
+
+		Label of2 =  new Label(controlGroup2, SWT.NONE);
+		of2.setText("of");
+		of2.setBounds(45, 60, 30, 20);
+
 		Text txtCompositionRule =  new Text(controlGroup2, SWT.NONE);
 		txtCompositionRule.setText("0");
-		txtCompositionRule.setBounds(310, 60, 30, 20);
+		txtCompositionRule.setBounds(70, 60, 30, 20);
 		txtCompositionRule.setEditable(false);
-		
+
+		Text txtAccess =  new Text(controlGroup2, SWT.NONE);
+		txtAccess.setText("0");
+		txtAccess.setBounds(10, 105, 30, 20);
+		txtAccess.setEditable(false);
+		txtAccess.setForeground(orange); 
+
+
+		Label of3 =  new Label(controlGroup2, SWT.NONE);
+		of3.setText("of");
+		of3.setBounds(45, 105, 30, 20);
+
 		Text txtAccessRule =  new Text(controlGroup2, SWT.NONE);
 		txtAccessRule.setText("0");
-		txtAccessRule.setBounds(310, 105, 30, 20);
+		txtAccessRule.setBounds(70, 105, 30, 20);
 		txtAccessRule.setEditable(false);
-		
+
+		Text txtDomain =  new Text(controlGroup2, SWT.NONE);
+		txtDomain.setText("0");
+		txtDomain.setBounds(10, 145, 30, 20);
+		txtDomain.setEditable(false);
+		txtDomain.setForeground(orange); 
+
+		Label of4 =  new Label(controlGroup2, SWT.NONE);
+		of4.setText("of");
+		of4.setBounds(45, 145, 30, 20);
+
 		Text txtDomainRule =  new Text(controlGroup2, SWT.NONE);
 		txtDomainRule.setText("0");
-		txtDomainRule.setBounds(310, 145, 30, 20);
+		txtDomainRule.setBounds(70, 145, 30, 20);
 		txtDomainRule.setEditable(false);
 
 		Label lblInfo1 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo1.setText(", after applying");
-		lblInfo1.setBounds(200, 15, 150, 20);
+		lblInfo1.setText("rules, are violating existing abstractions");
+		lblInfo1.setBounds(110, 15, 250, 20);
 
 		Label lblInfo2 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo2.setText(", after applying");
-		lblInfo2.setBounds(200, 60, 150, 20);
-		
+		lblInfo2.setText("rules, are violating compositions");
+		lblInfo2.setBounds(110, 60, 250, 20);
+
 		Label lblInfo3 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo3.setText(", after applying");
-		lblInfo3.setBounds(200, 105, 150, 20);
-		
+		lblInfo3.setText("rules, are violating accesses");
+		lblInfo3.setBounds(110, 105, 250, 20);
+
 		Label lblInfo4 =  new Label(controlGroup2, SWT.NONE);
-		lblInfo4.setText(", after applying");
-		lblInfo4.setBounds(200, 145, 150, 20);
-
-		Label lblInfoRule =  new Label(controlGroup2, SWT.NONE);
-		lblInfoRule.setText("rules.");
-		lblInfoRule.setBounds(350, 15, 150, 20);
-		
-		Label lblInfoRule2 =  new Label(controlGroup2, SWT.NONE);
-		lblInfoRule2.setText("rules.");
-		lblInfoRule2.setBounds(350, 60, 150, 20);
-
-		
-		Label lblInfoRule3 =  new Label(controlGroup2, SWT.NONE);
-		lblInfoRule3.setText("rules.");
-		lblInfoRule3.setBounds(350, 105, 150, 20);
-		
-		Label lblInfoRule4 =  new Label(controlGroup2, SWT.NONE);
-		lblInfoRule4.setText("rules.");
-		lblInfoRule4.setBounds(350, 145, 150, 20);
+		lblInfo4.setText("rules, are violating domain accesses");
+		lblInfo4.setBounds(110, 145, 250, 20);
 
 		Label lblDrifts1 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts1.setText("Untested abstractions");
@@ -803,25 +800,32 @@ public class MainView extends ViewPart implements IPartListener2 {
 		controlGroup3.setText("Architectural Drifts: Existence Rules");
 		controlGroup3.setBounds(10, 560, 450,260);
 		controlGroup3.setLayout(new GridLayout());
-		
+
 		//************* Grid for checking abstraction composition *************
 		Group controlGroup4 = new Group(group, SWT.NONE);
 		controlGroup4.setText("Architectural Drifts: Composite Rules");
 		controlGroup4.setBounds(470, 0, 450,260);
 		controlGroup4.setLayout(new GridLayout());
-		
+
 		//************* Grid for checking abstraction access *************
 		Group controlGroup5 = new Group(group, SWT.NONE);
 		controlGroup5.setText("Architectural Drifts: Access Rules");
 		controlGroup5.setBounds(470, 280, 450,260);
 		controlGroup5.setLayout(new GridLayout());
-		
+
 		//************* Grid for checking abstraction domain *************
 		Group controlGroup6 = new Group(group, SWT.NONE);
 		controlGroup6.setText("Architectural Drifts: Domain Rules");
 		controlGroup6.setBounds(470, 560, 450,260);
 		controlGroup6.setLayout(new GridLayout());
 
+		//************* JFreeChart *************
+		Group controlGroup7 = new Group(group, SWT.NONE);
+		controlGroup7.setText("Total Amount of Violated Rules");
+		controlGroup7.setBounds(930, 280, 340, 260);
+
+		
+		
 		Button generateRecommendation = new Button(controlGroup3, SWT.NONE);
 		generateRecommendation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		generateRecommendation.setBounds(10, 400, 120, 25);
@@ -910,19 +914,18 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 			}
 		});
-		
+
+		CheckConstraint checkConstraintMethod = new CheckConstraint(workspacePath, projectName);
 		GridTableViewer grid1 = this.createGrid(controlGroup3);
 		GridTableViewer grid2 = this.createGrid(controlGroup4);
 		GridTableViewer grid3 = this.createGrid(controlGroup5);
 		GridTableViewer grid4 = this.createGrid(controlGroup6);
-
+		
 		checkConstraint.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 
-				CheckConstraint checkConstraintMethod = new CheckConstraint(workspacePath, projectName);
-				
 				if (constraintPath.exists() && kdmCurrent.exists()) {
-					
+
 					List<MappedAnomaly> anomalyObject1 = new ArrayList<MappedAnomaly>();
 					List<MappedAnomaly> anomalyObject2 = new ArrayList<MappedAnomaly>();
 					List<MappedAnomaly> anomalyObject3 = new ArrayList<MappedAnomaly>();
@@ -951,19 +954,19 @@ public class MainView extends ViewPart implements IPartListener2 {
 									List<String> lstAnomaly= queryClass.getAnomaliesIdentifiedExistence();
 									for (String anomaly :lstAnomaly )
 										anomalyObject1.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));
-								
+
 									lstAnomaly= queryClass.getAnomaliesIdentifiedComposition();
 									for (String anomaly :lstAnomaly )
 										anomalyObject2.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));							
-									
+
 									lstAnomaly= queryClass.getAnomaliesIdentifiedAccess();
 									for (String anomaly :lstAnomaly )
 										anomalyObject3.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));						
-									
+
 									lstAnomaly= queryClass.getAnomaliesIdentifiedDomain();
 									for (String anomaly :lstAnomaly )
 										anomalyObject4.add(new MappedAnomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]));
-									
+
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -1017,11 +1020,41 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
-					
+
 					grid1.setInput(anomalyObject1);
 					grid2.setInput(anomalyObject2);
 					grid3.setInput(anomalyObject3);
 					grid4.setInput(anomalyObject4);
+					
+					
+					final DefaultPieDataset dataset = new DefaultPieDataset();
+					try {
+						dataset.setValue("Violations", Integer.parseInt(checkConstraintMethod.getTotalViolations()));
+					} catch (NumberFormatException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					try {
+						dataset.setValue("Passed",Integer.parseInt(checkConstraintMethod.getTotalPassed()));
+					} catch (NumberFormatException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					
+					//Graph
+					JFreeChart jchart = ChartFactory.createPieChart3D("", dataset, true, true, false);
+					final PiePlot3D plot = (PiePlot3D) jchart.getPlot();
+					plot.setStartAngle(290);
+					plot.setDirection(Rotation.CLOCKWISE);
+					plot.setForegroundAlpha(0.5f);
+					ChartComposite chartComposite = new ChartComposite(controlGroup7, SWT.NONE, jchart, true);
+					chartComposite.setSize(340,240);
 					
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The model was checked against ocl restrictions.");
 				}
@@ -1154,12 +1187,11 @@ public class MainView extends ViewPart implements IPartListener2 {
 				}
 			}
 		});
-
 		tab1.setControl(group);
 	}
-	
+
 	private GridTableViewer createGrid(Group control) {
-		
+
 		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		layoutData.minimumWidth = 300;
 		GridTableViewer gridTableViewer = new GridTableViewer(control, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
@@ -1185,7 +1217,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		gridTableViewer.setLabelProvider(new TableLabelAnomalyMappedProvider());		
 		return gridTableViewer;
 	}
-	
+
 	private void UIDomainRules(TabFolder tabFolder, String projectName) {
 
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
@@ -1234,7 +1266,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		column3.getColumn().setResizable(false);
 		column3.setLabelProvider(new ColumnLabelProviderFourth());
 
-		
+
 		TableViewerColumn column4 = new TableViewerColumn(viewerRules, SWT.CENTER | SWT.CHECK);
 		column4.getColumn().setText("On/Off ");
 		column4.getColumn().setWidth(15);
@@ -1243,12 +1275,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		
+
 		EditingRulesInstance editingRule = new EditingRulesInstance(column4.getViewer());
 		column4.setEditingSupport(editingRule);
 
 		viewerRules.setContentProvider(new ArrayContentProvider());
-	
+
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
@@ -1275,13 +1307,13 @@ public class MainView extends ViewPart implements IPartListener2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<TableMetaData> ruleContainer = new ArrayList<TableMetaData>();
-		
+
 		for (String rule :rules )
 			ruleContainer.add(new TableMetaData(Integer.valueOf(rule.split(Pattern.quote("|"))[0]), rule.split(Pattern.quote("|"))[1], rule.split(Pattern.quote("|"))[3],
 					rule.split(Pattern.quote("|"))[2],Boolean.valueOf(rule.split(Pattern.quote("|"))[4])));
-		
+
 		viewerRules.setInput(ruleContainer);
 
 	}

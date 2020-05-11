@@ -442,4 +442,50 @@ public class DataConstraint {
 		}
 
 	}
+
+	public String getTotalViolations() throws Exception
+	{
+		String result= "";
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select ifnull(count(*),0)\n" + 
+				"from (\n" + 
+				"select result from existence_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from composite_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from access_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from domain_rules\n" + 
+				")\n" + 
+				"where result = 0;\n");		
+		while (rs.next()) {
+			result = rs.getObject(1).toString();
+		}
+		mydb.closeConnection();
+		return result;
+		
+	}
+	
+	public String getTotalPassed() throws Exception
+	{
+		String result= "";
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select ifnull(count(*),0)\n" + 
+				"from (\n" + 
+				"select result from existence_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from composite_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from access_rules\n" + 
+				"UNION ALL\n" + 
+				"select result from domain_rules\n" + 
+				")\n" + 
+				"where result = 1;\n");		
+		while (rs.next()) {
+			result = rs.getObject(1).toString();
+		}
+		mydb.closeConnection();
+		return result;
+		
+	}
 }
