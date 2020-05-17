@@ -31,10 +31,10 @@ public class DataConstraint {
 		mydb.executeStmt("create table IF NOT EXISTS access (project_name text, abstraction1 text, abstraction2 text, result integer) ");
 		mydb.executeStmt("create table IF NOT EXISTS domain (project_name text, abstraction1 text, abstraction2 text, result integer) ");
 		mydb.executeStmt("create table IF NOT EXISTS drifts (project_name text, component integer, subsystem integer, association integer, domain integer) ");
-		mydb.executeStmt("create table IF NOT EXISTS existence_rules (project_name text, _key text, rule text, result integer)");
-		mydb.executeStmt("create table IF NOT EXISTS composite_rules (project_name text, _key text, rule text, result integer)");
-		mydb.executeStmt("create table IF NOT EXISTS access_rules (project_name text, _key text, rule text, result integer)");
-		mydb.executeStmt("create table IF NOT EXISTS domain_rules (project_name text, _key text, rule text, result integer)");
+		mydb.executeStmt("create table IF NOT EXISTS existence_rules (project_name text, _key text, rule text, result integer, id integer)");
+		mydb.executeStmt("create table IF NOT EXISTS composite_rules (project_name text, _key text, rule text, result integer, id integer)");
+		mydb.executeStmt("create table IF NOT EXISTS access_rules (project_name text, _key text, rule text, result integer, id integer)");
+		mydb.executeStmt("create table IF NOT EXISTS domain_rules (project_name text, _key text, rule text, result integer, id integer)");
 		mydb.executeStmt("create table IF NOT EXISTS architectural_anomaly (id integer, anomaly_type text, name text, description text, constraint_type text, _from text, _to text)");
 		mydb.executeStmt("create table IF NOT EXISTS mapping(id integer, _key text)");
 		mydb.executeStmt("delete from existence"); 
@@ -83,67 +83,96 @@ public class DataConstraint {
 		mydb.executeStmt("delete from drifts"); 
 	}
 
-	public void insertExistence(String projectName, String abstraction, int result) throws Exception {
+	public int insertExistence(String projectName, String abstraction, int result) throws Exception {
 
+		int rtn =-1;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into existence(project_name, abstraction, result) values"
 				+ " ('" + projectName + "','" +   abstraction + "',"  + result + ");"); 
+		
+		ResultSet rs = mydb.executeQry("select last_insert_rowid()"); 
+		while (rs.next()) {
+			rtn = Integer.valueOf(rs.getObject(1).toString());
+		}
+		
 		mydb.closeConnection();
+		return rtn;
 	}
 
-	public void insertExistenceRules(String projectName, String key, String rule, int result) throws Exception {
+	public void insertExistenceRules(String projectName, String key, String rule, int result, int id) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into existence_rules(project_name, _key, rule, result) values"
-				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.executeStmt("insert into existence_rules(project_name, _key, rule, result, id) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ","  + id + ");"); 
 		mydb.closeConnection();
 	}
 
-	public void insertComposite(String projectName, String abstraction, int result) throws Exception {
+	public int insertComposite(String projectName, String abstraction, int result) throws Exception {
 
+		int rtn =-1;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into composite(project_name, abstraction, result) values"
 				+ " ('" + projectName + "','" +   abstraction + "',"  + result + ");"); 
+		ResultSet rs = mydb.executeQry("select last_insert_rowid()"); 
+		while (rs.next()) {
+			rtn = Integer.valueOf(rs.getObject(1).toString());
+		}
+		
 		mydb.closeConnection();
+		return rtn;
 	}
 
-	public void insertCompositeRules(String projectName, String key, String rule, int result) throws Exception {
+	public void insertCompositeRules(String projectName, String key, String rule, int result, int id) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into composite_rules(project_name, _key, rule, result) values"
-				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.executeStmt("insert into composite_rules(project_name, _key, rule, result, id) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result +  ","  + id + ");"); 
 		mydb.closeConnection();
 	}
 
-	public void insertAccess(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
+	public int insertAccess(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
 
+		int rtn = -1;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into access(project_name, abstraction1, abstraction2, result) values"
 				+ " ('" + projectName + "','" +   abstraction1 + "','"  +   abstraction2 + "',"+ result + ");"); 
+		ResultSet rs = mydb.executeQry("select last_insert_rowid()"); 
+		while (rs.next()) {
+			rtn = Integer.valueOf(rs.getObject(1).toString());
+		}
+		
 		mydb.closeConnection();
+		return rtn;
 	}
 
-	public void insertAccessRules(String projectName, String key, String rule, int result) throws Exception {
+	public void insertAccessRules(String projectName, String key, String rule, int result, int id) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into access_rules(project_name, _key, rule, result) values"
-				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.executeStmt("insert into access_rules(project_name, _key, rule, result, id) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ","  + id + ");"); 
 		mydb.closeConnection();
 	}
 
-	public void insertDomain(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
+	public int insertDomain(String projectName, String abstraction1, String abstraction2, int result) throws Exception {
 
+		int rtn = -1;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("insert into domain(project_name, abstraction1, abstraction2, result) values"
 				+ " ('" + projectName + "','" +   abstraction1 + "','"  +   abstraction2 + "',"+ result + ");"); 
+		ResultSet rs = mydb.executeQry("select last_insert_rowid()"); 
+		while (rs.next()) {
+			rtn = Integer.valueOf(rs.getObject(1).toString());
+		}
+		
 		mydb.closeConnection();
+		return rtn;
 	}
 
-	public void insertDomainRules(String projectName, String key, String rule, int result) throws Exception {
+	public void insertDomainRules(String projectName, String key, String rule, int result, int id) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into domain_rules(project_name, _key, rule, result) values"
-				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ");"); 
+		mydb.executeStmt("insert into domain_rules(project_name, _key, rule, result, id) values"
+				+ " ('" + projectName + "','" +   key + "','" +   rule + "',"  + result + ","  + id + ");"); 
 		mydb.closeConnection();
 	}
 
@@ -226,7 +255,7 @@ public class DataConstraint {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select A.false, B.total from "
 				+ "(select count(*) as false from composite where result = 0) as A, "
-				+ "(select count(*) as total from composite) as B;\n" );
+				+ "(select count(*) as total from composite where result = 0 or result = 1) as B;\n" );
 		lst = resultSetToArrayList(rs);
 		mydb.closeConnection();
 		return lst;
@@ -238,7 +267,7 @@ public class DataConstraint {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select A.false, B.total from "
 				+ "(select count(*) as false from access where result = 0) as A, "
-				+ "(select count(*) as total from access) as B;\n" );
+				+ "(select count(*) as total from access where result = 0 or result = 1) as B;\n" );
 		lst = resultSetToArrayList(rs);
 		mydb.closeConnection();
 		return lst;
@@ -250,7 +279,7 @@ public class DataConstraint {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select A.false, B.total from "
 				+ "(select count(*) as false from domain where result = 0) as A, "
-				+ "(select count(*) as total from domain) as B;\n" );
+				+ "(select count(*) as total from domain where result = 0 or result = 1) as B;\n" );
 		lst = resultSetToArrayList(rs);
 		mydb.closeConnection();
 		return lst;
@@ -321,7 +350,7 @@ public class DataConstraint {
 				"(\n" + 
 				"    select * \n" + 
 				"    from composite_rules  \n" + 
-				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id  Where A.result <> -1 Order by A.result;");		
 		while (rs.next()) {
 			lst.add(this.setTextComposition(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
 		}
@@ -338,7 +367,7 @@ public class DataConstraint {
 				"(\n" + 
 				"    select * \n" + 
 				"    from access_rules  \n" + 
-				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id  Where A.result <> -1 Order by A.result;");		
 		while (rs.next()) {
 			lst.add(this.setTextAccess(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
 		}
@@ -355,7 +384,7 @@ public class DataConstraint {
 				"(\n" + 
 				"    select * \n" + 
 				"    from domain_rules  \n" + 
-				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id Order by A.result;");		
+				") A  left join mapping B  ON A._key LIKE  B._key || '%' left join architectural_anomaly C on  C.id = B.id  Where A.result <> -1 Order by A.result;");		
 		while (rs.next()) {
 			lst.add(this.setTextDomain(rs.getObject(1).toString())+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString());
 		}
@@ -488,4 +517,92 @@ public class DataConstraint {
 		return result;
 		
 	}
+	
+	public void checkRealConstraints() throws Exception {
+		
+		
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update composite \n" + 
+				"set result = -1\n" + 
+				"where \n" + 
+				"     abstraction not in \n" + 
+				"     (select abstraction from existence where result = 1);"); 
+		
+		mydb.executeStmt("update composite_rules\n" + 
+				"set result = -1\n" + 
+				"where id in (select rowid from composite where result = -1);");
+		
+		
+		mydb.executeStmt("update access \n" + 
+				"set result = -1\n" + 
+				"where \n" + 
+				"     (abstraction1 not in (select abstraction from existence where result = 1) or \n" + 
+				"      abstraction2 not in (select abstraction from existence where result = 1) );");
+		
+		
+		mydb.executeStmt("update access_rules\n" + 
+				"set result = -1\n" + 
+				"where id in (select rowid from access where result = -1);");
+		
+		
+		mydb.executeStmt("update domain \n" + 
+				"set result = -1\n" + 
+				"where \n" + 
+				"     (abstraction1 not in (select abstraction from existence where result = 1) or \n" + 
+				"      abstraction2 not in (select abstraction from existence where result = 1) );");
+		
+		mydb.executeStmt("update domain_rules\n" + 
+				"set result = -1\n" + 
+				"where id in (select rowid from domain where result = -1);");
+		
+		mydb.closeConnection();
+		
+	}
+	
+	public List<String> getIgnoredRules() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		lst.addAll(this.getIgnoredRulesComposition());
+		lst.addAll(this.getIgnoredRulesAccess());
+		lst.addAll(this.getIgnoredRulesDomain());
+		return lst;
+	}
+
+	public List<String> getIgnoredRulesComposition() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key,'Composite' from composite_rules where result = -1;");		
+		while (rs.next()) { 
+			lst.add(this.setTextComposition(rs.getObject(1).toString())+"|"+rs.getObject(2).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+	
+	public List<String> getIgnoredRulesAccess() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, 'Access' from access_rules where result = -1;");		
+		while (rs.next()) {
+			lst.add(this.setTextAccess(rs.getObject(1).toString())+"|"+rs.getObject(2).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+	
+	public List<String> getIgnoredRulesDomain() throws Exception
+	{
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select _key, 'Domain' from domain_rules where result = -1;");		
+		while (rs.next()) {
+			lst.add(this.setTextDomain(rs.getObject(1).toString())+"|"+rs.getObject(2).toString());
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+
+
 }
