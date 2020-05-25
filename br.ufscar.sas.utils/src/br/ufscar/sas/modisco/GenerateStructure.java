@@ -62,7 +62,7 @@ public class GenerateStructure {
 	{
 		List<String> memory1 = new ArrayList<String>();
 		List<String> memory2 = new ArrayList<String>();
-		List<String> rootList = tree.getChildren("roots");
+		List<String> rootList = tree.getChildren("roots"); 
 		memory1.addAll(rootList);
 		memory2.addAll(rootList);
 		while (!memory1.isEmpty())
@@ -72,14 +72,14 @@ public class GenerateStructure {
 			Set<String> set = new HashSet<>(rootList);
 			rootList.clear();
 			rootList.addAll(set);
-
 			if (!rootList.isEmpty())
 			{
 				for (int i = rootList.size()-1; i >= 0; i--)
 				{
+					String parent = null;
 					if (i == rootList.size()-1 )
 					{
-						String parent = memory1.remove(0);
+						parent = memory1.remove(0);
 						if (memory2.contains(new String(parent)))
 						{
 							memory2.remove(new String(parent));
@@ -90,15 +90,16 @@ public class GenerateStructure {
 					else
 						memory1.add(0,rootList.get(i));
 					this.createStructureElement(baseXManager, child, memory1.get(0),path_);
+					
+					if (parent.equals(rootList.get(i)))
+						memory1.remove(0);
 				}
 			}
 			else
 				memory1.remove(0);
 		}
 		for (String memory: memory2)
-		{
 			this.createStructureElement(baseXManager, null, memory, path_);
-		}
 	}
 
 	public void annotationPackage(File projectDir, String path_) {
@@ -445,7 +446,6 @@ public class GenerateStructure {
 			e.printStackTrace();
 		}
 
-
 		try {
 			baseXManager.exportDB();
 		} catch (BaseXException e) {
@@ -615,11 +615,11 @@ public class GenerateStructure {
 				{
 					//insert an aggregated relationship.
 					baseXManager.createAggregatedElement(fromAbstraction, modiscoPathFrom, modiscoPathTo, modiscoPathRelation);
-					
+
 					//create outAggregated
 					String pathAggregated = baseXManager.getPathOfAggregated(fromAbstraction, modiscoPathFrom, modiscoPathTo);
 					outAggregated = baseXManager.getOutAggregated(fromAbstraction);
-				
+
 					if (!outAggregated.contains(pathAggregated))
 						outAggregated = outAggregated + " " + pathAggregated; 
 
@@ -630,10 +630,10 @@ public class GenerateStructure {
 					//create inAggregated
 					inAggregated = baseXManager.getInAggregated(toAbstraction);
 					inAggregated = inAggregated.trim();
-					
+
 					if (!inAggregated.contains(pathAggregated))
 						inAggregated = inAggregated + " " + pathAggregated; 
-					
+
 					inAggregated = inAggregated.trim();
 					baseXManager.updateInAggregated(toAbstraction, inAggregated);
 					inAggregated = "";
