@@ -56,6 +56,7 @@ public class GenerateStructure {
 			children.addAll(childrenNonDuplicate);
 			tree.addNode(annotation.get(i), children);
 		}
+	
 	}
 
 	public void createStructureElementFromTree(Manager baseXManager, String path_) throws BaseXException, QueryException, SQLException
@@ -76,10 +77,9 @@ public class GenerateStructure {
 			{
 				for (int i = rootList.size()-1; i >= 0; i--)
 				{
-					String parent = null;
 					if (i == rootList.size()-1 )
 					{
-						parent = memory1.remove(0);
+						String parent = memory1.remove(0);
 						if (memory2.contains(new String(parent)))
 						{
 							memory2.remove(new String(parent));
@@ -90,13 +90,11 @@ public class GenerateStructure {
 					else
 						memory1.add(0,rootList.get(i));
 					this.createStructureElement(baseXManager, child, memory1.get(0),path_);
-					
-					if (parent.equals(rootList.get(i)))
-						memory1.remove(0);
 				}
 			}
 			else
 				memory1.remove(0);
+			
 		}
 		for (String memory: memory2)
 			this.createStructureElement(baseXManager, null, memory, path_);
