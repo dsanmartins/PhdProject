@@ -77,9 +77,11 @@ public class DataConstraint {
 		mydb.executeStmt("delete from existence"); 
 		mydb.executeStmt("delete from composite"); 
 		mydb.executeStmt("delete from access"); 
+		mydb.executeStmt("delete from domain"); 
 		mydb.executeStmt("delete from existence_rules"); 
 		mydb.executeStmt("delete from composite_rules"); 
 		mydb.executeStmt("delete from access_rules"); 
+		mydb.executeStmt("delete from domain_rules"); 
 		mydb.executeStmt("delete from drifts"); 
 	}
 

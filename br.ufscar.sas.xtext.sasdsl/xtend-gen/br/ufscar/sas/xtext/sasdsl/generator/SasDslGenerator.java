@@ -3,6 +3,8 @@
  */
 package br.ufscar.sas.xtext.sasdsl.generator;
 
+import br.ufscar.sas.database.QueryClass;
+import br.ufscar.sas.view.MainView;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
@@ -42,6 +44,7 @@ import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
@@ -3332,909 +3335,844 @@ public class SasDslGenerator extends AbstractGenerator {
   }
   
   public CharSequence compile2(final ArchitectureDefinition architectureDefinition) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/core\'");
-    _builder.newLine();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/kdm\'");
-    _builder.newLine();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/source\'");
-    _builder.newLine();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/code\'");
-    _builder.newLine();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/action\'");
-    _builder.newLine();
-    _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/structure\'");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("package structure");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("---------------------------------------------------------");
-    _builder.newLine();
-    _builder.append("-- Check the existence of adaptive system abstractions --");
-    _builder.newLine();
-    _builder.append("---------------------------------------------------------");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      for(final DSLManaging managing : this.lManaging) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name = managing.getName();
-        _builder.append(_name, "\t");
-        _builder.append(": Subsystem.allInstances()->exists(c| c.name=\'");
-        String _name_1 = managing.getName();
-        _builder.append(_name_1, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managing Subsystem\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLManaged managed : this.lManaged) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_2 = managed.getName();
-        _builder.append(_name_2, "\t");
-        _builder.append(": Subsystem.allInstances()->exists(c| c.name=\'");
-        String _name_3 = managed.getName();
-        _builder.append(_name_3, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managed Subsystem\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLManagerController mcontroller : this.lMController) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_4 = mcontroller.getName();
-        _builder.append(_name_4, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_5 = mcontroller.getName();
-        _builder.append(_name_5, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLController controller : this.lController) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_6 = controller.getName();
-        _builder.append(_name_6, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_7 = controller.getName();
-        _builder.append(_name_7, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLMonitor monitor : this.lMonitor) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_8 = monitor.getName();
-        _builder.append(_name_8, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_9 = monitor.getName();
-        _builder.append(_name_9, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Monitor\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLAnalyzer analyzer : this.lAnalyzer) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_10 = analyzer.getName();
-        _builder.append(_name_10, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_11 = analyzer.getName();
-        _builder.append(_name_11, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Analyzer\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLPlanner planner : this.lPlanner) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_12 = planner.getName();
-        _builder.append(_name_12, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_13 = planner.getName();
-        _builder.append(_name_13, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Planner\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLExecutor executor : this.lExecutor) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_14 = executor.getName();
-        _builder.append(_name_14, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_15 = executor.getName();
-        _builder.append(_name_15, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Executor\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLKnowledge knowledge : this.lKnowledge) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_16 = knowledge.getName();
-        _builder.append(_name_16, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_17 = knowledge.getName();
-        _builder.append(_name_17, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Knowledge\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLEffector effector : this.lEffector) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_18 = effector.getName();
-        _builder.append(_name_18, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_19 = effector.getName();
-        _builder.append(_name_19, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Effector\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLSensor sensor : this.lSensor) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_20 = sensor.getName();
-        _builder.append(_name_20, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_21 = sensor.getName();
-        _builder.append(_name_21, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Sensor\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLMeasuredOutput mesOutput : this.lMOutput) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_22 = mesOutput.getName();
-        _builder.append(_name_22, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_23 = mesOutput.getName();
-        _builder.append(_name_23, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Measured Output\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLReferenceInput refInput : this.lRInput) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_24 = refInput.getName();
-        _builder.append(_name_24, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_25 = refInput.getName();
-        _builder.append(_name_25, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Reference Input\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    {
-      for(final DSLAlternative shalt : this.lAlternative) {
-        _builder.append("\t");
-        _builder.append("context StructureModel");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("inv exist_");
-        String _name_26 = shalt.getName();
-        _builder.append(_name_26, "\t");
-        _builder.append(": Component.allInstances()->exists(c| c.name=\'");
-        String _name_27 = shalt.getName();
-        _builder.append(_name_27, "\t");
-        _builder.append("\' and c.stereotype->asSequence()->first().name = \'Alternative\')");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-      }
-    }
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.append("-- Check compositions of adaptive system abstractions --");
-    _builder.newLine();
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      for(final DSLManaging managing_1 : this.lManaging) {
-        {
-          EObject _eContainer = managing_1.eContainer();
-          if ((_eContainer instanceof ArchitectureDefinition)) {
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_28 = managing_1.getName();
-            _builder.append(_name_28, "\t");
-            _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
-            String _name_29 = managing_1.getName();
-            _builder.append(_name_29, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managing Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
-            _builder.newLineIfNotEmpty();
-          }
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/core\'");
+      _builder.newLine();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/kdm\'");
+      _builder.newLine();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/source\'");
+      _builder.newLine();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/code\'");
+      _builder.newLine();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/action\'");
+      _builder.newLine();
+      _builder.append("import \'http://www.eclipse.org/MoDisco/kdm/structure\'");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("package structure");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("---------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("-- Check the existence of adaptive system abstractions --");
+      _builder.newLine();
+      _builder.append("---------------------------------------------------------");
+      _builder.newLine();
+      _builder.newLine();
+      {
+        for(final DSLManaging managing : this.lManaging) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name = managing.getName();
+          _builder.append(_name, "\t");
+          _builder.append(": Subsystem.allInstances()->exists(c| c.name=\'");
+          String _name_1 = managing.getName();
+          _builder.append(_name_1, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managing Subsystem\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
         }
       }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLManaged managed_1 : this.lManaged) {
-        {
-          EObject _eContainer_1 = managed_1.eContainer();
-          if ((_eContainer_1 instanceof ArchitectureDefinition)) {
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_30 = managed_1.getName();
-            _builder.append(_name_30, "\t");
-            _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
-            String _name_31 = managed_1.getName();
-            _builder.append(_name_31, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managed Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
-            _builder.newLineIfNotEmpty();
-          }
+      {
+        for(final DSLManaged managed : this.lManaged) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_2 = managed.getName();
+          _builder.append(_name_2, "\t");
+          _builder.append(": Subsystem.allInstances()->exists(c| c.name=\'");
+          String _name_3 = managed.getName();
+          _builder.append(_name_3, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
         }
       }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLManagerController mcontroller_1 : this.lMController) {
-        {
-          EObject _eContainer_2 = mcontroller_1.eContainer();
-          if ((_eContainer_2 instanceof DSLManaging)) {
-            _builder.append("\t");
-            EObject _eContainer_3 = mcontroller_1.eContainer();
-            DSLManaging managing_2 = ((DSLManaging) _eContainer_3);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_32 = mcontroller_1.getName();
-            _builder.append(_name_32, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_33 = mcontroller_1.getName();
-            _builder.append(_name_33, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-            String _name_34 = managing_2.getName();
-            _builder.append(_name_34, "\t\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
-            _builder.newLineIfNotEmpty();
-          }
+      {
+        for(final DSLManagerController mcontroller : this.lMController) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_4 = mcontroller.getName();
+          _builder.append(_name_4, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_5 = mcontroller.getName();
+          _builder.append(_name_5, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
         }
       }
-    }
-    _builder.append("\t\t");
-    _builder.newLine();
-    {
-      for(final DSLController controller_1 : this.lController) {
-        {
-          EObject _eContainer_4 = controller_1.eContainer();
-          if ((_eContainer_4 instanceof DSLManaging)) {
-            _builder.append("\t");
-            EObject _eContainer_5 = controller_1.eContainer();
-            DSLManaging managing_3 = ((DSLManaging) _eContainer_5);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_35 = controller_1.getName();
-            _builder.append(_name_35, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_36 = controller_1.getName();
-            _builder.append(_name_36, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t\t ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-            String _name_37 = managing_3.getName();
-            _builder.append(_name_37, "\t\t\t\t\t\t\t\t\t ");
-            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
-            _builder.newLineIfNotEmpty();
-          } else {
-            EObject _eContainer_6 = controller_1.eContainer();
-            if ((_eContainer_6 instanceof DSLManagerController)) {
+      {
+        for(final DSLController controller : this.lController) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_6 = controller.getName();
+          _builder.append(_name_6, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_7 = controller.getName();
+          _builder.append(_name_7, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLMonitor monitor : this.lMonitor) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_8 = monitor.getName();
+          _builder.append(_name_8, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_9 = monitor.getName();
+          _builder.append(_name_9, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Monitor\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLAnalyzer analyzer : this.lAnalyzer) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_10 = analyzer.getName();
+          _builder.append(_name_10, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_11 = analyzer.getName();
+          _builder.append(_name_11, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Analyzer\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLPlanner planner : this.lPlanner) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_12 = planner.getName();
+          _builder.append(_name_12, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_13 = planner.getName();
+          _builder.append(_name_13, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Planner\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLExecutor executor : this.lExecutor) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_14 = executor.getName();
+          _builder.append(_name_14, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_15 = executor.getName();
+          _builder.append(_name_15, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Executor\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLKnowledge knowledge : this.lKnowledge) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_16 = knowledge.getName();
+          _builder.append(_name_16, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_17 = knowledge.getName();
+          _builder.append(_name_17, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Knowledge\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLEffector effector : this.lEffector) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_18 = effector.getName();
+          _builder.append(_name_18, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_19 = effector.getName();
+          _builder.append(_name_19, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Effector\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLSensor sensor : this.lSensor) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_20 = sensor.getName();
+          _builder.append(_name_20, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_21 = sensor.getName();
+          _builder.append(_name_21, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Sensor\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLMeasuredOutput mesOutput : this.lMOutput) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_22 = mesOutput.getName();
+          _builder.append(_name_22, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_23 = mesOutput.getName();
+          _builder.append(_name_23, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Measured Output\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLReferenceInput refInput : this.lRInput) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_24 = refInput.getName();
+          _builder.append(_name_24, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_25 = refInput.getName();
+          _builder.append(_name_25, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Reference Input\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      {
+        for(final DSLAlternative shalt : this.lAlternative) {
+          _builder.append("\t");
+          _builder.append("context StructureModel");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("inv exist_");
+          String _name_26 = shalt.getName();
+          _builder.append(_name_26, "\t");
+          _builder.append(": Component.allInstances()->exists(c| c.name=\'");
+          String _name_27 = shalt.getName();
+          _builder.append(_name_27, "\t");
+          _builder.append("\' and c.stereotype->asSequence()->first().name = \'Alternative\')");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+        }
+      }
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("-- Check compositions of adaptive system abstractions --");
+      _builder.newLine();
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.newLine();
+      {
+        for(final DSLManaging managing_1 : this.lManaging) {
+          {
+            EObject _eContainer = managing_1.eContainer();
+            if ((_eContainer instanceof ArchitectureDefinition)) {
               _builder.append("\t");
-              EObject _eContainer_7 = controller_1.eContainer();
-              DSLManagerController mcontroller_2 = ((DSLManagerController) _eContainer_7);
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_28 = managing_1.getName();
+              _builder.append(_name_28, "\t");
+              _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
+              String _name_29 = managing_1.getName();
+              _builder.append(_name_29, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managing Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLManaged managed_1 : this.lManaged) {
+          {
+            EObject _eContainer_1 = managed_1.eContainer();
+            if ((_eContainer_1 instanceof ArchitectureDefinition)) {
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_30 = managed_1.getName();
+              _builder.append(_name_30, "\t");
+              _builder.append(": Subsystem.allInstances()->select(c| c.name=\'");
+              String _name_31 = managed_1.getName();
+              _builder.append(_name_31, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Managed Subsystem\') -> exists(d|d.oclContainer().oclIsTypeOf(StructureModel))");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLManagerController mcontroller_1 : this.lMController) {
+          {
+            EObject _eContainer_2 = mcontroller_1.eContainer();
+            if ((_eContainer_2 instanceof DSLManaging)) {
+              _builder.append("\t");
+              EObject _eContainer_3 = mcontroller_1.eContainer();
+              DSLManaging managing_2 = ((DSLManaging) _eContainer_3);
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
               _builder.append("context StructureModel");
               _builder.newLine();
               _builder.append("\t");
               _builder.append("inv composite_");
-              String _name_38 = controller_1.getName();
-              _builder.append(_name_38, "\t");
+              String _name_32 = mcontroller_1.getName();
+              _builder.append(_name_32, "\t");
               _builder.append(": Component.allInstances()->select(c| c.name=\'");
-              String _name_39 = controller_1.getName();
-              _builder.append(_name_39, "\t");
+              String _name_33 = mcontroller_1.getName();
+              _builder.append(_name_33, "\t");
               _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')->");
               _builder.newLineIfNotEmpty();
               _builder.append("\t");
-              _builder.append("\t\t\t\t\t\t\t\t\t\t ");
+              _builder.append("\t\t\t\t\t\t\t\t  ");
               _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-              String _name_40 = mcontroller_2.getName();
-              _builder.append(_name_40, "\t\t\t\t\t\t\t\t\t\t\t ");
-              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop Manager\')");
+              String _name_34 = managing_2.getName();
+              _builder.append(_name_34, "\t\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
               _builder.newLineIfNotEmpty();
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLMonitor monitor_1 : this.lMonitor) {
-        {
-          EObject _eContainer_8 = monitor_1.eContainer();
-          if ((_eContainer_8 instanceof DSLController)) {
-            _builder.append("\t");
-            EObject _eContainer_9 = monitor_1.eContainer();
-            DSLController controller_2 = ((DSLController) _eContainer_9);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_41 = monitor_1.getName();
-            _builder.append(_name_41, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_42 = monitor_1.getName();
-            _builder.append(_name_42, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Monitor\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_43 = controller_2.getName();
-            _builder.append(_name_43, "\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t\t");
-    _builder.newLine();
-    {
-      for(final DSLAnalyzer analyzer_1 : this.lAnalyzer) {
-        {
-          EObject _eContainer_10 = analyzer_1.eContainer();
-          if ((_eContainer_10 instanceof DSLController)) {
-            _builder.append("\t");
-            EObject _eContainer_11 = analyzer_1.eContainer();
-            DSLController controller_3 = ((DSLController) _eContainer_11);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_44 = analyzer_1.getName();
-            _builder.append(_name_44, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_45 = analyzer_1.getName();
-            _builder.append(_name_45, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Analyzer\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_46 = controller_3.getName();
-            _builder.append(_name_46, "\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t\t");
-    _builder.newLine();
-    {
-      for(final DSLPlanner planner_1 : this.lPlanner) {
-        {
-          EObject _eContainer_12 = planner_1.eContainer();
-          if ((_eContainer_12 instanceof DSLController)) {
-            _builder.append("\t");
-            EObject _eContainer_13 = planner_1.eContainer();
-            DSLController controller_4 = ((DSLController) _eContainer_13);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_47 = planner_1.getName();
-            _builder.append(_name_47, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_48 = planner_1.getName();
-            _builder.append(_name_48, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Planner\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_49 = controller_4.getName();
-            _builder.append(_name_49, "\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLExecutor executor_1 : this.lExecutor) {
-        {
-          EObject _eContainer_14 = executor_1.eContainer();
-          if ((_eContainer_14 instanceof DSLController)) {
-            _builder.append("\t");
-            EObject _eContainer_15 = executor_1.eContainer();
-            DSLController controller_5 = ((DSLController) _eContainer_15);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_50 = executor_1.getName();
-            _builder.append(_name_50, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_51 = executor_1.getName();
-            _builder.append(_name_51, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Executor\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_52 = controller_5.getName();
-            _builder.append(_name_52, "\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLKnowledge knowledge_1 : this.lKnowledge) {
-        {
-          EObject _eContainer_16 = knowledge_1.eContainer();
-          if ((_eContainer_16 instanceof DSLController)) {
-            _builder.append("\t");
-            EObject _eContainer_17 = knowledge_1.eContainer();
-            DSLController controller_6 = ((DSLController) _eContainer_17);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_53 = knowledge_1.getName();
-            _builder.append(_name_53, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_54 = knowledge_1.getName();
-            _builder.append(_name_54, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Knowledge\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t  ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_55 = controller_6.getName();
-            _builder.append(_name_55, "\t\t\t\t\t\t\t\t  ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLEffector effector_1 : this.lEffector) {
-        {
-          EObject _eContainer_18 = effector_1.eContainer();
-          if ((_eContainer_18 instanceof DSLManaged)) {
-            _builder.append("\t");
-            EObject _eContainer_19 = effector_1.eContainer();
-            DSLManaged managed_2 = ((DSLManaged) _eContainer_19);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_56 = effector_1.getName();
-            _builder.append(_name_56, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_57 = effector_1.getName();
-            _builder.append(_name_57, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Effector\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t   ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-            String _name_58 = managed_2.getName();
-            _builder.append(_name_58, "\t\t\t\t\t\t\t\t   ");
-            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLSensor sensor_1 : this.lSensor) {
-        {
-          EObject _eContainer_20 = sensor_1.eContainer();
-          if ((_eContainer_20 instanceof DSLManaged)) {
-            _builder.append("\t");
-            EObject _eContainer_21 = sensor_1.eContainer();
-            DSLManaged managed_3 = ((DSLManaged) _eContainer_21);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_59 = sensor_1.getName();
-            _builder.append(_name_59, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_60 = sensor_1.getName();
-            _builder.append(_name_60, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Sensor\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t   ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-            String _name_61 = managed_3.getName();
-            _builder.append(_name_61, "\t\t\t\t\t\t\t\t   ");
-            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t\t");
-    _builder.newLine();
-    {
-      for(final DSLMeasuredOutput mesOutput_1 : this.lMOutput) {
-        {
-          EObject _eContainer_22 = mesOutput_1.eContainer();
-          if ((_eContainer_22 instanceof DSLManaged)) {
-            _builder.append("\t");
-            EObject _eContainer_23 = mesOutput_1.eContainer();
-            DSLManaged managed_4 = ((DSLManaged) _eContainer_23);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_62 = mesOutput_1.getName();
-            _builder.append(_name_62, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_63 = mesOutput_1.getName();
-            _builder.append(_name_63, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Measured Output\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t     ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
-            String _name_64 = managed_4.getName();
-            _builder.append(_name_64, "\t\t\t\t\t\t\t     ");
-            _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLReferenceInput refInput_1 : this.lRInput) {
-        {
-          EObject _eContainer_24 = refInput_1.eContainer();
-          if ((_eContainer_24 instanceof DSLKnowledge)) {
-            _builder.append("\t");
-            EObject _eContainer_25 = refInput_1.eContainer();
-            DSLKnowledge knowledge_2 = ((DSLKnowledge) _eContainer_25);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_65 = refInput_1.getName();
-            _builder.append(_name_65, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_66 = refInput_1.getName();
-            _builder.append(_name_66, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Reference Input\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t    ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_67 = knowledge_2.getName();
-            _builder.append(_name_67, "\t\t\t\t\t\t\t\t    ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Knowledge\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    {
-      for(final DSLAlternative shalt_1 : this.lAlternative) {
-        {
-          EObject _eContainer_26 = shalt_1.eContainer();
-          if ((_eContainer_26 instanceof DSLKnowledge)) {
-            _builder.append("\t");
-            EObject _eContainer_27 = shalt_1.eContainer();
-            DSLKnowledge knowledge_3 = ((DSLKnowledge) _eContainer_27);
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("context StructureModel");
-            _builder.newLine();
-            _builder.append("\t");
-            _builder.append("inv composite_");
-            String _name_68 = shalt_1.getName();
-            _builder.append(_name_68, "\t");
-            _builder.append(": Component.allInstances()->select(c| c.name=\'");
-            String _name_69 = shalt_1.getName();
-            _builder.append(_name_69, "\t");
-            _builder.append("\' and c.stereotype->asSequence()->first().name = \'Alternative\')->");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t");
-            _builder.append("\t\t\t\t\t\t\t    ");
-            _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
-            String _name_70 = knowledge_3.getName();
-            _builder.append(_name_70, "\t\t\t\t\t\t\t\t    ");
-            _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Knowledge\')");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("-- Check access rules of adaptive system abstractions --");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    EList<DSLRules> rules = architectureDefinition.getRules();
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLRules dslRule : rules) {
-        {
-          if ((dslRule instanceof DSLRuleMController)) {
-            _builder.append("\t");
-            DSLRuleMController dslRuleMController = ((DSLRuleMController) dslRule);
-            _builder.newLineIfNotEmpty();
-            {
-              DSLManagerController _mcontroller2 = dslRuleMController.getMcontroller2();
-              boolean _tripleNotEquals = (_mcontroller2 != null);
-              if (_tripleNotEquals) {
+      _builder.append("\t\t");
+      _builder.newLine();
+      {
+        for(final DSLController controller_1 : this.lController) {
+          {
+            EObject _eContainer_4 = controller_1.eContainer();
+            if ((_eContainer_4 instanceof DSLManaging)) {
+              _builder.append("\t");
+              EObject _eContainer_5 = controller_1.eContainer();
+              DSLManaging managing_3 = ((DSLManaging) _eContainer_5);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_35 = controller_1.getName();
+              _builder.append(_name_35, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_36 = controller_1.getName();
+              _builder.append(_name_36, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t\t ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+              String _name_37 = managing_3.getName();
+              _builder.append(_name_37, "\t\t\t\t\t\t\t\t\t ");
+              _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managing Subsystem\')");
+              _builder.newLineIfNotEmpty();
+            } else {
+              EObject _eContainer_6 = controller_1.eContainer();
+              if ((_eContainer_6 instanceof DSLManagerController)) {
                 _builder.append("\t");
-                DSLManagerController firstArgument = dslRuleMController.getMcontroller1();
+                EObject _eContainer_7 = controller_1.eContainer();
+                DSLManagerController mcontroller_2 = ((DSLManagerController) _eContainer_7);
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
-                DSLManagerController secondArgument = dslRuleMController.getMcontroller2();
+                _builder.append("context StructureModel");
+                _builder.newLine();
+                _builder.append("\t");
+                _builder.append("inv composite_");
+                String _name_38 = controller_1.getName();
+                _builder.append(_name_38, "\t");
+                _builder.append(": Component.allInstances()->select(c| c.name=\'");
+                String _name_39 = controller_1.getName();
+                _builder.append(_name_39, "\t");
+                _builder.append("\' and c.stereotype->asSequence()->first().name = \'Loop Manager\')->");
                 _builder.newLineIfNotEmpty();
-                {
-                  boolean _equals = ((DSLRuleMController)dslRule).getAccess().equals("must-use");
-                  if (_equals) {
-                    _builder.append("\t");
-                    _builder.append("context StructureModel");
-                    _builder.newLine();
-                    _builder.append("\t");
-                    _builder.append("inv access_");
-                    String _name_71 = firstArgument.getName();
-                    _builder.append(_name_71, "\t");
-                    _builder.append("_");
-                    String _name_72 = secondArgument.getName();
-                    _builder.append(_name_72, "\t");
-                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                    String _name_73 = firstArgument.getName();
-                    _builder.append(_name_73, "\t");
-                    _builder.append("\' and c.to.name=\'");
-                    String _name_74 = secondArgument.getName();
-                    _builder.append(_name_74, "\t");
-                    _builder.append("\') ");
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    _builder.newLine();
-                  } else {
-                    boolean _equals_1 = ((DSLRuleMController)dslRule).getAccess().equals("must-not-use");
-                    if (_equals_1) {
-                      _builder.append("\t");
-                      _builder.append("context StructureModel");
-                      _builder.newLine();
-                      _builder.append("\t");
-                      _builder.append("inv not_access_");
-                      String _name_75 = firstArgument.getName();
-                      _builder.append(_name_75, "\t");
-                      _builder.append("_");
-                      String _name_76 = secondArgument.getName();
-                      _builder.append(_name_76, "\t");
-                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_77 = firstArgument.getName();
-                      _builder.append(_name_77, "\t");
-                      _builder.append("\' and c.to.name=\'");
-                      String _name_78 = secondArgument.getName();
-                      _builder.append(_name_78, "\t");
-                      _builder.append("\') ");
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      _builder.newLine();
-                    }
-                  }
-                }
+                _builder.append("\t");
+                _builder.append("\t\t\t\t\t\t\t\t\t\t ");
+                _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+                String _name_40 = mcontroller_2.getName();
+                _builder.append(_name_40, "\t\t\t\t\t\t\t\t\t\t\t ");
+                _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop Manager\')");
+                _builder.newLineIfNotEmpty();
               }
             }
-          } else {
-            if ((dslRule instanceof DSLRuleController)) {
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLMonitor monitor_1 : this.lMonitor) {
+          {
+            EObject _eContainer_8 = monitor_1.eContainer();
+            if ((_eContainer_8 instanceof DSLController)) {
               _builder.append("\t");
-              DSLRuleController dslRuleController = ((DSLRuleController) dslRule);
+              EObject _eContainer_9 = monitor_1.eContainer();
+              DSLController controller_2 = ((DSLController) _eContainer_9);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_41 = monitor_1.getName();
+              _builder.append(_name_41, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_42 = monitor_1.getName();
+              _builder.append(_name_42, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Monitor\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t  ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_43 = controller_2.getName();
+              _builder.append(_name_43, "\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t\t");
+      _builder.newLine();
+      {
+        for(final DSLAnalyzer analyzer_1 : this.lAnalyzer) {
+          {
+            EObject _eContainer_10 = analyzer_1.eContainer();
+            if ((_eContainer_10 instanceof DSLController)) {
+              _builder.append("\t");
+              EObject _eContainer_11 = analyzer_1.eContainer();
+              DSLController controller_3 = ((DSLController) _eContainer_11);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_44 = analyzer_1.getName();
+              _builder.append(_name_44, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_45 = analyzer_1.getName();
+              _builder.append(_name_45, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Analyzer\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t  ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_46 = controller_3.getName();
+              _builder.append(_name_46, "\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t\t");
+      _builder.newLine();
+      {
+        for(final DSLPlanner planner_1 : this.lPlanner) {
+          {
+            EObject _eContainer_12 = planner_1.eContainer();
+            if ((_eContainer_12 instanceof DSLController)) {
+              _builder.append("\t");
+              EObject _eContainer_13 = planner_1.eContainer();
+              DSLController controller_4 = ((DSLController) _eContainer_13);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_47 = planner_1.getName();
+              _builder.append(_name_47, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_48 = planner_1.getName();
+              _builder.append(_name_48, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Planner\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t  ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_49 = controller_4.getName();
+              _builder.append(_name_49, "\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLExecutor executor_1 : this.lExecutor) {
+          {
+            EObject _eContainer_14 = executor_1.eContainer();
+            if ((_eContainer_14 instanceof DSLController)) {
+              _builder.append("\t");
+              EObject _eContainer_15 = executor_1.eContainer();
+              DSLController controller_5 = ((DSLController) _eContainer_15);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_50 = executor_1.getName();
+              _builder.append(_name_50, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_51 = executor_1.getName();
+              _builder.append(_name_51, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Executor\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t  ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_52 = controller_5.getName();
+              _builder.append(_name_52, "\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLKnowledge knowledge_1 : this.lKnowledge) {
+          {
+            EObject _eContainer_16 = knowledge_1.eContainer();
+            if ((_eContainer_16 instanceof DSLController)) {
+              _builder.append("\t");
+              EObject _eContainer_17 = knowledge_1.eContainer();
+              DSLController controller_6 = ((DSLController) _eContainer_17);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_53 = knowledge_1.getName();
+              _builder.append(_name_53, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_54 = knowledge_1.getName();
+              _builder.append(_name_54, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Knowledge\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t  ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_55 = controller_6.getName();
+              _builder.append(_name_55, "\t\t\t\t\t\t\t\t  ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Loop\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLEffector effector_1 : this.lEffector) {
+          {
+            EObject _eContainer_18 = effector_1.eContainer();
+            if ((_eContainer_18 instanceof DSLManaged)) {
+              _builder.append("\t");
+              EObject _eContainer_19 = effector_1.eContainer();
+              DSLManaged managed_2 = ((DSLManaged) _eContainer_19);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_56 = effector_1.getName();
+              _builder.append(_name_56, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_57 = effector_1.getName();
+              _builder.append(_name_57, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Effector\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t   ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+              String _name_58 = managed_2.getName();
+              _builder.append(_name_58, "\t\t\t\t\t\t\t\t   ");
+              _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLSensor sensor_1 : this.lSensor) {
+          {
+            EObject _eContainer_20 = sensor_1.eContainer();
+            if ((_eContainer_20 instanceof DSLManaged)) {
+              _builder.append("\t");
+              EObject _eContainer_21 = sensor_1.eContainer();
+              DSLManaged managed_3 = ((DSLManaged) _eContainer_21);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_59 = sensor_1.getName();
+              _builder.append(_name_59, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_60 = sensor_1.getName();
+              _builder.append(_name_60, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Sensor\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t   ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+              String _name_61 = managed_3.getName();
+              _builder.append(_name_61, "\t\t\t\t\t\t\t\t   ");
+              _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t\t");
+      _builder.newLine();
+      {
+        for(final DSLMeasuredOutput mesOutput_1 : this.lMOutput) {
+          {
+            EObject _eContainer_22 = mesOutput_1.eContainer();
+            if ((_eContainer_22 instanceof DSLManaged)) {
+              _builder.append("\t");
+              EObject _eContainer_23 = mesOutput_1.eContainer();
+              DSLManaged managed_4 = ((DSLManaged) _eContainer_23);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_62 = mesOutput_1.getName();
+              _builder.append(_name_62, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_63 = mesOutput_1.getName();
+              _builder.append(_name_63, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Measured Output\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t     ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Subsystem).name=\'");
+              String _name_64 = managed_4.getName();
+              _builder.append(_name_64, "\t\t\t\t\t\t\t     ");
+              _builder.append("\' and d.oclContainer().oclAsType(Subsystem).stereotype->asSequence()->first().name = \'Managed Subsystem\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLReferenceInput refInput_1 : this.lRInput) {
+          {
+            EObject _eContainer_24 = refInput_1.eContainer();
+            if ((_eContainer_24 instanceof DSLKnowledge)) {
+              _builder.append("\t");
+              EObject _eContainer_25 = refInput_1.eContainer();
+              DSLKnowledge knowledge_2 = ((DSLKnowledge) _eContainer_25);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_65 = refInput_1.getName();
+              _builder.append(_name_65, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_66 = refInput_1.getName();
+              _builder.append(_name_66, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Reference Input\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t    ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_67 = knowledge_2.getName();
+              _builder.append(_name_67, "\t\t\t\t\t\t\t\t    ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Knowledge\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.append("\t");
+      _builder.newLine();
+      {
+        for(final DSLAlternative shalt_1 : this.lAlternative) {
+          {
+            EObject _eContainer_26 = shalt_1.eContainer();
+            if ((_eContainer_26 instanceof DSLKnowledge)) {
+              _builder.append("\t");
+              EObject _eContainer_27 = shalt_1.eContainer();
+              DSLKnowledge knowledge_3 = ((DSLKnowledge) _eContainer_27);
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("context StructureModel");
+              _builder.newLine();
+              _builder.append("\t");
+              _builder.append("inv composite_");
+              String _name_68 = shalt_1.getName();
+              _builder.append(_name_68, "\t");
+              _builder.append(": Component.allInstances()->select(c| c.name=\'");
+              String _name_69 = shalt_1.getName();
+              _builder.append(_name_69, "\t");
+              _builder.append("\' and c.stereotype->asSequence()->first().name = \'Alternative\')->");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t");
+              _builder.append("\t\t\t\t\t\t\t    ");
+              _builder.append("exists(d|d.oclContainer().oclAsType(Component).name=\'");
+              String _name_70 = knowledge_3.getName();
+              _builder.append(_name_70, "\t\t\t\t\t\t\t\t    ");
+              _builder.append("\' and d.oclContainer().oclAsType(Component).stereotype->asSequence()->first().name = \'Knowledge\')");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("-- Check access rules of adaptive system abstractions --");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      EList<DSLRules> rules = architectureDefinition.getRules();
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLRules dslRule : rules) {
+          {
+            if ((dslRule instanceof DSLRuleMController)) {
+              _builder.append("\t");
+              DSLRuleMController dslRuleMController = ((DSLRuleMController) dslRule);
               _builder.newLineIfNotEmpty();
               {
-                DSLController _controller2 = dslRuleController.getController2();
-                boolean _tripleNotEquals_1 = (_controller2 != null);
-                if (_tripleNotEquals_1) {
+                DSLManagerController _mcontroller2 = dslRuleMController.getMcontroller2();
+                boolean _tripleNotEquals = (_mcontroller2 != null);
+                if (_tripleNotEquals) {
                   _builder.append("\t");
-                  DSLController firstArgument_1 = dslRuleController.getController1();
+                  DSLManagerController firstArgument = dslRuleMController.getMcontroller1();
                   _builder.newLineIfNotEmpty();
                   _builder.append("\t");
-                  DSLController secondArgument_1 = dslRuleController.getController2();
+                  DSLManagerController secondArgument = dslRuleMController.getMcontroller2();
                   _builder.newLineIfNotEmpty();
                   {
-                    boolean _equals_2 = ((DSLRuleController)dslRule).getAccess().equals("must-use");
-                    if (_equals_2) {
+                    boolean _equals = ((DSLRuleMController)dslRule).getAccess().equals("must-use");
+                    if (_equals) {
                       _builder.append("\t");
                       _builder.append("context StructureModel");
                       _builder.newLine();
                       _builder.append("\t");
                       _builder.append("inv access_");
-                      String _name_79 = firstArgument_1.getName();
-                      _builder.append(_name_79, "\t");
+                      String _name_71 = firstArgument.getName();
+                      _builder.append(_name_71, "\t");
                       _builder.append("_");
-                      String _name_80 = secondArgument_1.getName();
-                      _builder.append(_name_80, "\t");
+                      String _name_72 = secondArgument.getName();
+                      _builder.append(_name_72, "\t");
                       _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                      String _name_81 = firstArgument_1.getName();
-                      _builder.append(_name_81, "\t");
+                      String _name_73 = firstArgument.getName();
+                      _builder.append(_name_73, "\t");
                       _builder.append("\' and c.to.name=\'");
-                      String _name_82 = secondArgument_1.getName();
-                      _builder.append(_name_82, "\t");
+                      String _name_74 = secondArgument.getName();
+                      _builder.append(_name_74, "\t");
                       _builder.append("\') ");
                       _builder.newLineIfNotEmpty();
                       _builder.append("\t");
                       _builder.newLine();
                     } else {
-                      boolean _equals_3 = ((DSLRuleController)dslRule).getAccess().equals("must-not-use");
-                      if (_equals_3) {
+                      boolean _equals_1 = ((DSLRuleMController)dslRule).getAccess().equals("must-not-use");
+                      if (_equals_1) {
                         _builder.append("\t");
                         _builder.append("context StructureModel");
                         _builder.newLine();
                         _builder.append("\t");
                         _builder.append("inv not_access_");
-                        String _name_83 = firstArgument_1.getName();
-                        _builder.append(_name_83, "\t");
+                        String _name_75 = firstArgument.getName();
+                        _builder.append(_name_75, "\t");
                         _builder.append("_");
-                        String _name_84 = secondArgument_1.getName();
-                        _builder.append(_name_84, "\t");
+                        String _name_76 = secondArgument.getName();
+                        _builder.append(_name_76, "\t");
                         _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_85 = firstArgument_1.getName();
-                        _builder.append(_name_85, "\t");
+                        String _name_77 = firstArgument.getName();
+                        _builder.append(_name_77, "\t");
                         _builder.append("\' and c.to.name=\'");
-                        String _name_86 = secondArgument_1.getName();
-                        _builder.append(_name_86, "\t");
-                        _builder.append("\')");
+                        String _name_78 = secondArgument.getName();
+                        _builder.append(_name_78, "\t");
+                        _builder.append("\') ");
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
                         _builder.newLine();
@@ -4244,415 +4182,62 @@ public class SasDslGenerator extends AbstractGenerator {
                 }
               }
             } else {
-              if ((dslRule instanceof DSLRuleMonitor)) {
+              if ((dslRule instanceof DSLRuleController)) {
                 _builder.append("\t");
-                DSLRuleMonitor dslRuleMonitor = ((DSLRuleMonitor) dslRule);
+                DSLRuleController dslRuleController = ((DSLRuleController) dslRule);
                 _builder.newLineIfNotEmpty();
                 {
-                  DSLAnalyzer _analyzer = dslRuleMonitor.getAnalyzer();
-                  boolean _tripleNotEquals_2 = (_analyzer != null);
-                  if (_tripleNotEquals_2) {
+                  DSLController _controller2 = dslRuleController.getController2();
+                  boolean _tripleNotEquals_1 = (_controller2 != null);
+                  if (_tripleNotEquals_1) {
                     _builder.append("\t");
-                    DSLMonitor firstArgument_2 = dslRuleMonitor.getMonitor();
+                    DSLController firstArgument_1 = dslRuleController.getController1();
                     _builder.newLineIfNotEmpty();
                     _builder.append("\t");
-                    DSLAnalyzer secondArgument_2 = dslRuleMonitor.getAnalyzer();
+                    DSLController secondArgument_1 = dslRuleController.getController2();
                     _builder.newLineIfNotEmpty();
                     {
-                      boolean _equals_4 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_4) {
+                      boolean _equals_2 = ((DSLRuleController)dslRule).getAccess().equals("must-use");
+                      if (_equals_2) {
                         _builder.append("\t");
                         _builder.append("context StructureModel");
                         _builder.newLine();
                         _builder.append("\t");
                         _builder.append("inv access_");
-                        String _name_87 = firstArgument_2.getName();
-                        _builder.append(_name_87, "\t");
+                        String _name_79 = firstArgument_1.getName();
+                        _builder.append(_name_79, "\t");
                         _builder.append("_");
-                        String _name_88 = secondArgument_2.getName();
-                        _builder.append(_name_88, "\t");
+                        String _name_80 = secondArgument_1.getName();
+                        _builder.append(_name_80, "\t");
                         _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_89 = firstArgument_2.getName();
-                        _builder.append(_name_89, "\t");
+                        String _name_81 = firstArgument_1.getName();
+                        _builder.append(_name_81, "\t");
                         _builder.append("\' and c.to.name=\'");
-                        String _name_90 = secondArgument_2.getName();
-                        _builder.append(_name_90, "\t");
+                        String _name_82 = secondArgument_1.getName();
+                        _builder.append(_name_82, "\t");
                         _builder.append("\') ");
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
                         _builder.newLine();
                       } else {
-                        boolean _equals_5 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_5) {
-                          _builder.append("\t");
-                          List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _isEmpty = dslDomain.isEmpty();
-                            boolean _not = (!_isEmpty);
-                            if (_not) {
-                              _builder.append("\t");
-                              boolean add = this.lDomainMonitorAnalyzer.add(dslRuleMonitor.getAnalyzer());
-                              _builder.newLineIfNotEmpty();
-                            }
-                          }
+                        boolean _equals_3 = ((DSLRuleController)dslRule).getAccess().equals("must-not-use");
+                        if (_equals_3) {
                           _builder.append("\t");
                           _builder.append("context StructureModel");
                           _builder.newLine();
                           _builder.append("\t");
                           _builder.append("inv not_access_");
-                          String _name_91 = firstArgument_2.getName();
-                          _builder.append(_name_91, "\t");
+                          String _name_83 = firstArgument_1.getName();
+                          _builder.append(_name_83, "\t");
                           _builder.append("_");
-                          String _name_92 = secondArgument_2.getName();
-                          _builder.append(_name_92, "\t");
+                          String _name_84 = secondArgument_1.getName();
+                          _builder.append(_name_84, "\t");
                           _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_93 = firstArgument_2.getName();
-                          _builder.append(_name_93, "\t");
+                          String _name_85 = firstArgument_1.getName();
+                          _builder.append(_name_85, "\t");
                           _builder.append("\' and c.to.name=\'");
-                          String _name_94 = secondArgument_2.getName();
-                          _builder.append(_name_94, "\t");
-                          _builder.append("\')");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        }
-                      }
-                    }
-                  }
-                }
-                {
-                  DSLKnowledge _knowledge = dslRuleMonitor.getKnowledge();
-                  boolean _tripleNotEquals_3 = (_knowledge != null);
-                  if (_tripleNotEquals_3) {
-                    _builder.append("\t");
-                    DSLMonitor firstArgument_3 = dslRuleMonitor.getMonitor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    DSLKnowledge secondArgument_3 = dslRuleMonitor.getKnowledge();
-                    _builder.newLineIfNotEmpty();
-                    {
-                      boolean _equals_6 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_6) {
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_95 = firstArgument_3.getName();
-                        _builder.append(_name_95, "\t");
-                        _builder.append("_");
-                        String _name_96 = secondArgument_3.getName();
-                        _builder.append(_name_96, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_97 = firstArgument_3.getName();
-                        _builder.append(_name_97, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_98 = secondArgument_3.getName();
-                        _builder.append(_name_98, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.newLine();
-                      } else {
-                        boolean _equals_7 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_7) {
-                          _builder.append("\t");
-                          List<DSLDomainRule> dslDomain_1 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _isEmpty_1 = dslDomain_1.isEmpty();
-                            boolean _not_1 = (!_isEmpty_1);
-                            if (_not_1) {
-                              _builder.append("\t");
-                              boolean add_1 = this.lDomainMonitorKnowledge.add(dslRuleMonitor.getKnowledge());
-                              _builder.newLineIfNotEmpty();
-                            }
-                          }
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv not_access_");
-                          String _name_99 = firstArgument_3.getName();
-                          _builder.append(_name_99, "\t");
-                          _builder.append("_");
-                          String _name_100 = secondArgument_3.getName();
-                          _builder.append(_name_100, "\t");
-                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_101 = firstArgument_3.getName();
-                          _builder.append(_name_101, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_102 = secondArgument_3.getName();
-                          _builder.append(_name_102, "\t");
-                          _builder.append("\')");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        }
-                      }
-                    }
-                  }
-                }
-                {
-                  DSLPlanner _planner = dslRuleMonitor.getPlanner();
-                  boolean _tripleNotEquals_4 = (_planner != null);
-                  if (_tripleNotEquals_4) {
-                    _builder.append("\t");
-                    DSLMonitor firstArgument_4 = dslRuleMonitor.getMonitor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    DSLPlanner secondArgument_4 = dslRuleMonitor.getPlanner();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    List<DSLDomainRule> dslDomain_2 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
-                    _builder.newLineIfNotEmpty();
-                    {
-                      boolean _equals_8 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_8) {
-                        {
-                          boolean _isEmpty_2 = dslDomain_2.isEmpty();
-                          boolean _not_2 = (!_isEmpty_2);
-                          if (_not_2) {
-                            _builder.append("\t");
-                            boolean add_2 = this.lDomainMonitorPlanner.add(dslRuleMonitor.getPlanner());
-                            _builder.newLineIfNotEmpty();
-                          }
-                        }
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_103 = firstArgument_4.getName();
-                        _builder.append(_name_103, "\t");
-                        _builder.append("_");
-                        String _name_104 = secondArgument_4.getName();
-                        _builder.append(_name_104, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_105 = firstArgument_4.getName();
-                        _builder.append(_name_105, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_106 = secondArgument_4.getName();
-                        _builder.append(_name_106, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.newLine();
-                      } else {
-                        boolean _equals_9 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_9) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv not_access_");
-                          String _name_107 = firstArgument_4.getName();
-                          _builder.append(_name_107, "\t");
-                          _builder.append("_");
-                          String _name_108 = secondArgument_4.getName();
-                          _builder.append(_name_108, "\t");
-                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_109 = firstArgument_4.getName();
-                          _builder.append(_name_109, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_110 = secondArgument_4.getName();
-                          _builder.append(_name_110, "\t");
-                          _builder.append("\')");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        }
-                      }
-                    }
-                  }
-                }
-                {
-                  DSLExecutor _executor = dslRuleMonitor.getExecutor();
-                  boolean _tripleNotEquals_5 = (_executor != null);
-                  if (_tripleNotEquals_5) {
-                    _builder.append("\t");
-                    DSLMonitor firstArgument_5 = dslRuleMonitor.getMonitor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    DSLExecutor secondArgument_5 = dslRuleMonitor.getExecutor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    List<DSLDomainRule> dslDomain_3 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
-                    _builder.newLineIfNotEmpty();
-                    {
-                      boolean _equals_10 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_10) {
-                        {
-                          boolean _isEmpty_3 = dslDomain_3.isEmpty();
-                          boolean _not_3 = (!_isEmpty_3);
-                          if (_not_3) {
-                            _builder.append("\t");
-                            boolean add_3 = this.lDomainMonitorExecutor.add(dslRuleMonitor.getExecutor());
-                            _builder.newLineIfNotEmpty();
-                          }
-                        }
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_111 = firstArgument_5.getName();
-                        _builder.append(_name_111, "\t");
-                        _builder.append("_");
-                        String _name_112 = secondArgument_5.getName();
-                        _builder.append(_name_112, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_113 = firstArgument_5.getName();
-                        _builder.append(_name_113, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_114 = secondArgument_5.getName();
-                        _builder.append(_name_114, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.newLine();
-                      } else {
-                        boolean _equals_11 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_11) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv not_access_");
-                          String _name_115 = firstArgument_5.getName();
-                          _builder.append(_name_115, "\t");
-                          _builder.append("_");
-                          String _name_116 = secondArgument_5.getName();
-                          _builder.append(_name_116, "\t");
-                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_117 = firstArgument_5.getName();
-                          _builder.append(_name_117, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_118 = secondArgument_5.getName();
-                          _builder.append(_name_118, "\t");
-                          _builder.append("\')");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        }
-                      }
-                    }
-                  }
-                }
-                {
-                  DSLMonitor _monitor2 = dslRuleMonitor.getMonitor2();
-                  boolean _tripleNotEquals_6 = (_monitor2 != null);
-                  if (_tripleNotEquals_6) {
-                    _builder.append("\t");
-                    DSLMonitor firstArgument_6 = dslRuleMonitor.getMonitor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    DSLMonitor secondArgument_6 = dslRuleMonitor.getMonitor2();
-                    _builder.newLineIfNotEmpty();
-                    {
-                      boolean _equals_12 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_12) {
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_119 = firstArgument_6.getName();
-                        _builder.append(_name_119, "\t");
-                        _builder.append("_");
-                        String _name_120 = secondArgument_6.getName();
-                        _builder.append(_name_120, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_121 = firstArgument_6.getName();
-                        _builder.append(_name_121, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_122 = secondArgument_6.getName();
-                        _builder.append(_name_122, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.newLine();
-                      } else {
-                        boolean _equals_13 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_13) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv not_access_");
-                          String _name_123 = firstArgument_6.getName();
-                          _builder.append(_name_123, "\t");
-                          _builder.append("_");
-                          String _name_124 = secondArgument_6.getName();
-                          _builder.append(_name_124, "\t");
-                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_125 = firstArgument_6.getName();
-                          _builder.append(_name_125, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_126 = secondArgument_6.getName();
-                          _builder.append(_name_126, "\t");
-                          _builder.append("\')");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        }
-                      }
-                    }
-                  }
-                }
-                {
-                  DSLSensor _sensor = dslRuleMonitor.getSensor();
-                  boolean _tripleNotEquals_7 = (_sensor != null);
-                  if (_tripleNotEquals_7) {
-                    _builder.append("\t");
-                    DSLMonitor firstArgument_7 = dslRuleMonitor.getMonitor();
-                    _builder.newLineIfNotEmpty();
-                    _builder.append("\t");
-                    DSLSensor secondArgument_7 = dslRuleMonitor.getSensor();
-                    _builder.newLineIfNotEmpty();
-                    {
-                      boolean _equals_14 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
-                      if (_equals_14) {
-                        _builder.append("\t");
-                        _builder.append("context StructureModel");
-                        _builder.newLine();
-                        _builder.append("\t");
-                        _builder.append("inv access_");
-                        String _name_127 = firstArgument_7.getName();
-                        _builder.append(_name_127, "\t");
-                        _builder.append("_");
-                        String _name_128 = secondArgument_7.getName();
-                        _builder.append(_name_128, "\t");
-                        _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                        String _name_129 = firstArgument_7.getName();
-                        _builder.append(_name_129, "\t");
-                        _builder.append("\' and c.to.name=\'");
-                        String _name_130 = secondArgument_7.getName();
-                        _builder.append(_name_130, "\t");
-                        _builder.append("\') ");
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        _builder.newLine();
-                      } else {
-                        boolean _equals_15 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
-                        if (_equals_15) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv not_access_");
-                          String _name_131 = firstArgument_7.getName();
-                          _builder.append(_name_131, "\t");
-                          _builder.append("_");
-                          String _name_132 = secondArgument_7.getName();
-                          _builder.append(_name_132, "\t");
-                          _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_133 = firstArgument_7.getName();
-                          _builder.append(_name_133, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_134 = secondArgument_7.getName();
-                          _builder.append(_name_134, "\t");
+                          String _name_86 = secondArgument_1.getName();
+                          _builder.append(_name_86, "\t");
                           _builder.append("\')");
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
@@ -4663,128 +4248,55 @@ public class SasDslGenerator extends AbstractGenerator {
                   }
                 }
               } else {
-                if ((dslRule instanceof DSLRuleAnalyzer)) {
+                if ((dslRule instanceof DSLRuleMonitor)) {
                   _builder.append("\t");
-                  DSLRuleAnalyzer dslRuleAnalyzer = ((DSLRuleAnalyzer) dslRule);
+                  DSLRuleMonitor dslRuleMonitor = ((DSLRuleMonitor) dslRule);
                   _builder.newLineIfNotEmpty();
                   {
-                    DSLMonitor _monitor = dslRuleAnalyzer.getMonitor();
-                    boolean _tripleNotEquals_8 = (_monitor != null);
-                    if (_tripleNotEquals_8) {
+                    DSLAnalyzer _analyzer = dslRuleMonitor.getAnalyzer();
+                    boolean _tripleNotEquals_2 = (_analyzer != null);
+                    if (_tripleNotEquals_2) {
                       _builder.append("\t");
-                      DSLAnalyzer firstArgument_8 = dslRuleAnalyzer.getAnalyzer();
+                      DSLMonitor firstArgument_2 = dslRuleMonitor.getMonitor();
                       _builder.newLineIfNotEmpty();
                       _builder.append("\t");
-                      DSLMonitor secondArgument_8 = dslRuleAnalyzer.getMonitor();
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      List<DSLDomainRule> dslDomain_4 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                      DSLAnalyzer secondArgument_2 = dslRuleMonitor.getAnalyzer();
                       _builder.newLineIfNotEmpty();
                       {
-                        boolean _equals_16 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_16) {
-                          {
-                            boolean _isEmpty_4 = dslDomain_4.isEmpty();
-                            boolean _not_4 = (!_isEmpty_4);
-                            if (_not_4) {
-                              _builder.append("\t");
-                              boolean add_4 = this.lDomainAnalyzerMonitor.add(dslRuleAnalyzer.getMonitor());
-                              _builder.newLineIfNotEmpty();
-                            }
-                          }
+                        boolean _equals_4 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_4) {
                           _builder.append("\t");
                           _builder.append("context StructureModel");
                           _builder.newLine();
                           _builder.append("\t");
                           _builder.append("inv access_");
-                          String _name_135 = firstArgument_8.getName();
-                          _builder.append(_name_135, "\t");
+                          String _name_87 = firstArgument_2.getName();
+                          _builder.append(_name_87, "\t");
                           _builder.append("_");
-                          String _name_136 = secondArgument_8.getName();
-                          _builder.append(_name_136, "\t");
+                          String _name_88 = secondArgument_2.getName();
+                          _builder.append(_name_88, "\t");
                           _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_137 = firstArgument_8.getName();
-                          _builder.append(_name_137, "\t");
+                          String _name_89 = firstArgument_2.getName();
+                          _builder.append(_name_89, "\t");
                           _builder.append("\' and c.to.name=\'");
-                          String _name_138 = secondArgument_8.getName();
-                          _builder.append(_name_138, "\t");
+                          String _name_90 = secondArgument_2.getName();
+                          _builder.append(_name_90, "\t");
                           _builder.append("\') ");
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
                           _builder.newLine();
                         } else {
-                          boolean _equals_17 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_17) {
+                          boolean _equals_5 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_5) {
                             _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv not_access_");
-                            String _name_139 = firstArgument_8.getName();
-                            _builder.append(_name_139, "\t");
-                            _builder.append("_");
-                            String _name_140 = secondArgument_8.getName();
-                            _builder.append(_name_140, "\t");
-                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_141 = firstArgument_8.getName();
-                            _builder.append(_name_141, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_142 = secondArgument_8.getName();
-                            _builder.append(_name_142, "\t");
-                            _builder.append("\')");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          }
-                        }
-                      }
-                    }
-                  }
-                  {
-                    DSLKnowledge _knowledge_1 = dslRuleAnalyzer.getKnowledge();
-                    boolean _tripleNotEquals_9 = (_knowledge_1 != null);
-                    if (_tripleNotEquals_9) {
-                      _builder.append("\t");
-                      DSLAnalyzer firstArgument_9 = dslRuleAnalyzer.getAnalyzer();
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      DSLKnowledge secondArgument_9 = dslRuleAnalyzer.getKnowledge();
-                      _builder.newLineIfNotEmpty();
-                      {
-                        boolean _equals_18 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_18) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_143 = firstArgument_9.getName();
-                          _builder.append(_name_143, "\t");
-                          _builder.append("_");
-                          String _name_144 = secondArgument_9.getName();
-                          _builder.append(_name_144, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_145 = firstArgument_9.getName();
-                          _builder.append(_name_145, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_146 = secondArgument_9.getName();
-                          _builder.append(_name_146, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        } else {
-                          boolean _equals_19 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_19) {
-                            _builder.append("\t");
-                            List<DSLDomainRule> dslDomain_5 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                            List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
                             _builder.newLineIfNotEmpty();
                             {
-                              boolean _isEmpty_5 = dslDomain_5.isEmpty();
-                              boolean _not_5 = (!_isEmpty_5);
-                              if (_not_5) {
+                              boolean _isEmpty = dslDomain.isEmpty();
+                              boolean _not = (!_isEmpty);
+                              if (_not) {
                                 _builder.append("\t");
-                                boolean add_5 = this.lDomainAnalyzerKnowledge.add(dslRuleAnalyzer.getKnowledge());
+                                boolean add = this.lDomainMonitorAnalyzer.add(dslRuleMonitor.getAnalyzer());
                                 _builder.newLineIfNotEmpty();
                               }
                             }
@@ -4793,17 +4305,17 @@ public class SasDslGenerator extends AbstractGenerator {
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv not_access_");
-                            String _name_147 = firstArgument_9.getName();
-                            _builder.append(_name_147, "\t");
+                            String _name_91 = firstArgument_2.getName();
+                            _builder.append(_name_91, "\t");
                             _builder.append("_");
-                            String _name_148 = secondArgument_9.getName();
-                            _builder.append(_name_148, "\t");
+                            String _name_92 = secondArgument_2.getName();
+                            _builder.append(_name_92, "\t");
                             _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_149 = firstArgument_9.getName();
-                            _builder.append(_name_149, "\t");
+                            String _name_93 = firstArgument_2.getName();
+                            _builder.append(_name_93, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_150 = secondArgument_9.getName();
-                            _builder.append(_name_150, "\t");
+                            String _name_94 = secondArgument_2.getName();
+                            _builder.append(_name_94, "\t");
                             _builder.append("\')");
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
@@ -4814,111 +4326,50 @@ public class SasDslGenerator extends AbstractGenerator {
                     }
                   }
                   {
-                    DSLReferenceInput _rreference = dslRuleAnalyzer.getRreference();
-                    boolean _tripleNotEquals_10 = (_rreference != null);
-                    if (_tripleNotEquals_10) {
+                    DSLKnowledge _knowledge = dslRuleMonitor.getKnowledge();
+                    boolean _tripleNotEquals_3 = (_knowledge != null);
+                    if (_tripleNotEquals_3) {
                       _builder.append("\t");
-                      DSLAnalyzer firstArgument_10 = dslRuleAnalyzer.getAnalyzer();
+                      DSLMonitor firstArgument_3 = dslRuleMonitor.getMonitor();
                       _builder.newLineIfNotEmpty();
                       _builder.append("\t");
-                      DSLReferenceInput secondArgument_10 = dslRuleAnalyzer.getRreference();
+                      DSLKnowledge secondArgument_3 = dslRuleMonitor.getKnowledge();
                       _builder.newLineIfNotEmpty();
                       {
-                        boolean _equals_20 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_20) {
+                        boolean _equals_6 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_6) {
                           _builder.append("\t");
                           _builder.append("context StructureModel");
                           _builder.newLine();
                           _builder.append("\t");
                           _builder.append("inv access_");
-                          String _name_151 = firstArgument_10.getName();
-                          _builder.append(_name_151, "\t");
+                          String _name_95 = firstArgument_3.getName();
+                          _builder.append(_name_95, "\t");
                           _builder.append("_");
-                          String _name_152 = secondArgument_10.getName();
-                          _builder.append(_name_152, "\t");
+                          String _name_96 = secondArgument_3.getName();
+                          _builder.append(_name_96, "\t");
                           _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_153 = firstArgument_10.getName();
-                          _builder.append(_name_153, "\t");
+                          String _name_97 = firstArgument_3.getName();
+                          _builder.append(_name_97, "\t");
                           _builder.append("\' and c.to.name=\'");
-                          String _name_154 = secondArgument_10.getName();
-                          _builder.append(_name_154, "\t");
+                          String _name_98 = secondArgument_3.getName();
+                          _builder.append(_name_98, "\t");
                           _builder.append("\') ");
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
                           _builder.newLine();
                         } else {
-                          boolean _equals_21 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_21) {
+                          boolean _equals_7 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_7) {
                             _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv not_access_");
-                            String _name_155 = firstArgument_10.getName();
-                            _builder.append(_name_155, "\t");
-                            _builder.append("_");
-                            String _name_156 = secondArgument_10.getName();
-                            _builder.append(_name_156, "\t");
-                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_157 = firstArgument_10.getName();
-                            _builder.append(_name_157, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_158 = secondArgument_10.getName();
-                            _builder.append(_name_158, "\t");
-                            _builder.append("\')");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          }
-                        }
-                      }
-                    }
-                  }
-                  {
-                    DSLPlanner _planner_1 = dslRuleAnalyzer.getPlanner();
-                    boolean _tripleNotEquals_11 = (_planner_1 != null);
-                    if (_tripleNotEquals_11) {
-                      _builder.append("\t");
-                      DSLAnalyzer firstArgument_11 = dslRuleAnalyzer.getAnalyzer();
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      DSLPlanner secondArgument_11 = dslRuleAnalyzer.getPlanner();
-                      _builder.newLineIfNotEmpty();
-                      {
-                        boolean _equals_22 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_22) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_159 = firstArgument_11.getName();
-                          _builder.append(_name_159, "\t");
-                          _builder.append("_");
-                          String _name_160 = secondArgument_11.getName();
-                          _builder.append(_name_160, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_161 = firstArgument_11.getName();
-                          _builder.append(_name_161, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_162 = secondArgument_11.getName();
-                          _builder.append(_name_162, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        } else {
-                          boolean _equals_23 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_23) {
-                            _builder.append("\t");
-                            List<DSLDomainRule> dslDomain_6 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                            List<DSLDomainRule> dslDomain_1 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
                             _builder.newLineIfNotEmpty();
                             {
-                              boolean _isEmpty_6 = dslDomain_6.isEmpty();
-                              boolean _not_6 = (!_isEmpty_6);
-                              if (_not_6) {
+                              boolean _isEmpty_1 = dslDomain_1.isEmpty();
+                              boolean _not_1 = (!_isEmpty_1);
+                              if (_not_1) {
                                 _builder.append("\t");
-                                boolean add_6 = this.lDomainAnalyzerPlanner.add(dslRuleAnalyzer.getPlanner());
+                                boolean add_1 = this.lDomainMonitorKnowledge.add(dslRuleMonitor.getKnowledge());
                                 _builder.newLineIfNotEmpty();
                               }
                             }
@@ -4927,17 +4378,17 @@ public class SasDslGenerator extends AbstractGenerator {
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv not_access_");
-                            String _name_163 = firstArgument_11.getName();
-                            _builder.append(_name_163, "\t");
+                            String _name_99 = firstArgument_3.getName();
+                            _builder.append(_name_99, "\t");
                             _builder.append("_");
-                            String _name_164 = secondArgument_11.getName();
-                            _builder.append(_name_164, "\t");
+                            String _name_100 = secondArgument_3.getName();
+                            _builder.append(_name_100, "\t");
                             _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_165 = firstArgument_11.getName();
-                            _builder.append(_name_165, "\t");
+                            String _name_101 = firstArgument_3.getName();
+                            _builder.append(_name_101, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_166 = secondArgument_11.getName();
-                            _builder.append(_name_166, "\t");
+                            String _name_102 = secondArgument_3.getName();
+                            _builder.append(_name_102, "\t");
                             _builder.append("\')");
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
@@ -4948,149 +4399,27 @@ public class SasDslGenerator extends AbstractGenerator {
                     }
                   }
                   {
-                    DSLAnalyzer _analyzer2 = dslRuleAnalyzer.getAnalyzer2();
-                    boolean _tripleNotEquals_12 = (_analyzer2 != null);
-                    if (_tripleNotEquals_12) {
+                    DSLPlanner _planner = dslRuleMonitor.getPlanner();
+                    boolean _tripleNotEquals_4 = (_planner != null);
+                    if (_tripleNotEquals_4) {
                       _builder.append("\t");
-                      DSLAnalyzer firstArgument_12 = dslRuleAnalyzer.getAnalyzer();
+                      DSLMonitor firstArgument_4 = dslRuleMonitor.getMonitor();
                       _builder.newLineIfNotEmpty();
                       _builder.append("\t");
-                      DSLAnalyzer secondArgument_12 = dslRuleAnalyzer.getAnalyzer2();
-                      _builder.newLineIfNotEmpty();
-                      {
-                        boolean _equals_24 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_24) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_167 = firstArgument_12.getName();
-                          _builder.append(_name_167, "\t");
-                          _builder.append("_");
-                          String _name_168 = secondArgument_12.getName();
-                          _builder.append(_name_168, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_169 = firstArgument_12.getName();
-                          _builder.append(_name_169, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_170 = secondArgument_12.getName();
-                          _builder.append(_name_170, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        } else {
-                          boolean _equals_25 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_25) {
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv not_access_");
-                            String _name_171 = firstArgument_12.getName();
-                            _builder.append(_name_171, "\t");
-                            _builder.append("_");
-                            String _name_172 = secondArgument_12.getName();
-                            _builder.append(_name_172, "\t");
-                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_173 = firstArgument_12.getName();
-                            _builder.append(_name_173, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_174 = secondArgument_12.getName();
-                            _builder.append(_name_174, "\t");
-                            _builder.append("\')");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          }
-                        }
-                      }
-                    }
-                  }
-                  {
-                    DSLAlternative _shalt = dslRuleAnalyzer.getShalt();
-                    boolean _tripleNotEquals_13 = (_shalt != null);
-                    if (_tripleNotEquals_13) {
-                      _builder.append("\t");
-                      DSLAnalyzer firstArgument_13 = dslRuleAnalyzer.getAnalyzer();
+                      DSLPlanner secondArgument_4 = dslRuleMonitor.getPlanner();
                       _builder.newLineIfNotEmpty();
                       _builder.append("\t");
-                      DSLAlternative secondArgument_13 = dslRuleAnalyzer.getShalt();
+                      List<DSLDomainRule> dslDomain_2 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
                       _builder.newLineIfNotEmpty();
                       {
-                        boolean _equals_26 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_26) {
-                          _builder.append("\t");
-                          _builder.append("context StructureModel");
-                          _builder.newLine();
-                          _builder.append("\t");
-                          _builder.append("inv access_");
-                          String _name_175 = firstArgument_13.getName();
-                          _builder.append(_name_175, "\t");
-                          _builder.append("_");
-                          String _name_176 = secondArgument_13.getName();
-                          _builder.append(_name_176, "\t");
-                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_177 = firstArgument_13.getName();
-                          _builder.append(_name_177, "\t");
-                          _builder.append("\' and c.to.name=\'");
-                          String _name_178 = secondArgument_13.getName();
-                          _builder.append(_name_178, "\t");
-                          _builder.append("\') ");
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          _builder.newLine();
-                        } else {
-                          boolean _equals_27 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_27) {
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv not_access_");
-                            String _name_179 = firstArgument_13.getName();
-                            _builder.append(_name_179, "\t");
-                            _builder.append("_");
-                            String _name_180 = secondArgument_13.getName();
-                            _builder.append(_name_180, "\t");
-                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_181 = firstArgument_13.getName();
-                            _builder.append(_name_181, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_182 = secondArgument_13.getName();
-                            _builder.append(_name_182, "\t");
-                            _builder.append("\')");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          }
-                        }
-                      }
-                    }
-                  }
-                  {
-                    DSLExecutor _executor_1 = dslRuleAnalyzer.getExecutor();
-                    boolean _tripleNotEquals_14 = (_executor_1 != null);
-                    if (_tripleNotEquals_14) {
-                      _builder.append("\t");
-                      DSLAnalyzer firstArgument_14 = dslRuleAnalyzer.getAnalyzer();
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      DSLExecutor secondArgument_14 = dslRuleAnalyzer.getExecutor();
-                      _builder.newLineIfNotEmpty();
-                      _builder.append("\t");
-                      List<DSLDomainRule> dslDomain_7 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
-                      _builder.newLineIfNotEmpty();
-                      {
-                        boolean _equals_28 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
-                        if (_equals_28) {
+                        boolean _equals_8 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_8) {
                           {
-                            boolean _isEmpty_7 = dslDomain_7.isEmpty();
-                            boolean _not_7 = (!_isEmpty_7);
-                            if (_not_7) {
+                            boolean _isEmpty_2 = dslDomain_2.isEmpty();
+                            boolean _not_2 = (!_isEmpty_2);
+                            if (_not_2) {
                               _builder.append("\t");
-                              boolean add_7 = this.lDomainAnalyzerExecutor.add(dslRuleAnalyzer.getExecutor());
+                              boolean add_2 = this.lDomainMonitorPlanner.add(dslRuleMonitor.getPlanner());
                               _builder.newLineIfNotEmpty();
                             }
                           }
@@ -5099,40 +4428,235 @@ public class SasDslGenerator extends AbstractGenerator {
                           _builder.newLine();
                           _builder.append("\t");
                           _builder.append("inv access_");
-                          String _name_183 = firstArgument_14.getName();
-                          _builder.append(_name_183, "\t");
+                          String _name_103 = firstArgument_4.getName();
+                          _builder.append(_name_103, "\t");
                           _builder.append("_");
-                          String _name_184 = secondArgument_14.getName();
-                          _builder.append(_name_184, "\t");
+                          String _name_104 = secondArgument_4.getName();
+                          _builder.append(_name_104, "\t");
                           _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                          String _name_185 = firstArgument_14.getName();
-                          _builder.append(_name_185, "\t");
+                          String _name_105 = firstArgument_4.getName();
+                          _builder.append(_name_105, "\t");
                           _builder.append("\' and c.to.name=\'");
-                          String _name_186 = secondArgument_14.getName();
-                          _builder.append(_name_186, "\t");
+                          String _name_106 = secondArgument_4.getName();
+                          _builder.append(_name_106, "\t");
                           _builder.append("\') ");
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
                           _builder.newLine();
                         } else {
-                          boolean _equals_29 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
-                          if (_equals_29) {
+                          boolean _equals_9 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_9) {
                             _builder.append("\t");
                             _builder.append("context StructureModel");
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv not_access_");
-                            String _name_187 = firstArgument_14.getName();
-                            _builder.append(_name_187, "\t");
+                            String _name_107 = firstArgument_4.getName();
+                            _builder.append(_name_107, "\t");
                             _builder.append("_");
-                            String _name_188 = secondArgument_14.getName();
-                            _builder.append(_name_188, "\t");
+                            String _name_108 = secondArgument_4.getName();
+                            _builder.append(_name_108, "\t");
                             _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_189 = firstArgument_14.getName();
-                            _builder.append(_name_189, "\t");
+                            String _name_109 = firstArgument_4.getName();
+                            _builder.append(_name_109, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_190 = secondArgument_14.getName();
-                            _builder.append(_name_190, "\t");
+                            String _name_110 = secondArgument_4.getName();
+                            _builder.append(_name_110, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          }
+                        }
+                      }
+                    }
+                  }
+                  {
+                    DSLExecutor _executor = dslRuleMonitor.getExecutor();
+                    boolean _tripleNotEquals_5 = (_executor != null);
+                    if (_tripleNotEquals_5) {
+                      _builder.append("\t");
+                      DSLMonitor firstArgument_5 = dslRuleMonitor.getMonitor();
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      DSLExecutor secondArgument_5 = dslRuleMonitor.getExecutor();
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      List<DSLDomainRule> dslDomain_3 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleMonitor.getMonitor().eContainer().eContents(), DSLDomainRule.class));
+                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_10 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_10) {
+                          {
+                            boolean _isEmpty_3 = dslDomain_3.isEmpty();
+                            boolean _not_3 = (!_isEmpty_3);
+                            if (_not_3) {
+                              _builder.append("\t");
+                              boolean add_3 = this.lDomainMonitorExecutor.add(dslRuleMonitor.getExecutor());
+                              _builder.newLineIfNotEmpty();
+                            }
+                          }
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_111 = firstArgument_5.getName();
+                          _builder.append(_name_111, "\t");
+                          _builder.append("_");
+                          String _name_112 = secondArgument_5.getName();
+                          _builder.append(_name_112, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_113 = firstArgument_5.getName();
+                          _builder.append(_name_113, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_114 = secondArgument_5.getName();
+                          _builder.append(_name_114, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          _builder.newLine();
+                        } else {
+                          boolean _equals_11 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_11) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_115 = firstArgument_5.getName();
+                            _builder.append(_name_115, "\t");
+                            _builder.append("_");
+                            String _name_116 = secondArgument_5.getName();
+                            _builder.append(_name_116, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_117 = firstArgument_5.getName();
+                            _builder.append(_name_117, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_118 = secondArgument_5.getName();
+                            _builder.append(_name_118, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          }
+                        }
+                      }
+                    }
+                  }
+                  {
+                    DSLMonitor _monitor2 = dslRuleMonitor.getMonitor2();
+                    boolean _tripleNotEquals_6 = (_monitor2 != null);
+                    if (_tripleNotEquals_6) {
+                      _builder.append("\t");
+                      DSLMonitor firstArgument_6 = dslRuleMonitor.getMonitor();
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      DSLMonitor secondArgument_6 = dslRuleMonitor.getMonitor2();
+                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_12 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_12) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_119 = firstArgument_6.getName();
+                          _builder.append(_name_119, "\t");
+                          _builder.append("_");
+                          String _name_120 = secondArgument_6.getName();
+                          _builder.append(_name_120, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_121 = firstArgument_6.getName();
+                          _builder.append(_name_121, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_122 = secondArgument_6.getName();
+                          _builder.append(_name_122, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          _builder.newLine();
+                        } else {
+                          boolean _equals_13 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_13) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_123 = firstArgument_6.getName();
+                            _builder.append(_name_123, "\t");
+                            _builder.append("_");
+                            String _name_124 = secondArgument_6.getName();
+                            _builder.append(_name_124, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_125 = firstArgument_6.getName();
+                            _builder.append(_name_125, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_126 = secondArgument_6.getName();
+                            _builder.append(_name_126, "\t");
+                            _builder.append("\')");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          }
+                        }
+                      }
+                    }
+                  }
+                  {
+                    DSLSensor _sensor = dslRuleMonitor.getSensor();
+                    boolean _tripleNotEquals_7 = (_sensor != null);
+                    if (_tripleNotEquals_7) {
+                      _builder.append("\t");
+                      DSLMonitor firstArgument_7 = dslRuleMonitor.getMonitor();
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      DSLSensor secondArgument_7 = dslRuleMonitor.getSensor();
+                      _builder.newLineIfNotEmpty();
+                      {
+                        boolean _equals_14 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-use");
+                        if (_equals_14) {
+                          _builder.append("\t");
+                          _builder.append("context StructureModel");
+                          _builder.newLine();
+                          _builder.append("\t");
+                          _builder.append("inv access_");
+                          String _name_127 = firstArgument_7.getName();
+                          _builder.append(_name_127, "\t");
+                          _builder.append("_");
+                          String _name_128 = secondArgument_7.getName();
+                          _builder.append(_name_128, "\t");
+                          _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                          String _name_129 = firstArgument_7.getName();
+                          _builder.append(_name_129, "\t");
+                          _builder.append("\' and c.to.name=\'");
+                          String _name_130 = secondArgument_7.getName();
+                          _builder.append(_name_130, "\t");
+                          _builder.append("\') ");
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          _builder.newLine();
+                        } else {
+                          boolean _equals_15 = ((DSLRuleMonitor)dslRule).getAccess().equals("must-not-use");
+                          if (_equals_15) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv not_access_");
+                            String _name_131 = firstArgument_7.getName();
+                            _builder.append(_name_131, "\t");
+                            _builder.append("_");
+                            String _name_132 = secondArgument_7.getName();
+                            _builder.append(_name_132, "\t");
+                            _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_133 = firstArgument_7.getName();
+                            _builder.append(_name_133, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_134 = secondArgument_7.getName();
+                            _builder.append(_name_134, "\t");
                             _builder.append("\')");
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
@@ -5143,32 +4667,32 @@ public class SasDslGenerator extends AbstractGenerator {
                     }
                   }
                 } else {
-                  if ((dslRule instanceof DSLRulePlanner)) {
+                  if ((dslRule instanceof DSLRuleAnalyzer)) {
                     _builder.append("\t");
-                    DSLRulePlanner dslRulePlanner = ((DSLRulePlanner) dslRule);
+                    DSLRuleAnalyzer dslRuleAnalyzer = ((DSLRuleAnalyzer) dslRule);
                     _builder.newLineIfNotEmpty();
                     {
-                      DSLAnalyzer _analyzer_1 = dslRulePlanner.getAnalyzer();
-                      boolean _tripleNotEquals_15 = (_analyzer_1 != null);
-                      if (_tripleNotEquals_15) {
+                      DSLMonitor _monitor = dslRuleAnalyzer.getMonitor();
+                      boolean _tripleNotEquals_8 = (_monitor != null);
+                      if (_tripleNotEquals_8) {
                         _builder.append("\t");
-                        DSLPlanner firstArgument_15 = dslRulePlanner.getPlanner();
+                        DSLAnalyzer firstArgument_8 = dslRuleAnalyzer.getAnalyzer();
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
-                        DSLAnalyzer secondArgument_15 = dslRulePlanner.getAnalyzer();
+                        DSLMonitor secondArgument_8 = dslRuleAnalyzer.getMonitor();
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
-                        List<DSLDomainRule> dslDomain_8 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
+                        List<DSLDomainRule> dslDomain_4 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
                         _builder.newLineIfNotEmpty();
                         {
-                          boolean _equals_30 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_30) {
+                          boolean _equals_16 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_16) {
                             {
-                              boolean _isEmpty_8 = dslDomain_8.isEmpty();
-                              boolean _not_8 = (!_isEmpty_8);
-                              if (_not_8) {
+                              boolean _isEmpty_4 = dslDomain_4.isEmpty();
+                              boolean _not_4 = (!_isEmpty_4);
+                              if (_not_4) {
                                 _builder.append("\t");
-                                boolean add_8 = this.lDomainPlannerAnalyzer.add(dslRulePlanner.getAnalyzer());
+                                boolean add_4 = this.lDomainAnalyzerMonitor.add(dslRuleAnalyzer.getMonitor());
                                 _builder.newLineIfNotEmpty();
                               }
                             }
@@ -5177,39 +4701,40 @@ public class SasDslGenerator extends AbstractGenerator {
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv access_");
-                            String _name_191 = firstArgument_15.getName();
-                            _builder.append(_name_191, "\t");
+                            String _name_135 = firstArgument_8.getName();
+                            _builder.append(_name_135, "\t");
                             _builder.append("_");
-                            String _name_192 = secondArgument_15.getName();
-                            _builder.append(_name_192, "\t");
+                            String _name_136 = secondArgument_8.getName();
+                            _builder.append(_name_136, "\t");
                             _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_193 = firstArgument_15.getName();
-                            _builder.append(_name_193, "\t");
+                            String _name_137 = firstArgument_8.getName();
+                            _builder.append(_name_137, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_194 = secondArgument_15.getName();
-                            _builder.append(_name_194, "\t");
+                            String _name_138 = secondArgument_8.getName();
+                            _builder.append(_name_138, "\t");
                             _builder.append("\') ");
                             _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
                             _builder.newLine();
                           } else {
-                            boolean _equals_31 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_31) {
+                            boolean _equals_17 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_17) {
                               _builder.append("\t");
                               _builder.append("context StructureModel");
                               _builder.newLine();
                               _builder.append("\t");
                               _builder.append("inv not_access_");
-                              String _name_195 = firstArgument_15.getName();
-                              _builder.append(_name_195, "\t");
+                              String _name_139 = firstArgument_8.getName();
+                              _builder.append(_name_139, "\t");
                               _builder.append("_");
-                              String _name_196 = secondArgument_15.getName();
-                              _builder.append(_name_196, "\t");
+                              String _name_140 = secondArgument_8.getName();
+                              _builder.append(_name_140, "\t");
                               _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_197 = firstArgument_15.getName();
-                              _builder.append(_name_197, "\t");
+                              String _name_141 = firstArgument_8.getName();
+                              _builder.append(_name_141, "\t");
                               _builder.append("\' and c.to.name=\'");
-                              String _name_198 = secondArgument_15.getName();
-                              _builder.append(_name_198, "\t");
+                              String _name_142 = secondArgument_8.getName();
+                              _builder.append(_name_142, "\t");
                               _builder.append("\')");
                               _builder.newLineIfNotEmpty();
                               _builder.append("\t");
@@ -5220,57 +4745,69 @@ public class SasDslGenerator extends AbstractGenerator {
                       }
                     }
                     {
-                      DSLPlanner _planner2 = dslRulePlanner.getPlanner2();
-                      boolean _tripleNotEquals_16 = (_planner2 != null);
-                      if (_tripleNotEquals_16) {
+                      DSLKnowledge _knowledge_1 = dslRuleAnalyzer.getKnowledge();
+                      boolean _tripleNotEquals_9 = (_knowledge_1 != null);
+                      if (_tripleNotEquals_9) {
                         _builder.append("\t");
-                        DSLPlanner firstArgument_16 = dslRulePlanner.getPlanner();
+                        DSLAnalyzer firstArgument_9 = dslRuleAnalyzer.getAnalyzer();
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
-                        DSLPlanner secondArgument_16 = dslRulePlanner.getPlanner2();
+                        DSLKnowledge secondArgument_9 = dslRuleAnalyzer.getKnowledge();
                         _builder.newLineIfNotEmpty();
                         {
-                          boolean _equals_32 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_32) {
+                          boolean _equals_18 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_18) {
                             _builder.append("\t");
                             _builder.append("context StructureModel");
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv access_");
-                            String _name_199 = firstArgument_16.getName();
-                            _builder.append(_name_199, "\t");
+                            String _name_143 = firstArgument_9.getName();
+                            _builder.append(_name_143, "\t");
                             _builder.append("_");
-                            String _name_200 = secondArgument_16.getName();
-                            _builder.append(_name_200, "\t");
+                            String _name_144 = secondArgument_9.getName();
+                            _builder.append(_name_144, "\t");
                             _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_201 = firstArgument_16.getName();
-                            _builder.append(_name_201, "\t");
+                            String _name_145 = firstArgument_9.getName();
+                            _builder.append(_name_145, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_202 = secondArgument_16.getName();
-                            _builder.append(_name_202, "\t");
+                            String _name_146 = secondArgument_9.getName();
+                            _builder.append(_name_146, "\t");
                             _builder.append("\') ");
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
                             _builder.newLine();
                           } else {
-                            boolean _equals_33 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_33) {
+                            boolean _equals_19 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_19) {
+                              _builder.append("\t");
+                              List<DSLDomainRule> dslDomain_5 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                              _builder.newLineIfNotEmpty();
+                              {
+                                boolean _isEmpty_5 = dslDomain_5.isEmpty();
+                                boolean _not_5 = (!_isEmpty_5);
+                                if (_not_5) {
+                                  _builder.append("\t");
+                                  boolean add_5 = this.lDomainAnalyzerKnowledge.add(dslRuleAnalyzer.getKnowledge());
+                                  _builder.newLineIfNotEmpty();
+                                }
+                              }
                               _builder.append("\t");
                               _builder.append("context StructureModel");
                               _builder.newLine();
                               _builder.append("\t");
                               _builder.append("inv not_access_");
-                              String _name_203 = firstArgument_16.getName();
-                              _builder.append(_name_203, "\t");
+                              String _name_147 = firstArgument_9.getName();
+                              _builder.append(_name_147, "\t");
                               _builder.append("_");
-                              String _name_204 = secondArgument_16.getName();
-                              _builder.append(_name_204, "\t");
+                              String _name_148 = secondArgument_9.getName();
+                              _builder.append(_name_148, "\t");
                               _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_205 = firstArgument_16.getName();
-                              _builder.append(_name_205, "\t");
+                              String _name_149 = firstArgument_9.getName();
+                              _builder.append(_name_149, "\t");
                               _builder.append("\' and c.to.name=\'");
-                              String _name_206 = secondArgument_16.getName();
-                              _builder.append(_name_206, "\t");
+                              String _name_150 = secondArgument_9.getName();
+                              _builder.append(_name_150, "\t");
                               _builder.append("\')");
                               _builder.newLineIfNotEmpty();
                               _builder.append("\t");
@@ -5281,27 +4818,283 @@ public class SasDslGenerator extends AbstractGenerator {
                       }
                     }
                     {
-                      DSLMonitor _monitor_1 = dslRulePlanner.getMonitor();
-                      boolean _tripleNotEquals_17 = (_monitor_1 != null);
-                      if (_tripleNotEquals_17) {
+                      DSLReferenceInput _rreference = dslRuleAnalyzer.getRreference();
+                      boolean _tripleNotEquals_10 = (_rreference != null);
+                      if (_tripleNotEquals_10) {
                         _builder.append("\t");
-                        DSLPlanner firstArgument_17 = dslRulePlanner.getPlanner();
+                        DSLAnalyzer firstArgument_10 = dslRuleAnalyzer.getAnalyzer();
                         _builder.newLineIfNotEmpty();
                         _builder.append("\t");
-                        DSLMonitor secondArgument_17 = dslRulePlanner.getMonitor();
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        List<DSLDomainRule> dslDomain_9 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
+                        DSLReferenceInput secondArgument_10 = dslRuleAnalyzer.getRreference();
                         _builder.newLineIfNotEmpty();
                         {
-                          boolean _equals_34 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_34) {
+                          boolean _equals_20 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_20) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_151 = firstArgument_10.getName();
+                            _builder.append(_name_151, "\t");
+                            _builder.append("_");
+                            String _name_152 = secondArgument_10.getName();
+                            _builder.append(_name_152, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_153 = firstArgument_10.getName();
+                            _builder.append(_name_153, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_154 = secondArgument_10.getName();
+                            _builder.append(_name_154, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_21 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_21) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_155 = firstArgument_10.getName();
+                              _builder.append(_name_155, "\t");
+                              _builder.append("_");
+                              String _name_156 = secondArgument_10.getName();
+                              _builder.append(_name_156, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_157 = firstArgument_10.getName();
+                              _builder.append(_name_157, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_158 = secondArgument_10.getName();
+                              _builder.append(_name_158, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                    {
+                      DSLPlanner _planner_1 = dslRuleAnalyzer.getPlanner();
+                      boolean _tripleNotEquals_11 = (_planner_1 != null);
+                      if (_tripleNotEquals_11) {
+                        _builder.append("\t");
+                        DSLAnalyzer firstArgument_11 = dslRuleAnalyzer.getAnalyzer();
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t");
+                        DSLPlanner secondArgument_11 = dslRuleAnalyzer.getPlanner();
+                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_22 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_22) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_159 = firstArgument_11.getName();
+                            _builder.append(_name_159, "\t");
+                            _builder.append("_");
+                            String _name_160 = secondArgument_11.getName();
+                            _builder.append(_name_160, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_161 = firstArgument_11.getName();
+                            _builder.append(_name_161, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_162 = secondArgument_11.getName();
+                            _builder.append(_name_162, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_23 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_23) {
+                              _builder.append("\t");
+                              List<DSLDomainRule> dslDomain_6 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                              _builder.newLineIfNotEmpty();
+                              {
+                                boolean _isEmpty_6 = dslDomain_6.isEmpty();
+                                boolean _not_6 = (!_isEmpty_6);
+                                if (_not_6) {
+                                  _builder.append("\t");
+                                  boolean add_6 = this.lDomainAnalyzerPlanner.add(dslRuleAnalyzer.getPlanner());
+                                  _builder.newLineIfNotEmpty();
+                                }
+                              }
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_163 = firstArgument_11.getName();
+                              _builder.append(_name_163, "\t");
+                              _builder.append("_");
+                              String _name_164 = secondArgument_11.getName();
+                              _builder.append(_name_164, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_165 = firstArgument_11.getName();
+                              _builder.append(_name_165, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_166 = secondArgument_11.getName();
+                              _builder.append(_name_166, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                    {
+                      DSLAnalyzer _analyzer2 = dslRuleAnalyzer.getAnalyzer2();
+                      boolean _tripleNotEquals_12 = (_analyzer2 != null);
+                      if (_tripleNotEquals_12) {
+                        _builder.append("\t");
+                        DSLAnalyzer firstArgument_12 = dslRuleAnalyzer.getAnalyzer();
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t");
+                        DSLAnalyzer secondArgument_12 = dslRuleAnalyzer.getAnalyzer2();
+                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_24 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_24) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_167 = firstArgument_12.getName();
+                            _builder.append(_name_167, "\t");
+                            _builder.append("_");
+                            String _name_168 = secondArgument_12.getName();
+                            _builder.append(_name_168, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_169 = firstArgument_12.getName();
+                            _builder.append(_name_169, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_170 = secondArgument_12.getName();
+                            _builder.append(_name_170, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_25 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_25) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_171 = firstArgument_12.getName();
+                              _builder.append(_name_171, "\t");
+                              _builder.append("_");
+                              String _name_172 = secondArgument_12.getName();
+                              _builder.append(_name_172, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_173 = firstArgument_12.getName();
+                              _builder.append(_name_173, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_174 = secondArgument_12.getName();
+                              _builder.append(_name_174, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                    {
+                      DSLAlternative _shalt = dslRuleAnalyzer.getShalt();
+                      boolean _tripleNotEquals_13 = (_shalt != null);
+                      if (_tripleNotEquals_13) {
+                        _builder.append("\t");
+                        DSLAnalyzer firstArgument_13 = dslRuleAnalyzer.getAnalyzer();
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t");
+                        DSLAlternative secondArgument_13 = dslRuleAnalyzer.getShalt();
+                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_26 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_26) {
+                            _builder.append("\t");
+                            _builder.append("context StructureModel");
+                            _builder.newLine();
+                            _builder.append("\t");
+                            _builder.append("inv access_");
+                            String _name_175 = firstArgument_13.getName();
+                            _builder.append(_name_175, "\t");
+                            _builder.append("_");
+                            String _name_176 = secondArgument_13.getName();
+                            _builder.append(_name_176, "\t");
+                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                            String _name_177 = firstArgument_13.getName();
+                            _builder.append(_name_177, "\t");
+                            _builder.append("\' and c.to.name=\'");
+                            String _name_178 = secondArgument_13.getName();
+                            _builder.append(_name_178, "\t");
+                            _builder.append("\') ");
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            _builder.newLine();
+                          } else {
+                            boolean _equals_27 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_27) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv not_access_");
+                              String _name_179 = firstArgument_13.getName();
+                              _builder.append(_name_179, "\t");
+                              _builder.append("_");
+                              String _name_180 = secondArgument_13.getName();
+                              _builder.append(_name_180, "\t");
+                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_181 = firstArgument_13.getName();
+                              _builder.append(_name_181, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_182 = secondArgument_13.getName();
+                              _builder.append(_name_182, "\t");
+                              _builder.append("\')");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            }
+                          }
+                        }
+                      }
+                    }
+                    {
+                      DSLExecutor _executor_1 = dslRuleAnalyzer.getExecutor();
+                      boolean _tripleNotEquals_14 = (_executor_1 != null);
+                      if (_tripleNotEquals_14) {
+                        _builder.append("\t");
+                        DSLAnalyzer firstArgument_14 = dslRuleAnalyzer.getAnalyzer();
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t");
+                        DSLExecutor secondArgument_14 = dslRuleAnalyzer.getExecutor();
+                        _builder.newLineIfNotEmpty();
+                        _builder.append("\t");
+                        List<DSLDomainRule> dslDomain_7 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
+                        _builder.newLineIfNotEmpty();
+                        {
+                          boolean _equals_28 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-use");
+                          if (_equals_28) {
                             {
-                              boolean _isEmpty_9 = dslDomain_9.isEmpty();
-                              boolean _not_9 = (!_isEmpty_9);
-                              if (_not_9) {
+                              boolean _isEmpty_7 = dslDomain_7.isEmpty();
+                              boolean _not_7 = (!_isEmpty_7);
+                              if (_not_7) {
                                 _builder.append("\t");
-                                boolean add_9 = this.lDomainPlannerMonitor.add(dslRulePlanner.getMonitor());
+                                boolean add_7 = this.lDomainAnalyzerExecutor.add(dslRuleAnalyzer.getExecutor());
                                 _builder.newLineIfNotEmpty();
                               }
                             }
@@ -5310,247 +5103,40 @@ public class SasDslGenerator extends AbstractGenerator {
                             _builder.newLine();
                             _builder.append("\t");
                             _builder.append("inv access_");
-                            String _name_207 = firstArgument_17.getName();
-                            _builder.append(_name_207, "\t");
+                            String _name_183 = firstArgument_14.getName();
+                            _builder.append(_name_183, "\t");
                             _builder.append("_");
-                            String _name_208 = secondArgument_17.getName();
-                            _builder.append(_name_208, "\t");
+                            String _name_184 = secondArgument_14.getName();
+                            _builder.append(_name_184, "\t");
                             _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_209 = firstArgument_17.getName();
-                            _builder.append(_name_209, "\t");
+                            String _name_185 = firstArgument_14.getName();
+                            _builder.append(_name_185, "\t");
                             _builder.append("\' and c.to.name=\'");
-                            String _name_210 = secondArgument_17.getName();
-                            _builder.append(_name_210, "\t");
+                            String _name_186 = secondArgument_14.getName();
+                            _builder.append(_name_186, "\t");
                             _builder.append("\') ");
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
                             _builder.newLine();
                           } else {
-                            boolean _equals_35 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_35) {
+                            boolean _equals_29 = ((DSLRuleAnalyzer)dslRule).getAccess().equals("must-not-use");
+                            if (_equals_29) {
                               _builder.append("\t");
                               _builder.append("context StructureModel");
                               _builder.newLine();
                               _builder.append("\t");
                               _builder.append("inv not_access_");
-                              String _name_211 = firstArgument_17.getName();
-                              _builder.append(_name_211, "\t");
+                              String _name_187 = firstArgument_14.getName();
+                              _builder.append(_name_187, "\t");
                               _builder.append("_");
-                              String _name_212 = secondArgument_17.getName();
-                              _builder.append(_name_212, "\t");
+                              String _name_188 = secondArgument_14.getName();
+                              _builder.append(_name_188, "\t");
                               _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_213 = firstArgument_17.getName();
-                              _builder.append(_name_213, "\t");
+                              String _name_189 = firstArgument_14.getName();
+                              _builder.append(_name_189, "\t");
                               _builder.append("\' and c.to.name=\'");
-                              String _name_214 = secondArgument_17.getName();
-                              _builder.append(_name_214, "\t");
-                              _builder.append("\')");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            }
-                          }
-                        }
-                      }
-                    }
-                    {
-                      DSLAlternative _shalt_1 = dslRulePlanner.getShalt();
-                      boolean _tripleNotEquals_18 = (_shalt_1 != null);
-                      if (_tripleNotEquals_18) {
-                        _builder.append("\t");
-                        DSLPlanner firstArgument_18 = dslRulePlanner.getPlanner();
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        DSLAlternative secondArgument_18 = dslRulePlanner.getShalt();
-                        _builder.newLineIfNotEmpty();
-                        {
-                          boolean _equals_36 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_36) {
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv access_");
-                            String _name_215 = firstArgument_18.getName();
-                            _builder.append(_name_215, "\t");
-                            _builder.append("_");
-                            String _name_216 = secondArgument_18.getName();
-                            _builder.append(_name_216, "\t");
-                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_217 = firstArgument_18.getName();
-                            _builder.append(_name_217, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_218 = secondArgument_18.getName();
-                            _builder.append(_name_218, "\t");
-                            _builder.append("\') ");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          } else {
-                            boolean _equals_37 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_37) {
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv not_access_");
-                              String _name_219 = firstArgument_18.getName();
-                              _builder.append(_name_219, "\t");
-                              _builder.append("_");
-                              String _name_220 = secondArgument_18.getName();
-                              _builder.append(_name_220, "\t");
-                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_221 = firstArgument_18.getName();
-                              _builder.append(_name_221, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_222 = secondArgument_18.getName();
-                              _builder.append(_name_222, "\t");
-                              _builder.append("\')");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            }
-                          }
-                        }
-                      }
-                    }
-                    {
-                      DSLExecutor _executor_2 = dslRulePlanner.getExecutor();
-                      boolean _tripleNotEquals_19 = (_executor_2 != null);
-                      if (_tripleNotEquals_19) {
-                        _builder.append("\t");
-                        DSLPlanner firstArgument_19 = dslRulePlanner.getPlanner();
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        DSLExecutor secondArgument_19 = dslRulePlanner.getExecutor();
-                        _builder.newLineIfNotEmpty();
-                        {
-                          boolean _equals_38 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_38) {
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv access_");
-                            String _name_223 = firstArgument_19.getName();
-                            _builder.append(_name_223, "\t");
-                            _builder.append("_");
-                            String _name_224 = secondArgument_19.getName();
-                            _builder.append(_name_224, "\t");
-                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_225 = firstArgument_19.getName();
-                            _builder.append(_name_225, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_226 = secondArgument_19.getName();
-                            _builder.append(_name_226, "\t");
-                            _builder.append("\') ");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          } else {
-                            boolean _equals_39 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_39) {
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_10 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
-                              _builder.newLineIfNotEmpty();
-                              {
-                                boolean _isEmpty_10 = dslDomain_10.isEmpty();
-                                boolean _not_10 = (!_isEmpty_10);
-                                if (_not_10) {
-                                  _builder.append("\t");
-                                  boolean add_10 = this.lDomainPlannerExecutor.add(dslRulePlanner.getExecutor());
-                                  _builder.newLineIfNotEmpty();
-                                }
-                              }
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv not_access_");
-                              String _name_227 = firstArgument_19.getName();
-                              _builder.append(_name_227, "\t");
-                              _builder.append("_");
-                              String _name_228 = secondArgument_19.getName();
-                              _builder.append(_name_228, "\t");
-                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_229 = firstArgument_19.getName();
-                              _builder.append(_name_229, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_230 = secondArgument_19.getName();
-                              _builder.append(_name_230, "\t");
-                              _builder.append("\')");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            }
-                          }
-                        }
-                      }
-                    }
-                    {
-                      DSLKnowledge _knowledge_2 = dslRulePlanner.getKnowledge();
-                      boolean _tripleNotEquals_20 = (_knowledge_2 != null);
-                      if (_tripleNotEquals_20) {
-                        _builder.append("\t");
-                        DSLPlanner firstArgument_20 = dslRulePlanner.getPlanner();
-                        _builder.newLineIfNotEmpty();
-                        _builder.append("\t");
-                        DSLKnowledge secondArgument_20 = dslRulePlanner.getKnowledge();
-                        _builder.newLineIfNotEmpty();
-                        {
-                          boolean _equals_40 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
-                          if (_equals_40) {
-                            _builder.append("\t");
-                            _builder.append("context StructureModel");
-                            _builder.newLine();
-                            _builder.append("\t");
-                            _builder.append("inv access_");
-                            String _name_231 = firstArgument_20.getName();
-                            _builder.append(_name_231, "\t");
-                            _builder.append("_");
-                            String _name_232 = secondArgument_20.getName();
-                            _builder.append(_name_232, "\t");
-                            _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                            String _name_233 = firstArgument_20.getName();
-                            _builder.append(_name_233, "\t");
-                            _builder.append("\' and c.to.name=\'");
-                            String _name_234 = secondArgument_20.getName();
-                            _builder.append(_name_234, "\t");
-                            _builder.append("\') ");
-                            _builder.newLineIfNotEmpty();
-                            _builder.append("\t");
-                            _builder.newLine();
-                          } else {
-                            boolean _equals_41 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
-                            if (_equals_41) {
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_11 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
-                              _builder.newLineIfNotEmpty();
-                              {
-                                boolean _isEmpty_11 = dslDomain_11.isEmpty();
-                                boolean _not_11 = (!_isEmpty_11);
-                                if (_not_11) {
-                                  _builder.append("\t");
-                                  boolean add_11 = this.lDomainPlannerKnowledge.add(dslRulePlanner.getKnowledge());
-                                  _builder.newLineIfNotEmpty();
-                                }
-                              }
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv not_access_");
-                              String _name_235 = firstArgument_20.getName();
-                              _builder.append(_name_235, "\t");
-                              _builder.append("_");
-                              String _name_236 = secondArgument_20.getName();
-                              _builder.append(_name_236, "\t");
-                              _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_237 = firstArgument_20.getName();
-                              _builder.append(_name_237, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_238 = secondArgument_20.getName();
-                              _builder.append(_name_238, "\t");
+                              String _name_190 = secondArgument_14.getName();
+                              _builder.append(_name_190, "\t");
                               _builder.append("\')");
                               _builder.newLineIfNotEmpty();
                               _builder.append("\t");
@@ -5561,55 +5147,322 @@ public class SasDslGenerator extends AbstractGenerator {
                       }
                     }
                   } else {
-                    if ((dslRule instanceof DSLRuleExecutor)) {
+                    if ((dslRule instanceof DSLRulePlanner)) {
                       _builder.append("\t");
-                      DSLRuleExecutor dslRuleExecutor = ((DSLRuleExecutor) dslRule);
+                      DSLRulePlanner dslRulePlanner = ((DSLRulePlanner) dslRule);
                       _builder.newLineIfNotEmpty();
                       {
-                        DSLKnowledge _knowledge_3 = dslRuleExecutor.getKnowledge();
-                        boolean _tripleNotEquals_21 = (_knowledge_3 != null);
-                        if (_tripleNotEquals_21) {
+                        DSLAnalyzer _analyzer_1 = dslRulePlanner.getAnalyzer();
+                        boolean _tripleNotEquals_15 = (_analyzer_1 != null);
+                        if (_tripleNotEquals_15) {
                           _builder.append("\t");
-                          DSLExecutor firstArgument_21 = dslRuleExecutor.getExecutor();
+                          DSLPlanner firstArgument_15 = dslRulePlanner.getPlanner();
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
-                          DSLKnowledge secondArgument_21 = dslRuleExecutor.getKnowledge();
+                          DSLAnalyzer secondArgument_15 = dslRulePlanner.getAnalyzer();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          List<DSLDomainRule> dslDomain_8 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
                           _builder.newLineIfNotEmpty();
                           {
-                            boolean _equals_42 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_42) {
+                            boolean _equals_30 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_30) {
+                              {
+                                boolean _isEmpty_8 = dslDomain_8.isEmpty();
+                                boolean _not_8 = (!_isEmpty_8);
+                                if (_not_8) {
+                                  _builder.append("\t");
+                                  boolean add_8 = this.lDomainPlannerAnalyzer.add(dslRulePlanner.getAnalyzer());
+                                  _builder.newLineIfNotEmpty();
+                                }
+                              }
                               _builder.append("\t");
                               _builder.append("context StructureModel");
                               _builder.newLine();
                               _builder.append("\t");
                               _builder.append("inv access_");
-                              String _name_239 = firstArgument_21.getName();
-                              _builder.append(_name_239, "\t");
+                              String _name_191 = firstArgument_15.getName();
+                              _builder.append(_name_191, "\t");
                               _builder.append("_");
-                              String _name_240 = secondArgument_21.getName();
-                              _builder.append(_name_240, "\t");
+                              String _name_192 = secondArgument_15.getName();
+                              _builder.append(_name_192, "\t");
                               _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_241 = firstArgument_21.getName();
-                              _builder.append(_name_241, "\t");
+                              String _name_193 = firstArgument_15.getName();
+                              _builder.append(_name_193, "\t");
                               _builder.append("\' and c.to.name=\'");
-                              String _name_242 = secondArgument_21.getName();
-                              _builder.append(_name_242, "\t");
+                              String _name_194 = secondArgument_15.getName();
+                              _builder.append(_name_194, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_31 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_31) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_195 = firstArgument_15.getName();
+                                _builder.append(_name_195, "\t");
+                                _builder.append("_");
+                                String _name_196 = secondArgument_15.getName();
+                                _builder.append(_name_196, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_197 = firstArgument_15.getName();
+                                _builder.append(_name_197, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_198 = secondArgument_15.getName();
+                                _builder.append(_name_198, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              }
+                            }
+                          }
+                        }
+                      }
+                      {
+                        DSLPlanner _planner2 = dslRulePlanner.getPlanner2();
+                        boolean _tripleNotEquals_16 = (_planner2 != null);
+                        if (_tripleNotEquals_16) {
+                          _builder.append("\t");
+                          DSLPlanner firstArgument_16 = dslRulePlanner.getPlanner();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          DSLPlanner secondArgument_16 = dslRulePlanner.getPlanner2();
+                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_32 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_32) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_199 = firstArgument_16.getName();
+                              _builder.append(_name_199, "\t");
+                              _builder.append("_");
+                              String _name_200 = secondArgument_16.getName();
+                              _builder.append(_name_200, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_201 = firstArgument_16.getName();
+                              _builder.append(_name_201, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_202 = secondArgument_16.getName();
+                              _builder.append(_name_202, "\t");
                               _builder.append("\') ");
                               _builder.newLineIfNotEmpty();
                               _builder.append("\t");
                               _builder.newLine();
                             } else {
-                              boolean _equals_43 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_43) {
+                              boolean _equals_33 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_33) {
                                 _builder.append("\t");
-                                List<DSLDomainRule> dslDomain_12 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_203 = firstArgument_16.getName();
+                                _builder.append(_name_203, "\t");
+                                _builder.append("_");
+                                String _name_204 = secondArgument_16.getName();
+                                _builder.append(_name_204, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_205 = firstArgument_16.getName();
+                                _builder.append(_name_205, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_206 = secondArgument_16.getName();
+                                _builder.append(_name_206, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              }
+                            }
+                          }
+                        }
+                      }
+                      {
+                        DSLMonitor _monitor_1 = dslRulePlanner.getMonitor();
+                        boolean _tripleNotEquals_17 = (_monitor_1 != null);
+                        if (_tripleNotEquals_17) {
+                          _builder.append("\t");
+                          DSLPlanner firstArgument_17 = dslRulePlanner.getPlanner();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          DSLMonitor secondArgument_17 = dslRulePlanner.getMonitor();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          List<DSLDomainRule> dslDomain_9 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
+                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_34 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_34) {
+                              {
+                                boolean _isEmpty_9 = dslDomain_9.isEmpty();
+                                boolean _not_9 = (!_isEmpty_9);
+                                if (_not_9) {
+                                  _builder.append("\t");
+                                  boolean add_9 = this.lDomainPlannerMonitor.add(dslRulePlanner.getMonitor());
+                                  _builder.newLineIfNotEmpty();
+                                }
+                              }
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_207 = firstArgument_17.getName();
+                              _builder.append(_name_207, "\t");
+                              _builder.append("_");
+                              String _name_208 = secondArgument_17.getName();
+                              _builder.append(_name_208, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_209 = firstArgument_17.getName();
+                              _builder.append(_name_209, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_210 = secondArgument_17.getName();
+                              _builder.append(_name_210, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_35 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_35) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_211 = firstArgument_17.getName();
+                                _builder.append(_name_211, "\t");
+                                _builder.append("_");
+                                String _name_212 = secondArgument_17.getName();
+                                _builder.append(_name_212, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_213 = firstArgument_17.getName();
+                                _builder.append(_name_213, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_214 = secondArgument_17.getName();
+                                _builder.append(_name_214, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              }
+                            }
+                          }
+                        }
+                      }
+                      {
+                        DSLAlternative _shalt_1 = dslRulePlanner.getShalt();
+                        boolean _tripleNotEquals_18 = (_shalt_1 != null);
+                        if (_tripleNotEquals_18) {
+                          _builder.append("\t");
+                          DSLPlanner firstArgument_18 = dslRulePlanner.getPlanner();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          DSLAlternative secondArgument_18 = dslRulePlanner.getShalt();
+                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_36 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_36) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_215 = firstArgument_18.getName();
+                              _builder.append(_name_215, "\t");
+                              _builder.append("_");
+                              String _name_216 = secondArgument_18.getName();
+                              _builder.append(_name_216, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_217 = firstArgument_18.getName();
+                              _builder.append(_name_217, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_218 = secondArgument_18.getName();
+                              _builder.append(_name_218, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_37 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_37) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv not_access_");
+                                String _name_219 = firstArgument_18.getName();
+                                _builder.append(_name_219, "\t");
+                                _builder.append("_");
+                                String _name_220 = secondArgument_18.getName();
+                                _builder.append(_name_220, "\t");
+                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_221 = firstArgument_18.getName();
+                                _builder.append(_name_221, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_222 = secondArgument_18.getName();
+                                _builder.append(_name_222, "\t");
+                                _builder.append("\')");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              }
+                            }
+                          }
+                        }
+                      }
+                      {
+                        DSLExecutor _executor_2 = dslRulePlanner.getExecutor();
+                        boolean _tripleNotEquals_19 = (_executor_2 != null);
+                        if (_tripleNotEquals_19) {
+                          _builder.append("\t");
+                          DSLPlanner firstArgument_19 = dslRulePlanner.getPlanner();
+                          _builder.newLineIfNotEmpty();
+                          _builder.append("\t");
+                          DSLExecutor secondArgument_19 = dslRulePlanner.getExecutor();
+                          _builder.newLineIfNotEmpty();
+                          {
+                            boolean _equals_38 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_38) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_223 = firstArgument_19.getName();
+                              _builder.append(_name_223, "\t");
+                              _builder.append("_");
+                              String _name_224 = secondArgument_19.getName();
+                              _builder.append(_name_224, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_225 = firstArgument_19.getName();
+                              _builder.append(_name_225, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_226 = secondArgument_19.getName();
+                              _builder.append(_name_226, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_39 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_39) {
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_10 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
                                 _builder.newLineIfNotEmpty();
                                 {
-                                  boolean _isEmpty_12 = dslDomain_12.isEmpty();
-                                  boolean _not_12 = (!_isEmpty_12);
-                                  if (_not_12) {
+                                  boolean _isEmpty_10 = dslDomain_10.isEmpty();
+                                  boolean _not_10 = (!_isEmpty_10);
+                                  if (_not_10) {
                                     _builder.append("\t");
-                                    boolean add_12 = this.lDomainExecutorKnowledge.add(dslRuleExecutor.getKnowledge());
+                                    boolean add_10 = this.lDomainPlannerExecutor.add(dslRulePlanner.getExecutor());
                                     _builder.newLineIfNotEmpty();
                                   }
                                 }
@@ -5618,17 +5471,17 @@ public class SasDslGenerator extends AbstractGenerator {
                                 _builder.newLine();
                                 _builder.append("\t");
                                 _builder.append("inv not_access_");
-                                String _name_243 = firstArgument_21.getName();
-                                _builder.append(_name_243, "\t");
+                                String _name_227 = firstArgument_19.getName();
+                                _builder.append(_name_227, "\t");
                                 _builder.append("_");
-                                String _name_244 = secondArgument_21.getName();
-                                _builder.append(_name_244, "\t");
+                                String _name_228 = secondArgument_19.getName();
+                                _builder.append(_name_228, "\t");
                                 _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_245 = firstArgument_21.getName();
-                                _builder.append(_name_245, "\t");
+                                String _name_229 = firstArgument_19.getName();
+                                _builder.append(_name_229, "\t");
                                 _builder.append("\' and c.to.name=\'");
-                                String _name_246 = secondArgument_21.getName();
-                                _builder.append(_name_246, "\t");
+                                String _name_230 = secondArgument_19.getName();
+                                _builder.append(_name_230, "\t");
                                 _builder.append("\')");
                                 _builder.newLineIfNotEmpty();
                                 _builder.append("\t");
@@ -5639,337 +5492,69 @@ public class SasDslGenerator extends AbstractGenerator {
                         }
                       }
                       {
-                        DSLPlanner _planner_2 = dslRuleExecutor.getPlanner();
-                        boolean _tripleNotEquals_22 = (_planner_2 != null);
-                        if (_tripleNotEquals_22) {
+                        DSLKnowledge _knowledge_2 = dslRulePlanner.getKnowledge();
+                        boolean _tripleNotEquals_20 = (_knowledge_2 != null);
+                        if (_tripleNotEquals_20) {
                           _builder.append("\t");
-                          DSLExecutor firstArgument_22 = dslRuleExecutor.getExecutor();
+                          DSLPlanner firstArgument_20 = dslRulePlanner.getPlanner();
                           _builder.newLineIfNotEmpty();
                           _builder.append("\t");
-                          DSLPlanner secondArgument_22 = dslRuleExecutor.getPlanner();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          List<DSLDomainRule> dslDomain_13 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                          DSLKnowledge secondArgument_20 = dslRulePlanner.getKnowledge();
                           _builder.newLineIfNotEmpty();
                           {
-                            boolean _equals_44 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_44) {
-                              {
-                                boolean _isEmpty_13 = dslDomain_13.isEmpty();
-                                boolean _not_13 = (!_isEmpty_13);
-                                if (_not_13) {
-                                  _builder.append("\t");
-                                  boolean add_13 = this.lDomainExecutorPlanner.add(dslRuleExecutor.getPlanner());
-                                  _builder.newLineIfNotEmpty();
+                            boolean _equals_40 = ((DSLRulePlanner)dslRule).getAccess().equals("must-use");
+                            if (_equals_40) {
+                              _builder.append("\t");
+                              _builder.append("context StructureModel");
+                              _builder.newLine();
+                              _builder.append("\t");
+                              _builder.append("inv access_");
+                              String _name_231 = firstArgument_20.getName();
+                              _builder.append(_name_231, "\t");
+                              _builder.append("_");
+                              String _name_232 = secondArgument_20.getName();
+                              _builder.append(_name_232, "\t");
+                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                              String _name_233 = firstArgument_20.getName();
+                              _builder.append(_name_233, "\t");
+                              _builder.append("\' and c.to.name=\'");
+                              String _name_234 = secondArgument_20.getName();
+                              _builder.append(_name_234, "\t");
+                              _builder.append("\') ");
+                              _builder.newLineIfNotEmpty();
+                              _builder.append("\t");
+                              _builder.newLine();
+                            } else {
+                              boolean _equals_41 = ((DSLRulePlanner)dslRule).getAccess().equals("must-not-use");
+                              if (_equals_41) {
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_11 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRulePlanner.getPlanner().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.newLineIfNotEmpty();
+                                {
+                                  boolean _isEmpty_11 = dslDomain_11.isEmpty();
+                                  boolean _not_11 = (!_isEmpty_11);
+                                  if (_not_11) {
+                                    _builder.append("\t");
+                                    boolean add_11 = this.lDomainPlannerKnowledge.add(dslRulePlanner.getKnowledge());
+                                    _builder.newLineIfNotEmpty();
+                                  }
                                 }
-                              }
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv access_");
-                              String _name_247 = firstArgument_22.getName();
-                              _builder.append(_name_247, "\t");
-                              _builder.append("_");
-                              String _name_248 = secondArgument_22.getName();
-                              _builder.append(_name_248, "\t");
-                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_249 = firstArgument_22.getName();
-                              _builder.append(_name_249, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_250 = secondArgument_22.getName();
-                              _builder.append(_name_250, "\t");
-                              _builder.append("\') ");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            } else {
-                              boolean _equals_45 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_45) {
                                 _builder.append("\t");
                                 _builder.append("context StructureModel");
                                 _builder.newLine();
                                 _builder.append("\t");
                                 _builder.append("inv not_access_");
-                                String _name_251 = firstArgument_22.getName();
-                                _builder.append(_name_251, "\t");
+                                String _name_235 = firstArgument_20.getName();
+                                _builder.append(_name_235, "\t");
                                 _builder.append("_");
-                                String _name_252 = secondArgument_22.getName();
-                                _builder.append(_name_252, "\t");
+                                String _name_236 = secondArgument_20.getName();
+                                _builder.append(_name_236, "\t");
                                 _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_253 = firstArgument_22.getName();
-                                _builder.append(_name_253, "\t");
+                                String _name_237 = firstArgument_20.getName();
+                                _builder.append(_name_237, "\t");
                                 _builder.append("\' and c.to.name=\'");
-                                String _name_254 = secondArgument_22.getName();
-                                _builder.append(_name_254, "\t");
-                                _builder.append("\')");
-                                _builder.newLineIfNotEmpty();
-                                _builder.append("\t");
-                                _builder.newLine();
-                              }
-                            }
-                          }
-                        }
-                      }
-                      {
-                        DSLMonitor _monitor_2 = dslRuleExecutor.getMonitor();
-                        boolean _tripleNotEquals_23 = (_monitor_2 != null);
-                        if (_tripleNotEquals_23) {
-                          _builder.append("\t");
-                          DSLExecutor firstArgument_23 = dslRuleExecutor.getExecutor();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          DSLMonitor secondArgument_23 = dslRuleExecutor.getMonitor();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          List<DSLDomainRule> dslDomain_14 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _equals_46 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_46) {
-                              {
-                                boolean _isEmpty_14 = dslDomain_14.isEmpty();
-                                boolean _not_14 = (!_isEmpty_14);
-                                if (_not_14) {
-                                  _builder.append("\t");
-                                  boolean add_14 = this.lDomainExecutorMonitor.add(dslRuleExecutor.getMonitor());
-                                  _builder.newLineIfNotEmpty();
-                                }
-                              }
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv access_");
-                              String _name_255 = firstArgument_23.getName();
-                              _builder.append(_name_255, "\t");
-                              _builder.append("_");
-                              String _name_256 = secondArgument_23.getName();
-                              _builder.append(_name_256, "\t");
-                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_257 = firstArgument_23.getName();
-                              _builder.append(_name_257, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_258 = secondArgument_23.getName();
-                              _builder.append(_name_258, "\t");
-                              _builder.append("\') ");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            } else {
-                              boolean _equals_47 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_47) {
-                                _builder.append("\t");
-                                _builder.append("context StructureModel");
-                                _builder.newLine();
-                                _builder.append("\t");
-                                _builder.append("inv not_access_");
-                                String _name_259 = firstArgument_23.getName();
-                                _builder.append(_name_259, "\t");
-                                _builder.append("_");
-                                String _name_260 = secondArgument_23.getName();
-                                _builder.append(_name_260, "\t");
-                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_261 = firstArgument_23.getName();
-                                _builder.append(_name_261, "\t");
-                                _builder.append("\' and c.to.name=\'");
-                                String _name_262 = secondArgument_23.getName();
-                                _builder.append(_name_262, "\t");
-                                _builder.append("\')");
-                                _builder.newLineIfNotEmpty();
-                                _builder.append("\t");
-                                _builder.newLine();
-                              }
-                            }
-                          }
-                        }
-                      }
-                      {
-                        DSLAnalyzer _analyzer_2 = dslRuleExecutor.getAnalyzer();
-                        boolean _tripleNotEquals_24 = (_analyzer_2 != null);
-                        if (_tripleNotEquals_24) {
-                          _builder.append("\t");
-                          DSLExecutor firstArgument_24 = dslRuleExecutor.getExecutor();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          DSLAnalyzer secondArgument_24 = dslRuleExecutor.getAnalyzer();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          List<DSLDomainRule> dslDomain_15 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _equals_48 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_48) {
-                              {
-                                boolean _isEmpty_15 = dslDomain_15.isEmpty();
-                                boolean _not_15 = (!_isEmpty_15);
-                                if (_not_15) {
-                                  _builder.append("\t");
-                                  boolean add_15 = this.lDomainExecutorAnalyzer.add(dslRuleExecutor.getAnalyzer());
-                                  _builder.newLineIfNotEmpty();
-                                }
-                              }
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv access_");
-                              String _name_263 = firstArgument_24.getName();
-                              _builder.append(_name_263, "\t");
-                              _builder.append("_");
-                              String _name_264 = secondArgument_24.getName();
-                              _builder.append(_name_264, "\t");
-                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_265 = firstArgument_24.getName();
-                              _builder.append(_name_265, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_266 = secondArgument_24.getName();
-                              _builder.append(_name_266, "\t");
-                              _builder.append("\') ");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            } else {
-                              boolean _equals_49 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_49) {
-                                _builder.append("\t");
-                                _builder.append("context StructureModel");
-                                _builder.newLine();
-                                _builder.append("\t");
-                                _builder.append("inv not_access_");
-                                String _name_267 = firstArgument_24.getName();
-                                _builder.append(_name_267, "\t");
-                                _builder.append("_");
-                                String _name_268 = secondArgument_24.getName();
-                                _builder.append(_name_268, "\t");
-                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_269 = firstArgument_24.getName();
-                                _builder.append(_name_269, "\t");
-                                _builder.append("\' and c.to.name=\'");
-                                String _name_270 = secondArgument_24.getName();
-                                _builder.append(_name_270, "\t");
-                                _builder.append("\')");
-                                _builder.newLineIfNotEmpty();
-                                _builder.append("\t");
-                                _builder.newLine();
-                              }
-                            }
-                          }
-                        }
-                      }
-                      {
-                        DSLEffector _effector = dslRuleExecutor.getEffector();
-                        boolean _tripleNotEquals_25 = (_effector != null);
-                        if (_tripleNotEquals_25) {
-                          _builder.append("\t");
-                          DSLExecutor firstArgument_25 = dslRuleExecutor.getExecutor();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          DSLEffector secondArgument_25 = dslRuleExecutor.getEffector();
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _equals_50 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_50) {
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv access_");
-                              String _name_271 = firstArgument_25.getName();
-                              _builder.append(_name_271, "\t");
-                              _builder.append("_");
-                              String _name_272 = secondArgument_25.getName();
-                              _builder.append(_name_272, "\t");
-                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_273 = firstArgument_25.getName();
-                              _builder.append(_name_273, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_274 = secondArgument_25.getName();
-                              _builder.append(_name_274, "\t");
-                              _builder.append("\') ");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            } else {
-                              boolean _equals_51 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_51) {
-                                _builder.append("\t");
-                                _builder.append("context StructureModel");
-                                _builder.newLine();
-                                _builder.append("\t");
-                                _builder.append("inv not_access_");
-                                String _name_275 = firstArgument_25.getName();
-                                _builder.append(_name_275, "\t");
-                                _builder.append("_");
-                                String _name_276 = secondArgument_25.getName();
-                                _builder.append(_name_276, "\t");
-                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_277 = firstArgument_25.getName();
-                                _builder.append(_name_277, "\t");
-                                _builder.append("\' and c.to.name=\'");
-                                String _name_278 = secondArgument_25.getName();
-                                _builder.append(_name_278, "\t");
-                                _builder.append("\')");
-                                _builder.newLineIfNotEmpty();
-                                _builder.append("\t");
-                                _builder.newLine();
-                              }
-                            }
-                          }
-                        }
-                      }
-                      {
-                        DSLExecutor _executor2 = dslRuleExecutor.getExecutor2();
-                        boolean _tripleNotEquals_26 = (_executor2 != null);
-                        if (_tripleNotEquals_26) {
-                          _builder.append("\t");
-                          DSLExecutor firstArgument_26 = dslRuleExecutor.getExecutor();
-                          _builder.newLineIfNotEmpty();
-                          _builder.append("\t");
-                          DSLExecutor secondArgument_26 = dslRuleExecutor.getExecutor2();
-                          _builder.newLineIfNotEmpty();
-                          {
-                            boolean _equals_52 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
-                            if (_equals_52) {
-                              _builder.append("\t");
-                              _builder.append("context StructureModel");
-                              _builder.newLine();
-                              _builder.append("\t");
-                              _builder.append("inv access_");
-                              String _name_279 = firstArgument_26.getName();
-                              _builder.append(_name_279, "\t");
-                              _builder.append("_");
-                              String _name_280 = secondArgument_26.getName();
-                              _builder.append(_name_280, "\t");
-                              _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                              String _name_281 = firstArgument_26.getName();
-                              _builder.append(_name_281, "\t");
-                              _builder.append("\' and c.to.name=\'");
-                              String _name_282 = secondArgument_26.getName();
-                              _builder.append(_name_282, "\t");
-                              _builder.append("\') ");
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              _builder.newLine();
-                            } else {
-                              boolean _equals_53 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
-                              if (_equals_53) {
-                                _builder.append("\t");
-                                _builder.append("context StructureModel");
-                                _builder.newLine();
-                                _builder.append("\t");
-                                _builder.append("inv not_access_");
-                                String _name_283 = firstArgument_26.getName();
-                                _builder.append(_name_283, "\t");
-                                _builder.append("_");
-                                String _name_284 = secondArgument_26.getName();
-                                _builder.append(_name_284, "\t");
-                                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_285 = firstArgument_26.getName();
-                                _builder.append(_name_285, "\t");
-                                _builder.append("\' and c.to.name=\'");
-                                String _name_286 = secondArgument_26.getName();
-                                _builder.append(_name_286, "\t");
+                                String _name_238 = secondArgument_20.getName();
+                                _builder.append(_name_238, "\t");
                                 _builder.append("\')");
                                 _builder.newLineIfNotEmpty();
                                 _builder.append("\t");
@@ -5980,62 +5565,415 @@ public class SasDslGenerator extends AbstractGenerator {
                         }
                       }
                     } else {
-                      if ((dslRule instanceof DSLRuleMO)) {
+                      if ((dslRule instanceof DSLRuleExecutor)) {
                         _builder.append("\t");
-                        DSLRuleMO dslRuleSensor = ((DSLRuleMO) dslRule);
+                        DSLRuleExecutor dslRuleExecutor = ((DSLRuleExecutor) dslRule);
                         _builder.newLineIfNotEmpty();
                         {
-                          DSLMeasuredOutput _measured = dslRuleSensor.getMeasured();
-                          boolean _tripleNotEquals_27 = (_measured != null);
-                          if (_tripleNotEquals_27) {
+                          DSLKnowledge _knowledge_3 = dslRuleExecutor.getKnowledge();
+                          boolean _tripleNotEquals_21 = (_knowledge_3 != null);
+                          if (_tripleNotEquals_21) {
                             _builder.append("\t");
-                            DSLSensor firstArgument_27 = dslRuleSensor.getSensor();
+                            DSLExecutor firstArgument_21 = dslRuleExecutor.getExecutor();
                             _builder.newLineIfNotEmpty();
                             _builder.append("\t");
-                            DSLMeasuredOutput secondArgument_27 = dslRuleSensor.getMeasured();
+                            DSLKnowledge secondArgument_21 = dslRuleExecutor.getKnowledge();
                             _builder.newLineIfNotEmpty();
                             {
-                              boolean _equals_54 = ((DSLRuleMO)dslRule).getAccess().equals("must-use");
-                              if (_equals_54) {
+                              boolean _equals_42 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_42) {
                                 _builder.append("\t");
                                 _builder.append("context StructureModel");
                                 _builder.newLine();
                                 _builder.append("\t");
                                 _builder.append("inv access_");
-                                String _name_287 = firstArgument_27.getName();
-                                _builder.append(_name_287, "\t");
+                                String _name_239 = firstArgument_21.getName();
+                                _builder.append(_name_239, "\t");
                                 _builder.append("_");
-                                String _name_288 = secondArgument_27.getName();
-                                _builder.append(_name_288, "\t");
+                                String _name_240 = secondArgument_21.getName();
+                                _builder.append(_name_240, "\t");
                                 _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                String _name_289 = firstArgument_27.getName();
-                                _builder.append(_name_289, "\t");
+                                String _name_241 = firstArgument_21.getName();
+                                _builder.append(_name_241, "\t");
                                 _builder.append("\' and c.to.name=\'");
-                                String _name_290 = secondArgument_27.getName();
-                                _builder.append(_name_290, "\t");
+                                String _name_242 = secondArgument_21.getName();
+                                _builder.append(_name_242, "\t");
                                 _builder.append("\') ");
                                 _builder.newLineIfNotEmpty();
                                 _builder.append("\t");
                                 _builder.newLine();
                               } else {
-                                boolean _equals_55 = ((DSLRuleMO)dslRule).getAccess().equals("must-not-use");
-                                if (_equals_55) {
+                                boolean _equals_43 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_43) {
+                                  _builder.append("\t");
+                                  List<DSLDomainRule> dslDomain_12 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                                  _builder.newLineIfNotEmpty();
+                                  {
+                                    boolean _isEmpty_12 = dslDomain_12.isEmpty();
+                                    boolean _not_12 = (!_isEmpty_12);
+                                    if (_not_12) {
+                                      _builder.append("\t");
+                                      boolean add_12 = this.lDomainExecutorKnowledge.add(dslRuleExecutor.getKnowledge());
+                                      _builder.newLineIfNotEmpty();
+                                    }
+                                  }
                                   _builder.append("\t");
                                   _builder.append("context StructureModel");
                                   _builder.newLine();
                                   _builder.append("\t");
                                   _builder.append("inv not_access_");
-                                  String _name_291 = firstArgument_27.getName();
-                                  _builder.append(_name_291, "\t");
+                                  String _name_243 = firstArgument_21.getName();
+                                  _builder.append(_name_243, "\t");
                                   _builder.append("_");
-                                  String _name_292 = secondArgument_27.getName();
-                                  _builder.append(_name_292, "\t");
+                                  String _name_244 = secondArgument_21.getName();
+                                  _builder.append(_name_244, "\t");
                                   _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                  String _name_293 = firstArgument_27.getName();
-                                  _builder.append(_name_293, "\t");
+                                  String _name_245 = firstArgument_21.getName();
+                                  _builder.append(_name_245, "\t");
                                   _builder.append("\' and c.to.name=\'");
-                                  String _name_294 = secondArgument_27.getName();
-                                  _builder.append(_name_294, "\t");
+                                  String _name_246 = secondArgument_21.getName();
+                                  _builder.append(_name_246, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("\t");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                        {
+                          DSLPlanner _planner_2 = dslRuleExecutor.getPlanner();
+                          boolean _tripleNotEquals_22 = (_planner_2 != null);
+                          if (_tripleNotEquals_22) {
+                            _builder.append("\t");
+                            DSLExecutor firstArgument_22 = dslRuleExecutor.getExecutor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            DSLPlanner secondArgument_22 = dslRuleExecutor.getPlanner();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            List<DSLDomainRule> dslDomain_13 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_44 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_44) {
+                                {
+                                  boolean _isEmpty_13 = dslDomain_13.isEmpty();
+                                  boolean _not_13 = (!_isEmpty_13);
+                                  if (_not_13) {
+                                    _builder.append("\t");
+                                    boolean add_13 = this.lDomainExecutorPlanner.add(dslRuleExecutor.getPlanner());
+                                    _builder.newLineIfNotEmpty();
+                                  }
+                                }
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_247 = firstArgument_22.getName();
+                                _builder.append(_name_247, "\t");
+                                _builder.append("_");
+                                String _name_248 = secondArgument_22.getName();
+                                _builder.append(_name_248, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_249 = firstArgument_22.getName();
+                                _builder.append(_name_249, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_250 = secondArgument_22.getName();
+                                _builder.append(_name_250, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_45 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_45) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_251 = firstArgument_22.getName();
+                                  _builder.append(_name_251, "\t");
+                                  _builder.append("_");
+                                  String _name_252 = secondArgument_22.getName();
+                                  _builder.append(_name_252, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_253 = firstArgument_22.getName();
+                                  _builder.append(_name_253, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_254 = secondArgument_22.getName();
+                                  _builder.append(_name_254, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("\t");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                        {
+                          DSLMonitor _monitor_2 = dslRuleExecutor.getMonitor();
+                          boolean _tripleNotEquals_23 = (_monitor_2 != null);
+                          if (_tripleNotEquals_23) {
+                            _builder.append("\t");
+                            DSLExecutor firstArgument_23 = dslRuleExecutor.getExecutor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            DSLMonitor secondArgument_23 = dslRuleExecutor.getMonitor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            List<DSLDomainRule> dslDomain_14 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_46 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_46) {
+                                {
+                                  boolean _isEmpty_14 = dslDomain_14.isEmpty();
+                                  boolean _not_14 = (!_isEmpty_14);
+                                  if (_not_14) {
+                                    _builder.append("\t");
+                                    boolean add_14 = this.lDomainExecutorMonitor.add(dslRuleExecutor.getMonitor());
+                                    _builder.newLineIfNotEmpty();
+                                  }
+                                }
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_255 = firstArgument_23.getName();
+                                _builder.append(_name_255, "\t");
+                                _builder.append("_");
+                                String _name_256 = secondArgument_23.getName();
+                                _builder.append(_name_256, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_257 = firstArgument_23.getName();
+                                _builder.append(_name_257, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_258 = secondArgument_23.getName();
+                                _builder.append(_name_258, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_47 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_47) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_259 = firstArgument_23.getName();
+                                  _builder.append(_name_259, "\t");
+                                  _builder.append("_");
+                                  String _name_260 = secondArgument_23.getName();
+                                  _builder.append(_name_260, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_261 = firstArgument_23.getName();
+                                  _builder.append(_name_261, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_262 = secondArgument_23.getName();
+                                  _builder.append(_name_262, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("\t");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                        {
+                          DSLAnalyzer _analyzer_2 = dslRuleExecutor.getAnalyzer();
+                          boolean _tripleNotEquals_24 = (_analyzer_2 != null);
+                          if (_tripleNotEquals_24) {
+                            _builder.append("\t");
+                            DSLExecutor firstArgument_24 = dslRuleExecutor.getExecutor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            DSLAnalyzer secondArgument_24 = dslRuleExecutor.getAnalyzer();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            List<DSLDomainRule> dslDomain_15 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleExecutor.getExecutor().eContainer().eContents(), DSLDomainRule.class));
+                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_48 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_48) {
+                                {
+                                  boolean _isEmpty_15 = dslDomain_15.isEmpty();
+                                  boolean _not_15 = (!_isEmpty_15);
+                                  if (_not_15) {
+                                    _builder.append("\t");
+                                    boolean add_15 = this.lDomainExecutorAnalyzer.add(dslRuleExecutor.getAnalyzer());
+                                    _builder.newLineIfNotEmpty();
+                                  }
+                                }
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_263 = firstArgument_24.getName();
+                                _builder.append(_name_263, "\t");
+                                _builder.append("_");
+                                String _name_264 = secondArgument_24.getName();
+                                _builder.append(_name_264, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_265 = firstArgument_24.getName();
+                                _builder.append(_name_265, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_266 = secondArgument_24.getName();
+                                _builder.append(_name_266, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_49 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_49) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_267 = firstArgument_24.getName();
+                                  _builder.append(_name_267, "\t");
+                                  _builder.append("_");
+                                  String _name_268 = secondArgument_24.getName();
+                                  _builder.append(_name_268, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_269 = firstArgument_24.getName();
+                                  _builder.append(_name_269, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_270 = secondArgument_24.getName();
+                                  _builder.append(_name_270, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("\t");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                        {
+                          DSLEffector _effector = dslRuleExecutor.getEffector();
+                          boolean _tripleNotEquals_25 = (_effector != null);
+                          if (_tripleNotEquals_25) {
+                            _builder.append("\t");
+                            DSLExecutor firstArgument_25 = dslRuleExecutor.getExecutor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            DSLEffector secondArgument_25 = dslRuleExecutor.getEffector();
+                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_50 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_50) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_271 = firstArgument_25.getName();
+                                _builder.append(_name_271, "\t");
+                                _builder.append("_");
+                                String _name_272 = secondArgument_25.getName();
+                                _builder.append(_name_272, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_273 = firstArgument_25.getName();
+                                _builder.append(_name_273, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_274 = secondArgument_25.getName();
+                                _builder.append(_name_274, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_51 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_51) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_275 = firstArgument_25.getName();
+                                  _builder.append(_name_275, "\t");
+                                  _builder.append("_");
+                                  String _name_276 = secondArgument_25.getName();
+                                  _builder.append(_name_276, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_277 = firstArgument_25.getName();
+                                  _builder.append(_name_277, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_278 = secondArgument_25.getName();
+                                  _builder.append(_name_278, "\t");
+                                  _builder.append("\')");
+                                  _builder.newLineIfNotEmpty();
+                                  _builder.append("\t");
+                                  _builder.newLine();
+                                }
+                              }
+                            }
+                          }
+                        }
+                        {
+                          DSLExecutor _executor2 = dslRuleExecutor.getExecutor2();
+                          boolean _tripleNotEquals_26 = (_executor2 != null);
+                          if (_tripleNotEquals_26) {
+                            _builder.append("\t");
+                            DSLExecutor firstArgument_26 = dslRuleExecutor.getExecutor();
+                            _builder.newLineIfNotEmpty();
+                            _builder.append("\t");
+                            DSLExecutor secondArgument_26 = dslRuleExecutor.getExecutor2();
+                            _builder.newLineIfNotEmpty();
+                            {
+                              boolean _equals_52 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-use");
+                              if (_equals_52) {
+                                _builder.append("\t");
+                                _builder.append("context StructureModel");
+                                _builder.newLine();
+                                _builder.append("\t");
+                                _builder.append("inv access_");
+                                String _name_279 = firstArgument_26.getName();
+                                _builder.append(_name_279, "\t");
+                                _builder.append("_");
+                                String _name_280 = secondArgument_26.getName();
+                                _builder.append(_name_280, "\t");
+                                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                String _name_281 = firstArgument_26.getName();
+                                _builder.append(_name_281, "\t");
+                                _builder.append("\' and c.to.name=\'");
+                                String _name_282 = secondArgument_26.getName();
+                                _builder.append(_name_282, "\t");
+                                _builder.append("\') ");
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                _builder.newLine();
+                              } else {
+                                boolean _equals_53 = ((DSLRuleExecutor)dslRule).getAccess().equals("must-not-use");
+                                if (_equals_53) {
+                                  _builder.append("\t");
+                                  _builder.append("context StructureModel");
+                                  _builder.newLine();
+                                  _builder.append("\t");
+                                  _builder.append("inv not_access_");
+                                  String _name_283 = firstArgument_26.getName();
+                                  _builder.append(_name_283, "\t");
+                                  _builder.append("_");
+                                  String _name_284 = secondArgument_26.getName();
+                                  _builder.append(_name_284, "\t");
+                                  _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                  String _name_285 = firstArgument_26.getName();
+                                  _builder.append(_name_285, "\t");
+                                  _builder.append("\' and c.to.name=\'");
+                                  String _name_286 = secondArgument_26.getName();
+                                  _builder.append(_name_286, "\t");
                                   _builder.append("\')");
                                   _builder.newLineIfNotEmpty();
                                   _builder.append("\t");
@@ -6046,74 +5984,62 @@ public class SasDslGenerator extends AbstractGenerator {
                           }
                         }
                       } else {
-                        if ((dslRule instanceof DSLRuleKnowledge)) {
+                        if ((dslRule instanceof DSLRuleMO)) {
                           _builder.append("\t");
-                          DSLRuleKnowledge dslRuleKnowledge = ((DSLRuleKnowledge) dslRule);
+                          DSLRuleMO dslRuleSensor = ((DSLRuleMO) dslRule);
                           _builder.newLineIfNotEmpty();
                           {
-                            DSLMonitor _monitor_3 = dslRuleKnowledge.getMonitor();
-                            boolean _tripleNotEquals_28 = (_monitor_3 != null);
-                            if (_tripleNotEquals_28) {
+                            DSLMeasuredOutput _measured = dslRuleSensor.getMeasured();
+                            boolean _tripleNotEquals_27 = (_measured != null);
+                            if (_tripleNotEquals_27) {
                               _builder.append("\t");
-                              DSLKnowledge firstArgument_28 = dslRuleKnowledge.getKnowledge();
+                              DSLSensor firstArgument_27 = dslRuleSensor.getSensor();
                               _builder.newLineIfNotEmpty();
                               _builder.append("\t");
-                              DSLMonitor secondArgument_28 = dslRuleKnowledge.getMonitor();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_16 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
+                              DSLMeasuredOutput secondArgument_27 = dslRuleSensor.getMeasured();
                               _builder.newLineIfNotEmpty();
                               {
-                                boolean _equals_56 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
-                                if (_equals_56) {
-                                  {
-                                    boolean _isEmpty_16 = dslDomain_16.isEmpty();
-                                    boolean _not_16 = (!_isEmpty_16);
-                                    if (_not_16) {
-                                      _builder.append("\t");
-                                      boolean add_16 = this.lDomainKnowledgeMonitor.add(dslRuleKnowledge.getMonitor());
-                                      _builder.newLineIfNotEmpty();
-                                    }
-                                  }
+                                boolean _equals_54 = ((DSLRuleMO)dslRule).getAccess().equals("must-use");
+                                if (_equals_54) {
                                   _builder.append("\t");
                                   _builder.append("context StructureModel");
                                   _builder.newLine();
                                   _builder.append("\t");
                                   _builder.append("inv access_");
-                                  String _name_295 = firstArgument_28.getName();
-                                  _builder.append(_name_295, "\t");
+                                  String _name_287 = firstArgument_27.getName();
+                                  _builder.append(_name_287, "\t");
                                   _builder.append("_");
-                                  String _name_296 = secondArgument_28.getName();
-                                  _builder.append(_name_296, "\t");
+                                  String _name_288 = secondArgument_27.getName();
+                                  _builder.append(_name_288, "\t");
                                   _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                  String _name_297 = firstArgument_28.getName();
-                                  _builder.append(_name_297, "\t");
+                                  String _name_289 = firstArgument_27.getName();
+                                  _builder.append(_name_289, "\t");
                                   _builder.append("\' and c.to.name=\'");
-                                  String _name_298 = secondArgument_28.getName();
-                                  _builder.append(_name_298, "\t");
+                                  String _name_290 = secondArgument_27.getName();
+                                  _builder.append(_name_290, "\t");
                                   _builder.append("\') ");
                                   _builder.newLineIfNotEmpty();
                                   _builder.append("\t");
                                   _builder.newLine();
                                 } else {
-                                  boolean _equals_57 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
-                                  if (_equals_57) {
+                                  boolean _equals_55 = ((DSLRuleMO)dslRule).getAccess().equals("must-not-use");
+                                  if (_equals_55) {
                                     _builder.append("\t");
                                     _builder.append("context StructureModel");
                                     _builder.newLine();
                                     _builder.append("\t");
                                     _builder.append("inv not_access_");
-                                    String _name_299 = firstArgument_28.getName();
-                                    _builder.append(_name_299, "\t");
+                                    String _name_291 = firstArgument_27.getName();
+                                    _builder.append(_name_291, "\t");
                                     _builder.append("_");
-                                    String _name_300 = secondArgument_28.getName();
-                                    _builder.append(_name_300, "\t");
+                                    String _name_292 = secondArgument_27.getName();
+                                    _builder.append(_name_292, "\t");
                                     _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                    String _name_301 = firstArgument_28.getName();
-                                    _builder.append(_name_301, "\t");
+                                    String _name_293 = firstArgument_27.getName();
+                                    _builder.append(_name_293, "\t");
                                     _builder.append("\' and c.to.name=\'");
-                                    String _name_302 = secondArgument_28.getName();
-                                    _builder.append(_name_302, "\t");
+                                    String _name_294 = secondArgument_27.getName();
+                                    _builder.append(_name_294, "\t");
                                     _builder.append("\')");
                                     _builder.newLineIfNotEmpty();
                                     _builder.append("\t");
@@ -6123,220 +6049,299 @@ public class SasDslGenerator extends AbstractGenerator {
                               }
                             }
                           }
-                          {
-                            DSLAnalyzer _analyzer_3 = dslRuleKnowledge.getAnalyzer();
-                            boolean _tripleNotEquals_29 = (_analyzer_3 != null);
-                            if (_tripleNotEquals_29) {
-                              _builder.append("\t");
-                              DSLKnowledge firstArgument_29 = dslRuleKnowledge.getKnowledge();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              DSLAnalyzer secondArgument_29 = dslRuleKnowledge.getAnalyzer();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_17 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
-                              _builder.newLineIfNotEmpty();
-                              {
-                                boolean _equals_58 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
-                                if (_equals_58) {
-                                  {
-                                    boolean _isEmpty_17 = dslDomain_17.isEmpty();
-                                    boolean _not_17 = (!_isEmpty_17);
-                                    if (_not_17) {
-                                      _builder.append("\t");
-                                      boolean add_17 = this.lDomainKnowledgeAnalyzer.add(dslRuleKnowledge.getAnalyzer());
-                                      _builder.newLineIfNotEmpty();
+                        } else {
+                          if ((dslRule instanceof DSLRuleKnowledge)) {
+                            _builder.append("\t");
+                            DSLRuleKnowledge dslRuleKnowledge = ((DSLRuleKnowledge) dslRule);
+                            _builder.newLineIfNotEmpty();
+                            {
+                              DSLMonitor _monitor_3 = dslRuleKnowledge.getMonitor();
+                              boolean _tripleNotEquals_28 = (_monitor_3 != null);
+                              if (_tripleNotEquals_28) {
+                                _builder.append("\t");
+                                DSLKnowledge firstArgument_28 = dslRuleKnowledge.getKnowledge();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                DSLMonitor secondArgument_28 = dslRuleKnowledge.getMonitor();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_16 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.newLineIfNotEmpty();
+                                {
+                                  boolean _equals_56 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
+                                  if (_equals_56) {
+                                    {
+                                      boolean _isEmpty_16 = dslDomain_16.isEmpty();
+                                      boolean _not_16 = (!_isEmpty_16);
+                                      if (_not_16) {
+                                        _builder.append("\t");
+                                        boolean add_16 = this.lDomainKnowledgeMonitor.add(dslRuleKnowledge.getMonitor());
+                                        _builder.newLineIfNotEmpty();
+                                      }
                                     }
-                                  }
-                                  _builder.append("\t");
-                                  _builder.append("context StructureModel");
-                                  _builder.newLine();
-                                  _builder.append("\t");
-                                  _builder.append("inv access_");
-                                  String _name_303 = firstArgument_29.getName();
-                                  _builder.append(_name_303, "\t");
-                                  _builder.append("_");
-                                  String _name_304 = secondArgument_29.getName();
-                                  _builder.append(_name_304, "\t");
-                                  _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                  String _name_305 = firstArgument_29.getName();
-                                  _builder.append(_name_305, "\t");
-                                  _builder.append("\' and c.to.name=\'");
-                                  String _name_306 = secondArgument_29.getName();
-                                  _builder.append(_name_306, "\t");
-                                  _builder.append("\') ");
-                                  _builder.newLineIfNotEmpty();
-                                  _builder.append("\t");
-                                  _builder.newLine();
-                                } else {
-                                  boolean _equals_59 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
-                                  if (_equals_59) {
                                     _builder.append("\t");
                                     _builder.append("context StructureModel");
                                     _builder.newLine();
                                     _builder.append("\t");
-                                    _builder.append("inv not_access_");
-                                    String _name_307 = firstArgument_29.getName();
-                                    _builder.append(_name_307, "\t");
+                                    _builder.append("inv access_");
+                                    String _name_295 = firstArgument_28.getName();
+                                    _builder.append(_name_295, "\t");
                                     _builder.append("_");
-                                    String _name_308 = secondArgument_29.getName();
-                                    _builder.append(_name_308, "\t");
-                                    _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                    String _name_309 = firstArgument_29.getName();
-                                    _builder.append(_name_309, "\t");
+                                    String _name_296 = secondArgument_28.getName();
+                                    _builder.append(_name_296, "\t");
+                                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                    String _name_297 = firstArgument_28.getName();
+                                    _builder.append(_name_297, "\t");
                                     _builder.append("\' and c.to.name=\'");
-                                    String _name_310 = secondArgument_29.getName();
-                                    _builder.append(_name_310, "\t");
-                                    _builder.append("\')");
+                                    String _name_298 = secondArgument_28.getName();
+                                    _builder.append(_name_298, "\t");
+                                    _builder.append("\') ");
                                     _builder.newLineIfNotEmpty();
                                     _builder.append("\t");
                                     _builder.newLine();
+                                  } else {
+                                    boolean _equals_57 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
+                                    if (_equals_57) {
+                                      _builder.append("\t");
+                                      _builder.append("context StructureModel");
+                                      _builder.newLine();
+                                      _builder.append("\t");
+                                      _builder.append("inv not_access_");
+                                      String _name_299 = firstArgument_28.getName();
+                                      _builder.append(_name_299, "\t");
+                                      _builder.append("_");
+                                      String _name_300 = secondArgument_28.getName();
+                                      _builder.append(_name_300, "\t");
+                                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                      String _name_301 = firstArgument_28.getName();
+                                      _builder.append(_name_301, "\t");
+                                      _builder.append("\' and c.to.name=\'");
+                                      String _name_302 = secondArgument_28.getName();
+                                      _builder.append(_name_302, "\t");
+                                      _builder.append("\')");
+                                      _builder.newLineIfNotEmpty();
+                                      _builder.append("\t");
+                                      _builder.newLine();
+                                    }
                                   }
                                 }
                               }
                             }
-                          }
-                          {
-                            DSLPlanner _planner_3 = dslRuleKnowledge.getPlanner();
-                            boolean _tripleNotEquals_30 = (_planner_3 != null);
-                            if (_tripleNotEquals_30) {
-                              _builder.append("\t");
-                              DSLKnowledge firstArgument_30 = dslRuleKnowledge.getKnowledge();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              DSLPlanner secondArgument_30 = dslRuleKnowledge.getPlanner();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_18 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
-                              _builder.newLineIfNotEmpty();
-                              {
-                                boolean _equals_60 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
-                                if (_equals_60) {
-                                  {
-                                    boolean _isEmpty_18 = dslDomain_18.isEmpty();
-                                    boolean _not_18 = (!_isEmpty_18);
-                                    if (_not_18) {
-                                      _builder.append("\t");
-                                      boolean add_18 = this.lDomainKnowledgePlanner.add(dslRuleKnowledge.getPlanner());
-                                      _builder.newLineIfNotEmpty();
+                            {
+                              DSLAnalyzer _analyzer_3 = dslRuleKnowledge.getAnalyzer();
+                              boolean _tripleNotEquals_29 = (_analyzer_3 != null);
+                              if (_tripleNotEquals_29) {
+                                _builder.append("\t");
+                                DSLKnowledge firstArgument_29 = dslRuleKnowledge.getKnowledge();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                DSLAnalyzer secondArgument_29 = dslRuleKnowledge.getAnalyzer();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_17 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.newLineIfNotEmpty();
+                                {
+                                  boolean _equals_58 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
+                                  if (_equals_58) {
+                                    {
+                                      boolean _isEmpty_17 = dslDomain_17.isEmpty();
+                                      boolean _not_17 = (!_isEmpty_17);
+                                      if (_not_17) {
+                                        _builder.append("\t");
+                                        boolean add_17 = this.lDomainKnowledgeAnalyzer.add(dslRuleKnowledge.getAnalyzer());
+                                        _builder.newLineIfNotEmpty();
+                                      }
                                     }
-                                  }
-                                  _builder.append("\t");
-                                  _builder.append("context StructureModel");
-                                  _builder.newLine();
-                                  _builder.append("\t");
-                                  _builder.append("inv access_");
-                                  String _name_311 = firstArgument_30.getName();
-                                  _builder.append(_name_311, "\t");
-                                  _builder.append("_");
-                                  String _name_312 = secondArgument_30.getName();
-                                  _builder.append(_name_312, "\t");
-                                  _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                  String _name_313 = firstArgument_30.getName();
-                                  _builder.append(_name_313, "\t");
-                                  _builder.append("\' and c.to.name=\'");
-                                  String _name_314 = secondArgument_30.getName();
-                                  _builder.append(_name_314, "\t");
-                                  _builder.append("\') ");
-                                  _builder.newLineIfNotEmpty();
-                                  _builder.append("\t");
-                                  _builder.newLine();
-                                } else {
-                                  boolean _equals_61 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
-                                  if (_equals_61) {
                                     _builder.append("\t");
                                     _builder.append("context StructureModel");
                                     _builder.newLine();
                                     _builder.append("\t");
-                                    _builder.append("inv not_access_");
-                                    String _name_315 = firstArgument_30.getName();
-                                    _builder.append(_name_315, "\t");
+                                    _builder.append("inv access_");
+                                    String _name_303 = firstArgument_29.getName();
+                                    _builder.append(_name_303, "\t");
                                     _builder.append("_");
-                                    String _name_316 = secondArgument_30.getName();
-                                    _builder.append(_name_316, "\t");
-                                    _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                    String _name_317 = firstArgument_30.getName();
-                                    _builder.append(_name_317, "\t");
+                                    String _name_304 = secondArgument_29.getName();
+                                    _builder.append(_name_304, "\t");
+                                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                    String _name_305 = firstArgument_29.getName();
+                                    _builder.append(_name_305, "\t");
                                     _builder.append("\' and c.to.name=\'");
-                                    String _name_318 = secondArgument_30.getName();
-                                    _builder.append(_name_318, "\t");
-                                    _builder.append("\')");
+                                    String _name_306 = secondArgument_29.getName();
+                                    _builder.append(_name_306, "\t");
+                                    _builder.append("\') ");
                                     _builder.newLineIfNotEmpty();
                                     _builder.append("\t");
                                     _builder.newLine();
+                                  } else {
+                                    boolean _equals_59 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
+                                    if (_equals_59) {
+                                      _builder.append("\t");
+                                      _builder.append("context StructureModel");
+                                      _builder.newLine();
+                                      _builder.append("\t");
+                                      _builder.append("inv not_access_");
+                                      String _name_307 = firstArgument_29.getName();
+                                      _builder.append(_name_307, "\t");
+                                      _builder.append("_");
+                                      String _name_308 = secondArgument_29.getName();
+                                      _builder.append(_name_308, "\t");
+                                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                      String _name_309 = firstArgument_29.getName();
+                                      _builder.append(_name_309, "\t");
+                                      _builder.append("\' and c.to.name=\'");
+                                      String _name_310 = secondArgument_29.getName();
+                                      _builder.append(_name_310, "\t");
+                                      _builder.append("\')");
+                                      _builder.newLineIfNotEmpty();
+                                      _builder.append("\t");
+                                      _builder.newLine();
+                                    }
                                   }
                                 }
                               }
                             }
-                          }
-                          {
-                            DSLExecutor _executor_3 = dslRuleKnowledge.getExecutor();
-                            boolean _tripleNotEquals_31 = (_executor_3 != null);
-                            if (_tripleNotEquals_31) {
-                              _builder.append("\t");
-                              DSLKnowledge firstArgument_31 = dslRuleKnowledge.getKnowledge();
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              List<DSLDomainRule> dslDomain_19 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
-                              _builder.newLineIfNotEmpty();
-                              _builder.append("\t");
-                              DSLExecutor secondArgument_31 = dslRuleKnowledge.getExecutor();
-                              _builder.newLineIfNotEmpty();
-                              {
-                                boolean _equals_62 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
-                                if (_equals_62) {
-                                  {
-                                    boolean _isEmpty_19 = dslDomain_19.isEmpty();
-                                    boolean _not_19 = (!_isEmpty_19);
-                                    if (_not_19) {
-                                      _builder.append("\t");
-                                      boolean add_19 = this.lDomainKnowledgeExecutor.add(dslRuleKnowledge.getExecutor());
-                                      _builder.newLineIfNotEmpty();
+                            {
+                              DSLPlanner _planner_3 = dslRuleKnowledge.getPlanner();
+                              boolean _tripleNotEquals_30 = (_planner_3 != null);
+                              if (_tripleNotEquals_30) {
+                                _builder.append("\t");
+                                DSLKnowledge firstArgument_30 = dslRuleKnowledge.getKnowledge();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                DSLPlanner secondArgument_30 = dslRuleKnowledge.getPlanner();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_18 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.newLineIfNotEmpty();
+                                {
+                                  boolean _equals_60 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
+                                  if (_equals_60) {
+                                    {
+                                      boolean _isEmpty_18 = dslDomain_18.isEmpty();
+                                      boolean _not_18 = (!_isEmpty_18);
+                                      if (_not_18) {
+                                        _builder.append("\t");
+                                        boolean add_18 = this.lDomainKnowledgePlanner.add(dslRuleKnowledge.getPlanner());
+                                        _builder.newLineIfNotEmpty();
+                                      }
                                     }
-                                  }
-                                  _builder.append("\t");
-                                  _builder.append("context StructureModel");
-                                  _builder.newLine();
-                                  _builder.append("\t");
-                                  _builder.append("inv access_");
-                                  String _name_319 = firstArgument_31.getName();
-                                  _builder.append(_name_319, "\t");
-                                  _builder.append("_");
-                                  String _name_320 = secondArgument_31.getName();
-                                  _builder.append(_name_320, "\t");
-                                  _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                  String _name_321 = firstArgument_31.getName();
-                                  _builder.append(_name_321, "\t");
-                                  _builder.append("\' and c.to.name=\'");
-                                  String _name_322 = secondArgument_31.getName();
-                                  _builder.append(_name_322, "\t");
-                                  _builder.append("\') ");
-                                  _builder.newLineIfNotEmpty();
-                                  _builder.append("\t");
-                                  _builder.newLine();
-                                } else {
-                                  boolean _equals_63 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
-                                  if (_equals_63) {
                                     _builder.append("\t");
                                     _builder.append("context StructureModel");
                                     _builder.newLine();
                                     _builder.append("\t");
-                                    _builder.append("inv not_access_");
-                                    String _name_323 = firstArgument_31.getName();
-                                    _builder.append(_name_323, "\t");
+                                    _builder.append("inv access_");
+                                    String _name_311 = firstArgument_30.getName();
+                                    _builder.append(_name_311, "\t");
                                     _builder.append("_");
-                                    String _name_324 = secondArgument_31.getName();
-                                    _builder.append(_name_324, "\t");
-                                    _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                                    String _name_325 = firstArgument_31.getName();
-                                    _builder.append(_name_325, "\t");
+                                    String _name_312 = secondArgument_30.getName();
+                                    _builder.append(_name_312, "\t");
+                                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                    String _name_313 = firstArgument_30.getName();
+                                    _builder.append(_name_313, "\t");
                                     _builder.append("\' and c.to.name=\'");
-                                    String _name_326 = secondArgument_31.getName();
-                                    _builder.append(_name_326, "\t");
-                                    _builder.append("\')");
+                                    String _name_314 = secondArgument_30.getName();
+                                    _builder.append(_name_314, "\t");
+                                    _builder.append("\') ");
                                     _builder.newLineIfNotEmpty();
                                     _builder.append("\t");
                                     _builder.newLine();
+                                  } else {
+                                    boolean _equals_61 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
+                                    if (_equals_61) {
+                                      _builder.append("\t");
+                                      _builder.append("context StructureModel");
+                                      _builder.newLine();
+                                      _builder.append("\t");
+                                      _builder.append("inv not_access_");
+                                      String _name_315 = firstArgument_30.getName();
+                                      _builder.append(_name_315, "\t");
+                                      _builder.append("_");
+                                      String _name_316 = secondArgument_30.getName();
+                                      _builder.append(_name_316, "\t");
+                                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                      String _name_317 = firstArgument_30.getName();
+                                      _builder.append(_name_317, "\t");
+                                      _builder.append("\' and c.to.name=\'");
+                                      String _name_318 = secondArgument_30.getName();
+                                      _builder.append(_name_318, "\t");
+                                      _builder.append("\')");
+                                      _builder.newLineIfNotEmpty();
+                                      _builder.append("\t");
+                                      _builder.newLine();
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            {
+                              DSLExecutor _executor_3 = dslRuleKnowledge.getExecutor();
+                              boolean _tripleNotEquals_31 = (_executor_3 != null);
+                              if (_tripleNotEquals_31) {
+                                _builder.append("\t");
+                                DSLKnowledge firstArgument_31 = dslRuleKnowledge.getKnowledge();
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                List<DSLDomainRule> dslDomain_19 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleKnowledge.getKnowledge().eContainer().eContents(), DSLDomainRule.class));
+                                _builder.newLineIfNotEmpty();
+                                _builder.append("\t");
+                                DSLExecutor secondArgument_31 = dslRuleKnowledge.getExecutor();
+                                _builder.newLineIfNotEmpty();
+                                {
+                                  boolean _equals_62 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-use");
+                                  if (_equals_62) {
+                                    {
+                                      boolean _isEmpty_19 = dslDomain_19.isEmpty();
+                                      boolean _not_19 = (!_isEmpty_19);
+                                      if (_not_19) {
+                                        _builder.append("\t");
+                                        boolean add_19 = this.lDomainKnowledgeExecutor.add(dslRuleKnowledge.getExecutor());
+                                        _builder.newLineIfNotEmpty();
+                                      }
+                                    }
+                                    _builder.append("\t");
+                                    _builder.append("context StructureModel");
+                                    _builder.newLine();
+                                    _builder.append("\t");
+                                    _builder.append("inv access_");
+                                    String _name_319 = firstArgument_31.getName();
+                                    _builder.append(_name_319, "\t");
+                                    _builder.append("_");
+                                    String _name_320 = secondArgument_31.getName();
+                                    _builder.append(_name_320, "\t");
+                                    _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                    String _name_321 = firstArgument_31.getName();
+                                    _builder.append(_name_321, "\t");
+                                    _builder.append("\' and c.to.name=\'");
+                                    String _name_322 = secondArgument_31.getName();
+                                    _builder.append(_name_322, "\t");
+                                    _builder.append("\') ");
+                                    _builder.newLineIfNotEmpty();
+                                    _builder.append("\t");
+                                    _builder.newLine();
+                                  } else {
+                                    boolean _equals_63 = ((DSLRuleKnowledge)dslRule).getAccess().equals("must-not-use");
+                                    if (_equals_63) {
+                                      _builder.append("\t");
+                                      _builder.append("context StructureModel");
+                                      _builder.newLine();
+                                      _builder.append("\t");
+                                      _builder.append("inv not_access_");
+                                      String _name_323 = firstArgument_31.getName();
+                                      _builder.append(_name_323, "\t");
+                                      _builder.append("_");
+                                      String _name_324 = secondArgument_31.getName();
+                                      _builder.append(_name_324, "\t");
+                                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                                      String _name_325 = firstArgument_31.getName();
+                                      _builder.append(_name_325, "\t");
+                                      _builder.append("\' and c.to.name=\'");
+                                      String _name_326 = secondArgument_31.getName();
+                                      _builder.append(_name_326, "\t");
+                                      _builder.append("\')");
+                                      _builder.newLineIfNotEmpty();
+                                      _builder.append("\t");
+                                      _builder.newLine();
+                                    }
                                   }
                                 }
                               }
@@ -6352,812 +6357,977 @@ public class SasDslGenerator extends AbstractGenerator {
           }
         }
       }
-    }
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("------------------ Domain rules section ----------------");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("--------------------------------------------------------");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    HashSet<DSLPlanner> hSPlanner = new HashSet<DSLPlanner>(this.lPlanner);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check1 = hSPlanner.removeAll(this.lDomainMonitorPlanner);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLMonitor dslMonitor : this.lMonitor) {
-        {
-          boolean _isEmpty_20 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_20 = (!_isEmpty_20);
-          if (_not_20) {
-            {
-              for(final DSLPlanner dslPlanner : hSPlanner) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_327 = dslMonitor.getName();
-                _builder.append(_name_327, "\t");
-                _builder.append("_");
-                String _name_328 = dslPlanner.getName();
-                _builder.append(_name_328, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_329 = dslMonitor.getName();
-                _builder.append(_name_329, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_330 = dslPlanner.getName();
-                _builder.append(_name_330, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("------------------ Domain rules section ----------------");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("--------------------------------------------------------");
+      _builder.newLine();
+      _builder.append("\t");
+      String _databaseUrl = MainView.getDatabaseUrl();
+      final QueryClass queryClass = new QueryClass(_databaseUrl);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      HashSet<DSLPlanner> hSPlanner = new HashSet<DSLPlanner>(this.lPlanner);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check1 = hSPlanner.removeAll(this.lDomainMonitorPlanner);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLMonitor dslMonitor : this.lMonitor) {
+          {
+            boolean _isEmpty_20 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_20 = (!_isEmpty_20);
+            if (_not_20) {
+              _builder.append("\t");
+              final String rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8603, "Planner");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_64 = rule.equals("true");
+                if (_equals_64) {
+                  {
+                    for(final DSLPlanner dslPlanner : hSPlanner) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_327 = dslMonitor.getName();
+                      _builder.append(_name_327, "\t");
+                      _builder.append("_");
+                      String _name_328 = dslPlanner.getName();
+                      _builder.append(_name_328, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_329 = dslMonitor.getName();
+                      _builder.append(_name_329, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_330 = dslPlanner.getName();
+                      _builder.append(_name_330, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLExecutor> hsExecutor = new HashSet<DSLExecutor>(this.lExecutor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check2 = hsExecutor.removeAll(this.lDomainMonitorExecutor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLMonitor dslMonitor_1 : this.lMonitor) {
-        {
-          boolean _isEmpty_21 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_21 = (!_isEmpty_21);
-          if (_not_21) {
-            {
-              for(final DSLExecutor dslExecutor : hsExecutor) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_331 = dslMonitor_1.getName();
-                _builder.append(_name_331, "\t");
-                _builder.append("_");
-                String _name_332 = dslExecutor.getName();
-                _builder.append(_name_332, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_333 = dslMonitor_1.getName();
-                _builder.append(_name_333, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_334 = dslExecutor.getName();
-                _builder.append(_name_334, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLExecutor> hsExecutor = new HashSet<DSLExecutor>(this.lExecutor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check2 = hsExecutor.removeAll(this.lDomainMonitorExecutor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLMonitor dslMonitor_1 : this.lMonitor) {
+          {
+            boolean _isEmpty_21 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_21 = (!_isEmpty_21);
+            if (_not_21) {
+              _builder.append("\t");
+              final String rule_1 = queryClass.getRuleIsActiveForGeneration("Monitor", 8603, "Executor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_65 = rule_1.equals("true");
+                if (_equals_65) {
+                  {
+                    for(final DSLExecutor dslExecutor : hsExecutor) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_331 = dslMonitor_1.getName();
+                      _builder.append(_name_331, "\t");
+                      _builder.append("_");
+                      String _name_332 = dslExecutor.getName();
+                      _builder.append(_name_332, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_333 = dslMonitor_1.getName();
+                      _builder.append(_name_333, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_334 = dslExecutor.getName();
+                      _builder.append(_name_334, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLMonitor> hsMonitor = new HashSet<DSLMonitor>(this.lMonitor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check3 = hsMonitor.removeAll(this.lDomainAnalyzerMonitor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLAnalyzer dslAnalyzer : this.lAnalyzer) {
-        {
-          boolean _isEmpty_22 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_22 = (!_isEmpty_22);
-          if (_not_22) {
-            {
-              for(final DSLMonitor dslMonitor_2 : hsMonitor) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_335 = dslAnalyzer.getName();
-                _builder.append(_name_335, "\t");
-                _builder.append("_");
-                String _name_336 = dslMonitor_2.getName();
-                _builder.append(_name_336, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_337 = dslAnalyzer.getName();
-                _builder.append(_name_337, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_338 = dslMonitor_2.getName();
-                _builder.append(_name_338, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLMonitor> hsMonitor = new HashSet<DSLMonitor>(this.lMonitor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check3 = hsMonitor.removeAll(this.lDomainAnalyzerMonitor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLAnalyzer dslAnalyzer : this.lAnalyzer) {
+          {
+            boolean _isEmpty_22 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_22 = (!_isEmpty_22);
+            if (_not_22) {
+              _builder.append("\t");
+              final String rule_2 = queryClass.getRuleIsActiveForGeneration("Analyzer", 8603, "Monitor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_66 = rule_2.equals("true");
+                if (_equals_66) {
+                  {
+                    for(final DSLMonitor dslMonitor_2 : hsMonitor) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_335 = dslAnalyzer.getName();
+                      _builder.append(_name_335, "\t");
+                      _builder.append("_");
+                      String _name_336 = dslMonitor_2.getName();
+                      _builder.append(_name_336, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_337 = dslAnalyzer.getName();
+                      _builder.append(_name_337, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_338 = dslMonitor_2.getName();
+                      _builder.append(_name_338, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLExecutor> hsExecutor1 = new HashSet<DSLExecutor>(this.lExecutor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check4 = hsExecutor1.removeAll(this.lDomainAnalyzerExecutor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLAnalyzer dslAnalyzer_1 : this.lAnalyzer) {
-        {
-          boolean _isEmpty_23 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_23 = (!_isEmpty_23);
-          if (_not_23) {
-            {
-              for(final DSLExecutor dslExecutor_1 : hsExecutor1) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_339 = dslAnalyzer_1.getName();
-                _builder.append(_name_339, "\t");
-                _builder.append("_");
-                String _name_340 = dslExecutor_1.getName();
-                _builder.append(_name_340, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_341 = dslAnalyzer_1.getName();
-                _builder.append(_name_341, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_342 = dslExecutor_1.getName();
-                _builder.append(_name_342, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLExecutor> hsExecutor1 = new HashSet<DSLExecutor>(this.lExecutor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check4 = hsExecutor1.removeAll(this.lDomainAnalyzerExecutor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLAnalyzer dslAnalyzer_1 : this.lAnalyzer) {
+          {
+            boolean _isEmpty_23 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_23 = (!_isEmpty_23);
+            if (_not_23) {
+              _builder.append("\t");
+              final String rule_3 = queryClass.getRuleIsActiveForGeneration("Analyzer", 8603, "Executor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_67 = rule_3.equals("true");
+                if (_equals_67) {
+                  {
+                    for(final DSLExecutor dslExecutor_1 : hsExecutor1) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_339 = dslAnalyzer_1.getName();
+                      _builder.append(_name_339, "\t");
+                      _builder.append("_");
+                      String _name_340 = dslExecutor_1.getName();
+                      _builder.append(_name_340, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_341 = dslAnalyzer_1.getName();
+                      _builder.append(_name_341, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_342 = dslExecutor_1.getName();
+                      _builder.append(_name_342, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLMonitor> hsMonitor1 = new HashSet<DSLMonitor>(this.lMonitor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check5 = hsMonitor1.removeAll(this.lDomainPlannerMonitor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLPlanner dslPlanner_1 : this.lPlanner) {
-        {
-          boolean _isEmpty_24 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_24 = (!_isEmpty_24);
-          if (_not_24) {
-            {
-              for(final DSLMonitor dslMonitor_3 : hsMonitor1) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_343 = dslPlanner_1.getName();
-                _builder.append(_name_343, "\t");
-                _builder.append("_");
-                String _name_344 = dslMonitor_3.getName();
-                _builder.append(_name_344, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_345 = dslPlanner_1.getName();
-                _builder.append(_name_345, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_346 = dslMonitor_3.getName();
-                _builder.append(_name_346, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLMonitor> hsMonitor1 = new HashSet<DSLMonitor>(this.lMonitor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check5 = hsMonitor1.removeAll(this.lDomainPlannerMonitor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLPlanner dslPlanner_1 : this.lPlanner) {
+          {
+            boolean _isEmpty_24 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_24 = (!_isEmpty_24);
+            if (_not_24) {
+              _builder.append("\t");
+              final String rule_4 = queryClass.getRuleIsActiveForGeneration("Planner", 8603, "Monitor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_68 = rule_4.equals("true");
+                if (_equals_68) {
+                  {
+                    for(final DSLMonitor dslMonitor_3 : hsMonitor1) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_343 = dslPlanner_1.getName();
+                      _builder.append(_name_343, "\t");
+                      _builder.append("_");
+                      String _name_344 = dslMonitor_3.getName();
+                      _builder.append(_name_344, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_345 = dslPlanner_1.getName();
+                      _builder.append(_name_345, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_346 = dslMonitor_3.getName();
+                      _builder.append(_name_346, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLAnalyzer> hsAnalyzer = new HashSet<DSLAnalyzer>(this.lAnalyzer);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check6 = hsAnalyzer.removeAll(this.lDomainPlannerAnalyzer);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLPlanner dslPlanner_2 : this.lPlanner) {
-        {
-          boolean _isEmpty_25 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_25 = (!_isEmpty_25);
-          if (_not_25) {
-            {
-              for(final DSLAnalyzer dslANalyzer : hsAnalyzer) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_347 = dslPlanner_2.getName();
-                _builder.append(_name_347, "\t");
-                _builder.append("_");
-                String _name_348 = dslANalyzer.getName();
-                _builder.append(_name_348, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_349 = dslPlanner_2.getName();
-                _builder.append(_name_349, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_350 = dslANalyzer.getName();
-                _builder.append(_name_350, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLAnalyzer> hsAnalyzer = new HashSet<DSLAnalyzer>(this.lAnalyzer);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check6 = hsAnalyzer.removeAll(this.lDomainPlannerAnalyzer);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLPlanner dslPlanner_2 : this.lPlanner) {
+          {
+            boolean _isEmpty_25 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_25 = (!_isEmpty_25);
+            if (_not_25) {
+              _builder.append("\t");
+              final String rule_5 = queryClass.getRuleIsActiveForGeneration("Planner", 8603, "Analyzer");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_69 = rule_5.equals("true");
+                if (_equals_69) {
+                  {
+                    for(final DSLAnalyzer dslANalyzer : hsAnalyzer) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_347 = dslPlanner_2.getName();
+                      _builder.append(_name_347, "\t");
+                      _builder.append("_");
+                      String _name_348 = dslANalyzer.getName();
+                      _builder.append(_name_348, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_349 = dslPlanner_2.getName();
+                      _builder.append(_name_349, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_350 = dslANalyzer.getName();
+                      _builder.append(_name_350, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLMonitor> hsMonitor2 = new HashSet<DSLMonitor>(this.lMonitor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check7 = hsMonitor2.removeAll(this.lDomainExecutorMonitor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLExecutor dslExecutor_2 : this.lExecutor) {
-        {
-          boolean _isEmpty_26 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_26 = (!_isEmpty_26);
-          if (_not_26) {
-            {
-              for(final DSLMonitor dslMonitor_4 : hsMonitor2) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_351 = dslExecutor_2.getName();
-                _builder.append(_name_351, "\t");
-                _builder.append("_");
-                String _name_352 = dslMonitor_4.getName();
-                _builder.append(_name_352, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_353 = dslExecutor_2.getName();
-                _builder.append(_name_353, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_354 = dslMonitor_4.getName();
-                _builder.append(_name_354, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLMonitor> hsMonitor2 = new HashSet<DSLMonitor>(this.lMonitor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check7 = hsMonitor2.removeAll(this.lDomainExecutorMonitor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLExecutor dslExecutor_2 : this.lExecutor) {
+          {
+            boolean _isEmpty_26 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_26 = (!_isEmpty_26);
+            if (_not_26) {
+              _builder.append("\t");
+              final String rule_6 = queryClass.getRuleIsActiveForGeneration("Executor", 8603, "Monitor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_70 = rule_6.equals("true");
+                if (_equals_70) {
+                  {
+                    for(final DSLMonitor dslMonitor_4 : hsMonitor2) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_351 = dslExecutor_2.getName();
+                      _builder.append(_name_351, "\t");
+                      _builder.append("_");
+                      String _name_352 = dslMonitor_4.getName();
+                      _builder.append(_name_352, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_353 = dslExecutor_2.getName();
+                      _builder.append(_name_353, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_354 = dslMonitor_4.getName();
+                      _builder.append(_name_354, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLAnalyzer> hsAnalyzer1 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check8 = hsAnalyzer1.removeAll(this.lDomainExecutorAnalyzer);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLExecutor dslExecutor_3 : this.lExecutor) {
-        {
-          boolean _isEmpty_27 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_3.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_27 = (!_isEmpty_27);
-          if (_not_27) {
-            {
-              for(final DSLAnalyzer dslAnalyzer_2 : hsAnalyzer1) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_355 = dslExecutor_3.getName();
-                _builder.append(_name_355, "\t");
-                _builder.append("_");
-                String _name_356 = dslAnalyzer_2.getName();
-                _builder.append(_name_356, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_357 = dslExecutor_3.getName();
-                _builder.append(_name_357, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_358 = dslAnalyzer_2.getName();
-                _builder.append(_name_358, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLAnalyzer> hsAnalyzer1 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check8 = hsAnalyzer1.removeAll(this.lDomainExecutorAnalyzer);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLExecutor dslExecutor_3 : this.lExecutor) {
+          {
+            boolean _isEmpty_27 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_3.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_27 = (!_isEmpty_27);
+            if (_not_27) {
+              _builder.append("\t");
+              final String rule_7 = queryClass.getRuleIsActiveForGeneration("Executor", 8603, "Analyzer");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_71 = rule_7.equals("true");
+                if (_equals_71) {
+                  {
+                    for(final DSLAnalyzer dslAnalyzer_2 : hsAnalyzer1) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_355 = dslExecutor_3.getName();
+                      _builder.append(_name_355, "\t");
+                      _builder.append("_");
+                      String _name_356 = dslAnalyzer_2.getName();
+                      _builder.append(_name_356, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_357 = dslExecutor_3.getName();
+                      _builder.append(_name_357, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_358 = dslAnalyzer_2.getName();
+                      _builder.append(_name_358, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLPlanner> hSPlanner1 = new HashSet<DSLPlanner>(this.lPlanner);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check9 = hSPlanner1.removeAll(this.lDomainExecutorPlanner);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLExecutor dslExecutor_4 : this.lExecutor) {
-        {
-          boolean _isEmpty_28 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_4.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_28 = (!_isEmpty_28);
-          if (_not_28) {
-            {
-              for(final DSLPlanner dslPlanner_3 : hSPlanner1) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_359 = dslExecutor_4.getName();
-                _builder.append(_name_359, "\t");
-                _builder.append("_");
-                String _name_360 = dslPlanner_3.getName();
-                _builder.append(_name_360, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_361 = dslExecutor_4.getName();
-                _builder.append(_name_361, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_362 = dslPlanner_3.getName();
-                _builder.append(_name_362, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLPlanner> hSPlanner1 = new HashSet<DSLPlanner>(this.lPlanner);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check9 = hSPlanner1.removeAll(this.lDomainExecutorPlanner);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLExecutor dslExecutor_4 : this.lExecutor) {
+          {
+            boolean _isEmpty_28 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_4.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_28 = (!_isEmpty_28);
+            if (_not_28) {
+              _builder.append("\t");
+              final String rule_8 = queryClass.getRuleIsActiveForGeneration("Executor", 8603, "Planner");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_72 = rule_8.equals("true");
+                if (_equals_72) {
+                  {
+                    for(final DSLPlanner dslPlanner_3 : hSPlanner1) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_359 = dslExecutor_4.getName();
+                      _builder.append(_name_359, "\t");
+                      _builder.append("_");
+                      String _name_360 = dslPlanner_3.getName();
+                      _builder.append(_name_360, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_361 = dslExecutor_4.getName();
+                      _builder.append(_name_361, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_362 = dslPlanner_3.getName();
+                      _builder.append(_name_362, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLMonitor> hsMonitor3 = new HashSet<DSLMonitor>(this.lMonitor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check10 = hsMonitor3.removeAll(this.lDomainKnowledgeMonitor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLKnowledge dslKnowledge : this.lKnowledge) {
-        {
-          boolean _isEmpty_29 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_29 = (!_isEmpty_29);
-          if (_not_29) {
-            {
-              for(final DSLMonitor dslMonitor_5 : hsMonitor3) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_363 = dslKnowledge.getName();
-                _builder.append(_name_363, "\t");
-                _builder.append("_");
-                String _name_364 = dslMonitor_5.getName();
-                _builder.append(_name_364, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_365 = dslKnowledge.getName();
-                _builder.append(_name_365, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_366 = dslMonitor_5.getName();
-                _builder.append(_name_366, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLMonitor> hsMonitor3 = new HashSet<DSLMonitor>(this.lMonitor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check10 = hsMonitor3.removeAll(this.lDomainKnowledgeMonitor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLKnowledge dslKnowledge : this.lKnowledge) {
+          {
+            boolean _isEmpty_29 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_29 = (!_isEmpty_29);
+            if (_not_29) {
+              _builder.append("\t");
+              final String rule_9 = queryClass.getRuleIsActiveForGeneration("Knowledge", 8603, "Monitor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_73 = rule_9.equals("true");
+                if (_equals_73) {
+                  {
+                    for(final DSLMonitor dslMonitor_5 : hsMonitor3) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_363 = dslKnowledge.getName();
+                      _builder.append(_name_363, "\t");
+                      _builder.append("_");
+                      String _name_364 = dslMonitor_5.getName();
+                      _builder.append(_name_364, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_365 = dslKnowledge.getName();
+                      _builder.append(_name_365, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_366 = dslMonitor_5.getName();
+                      _builder.append(_name_366, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLAnalyzer> hsAnalyzer2 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check11 = hsAnalyzer2.removeAll(this.lDomainKnowledgeAnalyzer);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLKnowledge dslKnowledge_1 : this.lKnowledge) {
-        {
-          boolean _isEmpty_30 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_30 = (!_isEmpty_30);
-          if (_not_30) {
-            {
-              for(final DSLAnalyzer dslAnalyzer_3 : hsAnalyzer2) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_367 = dslKnowledge_1.getName();
-                _builder.append(_name_367, "\t");
-                _builder.append("_");
-                String _name_368 = dslAnalyzer_3.getName();
-                _builder.append(_name_368, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_369 = dslKnowledge_1.getName();
-                _builder.append(_name_369, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_370 = dslAnalyzer_3.getName();
-                _builder.append(_name_370, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLAnalyzer> hsAnalyzer2 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check11 = hsAnalyzer2.removeAll(this.lDomainKnowledgeAnalyzer);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLKnowledge dslKnowledge_1 : this.lKnowledge) {
+          {
+            boolean _isEmpty_30 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_1.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_30 = (!_isEmpty_30);
+            if (_not_30) {
+              _builder.append("\t");
+              final String rule_10 = queryClass.getRuleIsActiveForGeneration("Knowledge", 8603, "Analyzer");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_74 = rule_10.equals("true");
+                if (_equals_74) {
+                  {
+                    for(final DSLAnalyzer dslAnalyzer_3 : hsAnalyzer2) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_367 = dslKnowledge_1.getName();
+                      _builder.append(_name_367, "\t");
+                      _builder.append("_");
+                      String _name_368 = dslAnalyzer_3.getName();
+                      _builder.append(_name_368, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_369 = dslKnowledge_1.getName();
+                      _builder.append(_name_369, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_370 = dslAnalyzer_3.getName();
+                      _builder.append(_name_370, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLPlanner> hSPlanner3 = new HashSet<DSLPlanner>(this.lPlanner);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check12 = hSPlanner3.removeAll(this.lDomainKnowledgePlanner);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLKnowledge dslKnowledge_2 : this.lKnowledge) {
-        {
-          boolean _isEmpty_31 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_31 = (!_isEmpty_31);
-          if (_not_31) {
-            {
-              for(final DSLPlanner dslPlanner_4 : hSPlanner3) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_371 = dslKnowledge_2.getName();
-                _builder.append(_name_371, "\t");
-                _builder.append("_");
-                String _name_372 = dslPlanner_4.getName();
-                _builder.append(_name_372, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_373 = dslKnowledge_2.getName();
-                _builder.append(_name_373, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_374 = dslPlanner_4.getName();
-                _builder.append(_name_374, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLPlanner> hSPlanner3 = new HashSet<DSLPlanner>(this.lPlanner);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check12 = hSPlanner3.removeAll(this.lDomainKnowledgePlanner);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLKnowledge dslKnowledge_2 : this.lKnowledge) {
+          {
+            boolean _isEmpty_31 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_2.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_31 = (!_isEmpty_31);
+            if (_not_31) {
+              _builder.append("\t");
+              final String rule_11 = queryClass.getRuleIsActiveForGeneration("Knowledge", 8603, "Planner");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_75 = rule_11.equals("true");
+                if (_equals_75) {
+                  {
+                    for(final DSLPlanner dslPlanner_4 : hSPlanner3) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_371 = dslKnowledge_2.getName();
+                      _builder.append(_name_371, "\t");
+                      _builder.append("_");
+                      String _name_372 = dslPlanner_4.getName();
+                      _builder.append(_name_372, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_373 = dslKnowledge_2.getName();
+                      _builder.append(_name_373, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_374 = dslPlanner_4.getName();
+                      _builder.append(_name_374, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLExecutor> hsExecutor2 = new HashSet<DSLExecutor>(this.lExecutor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check13 = hsExecutor2.removeAll(this.lDomainKnowledgeExecutor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLKnowledge dslKnowledge_3 : this.lKnowledge) {
-        {
-          boolean _isEmpty_32 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_3.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_32 = (!_isEmpty_32);
-          if (_not_32) {
-            {
-              for(final DSLExecutor dslExecutor_5 : hsExecutor2) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_not_access_");
-                String _name_375 = dslKnowledge_3.getName();
-                _builder.append(_name_375, "\t");
-                _builder.append("_");
-                String _name_376 = dslExecutor_5.getName();
-                _builder.append(_name_376, "\t");
-                _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_377 = dslKnowledge_3.getName();
-                _builder.append(_name_377, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_378 = dslExecutor_5.getName();
-                _builder.append(_name_378, "\t");
-                _builder.append("\')");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLExecutor> hsExecutor2 = new HashSet<DSLExecutor>(this.lExecutor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check13 = hsExecutor2.removeAll(this.lDomainKnowledgeExecutor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLKnowledge dslKnowledge_3 : this.lKnowledge) {
+          {
+            boolean _isEmpty_32 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslKnowledge_3.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_32 = (!_isEmpty_32);
+            if (_not_32) {
+              _builder.append("\t");
+              final String rule_12 = queryClass.getRuleIsActiveForGeneration("Knowledge", 8603, "Executor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_76 = rule_12.equals("true");
+                if (_equals_76) {
+                  {
+                    for(final DSLExecutor dslExecutor_5 : hsExecutor2) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_not_access_");
+                      String _name_375 = dslKnowledge_3.getName();
+                      _builder.append(_name_375, "\t");
+                      _builder.append("_");
+                      String _name_376 = dslExecutor_5.getName();
+                      _builder.append(_name_376, "\t");
+                      _builder.append(": not AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_377 = dslKnowledge_3.getName();
+                      _builder.append(_name_377, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_378 = dslExecutor_5.getName();
+                      _builder.append(_name_378, "\t");
+                      _builder.append("\')");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLAnalyzer> hsAnalyzer4 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check14 = hsAnalyzer4.removeAll(this.lDomainMonitorAnalyzer);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLMonitor dslMonitor_6 : this.lMonitor) {
-        {
-          boolean _isEmpty_33 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_33 = (!_isEmpty_33);
-          if (_not_33) {
-            {
-              for(final DSLAnalyzer dslAnalyzer_4 : hsAnalyzer4) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_379 = dslMonitor_6.getName();
-                _builder.append(_name_379, "\t");
-                _builder.append("_");
-                String _name_380 = dslAnalyzer_4.getName();
-                _builder.append(_name_380, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_381 = dslMonitor_6.getName();
-                _builder.append(_name_381, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_382 = dslAnalyzer_4.getName();
-                _builder.append(_name_382, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLAnalyzer> hsAnalyzer4 = new HashSet<DSLAnalyzer>(this.lAnalyzer);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check14 = hsAnalyzer4.removeAll(this.lDomainMonitorAnalyzer);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLMonitor dslMonitor_6 : this.lMonitor) {
+          {
+            boolean _isEmpty_33 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_33 = (!_isEmpty_33);
+            if (_not_33) {
+              _builder.append("\t");
+              final String rule_13 = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Analyzer");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_77 = rule_13.equals("true");
+                if (_equals_77) {
+                  {
+                    for(final DSLAnalyzer dslAnalyzer_4 : hsAnalyzer4) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_379 = dslMonitor_6.getName();
+                      _builder.append(_name_379, "\t");
+                      _builder.append("_");
+                      String _name_380 = dslAnalyzer_4.getName();
+                      _builder.append(_name_380, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_381 = dslMonitor_6.getName();
+                      _builder.append(_name_381, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_382 = dslAnalyzer_4.getName();
+                      _builder.append(_name_382, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLPlanner> hsPlanner4 = new HashSet<DSLPlanner>(this.lPlanner);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check15 = hsPlanner4.removeAll(this.lDomainAnalyzerPlanner);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLAnalyzer dslAnalyzer_5 : this.lAnalyzer) {
-        {
-          boolean _isEmpty_34 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_5.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_34 = (!_isEmpty_34);
-          if (_not_34) {
-            {
-              for(final DSLPlanner dslPlanner_5 : hsPlanner4) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_383 = dslAnalyzer_5.getName();
-                _builder.append(_name_383, "\t");
-                _builder.append("_");
-                String _name_384 = dslPlanner_5.getName();
-                _builder.append(_name_384, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_385 = dslAnalyzer_5.getName();
-                _builder.append(_name_385, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_386 = dslPlanner_5.getName();
-                _builder.append(_name_386, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLPlanner> hsPlanner4 = new HashSet<DSLPlanner>(this.lPlanner);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check15 = hsPlanner4.removeAll(this.lDomainAnalyzerPlanner);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLAnalyzer dslAnalyzer_5 : this.lAnalyzer) {
+          {
+            boolean _isEmpty_34 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_5.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_34 = (!_isEmpty_34);
+            if (_not_34) {
+              _builder.append("\t");
+              final String rule_14 = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Planner");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_78 = rule_14.equals("true");
+                if (_equals_78) {
+                  {
+                    for(final DSLPlanner dslPlanner_5 : hsPlanner4) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_383 = dslAnalyzer_5.getName();
+                      _builder.append(_name_383, "\t");
+                      _builder.append("_");
+                      String _name_384 = dslPlanner_5.getName();
+                      _builder.append(_name_384, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_385 = dslAnalyzer_5.getName();
+                      _builder.append(_name_385, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_386 = dslPlanner_5.getName();
+                      _builder.append(_name_386, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLExecutor> hdExecutor4 = new HashSet<DSLExecutor>(this.lExecutor);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check16 = hdExecutor4.removeAll(this.lDomainPlannerExecutor);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLPlanner dslPlanner_6 : this.lPlanner) {
-        {
-          boolean _isEmpty_35 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_35 = (!_isEmpty_35);
-          if (_not_35) {
-            {
-              for(final DSLExecutor dslExecutor_6 : hdExecutor4) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_387 = dslPlanner_6.getName();
-                _builder.append(_name_387, "\t");
-                _builder.append("_");
-                String _name_388 = dslExecutor_6.getName();
-                _builder.append(_name_388, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_389 = dslPlanner_6.getName();
-                _builder.append(_name_389, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_390 = dslExecutor_6.getName();
-                _builder.append(_name_390, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLExecutor> hdExecutor4 = new HashSet<DSLExecutor>(this.lExecutor);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check16 = hdExecutor4.removeAll(this.lDomainPlannerExecutor);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLPlanner dslPlanner_6 : this.lPlanner) {
+          {
+            boolean _isEmpty_35 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_35 = (!_isEmpty_35);
+            if (_not_35) {
+              _builder.append("\t");
+              final String rule_15 = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Executor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_79 = rule_15.equals("true");
+                if (_equals_79) {
+                  {
+                    for(final DSLExecutor dslExecutor_6 : hdExecutor4) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_387 = dslPlanner_6.getName();
+                      _builder.append(_name_387, "\t");
+                      _builder.append("_");
+                      String _name_388 = dslExecutor_6.getName();
+                      _builder.append(_name_388, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_389 = dslPlanner_6.getName();
+                      _builder.append(_name_389, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_390 = dslExecutor_6.getName();
+                      _builder.append(_name_390, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLKnowledge> hsKnowledge3 = new HashSet<DSLKnowledge>(this.lKnowledge);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check17 = hsKnowledge3.removeAll(this.lDomainMonitorKnowledge);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLMonitor dslMonitor_7 : this.lMonitor) {
-        {
-          boolean _isEmpty_36 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_36 = (!_isEmpty_36);
-          if (_not_36) {
-            {
-              for(final DSLKnowledge dslKnowledge_4 : hsKnowledge3) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_391 = dslMonitor_7.getName();
-                _builder.append(_name_391, "\t");
-                _builder.append("_");
-                String _name_392 = dslKnowledge_4.getName();
-                _builder.append(_name_392, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_393 = dslMonitor_7.getName();
-                _builder.append(_name_393, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_394 = dslKnowledge_4.getName();
-                _builder.append(_name_394, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLKnowledge> hsKnowledge3 = new HashSet<DSLKnowledge>(this.lKnowledge);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check17 = hsKnowledge3.removeAll(this.lDomainMonitorKnowledge);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLMonitor dslMonitor_7 : this.lMonitor) {
+          {
+            boolean _isEmpty_36 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslMonitor_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_36 = (!_isEmpty_36);
+            if (_not_36) {
+              _builder.append("\t");
+              final String rule_16 = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Knowledge");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_80 = rule_16.equals("true");
+                if (_equals_80) {
+                  {
+                    for(final DSLKnowledge dslKnowledge_4 : hsKnowledge3) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_391 = dslMonitor_7.getName();
+                      _builder.append(_name_391, "\t");
+                      _builder.append("_");
+                      String _name_392 = dslKnowledge_4.getName();
+                      _builder.append(_name_392, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_393 = dslMonitor_7.getName();
+                      _builder.append(_name_393, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_394 = dslKnowledge_4.getName();
+                      _builder.append(_name_394, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLKnowledge> hsKnowledge4 = new HashSet<DSLKnowledge>(this.lKnowledge);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check18 = hsKnowledge4.removeAll(this.lDomainAnalyzerKnowledge);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLAnalyzer dslAnalyzer_6 : this.lAnalyzer) {
-        {
-          boolean _isEmpty_37 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_37 = (!_isEmpty_37);
-          if (_not_37) {
-            {
-              for(final DSLKnowledge dslKnowledge_5 : hsKnowledge4) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_395 = dslAnalyzer_6.getName();
-                _builder.append(_name_395, "\t");
-                _builder.append("_");
-                String _name_396 = dslKnowledge_5.getName();
-                _builder.append(_name_396, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_397 = dslAnalyzer_6.getName();
-                _builder.append(_name_397, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_398 = dslKnowledge_5.getName();
-                _builder.append(_name_398, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLKnowledge> hsKnowledge4 = new HashSet<DSLKnowledge>(this.lKnowledge);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check18 = hsKnowledge4.removeAll(this.lDomainAnalyzerKnowledge);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLAnalyzer dslAnalyzer_6 : this.lAnalyzer) {
+          {
+            boolean _isEmpty_37 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslAnalyzer_6.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_37 = (!_isEmpty_37);
+            if (_not_37) {
+              _builder.append("\t");
+              final String rule_17 = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Knowledge");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_81 = rule_17.equals("true");
+                if (_equals_81) {
+                  {
+                    for(final DSLKnowledge dslKnowledge_5 : hsKnowledge4) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_395 = dslAnalyzer_6.getName();
+                      _builder.append(_name_395, "\t");
+                      _builder.append("_");
+                      String _name_396 = dslKnowledge_5.getName();
+                      _builder.append(_name_396, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_397 = dslAnalyzer_6.getName();
+                      _builder.append(_name_397, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_398 = dslKnowledge_5.getName();
+                      _builder.append(_name_398, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLKnowledge> hsKnowledge5 = new HashSet<DSLKnowledge>(this.lKnowledge);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check19 = hsKnowledge5.removeAll(this.lDomainPlannerKnowledge);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLPlanner dslPlanner_7 : this.lPlanner) {
-        {
-          boolean _isEmpty_38 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_38 = (!_isEmpty_38);
-          if (_not_38) {
-            {
-              for(final DSLKnowledge dslKnowledge_6 : hsKnowledge5) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_399 = dslPlanner_7.getName();
-                _builder.append(_name_399, "\t");
-                _builder.append("_");
-                String _name_400 = dslKnowledge_6.getName();
-                _builder.append(_name_400, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_401 = dslPlanner_7.getName();
-                _builder.append(_name_401, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_402 = dslKnowledge_6.getName();
-                _builder.append(_name_402, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLKnowledge> hsKnowledge5 = new HashSet<DSLKnowledge>(this.lKnowledge);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check19 = hsKnowledge5.removeAll(this.lDomainPlannerKnowledge);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLPlanner dslPlanner_7 : this.lPlanner) {
+          {
+            boolean _isEmpty_38 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslPlanner_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_38 = (!_isEmpty_38);
+            if (_not_38) {
+              _builder.append("\t");
+              final String rule_18 = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Knowledge");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_82 = rule_18.equals("true");
+                if (_equals_82) {
+                  {
+                    for(final DSLKnowledge dslKnowledge_6 : hsKnowledge5) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_399 = dslPlanner_7.getName();
+                      _builder.append(_name_399, "\t");
+                      _builder.append("_");
+                      String _name_400 = dslKnowledge_6.getName();
+                      _builder.append(_name_400, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_401 = dslPlanner_7.getName();
+                      _builder.append(_name_401, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_402 = dslKnowledge_6.getName();
+                      _builder.append(_name_402, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-    _builder.append("\t");
-    HashSet<DSLKnowledge> hsKnowledge6 = new HashSet<DSLKnowledge>(this.lKnowledge);
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    boolean check20 = hsKnowledge6.removeAll(this.lDomainExecutorKnowledge);
-    _builder.newLineIfNotEmpty();
-    {
-      for(final DSLExecutor dslExecutor_7 : this.lExecutor) {
-        {
-          boolean _isEmpty_39 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
-          boolean _not_39 = (!_isEmpty_39);
-          if (_not_39) {
-            {
-              for(final DSLKnowledge dslKnowledge_7 : hsKnowledge6) {
-                _builder.append("\t");
-                _builder.append("context StructureModel");
-                _builder.newLine();
-                _builder.append("\t");
-                _builder.append("inv domain_access_");
-                String _name_403 = dslExecutor_7.getName();
-                _builder.append(_name_403, "\t");
-                _builder.append("_");
-                String _name_404 = dslKnowledge_7.getName();
-                _builder.append(_name_404, "\t");
-                _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
-                String _name_405 = dslExecutor_7.getName();
-                _builder.append(_name_405, "\t");
-                _builder.append("\' and c.to.name=\'");
-                String _name_406 = dslKnowledge_7.getName();
-                _builder.append(_name_406, "\t");
-                _builder.append("\') ");
-                _builder.newLineIfNotEmpty();
-                _builder.append("\t");
-                _builder.newLine();
+      _builder.append("\t");
+      HashSet<DSLKnowledge> hsKnowledge6 = new HashSet<DSLKnowledge>(this.lKnowledge);
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      boolean check20 = hsKnowledge6.removeAll(this.lDomainExecutorKnowledge);
+      _builder.newLineIfNotEmpty();
+      {
+        for(final DSLExecutor dslExecutor_7 : this.lExecutor) {
+          {
+            boolean _isEmpty_39 = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslExecutor_7.eContainer().eContents(), DSLDomainRule.class)).isEmpty();
+            boolean _not_39 = (!_isEmpty_39);
+            if (_not_39) {
+              _builder.append("\t");
+              final String rule_19 = queryClass.getRuleIsActiveForGeneration("Monitor", 8603, "Executor");
+              _builder.newLineIfNotEmpty();
+              {
+                boolean _equals_83 = rule_19.equals("true");
+                if (_equals_83) {
+                  {
+                    for(final DSLKnowledge dslKnowledge_7 : hsKnowledge6) {
+                      _builder.append("\t");
+                      _builder.append("context StructureModel");
+                      _builder.newLine();
+                      _builder.append("\t");
+                      _builder.append("inv domain_access_");
+                      String _name_403 = dslExecutor_7.getName();
+                      _builder.append(_name_403, "\t");
+                      _builder.append("_");
+                      String _name_404 = dslKnowledge_7.getName();
+                      _builder.append(_name_404, "\t");
+                      _builder.append(": AggregatedRelationship.allInstances()->exists(c| c.from.name=\'");
+                      String _name_405 = dslExecutor_7.getName();
+                      _builder.append(_name_405, "\t");
+                      _builder.append("\' and c.to.name=\'");
+                      String _name_406 = dslKnowledge_7.getName();
+                      _builder.append(_name_406, "\t");
+                      _builder.append("\') ");
+                      _builder.newLineIfNotEmpty();
+                      _builder.append("\t");
+                      _builder.newLine();
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
+      _builder.append("endpackage");
+      _builder.newLine();
+      return _builder;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    _builder.append("endpackage");
-    _builder.newLine();
-    return _builder;
   }
 }

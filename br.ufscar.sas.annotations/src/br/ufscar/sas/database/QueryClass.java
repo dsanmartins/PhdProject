@@ -721,4 +721,19 @@ public class QueryClass {
 		mydb.closeConnection();
 		return lstRule;
 	}
+	
+	public String getRuleIsActiveForGeneration(String abstraction1, int access, String abstraction2) throws Exception {
+		
+		String isActive = "false";
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select switch from domain_rules where abstraction1='" + abstraction1 + "' and unicode(access_type)=" + access + " and abstraction2='" + abstraction2 + "' ;");	
+		while (rs.next()) {
+			isActive = String.valueOf(rs.getObject(1));
+		}
+		mydb.closeConnection();
+		return isActive;
+		
+		
+	}
+	
 }
