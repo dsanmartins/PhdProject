@@ -679,4 +679,12 @@ public class Manager   {
 		default: return "";
 		}
 	}
+
+	public String rtnType(String predicate) throws Exception {
+		
+		QueryProcessor proc = new QueryProcessor(predicate, context);
+		String value = proc.value().toString().replaceAll("\"", "");
+		proc.close();
+		return value;
+	}
 }

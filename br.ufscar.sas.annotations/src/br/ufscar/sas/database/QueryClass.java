@@ -32,7 +32,8 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS variable_annotation (project_name text, class_name text, method_name text, variable_name, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
-		mydb.executeStmt("create table IF NOT EXISTS relation (from_ text, to_ text, modisco_path text, type_relation text) ");
+		mydb.executeStmt("create table IF NOT EXISTS relation (package_from text, class_from text, field_from text, method_from text, variable_from text, "
+				+ "package_to text, class_to text, field_to text, method_to text, variable_to text, modisco_path text, type_relation text) ");
 		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch text)");
 		mydb.executeStmt("CREATE VIEW IF NOT EXISTS annotations(annotation,belongs)  AS " +
 				"    select T.A, T.B from (\n" + 
@@ -46,18 +47,10 @@ public class QueryClass {
 				"        UNION ALL \n" + 
 				"        select annotation A ,belongs B from variable_annotation ) \n" + 
 				" T where T.A <> 'None' and T.B <> 'None' ;");
-		mydb.executeStmt("CREATE VIEW IF NOT EXISTS summary_annotation(name,annotation)  AS\n" + 
-				"select name AS name, annotation from package_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') name, annotation from class_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || field_name) name, annotation from field_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name) name, annotation from method_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name || '.' ||variable_name) name, annotation from variable_annotation where annotation <> 'None';");
+		mydb.executeStmt("create table IF NOT EXISTS summary_annotation(package text,class text, field text ,method text,variable text,annotation text) ");	
 		mydb.executeStmt("delete from abstractions"); 
 		mydb.executeStmt("delete from relation"); 
+		mydb.executeStmt("delete from summary_annotation"); 
 		mydb.closeConnection();
 	}
 
@@ -404,12 +397,39 @@ public class QueryClass {
 	public void insertRelations(List<String> relations) throws Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		for (int i=0; i < relations.size(); i++)
-			mydb.executeStmt("insert into relation (from_, to_, modisco_path, type_relation) values "
+		for (int i=0; i < relations.size(); i++) {
+			
+			mydb.executeStmt("insert into relation (package_from, class_from, field_from, method_from, variable_from, " + 
+					" package_to, class_to, field_to, method_to, variable_to, modisco_path, type_relation) values "
 					+ " ('" + relations.get(i).split(Pattern.quote("|"))[0] + "'," +
 					"'" + relations.get(i).split(Pattern.quote("|"))[1] + "'," +
 					"'" + relations.get(i).split(Pattern.quote("|"))[2] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[3] + "');"); 
+					"'" + relations.get(i).split(Pattern.quote("|"))[3] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[4] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[5] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[6] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[7] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[8] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[9] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[10] + "'," +
+					"'" + relations.get(i).split(Pattern.quote("|"))[11] + "');");
+		}
+		mydb.closeConnection();
+	}
+	
+	public void insertSummaryAnnotation(List<String> summary) throws Exception
+	{
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		for (int i=0; i < summary.size(); i++) {
+			
+			mydb.executeStmt("insert into summary_annotation (package, class, field, method, variable, annotation) values" +
+					"('" + summary.get(i).split(Pattern.quote("|"))[0] + "'," +
+				     "'" + summary.get(i).split(Pattern.quote("|"))[1] + "'," +
+					 "'" + summary.get(i).split(Pattern.quote("|"))[2] + "'," +
+					 "'" + summary.get(i).split(Pattern.quote("|"))[3] + "'," +
+					 "'" + summary.get(i).split(Pattern.quote("|"))[4] + "'," +
+					 "'" + summary.get(i).split(Pattern.quote("|"))[5]+ "');");
+		}
 		mydb.closeConnection();
 	}
 
@@ -721,9 +741,9 @@ public class QueryClass {
 		mydb.closeConnection();
 		return lstRule;
 	}
-	
+
 	public String getRuleIsActiveForGeneration(String abstraction1, int access, String abstraction2) throws Exception {
-		
+
 		String isActive = "false";
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select switch from domain_rules where abstraction1='" + abstraction1 + "' and unicode(access_type)=" + access + " and abstraction2='" + abstraction2 + "' ;");	
@@ -732,8 +752,30 @@ public class QueryClass {
 		}
 		mydb.closeConnection();
 		return isActive;
-		
-		
+
+
 	}
+
+	public List<String> getSummaryAnnotation() throws Exception{
+		
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select name AS name, annotation from package_annotation where annotation <> 'None'\n" + 
+				"UNION ALL\n" + 
+				"select REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') name, annotation from class_annotation where annotation <> 'None'\n" + 
+				"UNION ALL\n" + 
+				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || field_name) name, annotation from field_annotation where annotation <> 'None'\n" + 
+				"UNION ALL\n" + 
+				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name) name, annotation from method_annotation where annotation <> 'None'\n" + 
+				"UNION ALL\n" + 
+				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name || '.' ||variable_name) name, annotation from variable_annotation where annotation <> 'None';");		
+
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2));
+		}
+		mydb.closeConnection();
+		return lst;	
+	}
+	
 	
 }

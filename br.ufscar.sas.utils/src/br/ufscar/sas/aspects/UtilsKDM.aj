@@ -52,8 +52,8 @@ public aspect UtilsKDM {
 		try {addAbsTag.updateVariableMethodWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
 		System.out.println("************* END ADD ABSTRACTION CODE ELEMENT *************");
 		System.out.println("************* START EDITING SOURCE REGION *************");
-		SourceRegion sourceRegion = new SourceRegion();
-		sourceRegion.statementsByLine(new File(path));
+		//SourceRegion sourceRegion = new SourceRegion();
+		//sourceRegion.statementsByLine(new File(path));
 		System.out.println("************* END EDITING SOURCE REGION *************");
 		System.out.println("************* GENERATE STEREOTYPE OF SAS *************");
 		GenerateStereotype generateStereotype = new GenerateStereotype();
@@ -70,7 +70,7 @@ public aspect UtilsKDM {
 		generateStructure.annotationFieldClass(new File(path),path);
 		generateStructure.annotationMethod(new File(path),path);
 		generateStructure.annotationVariable(new File(path),path);
-		try {generateStructure.addAggregatedRelationShip(new File(path),path);} catch (Exception e) {e.printStackTrace();} 
+		//try {generateStructure.addAggregatedRelationShip(new File(path),path);} catch (Exception e) {e.printStackTrace();} 
 		System.out.println("************* END GENERATE STRUCTURE ELEMENTS *************");
 				
 	}

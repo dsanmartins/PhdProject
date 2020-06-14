@@ -56,7 +56,7 @@ public class GenerateStructure {
 			children.addAll(childrenNonDuplicate);
 			tree.addNode(annotation.get(i), children);
 		}
-	
+
 	}
 
 	public void createStructureElementFromTree(Manager baseXManager, String path_) throws BaseXException, QueryException, SQLException
@@ -94,7 +94,7 @@ public class GenerateStructure {
 			}
 			else
 				memory1.remove(0);
-			
+
 		}
 		for (String memory: memory2)
 			this.createStructureElement(baseXManager, null, memory, path_);
@@ -556,21 +556,218 @@ public class GenerateStructure {
 			relation.add(rtn);
 
 		rtn = baseXManager.getActionRelation("code:HasType");
+
+
+
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		if (!relation.isEmpty())
-		{
-			List<String> nodes = new ArrayList<String>();
-			nodes.addAll(baseXManager.getArtifactName(relation));
-			for (String str: nodes)
-				relations.add(str);
+		List<String> nodes = new ArrayList<String>();
 
+		if (!relation.isEmpty())
+			nodes.addAll(baseXManager.getArtifactName(relation));
+
+		if (!nodes.isEmpty())
+		{
+			for (String path: nodes)
+			{
+				String from = path.split(Pattern.quote("|"))[0];
+				String to = path.split(Pattern.quote("|"))[1];
+				String action = path.split(Pattern.quote("|"))[2];
+				String type = path.split(Pattern.quote("|"))[3];
+
+				String package_from = this.checkPathType(baseXManager,from, "package");
+				String class_from = this.checkPathType(baseXManager,from, "class");
+				String field_from= this.checkPathType(baseXManager,from, "field");
+				String method_from= this.checkPathType(baseXManager,from, "method");
+				String variable_from= this.checkPathType(baseXManager,from, "variable");
+
+				String package_to = this.checkPathType(baseXManager,to, "package");
+				String class_to = this.checkPathType(baseXManager,to, "class");
+				String field_to= this.checkPathType(baseXManager,to, "field");
+				String method_to= this.checkPathType(baseXManager,to, "method");
+				String variable_to= this.checkPathType(baseXManager,to, "variable");
+
+				String rel = package_from + "|" + class_from + "|" + field_from  + "|" + method_from  + "|" + variable_from  + "|" 
+						+ package_to  + "|" + class_to  + "|" + field_to  + "|" + method_to  + "|" + variable_to + "|" +action  + "|" + type;
+
+				relations.add(rel);
+			}
 			queryClass.insertRelations(relations);
 			relations.clear();
 		}
-
+		
+		List<String> annotations = queryClass.getSummaryAnnotation();
+		for (String annotation : annotations) {
+			
+			String element = annotation.split(Pattern.quote("|"))[0];
+			String abstraction = annotation.split(Pattern.quote("|"))[1];
+			
+			String package_ = this.checkPathType(baseXManager,element, "package");
+			String class_ = this.checkPathType(baseXManager,element, "class");
+			String field_= this.checkPathType(baseXManager,element, "field");
+			String method_= this.checkPathType(baseXManager,element, "method");
+			String variable_= this.checkPathType(baseXManager,element, "variable");
+			
+			String rel = package_ + "|" + class_ + "|" + field_  + "|" + method_  + "|" + variable_  + "|" 	+ abstraction;
+			relations.add(rel);
+		}
+		
+		queryClass.insertSummaryAnnotation(relations);
+		relations.clear();
+		
 		try {baseXManager.closeDB();} catch (BaseXException e) {e.printStackTrace();}
+	}
+
+	public String checkPathType(Manager baseXManager, String path, String type) throws Exception {
+
+		String preamble =  "declare namespace xmi='http://www.omg.org/XMI'; \n" +
+							"declare namespace xsi='http://www.w3.org/2001/XMLSchema-instance'; \n" +
+							"declare namespace action='http://www.eclipse.org/MoDisco/kdm/action'; \n" +
+							"declare namespace code='http://www.eclipse.org/MoDisco/kdm/code'; \n" +
+							"declare namespace kdm='http://www.eclipse.org/MoDisco/kdm/kdm'; \n" +
+							"declare namespace source='http://www.eclipse.org/MoDisco/kdm/source'; \n\n";
+	
+		String rtn="";
+		String newStr = "";
+		String lstString[] = path.split(Pattern.quote("."));
+		if (type.equals("package"))
+		{
+			String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+			for (String str: lstString)
+			{
+				query = query + "/codeElement[@name = '" + str + "']";
+				rtn = baseXManager.rtnType(preamble + query + " return $a/data(@xsi:type)");
+				if (rtn.equals("code:Package")) {
+					newStr = newStr + "." + str;
+				}
+				else
+				{
+					newStr = newStr.substring(1);
+					break;
+				}
+			}
+			if (newStr.startsWith("."))
+				newStr = newStr.substring(1);
+			
+			return newStr;
+		}
+		else 
+		{
+			if (type.equals("class"))
+			{
+				String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+				for (String str: lstString)
+				{
+					query = query + "/codeElement[@name = '" + str + "']";
+					rtn = baseXManager.rtnType(preamble + query + " return $a/data(@xsi:type)");
+					if (rtn.equals("code:Package")) {
+
+					}
+					else
+						if (rtn.equals("code:ClassUnit"))
+							newStr = str;
+						else
+							break;
+				}
+
+				return newStr;
+			}
+			else 
+			{
+				if (type.equals("field"))
+				{
+					String old = "";
+					String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+					for (String str: lstString)
+					{	
+						query = query + "/codeElement[@name = '" + str + "']";
+						rtn = baseXManager.rtnType(preamble + query + " return $a/data(@xsi:type)");
+						if (rtn.equals("code:Package")) {
+
+						}
+						else
+						{
+							if (rtn.equals("code:ClassUnit"))
+								old = "class";
+							else
+							{
+								if (rtn.equals("code:StorableUnit") && old.equals("class"))
+									newStr = str;
+								else
+									break;
+							}
+						}
+					}
+
+					return newStr;
+				}
+				else 
+				{
+					if (type.equals("method"))
+					{
+						String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+						for (String str: lstString)
+						{
+							query = query + "/codeElement[@name = '" + str + "']";
+							rtn = baseXManager.rtnType(preamble + query + " return $a/data(@xsi:type)");
+							if (rtn.equals("code:Package")) {
+
+							}
+							else
+							{
+								if (rtn.equals("code:ClassUnit")) {
+
+								}
+								else
+								{
+									if (rtn.equals("code:MethodUnit"))
+										newStr = str;
+									else
+										break;
+								}
+							}
+						}
+						return newStr;
+					}
+					else 
+					{
+						if (type.equals("variable"))
+						{
+							String old = "";
+							String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+							for (int i=0; i< lstString.length ; i++)
+							{
+								String str = lstString[i];
+								if (i+1 == lstString.length)
+									query = query + "//codeElement[@name = '" + str + "']";
+								else
+									query = query + "/codeElement[@name = '" + str + "']";
+								rtn = baseXManager.rtnType(preamble + query + " return $a/data(@xsi:type)");
+								if (rtn.equals("code:Package")) {
+								}
+								else
+								{
+									if (rtn.equals("code:ClassUnit")) {
+									}
+									else {
+										if (rtn.equals("code:MethodUnit"))
+											old = "method";
+										else
+											if (rtn.equals("code:StorableUnit") && old.equals("method"))
+												newStr = str;
+											else
+												break;
+									}
+								}
+							}
+							return newStr;
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public void addAggregatedRelationShip(File projectDir, String path_) throws Exception {
