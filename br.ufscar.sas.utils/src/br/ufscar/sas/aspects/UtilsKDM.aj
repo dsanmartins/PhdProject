@@ -70,7 +70,7 @@ public aspect UtilsKDM {
 		generateStructure.annotationFieldClass(new File(path),path);
 		generateStructure.annotationMethod(new File(path),path);
 		generateStructure.annotationVariable(new File(path),path);
-		//try {generateStructure.addAggregatedRelationShip(new File(path),path);} catch (Exception e) {e.printStackTrace();} 
+		try {generateStructure.addAggregatedRelationShip(new File(path),path);} catch (Exception e) {e.printStackTrace();} 
 		System.out.println("************* END GENERATE STRUCTURE ELEMENTS *************");
 				
 	}

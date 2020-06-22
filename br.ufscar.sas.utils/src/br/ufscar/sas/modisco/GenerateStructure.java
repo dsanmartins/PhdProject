@@ -538,27 +538,32 @@ public class GenerateStructure {
 		rtn = baseXManager.getActionRelation("action:Creates");
 		if (!rtn.equals(""))
 			relation.add(rtn);
-
-		rtn = baseXManager.getActionRelation("code:Extends");
+		
+		rtn = baseXManager.getActionRelation("action:Addresses");
+		if (!rtn.equals(""))
+			relation.add(rtn);
+		
+		rtn = baseXManager.getActionRelation("action:Writes");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		rtn = baseXManager.getActionRelation("code:Implements");
+		rtn = baseXManager.getCodeRelation("code:Extends");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		rtn = baseXManager.getActionRelation("code:HasValue");
+		rtn = baseXManager.getCodeRelation("code:Implements");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		rtn = baseXManager.getActionRelation("code:Imports");
+		rtn = baseXManager.getCodeRelation("code:HasValue");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		rtn = baseXManager.getActionRelation("code:HasType");
+		rtn = baseXManager.getCodeRelation("code:Imports");
+		if (!rtn.equals(""))
+			relation.add(rtn);
 
-
-
+		rtn = baseXManager.getCodeRelation("code:HasType");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
@@ -571,6 +576,7 @@ public class GenerateStructure {
 		{
 			for (String path: nodes)
 			{
+				
 				String from = path.split(Pattern.quote("|"))[0];
 				String to = path.split(Pattern.quote("|"))[1];
 				String action = path.split(Pattern.quote("|"))[2];
@@ -633,7 +639,7 @@ public class GenerateStructure {
 		String lstString[] = path.split(Pattern.quote("."));
 		if (type.equals("package"))
 		{
-			String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' and @name != 'externals']";
+			String query = "let $a:= //kdm:Segment/model[@xsi:type='code:CodeModel' ]";
 			for (String str: lstString)
 			{
 				query = query + "/codeElement[@name = '" + str + "']";
@@ -643,7 +649,8 @@ public class GenerateStructure {
 				}
 				else
 				{
-					newStr = newStr.substring(1);
+					if (newStr.length()>0)
+						newStr = newStr.substring(1);
 					break;
 				}
 			}
@@ -783,7 +790,7 @@ public class GenerateStructure {
 		}
 
 		QueryClass queryClass = new QueryClass(path_);
-		List<String> lstActionRelation = queryClass.getActionRelation();
+		List<String> lstActionRelation = queryClass.getActionRelationClass();
 		if (lstActionRelation.size() != 0)
 		{
 

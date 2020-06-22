@@ -36,7 +36,6 @@ import org.basex.query.QueryProcessor;
 import org.basex.query.iter.Iter;
 import org.basex.query.value.item.Item;
 
-
 public class Manager   {
 
 	Context context; 
@@ -267,9 +266,13 @@ public class Manager   {
 				type.add(line[j].split(Pattern.quote("|"))[3]);
 			}
 		}
-
-		List<String> arrayList1 = this.resolvePathNames(from);
-		List<String> arrayList2 = this.resolvePathNames(to);
+		
+		List<List<String>> arrayList = this.resolvePathNames(from,to,action,type);
+		List<String>  arrayList1 = arrayList.get(0);
+		List<String>  arrayList2 = arrayList.get(1);
+		action = arrayList.get(2);
+		type = arrayList.get(3);
+		
 		List<String> newFromTo= new ArrayList<String>();
 
 		int size = arrayList1.size();
@@ -324,63 +327,156 @@ public class Manager   {
 		return newString;
 	}
 
-	public ArrayList<String> resolvePathNames(List<String> path) throws SQLException, QueryException
+	public List<List<String>> resolvePathNames(List<String> arrayFrom, List<String> arrayTo, List<String> arrayAction, List<String> arrayType) throws SQLException, QueryException
 	{
-		ArrayList<String> arrayList = new ArrayList<String>();	
+		List<String> resultFrom = new ArrayList<String>();	
+		List<String> resultTo = new ArrayList<String>();	
+		List<String> resultAction = new ArrayList<String>();
+		List<String> resultType = new ArrayList<String>();	
+		List<List<String>> listResult = new ArrayList<List<String>>();  
+		
+		String preamble =  "declare namespace xmi='http://www.omg.org/XMI'; \n" +
+				"declare namespace xsi='http://www.w3.org/2001/XMLSchema-instance'; \n" +
+				"declare namespace action='http://www.eclipse.org/MoDisco/kdm/action'; \n" +
+				"declare namespace code='http://www.eclipse.org/MoDisco/kdm/code'; \n" +
+				"declare namespace kdm='http://www.eclipse.org/MoDisco/kdm/kdm'; \n" +
+				"declare namespace source='http://www.eclipse.org/MoDisco/kdm/source'; \n\n";
+		
 		String iString = " let $prod := //kdm:Segment/";	
 		String mString = " let $rtn1 := $prod[@xsi:type='code:StorableUnit' or @xsi:type='code:MethodUnit' or @xsi:type='code:ClassUnit' or @xsi:type='code:Package']/@name ";
 		String nString = " let $rtn2 := $prod/@xsi:type ";
 		String fString = " return concat(data($rtn1),'-',data($rtn2)) ";
-		String result = "";
+		String result1 = "";
+		String result2 = "";
 		String modelE = "";
 		String f1 = "";
+		String f2 = "";
+		int error1 = 0;
+		int error2 = 0;
 
-		for (int i=0; i<path.size(); i++)
+		for (int i=0; i<arrayFrom.size(); i++)
 		{
 			//Get path for each element of the array
-			String line = path.get(i);
-			String[] element = line.split(Pattern.quote("/"));
-			for (int j=0; j<element.length; j++)
+			String line1 = arrayFrom.get(i);
+			String[] element1 = line1.split(Pattern.quote("/"));
+			for (int j=0; j<element1.length; j++)
 			{ 
 				if (j==2)
 				{
-					String[] modelElement = element[j].split(Pattern.quote("."));
+					String[] modelElement = element1[j].split(Pattern.quote("."));
 					String mElement = modelElement[0].substring(1);
 					int nElement = Integer.parseInt(modelElement[1]) + 1;
 					modelE = mElement+"["+nElement+"]/";
 				}	 
 				if (j>2)
 				{
-					String[] codeElement = element[j].split(Pattern.quote("."));
+					String[] codeElement = element1[j].split(Pattern.quote("."));
 					String sElement = codeElement[0].substring(1);
 					int nElement = Integer.parseInt(codeElement[1]) + 1;
 					String f1Element = sElement+"["+nElement+"]";
-					String query = PropertyFileManager.getQuery("query-3");
-					query = query + iString + modelE + f1 + f1Element + mString + nString + fString;
-
+					String query = preamble + iString + modelE + f1 + f1Element + mString + nString + fString;
 					String rtn = this.executeQueryPath(query);
-					String name = rtn.split(Pattern.quote("-"))[0];
-					String type = rtn.split(Pattern.quote("-"))[1];
-
-					if (!name.equals(""))
-						result = result+"."+name;	
-					f1 = f1 + f1Element + "/";
-
-					if (type.equals("code:StorableUnit"))
+					if (rtn.split(Pattern.quote("-")).length != 2)
+					{
+						error1 = 1;
 						break;
+					}
+					else
+					{
+						String name = rtn.split(Pattern.quote("-"))[0];
+						String type = rtn.split(Pattern.quote("-"))[1];
+
+						if (!name.equals(""))
+							result1 = result1+"."+name;	
+						f1 = f1 + f1Element + "/";
+
+						if (type.equals("code:StorableUnit"))
+							break;
+					}
 				}
 			}
-			arrayList.add(result.substring(1)); 
-			result = "";
+	
+			String line2 = arrayTo.get(i);
+			String[] element2 = line2.split(Pattern.quote("/"));
+			for (int j=0; j<element2.length; j++)
+			{ 
+				if (j==2)
+				{
+					String[] modelElement = element2[j].split(Pattern.quote("."));
+					String mElement = modelElement[0].substring(1);
+					int nElement = Integer.parseInt(modelElement[1]) + 1;
+					modelE = mElement+"["+nElement+"]/";
+				}	 
+				if (j>2)
+				{
+					String[] codeElement = element2[j].split(Pattern.quote("."));
+					String sElement = codeElement[0].substring(1);
+					int nElement = Integer.parseInt(codeElement[1]) + 1;
+					String f1Element = sElement+"["+nElement+"]";
+					String query = preamble + iString + modelE + f2 + f1Element + mString + nString + fString;
+					String rtn = this.executeQueryPath(query);
+					if (rtn.split(Pattern.quote("-")).length != 2)
+					{
+						error2 = 1;
+						break;
+					}
+					else
+					{
+						String name = rtn.split(Pattern.quote("-"))[0];
+						String type = rtn.split(Pattern.quote("-"))[1];
+
+						if (!name.equals(""))
+							result2 = result2+"."+name;	
+						f2 = f2 + f1Element + "/";
+
+						if (type.equals("code:StorableUnit"))
+							break;
+					}
+				}
+			}
+
+			if (error1 == 0 && error2 ==0)
+			{
+				if (result1.length()>0 && !result1.startsWith(".java") && result2.length()>0 && !result2.startsWith(".java")) {
+					
+					resultFrom.add(result1.substring(1));
+					resultTo.add(result2.substring(1));
+					resultAction.add(arrayAction.get(i));
+					resultType.add(arrayType.get(i));
+				}
+			}
+
 			f1 = "";
+			f2 = "";
+			result1 = "";
+			result2 = "";
+			error1 = 0;
+			error2 = 0;
 		}
-		return arrayList;
+		
+		listResult.add(resultFrom);
+		listResult.add(resultTo);
+		listResult.add(resultAction);
+		listResult.add(resultType);
+		
+		return listResult;
 	}	
 
 	public String getActionRelation(String action) throws SQLException, QueryException
 	{
 		String rtn = "";
 		String query = PropertyFileManager.getQuery("getActionRelation");
+		QueryProcessor proc = new QueryProcessor(query, context);
+		proc.bind("action", action);
+		rtn = proc.value().toString();
+		proc.close();
+		return rtn;		
+	}
+
+	public String getCodeRelation(String action) throws SQLException, QueryException
+	{
+		String rtn = "";
+		String query = PropertyFileManager.getQuery("getCodeRelation");
 		QueryProcessor proc = new QueryProcessor(query, context);
 		proc.bind("action", action);
 		rtn = proc.value().toString();
@@ -681,7 +777,7 @@ public class Manager   {
 	}
 
 	public String rtnType(String predicate) throws Exception {
-		
+
 		QueryProcessor proc = new QueryProcessor(predicate, context);
 		String value = proc.value().toString().replaceAll("\"", "");
 		proc.close();

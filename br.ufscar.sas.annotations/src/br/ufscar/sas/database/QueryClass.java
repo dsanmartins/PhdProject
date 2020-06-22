@@ -398,37 +398,39 @@ public class QueryClass {
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		for (int i=0; i < relations.size(); i++) {
-			
+
 			mydb.executeStmt("insert into relation (package_from, class_from, field_from, method_from, variable_from, " + 
-					" package_to, class_to, field_to, method_to, variable_to, modisco_path, type_relation) values "
-					+ " ('" + relations.get(i).split(Pattern.quote("|"))[0] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[1] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[2] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[3] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[4] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[5] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[6] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[7] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[8] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[9] + "'," +
+					" package_to, class_to, field_to, method_to, variable_to, modisco_path, type_relation) values (" +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[0] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[0] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[1] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[1] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[2] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[2] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[3] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[3] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[4] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[4] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[5] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[5] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[6] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[6] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[7] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[7] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[8] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[8] + "' END," +
+					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[9] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[9] + "' END," +
 					"'" + relations.get(i).split(Pattern.quote("|"))[10] + "'," +
 					"'" + relations.get(i).split(Pattern.quote("|"))[11] + "');");
 		}
 		mydb.closeConnection();
 	}
-	
+
 	public void insertSummaryAnnotation(List<String> summary) throws Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		for (int i=0; i < summary.size(); i++) {
 			
-			mydb.executeStmt("insert into summary_annotation (package, class, field, method, variable, annotation) values" +
-					"('" + summary.get(i).split(Pattern.quote("|"))[0] + "'," +
-				     "'" + summary.get(i).split(Pattern.quote("|"))[1] + "'," +
-					 "'" + summary.get(i).split(Pattern.quote("|"))[2] + "'," +
-					 "'" + summary.get(i).split(Pattern.quote("|"))[3] + "'," +
-					 "'" + summary.get(i).split(Pattern.quote("|"))[4] + "'," +
-					 "'" + summary.get(i).split(Pattern.quote("|"))[5]+ "');");
+			String query = "insert into summary_annotation (package, class, field, method, variable, annotation) values (" +
+					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[0] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[0] + "' END," +
+					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[1] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[1] + "' END," +
+					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[2] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[2] + "' END," +
+					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[3] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[3] + "' END," +
+					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[4] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[4] + "' END," +
+					"'" + summary.get(i).split(Pattern.quote("|"))[5]+ "');";
+
+			mydb.executeStmt(query);
 		}
 		mydb.closeConnection();
 	}
@@ -465,7 +467,7 @@ public class QueryClass {
 		mydb.executeStmt("delete from instances where annotation = '" +   instance + "';"); 
 		mydb.closeConnection();
 	}
-
+	
 	public List<String> selectInstance(int op) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -556,17 +558,29 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
-	public List<String> getActionRelation() throws Exception {
+	public List<String> getActionRelationClass() throws Exception {
 
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
-		ResultSet rs = mydb.executeQry("select DISTINCT b.annotation, a.from_, (select annotation from summary_annotation where name = a.to_), a.to_, a.modisco_path, a.type_relation\n" + 
-				"from relation a inner join summary_annotation b on a.from_ = b.name \n" + 
-				"where a.to_ in (select name from summary_annotation) \n" + 
-				"order by b.annotation;");		
+		ResultSet rs = mydb.executeQry("select abstraction1, package_from || '.' ||  class_from, abstraction2, package_to || '.' ||class_to, a.modisco_path  \n" + 
+				"from (\n" + 
+				"    select DISTINCT (select annotation from summary_annotation where package = a.package_from and class = a.class_from) abstraction1,\n" + 
+				"           a.package_from, \n" + 
+				"           a.class_from, \n" + 
+				"           (select annotation from summary_annotation where package = a.package_to and class = a.class_to) abstraction2,\n" + 
+				"           a.package_to, \n" + 
+				"           a.class_to,\n" + 
+				"           a.modisco_path\n" + 
+				"    from relation a inner join summary_annotation  b on  a.package_to = b.package and \n" + 
+				"                                                        a.class_to = b.class                                                 \n" + 
+				"    where a.package_from <> a.package_to AND\n" + 
+				"        a.class_from <> a.class_to\n" + 
+				"    ) a\n" + 
+				"where a.package_from in (select package from summary_annotation) AND\n" + 
+				"      a.class_from in (select class from summary_annotation);");		
 
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString()+"|"+rs.getObject(6).toString());
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
 		}
 		mydb.closeConnection();
 		return lst;	
@@ -654,7 +668,7 @@ public class QueryClass {
 
 		mydb.closeConnection();
 	}
-
+	
 	public void methodBelongsTo() throws Exception {
 
 		List<String> values = new ArrayList<String>();
@@ -755,9 +769,9 @@ public class QueryClass {
 
 
 	}
-
-	public List<String> getSummaryAnnotation() throws Exception{
 		
+	public List<String> getSummaryAnnotation() throws Exception{
+
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
 		ResultSet rs = mydb.executeQry("select name AS name, annotation from package_annotation where annotation <> 'None'\n" + 
@@ -776,6 +790,6 @@ public class QueryClass {
 		mydb.closeConnection();
 		return lst;	
 	}
-	
-	
+
+
 }
