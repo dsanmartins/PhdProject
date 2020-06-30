@@ -65,6 +65,7 @@ public class Report {
 		r1.addBreak();
 
 		try {
+			System.out.println(currentPath + "ComponentDiagram.txt");
 			File currentFile = new File(currentPath + "ComponentDiagram.txt");
 			InputStream currentStream = getFigure(currentFile);
 			File plannedFile = new File(plannedPath + "ComponentDiagram.txt");

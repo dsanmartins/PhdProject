@@ -14,9 +14,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -42,21 +40,12 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.jface.viewers.TreeViewerEditor;
-import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
@@ -74,18 +63,12 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
@@ -132,6 +115,15 @@ import br.ufscar.sas.tableviewer.EditingRulesInstance;
 import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
 import br.ufscar.sas.tableviewer.TableMetaData;
+import br.ufscar.sas.tableviewer.abstractions.Abstraction;
+import br.ufscar.sas.tableviewer.abstractions.EditingAbstractionQuantityInstance;
+import br.ufscar.sas.tableviewer.abstractions.TableLabelAbstractionProvider;
+import br.ufscar.sas.tableviewer.instances.ColumnLabelProviderCheckbox;
+import br.ufscar.sas.tableviewer.instances.EditingInstanceName;
+import br.ufscar.sas.tableviewer.instances.Instance;
+import br.ufscar.sas.tableviewer.instances.InstanceFilter;
+import br.ufscar.sas.tableviewer.instances.ColumnLabelProviderInstance;
+import br.ufscar.sas.tableviewer.instances.EditingInstanceCheck;
 import br.ufscar.sas.tableviewer.result.MappedAnomaly;
 import br.ufscar.sas.tableviewer.result.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
@@ -139,8 +131,6 @@ import br.ufscar.sas.transformation.ComputeModelDiff;
 import br.ufscar.sas.transformation.Kdm2Uml;
 import br.ufscar.sas.transformation.OpenComponentDiagram;
 import br.ufscar.sas.transformation.Uml2PlantUML;
-import br.ufscar.sas.treeviewer.TreeModel;
-import br.ufscar.sas.treeviewer.TreeProvider;
 
 public class MainView extends ViewPart implements IPartListener2 {
 
@@ -226,10 +216,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 		tab1.setText("Configurations");
 
 		Group group = new Group(tabFolder, SWT.NONE);
-		Group treeViewGroup = new Group(group, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
-		treeViewGroup.setText("Abstraction Instances");
-		treeViewGroup.setBounds(10, 55, 500, 450);
-		treeViewGroup.setLayout(new FillLayout());
+		Group abstractionGroup = new Group(group, SWT.NONE | SWT.V_SCROLL | SWT.H_SCROLL);
+		abstractionGroup.setText("Adaptive System Abstractions and Instances");
+		abstractionGroup.setBounds(10, 55, 500, 510);
+		abstractionGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
 
 		Group controlGroup = new Group(group, SWT.NONE);
@@ -240,253 +230,40 @@ public class MainView extends ViewPart implements IPartListener2 {
 		label1.setText("Project Name: " + projectName);
 		label1.setBounds(15, 3, 300, 20);
 
-		TreeViewer treeViewer = new TreeViewer(treeViewGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-		treeViewer.setContentProvider(new TreeProvider());
-		treeViewer.getTree().setHeaderVisible(true);
-		treeViewer.getTree().setLinesVisible(true);
-		treeViewer.getTree().setBounds(0, 0, 500, 450);
+		//Abstractions Table
+		TableViewer tableAbstraction = new TableViewer(abstractionGroup, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP |  SWT.FULL_SELECTION);
+		tableAbstraction.setUseHashlookup(true);
+		tableAbstraction.getTable().setLinesVisible(true);
+		tableAbstraction.getTable().setHeaderVisible(true);
+		tableAbstraction.getTable().setBounds(0, 0, 250, 450);
 
-		Tree tree = treeViewer.getTree();
-		final Menu menu = new Menu(tree);
-		tree.setMenu(menu);
-		menu.addListener(SWT.Show, new Listener() {
-			public void handleEvent(Event event) {
-				MenuItem[] menuItems = menu.getItems();
-				for (int i = 0; i < menuItems.length; i++) {
-					menuItems[i].dispose();
-				}
-				TreeItem[] treeItems = tree.getSelection();
-				for (int i = 0; i < treeItems.length; i++) {
+		TableViewerColumn abstractionName = new TableViewerColumn(tableAbstraction, SWT.NONE);
+		abstractionName.getColumn().setResizable(false);
+		abstractionName.getColumn().setWidth(150);
+		abstractionName.getColumn().setText("Abstraction");
 
-					MenuItem menuItem1 = new MenuItem(menu, SWT.PUSH);
-					menuItem1.setText("Add Instance");
-					menuItem1.addSelectionListener(new SelectionAdapter() {
+		TableViewerColumn quantity = new TableViewerColumn(tableAbstraction, SWT.CENTER);
+		quantity.getColumn().setResizable(false);
+		quantity.getColumn().setWidth(100);
+		quantity.getColumn().setText("Quantity");
+		quantity.setEditingSupport(new EditingAbstractionQuantityInstance(tableAbstraction));
 
-						public void widgetSelected(SelectionEvent e) {
+		tableAbstraction.setContentProvider(new ArrayContentProvider());
+		tableAbstraction.setLabelProvider(new TableLabelAbstractionProvider());
 
-							TreeItem treeItem = null;
-
-							if (tree.getSelection()[0].getItemCount() == 0)	{
-
-
-								if (tree.getSelection()[0].getParentItem() == null) {
-									treeItem = new TreeItem(tree.getSelection()[0],0);
-									treeItem.setText(tree.getSelection()[0].getText().toLowerCase() + "_" + 1);
-								}
-							}
-							else{
-
-								TreeItem[] items = tree.getSelection()[0].getItems();
-								int max = 0;
-								for (int i=0; i< items.length; i++)
-								{ 
-									String abs = items[i].getText();
-									if (Character.isDigit(abs.charAt(abs.length()-1)))
-									{
-										int val = Integer.valueOf(abs.substring(abs.length()-1));
-										if (val> max)
-											max = val;
-									}
-								}
-
-								int number = max;
-								number = number + 1;
-								treeItem = new TreeItem(tree.getSelection()[0],0);
-								treeItem.setText(tree.getSelection()[0].getText().toLowerCase() + "_" + number);
-
-							}
-
-							try {
-
-								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-								queryClass.insertInstance(tree.getSelection()[0].getText(), treeItem.getText().toLowerCase());
-
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-
-							tree.getSelection()[0].setExpanded(true);
-							try {
-								treeViewer.getTree().clearAll(true);
-
-								treeViewer.setInput(getParentAbstactions());
-							} catch (Exception e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
-
-						}	
-					});
-
-					MenuItem menuItem2 = new MenuItem(menu, SWT.PUSH);
-					menuItem2.setText("Remove Instance");
-					menuItem2.addSelectionListener(new SelectionAdapter() {
-						public void widgetSelected(SelectionEvent e) {
-
-							TreeItem[] items = tree.getSelection()[0].getItems();
-							String text = items[items.length-1].getText();
-
-
-							try {
-								QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-								boolean rtn = queryClass.isUsingData(items[items.length-1].getText());
-								if (rtn == false)
-								{
-									items[items.length-1].dispose();
-									queryClass.deleteInstance(text);
-								}
-								else
-									MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Info", "It can not be delete because it is already in use!");
-
-
-
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-
-						}
-					});
-
-				}
-			}
-		});
-
-
-		TreeViewerFocusCellManager focusCellManager = new TreeViewerFocusCellManager(treeViewer, new FocusCellOwnerDrawHighlighter(treeViewer));
-		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(	treeViewer) {
-			@Override
-			protected boolean isEditorActivationEvent(
-					ColumnViewerEditorActivationEvent event) {
-				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
-						|| (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR)
-						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-			}
-		};
-
-		int feature = ColumnViewerEditor.TABBING_HORIZONTAL
-				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
-				| ColumnViewerEditor.TABBING_VERTICAL
-				| ColumnViewerEditor.KEYBOARD_ACTIVATION;
-
-		TreeViewerEditor.create(treeViewer, focusCellManager, actSupport, feature);
-		final TextCellEditor textCellEditor = new TextCellEditor(treeViewer.getTree());
-
-
-		TreeViewerColumn viewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
-		viewerColumn.getColumn().setWidth(300);
-		viewerColumn.getColumn().setText("Abstractions");
-		viewerColumn.setLabelProvider(createColumnLabelProvider());
-		viewerColumn.setEditingSupport(new EditingSupport(treeViewer) {
-
-			protected boolean canEdit(Object element) {
-
-				return true;
-			}
-
-			protected CellEditor getCellEditor(Object element) {
-				return textCellEditor;
-			}
-
-			protected Object getValue(Object element) {
-
-				TreeModel model = (TreeModel) element;
-				if (!model.getParent().equals("root"))
-					return model.getNodeName();
-
-				else 
-					return null;
-			}
-
-			protected void setValue(Object element, Object value) {
-
-				QueryClass queryClass = null;
-				boolean check = false;
-				TreeModel model = (TreeModel) element;
-				try
-				{
-					queryClass = new QueryClass(MainView.getDatabaseUrl());
-					check = queryClass.checkAbstractionExist((String) value);
-
-				}catch(Exception ex) {
-					ex.printStackTrace();
-				}
-
-				if (!model.getParent().equals("root"))
-				{
-					if (!check)
-					{
-						try
-						{
-							queryClass = new QueryClass(MainView.getDatabaseUrl());
-							queryClass.UpdateInstance((String) value, model.getNodeName());
-
-						}catch(Exception ex) {
-							ex.printStackTrace();
-						}
-						model.setNodeName((String) value);
-						treeViewer.update(element, null);
-					}
-					else
-						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The abstraction name already exist!");
-				}
-			}
-
-		});
-
+		QueryClass queryClass = null;
+		List<Abstraction> abstractionObject = new ArrayList<Abstraction>();
 
 		try {
-			treeViewer.setInput(getParentAbstactions());
-		} catch (Exception e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+			queryClass = new QueryClass(databaseUrl);
+			List<String> lstAbstraction= queryClass.getAbstractions();
+			for (String abstraction :lstAbstraction )
+				abstractionObject.add(new Abstraction(Integer.valueOf(abstraction.split(Pattern.quote("|"))[0]), 
+						abstraction.split(Pattern.quote("|"))[1], 
+						abstraction.split(Pattern.quote("|"))[2],
+						abstraction.split(Pattern.quote("|"))[3]));
 
-
-		Group tableViewGroup = new Group(group, SWT.NONE);
-		tableViewGroup.setText("Architectural Drifts");
-		tableViewGroup.setBounds(10, 520, 500, 300);
-		tableViewGroup.setLayout(new FillLayout());
-		tab1.setControl(group);
-
-		GridTableViewer gridTableViewer = new GridTableViewer(tableViewGroup, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		gridTableViewer.setUseHashlookup(true);
-		gridTableViewer.getGrid().setLinesVisible(true);
-		gridTableViewer.getGrid().setHeaderVisible(true);
-		gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
-		gridTableViewer.getGrid().setBounds(0, 0, 500, 300);
-
-		GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column1.setResizeable(false);
-		column1.setWidth(75);
-		column1.setText("Drift");
-
-		GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column2.setResizeable(false);
-		column2.setWidth(210);
-		column2.setText("Name");
-
-		GridColumn column3 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
-		column3.setResizeable(false);
-		column3.setWidth(210);
-		column3.setWordWrap(true);
-		column3.setText("Description");
-
-		gridTableViewer.setContentProvider(new ArrayContentProvider());
-		gridTableViewer.setLabelProvider(new TableLabelAnomalyProvider());
-
-		DataConstraint queryClass = null;
-		List<Anomaly> anomalyObject = new ArrayList<Anomaly>();
-
-		try {
-			queryClass = new DataConstraint(databaseUrl);
-			List<String> lstAnomaly= queryClass.getAnomalies();
-			for (String anomaly :lstAnomaly )
-				anomalyObject.add(new Anomaly(anomaly.split(Pattern.quote("|"))[0], anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]  ));
-
-			gridTableViewer.setInput(anomalyObject);
+			tableAbstraction.setInput(abstractionObject);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -496,29 +273,276 @@ public class MainView extends ViewPart implements IPartListener2 {
 			e.printStackTrace();
 		}
 
-		GridColumn []cols = gridTableViewer.getGrid().getColumns();
-		for (GridItem item : gridTableViewer.getGrid().getItems()) {
-			GC gc = new GC(item.getDisplay());
-			int hmax = 80;
-			int max = 0;
-			Point tb=null;
-			for(GridColumn col : cols){
-				tb = col.getCellRenderer().computeSize(gc, col.getWidth(), SWT.DEFAULT, item);
-				max = Math.max(max, tb.y);
-				if(max > hmax){
-					break;
+		//Instances Table
+		TableViewer tableInstance = new TableViewer(abstractionGroup, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP |  SWT.FULL_SELECTION);
+		tableInstance.setUseHashlookup(true);
+		tableInstance.getTable().setLinesVisible(true);
+		tableInstance.getTable().setHeaderVisible(true);
+		tableInstance.getTable().setBounds(255, 0, 245, 450);
+
+		TableViewerColumn instanceName = new TableViewerColumn(tableInstance, SWT.NONE);
+		instanceName.getColumn().setResizable(false);
+		instanceName.getColumn().setWidth(150);
+		instanceName.getColumn().setText("Instance");
+		instanceName.setLabelProvider(new ColumnLabelProviderInstance());
+		instanceName.setEditingSupport(new EditingInstanceName(tableInstance));
+
+		TableViewerColumn check = new TableViewerColumn(tableInstance, SWT.CENTER);
+		check.getColumn().setResizable(false);
+		check.getColumn().setWidth(150);
+		check.getColumn().setText("");
+		check.setLabelProvider(new ColumnLabelProviderCheckbox());
+		check.setEditingSupport(new EditingInstanceCheck(tableInstance));
+
+		tableInstance.setContentProvider(new ArrayContentProvider());
+
+		List<Instance> instanceObject = new ArrayList<Instance>();
+
+		try {
+			queryClass = new QueryClass(databaseUrl);
+			List<String> lstInstance= queryClass.selectInstance(0);
+			for (String instance :lstInstance )
+				instanceObject.add(new Instance(Integer.valueOf(instance.split(Pattern.quote("|"))[0]),instance.split(Pattern.quote("|"))[1] , false));
+
+			tableInstance.setInput(instanceObject);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Button generateInstances = new Button(abstractionGroup, SWT.NONE);
+		generateInstances.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		generateInstances.setBounds(5, 460, 80, 25);
+		generateInstances.setText("Generate");
+
+		generateInstances.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+
+				try {
+					QueryClass queryClass = new QueryClass(databaseUrl);
+					List<String> lstAbstraction = queryClass.getAbstractions();
+					for (int i=0 ; i<lstAbstraction.size(); i++) {
+						String abstraction = lstAbstraction.get(i).split(Pattern.quote("|"))[1];
+						int quantity = Integer.valueOf(lstAbstraction.get(i).split(Pattern.quote("|"))[3]);
+						int numberOfInstance = queryClass.getQuantityAbstraction(abstraction.toLowerCase());
+						if (quantity > numberOfInstance) {
+
+							int max = queryClass.getMaxValueInstance(abstraction.toLowerCase());
+							for (int j=0; j<quantity-numberOfInstance; j++)
+							{
+								max = max + 1;
+								String instance = abstraction.toLowerCase() + "_" + max;
+								queryClass.insertInstance(abstraction, instance);
+							}
+						}
+					}
+
+					instanceObject.clear();
+					List<String> lstInstance= queryClass.selectInstance(0);
+					for (String instance :lstInstance )
+						instanceObject.add(new Instance(Integer.valueOf(instance.split(Pattern.quote("|"))[0]),instance.split(Pattern.quote("|"))[1] , false));
+
+					tableInstance.setInput(instanceObject);
+					tableInstance.refresh();
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		Button clearInstances = new Button(abstractionGroup, SWT.NONE);
+		clearInstances.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		clearInstances.setBounds(165, 460, 80, 25);
+		clearInstances.setText("Clear");
+
+		clearInstances.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+
+				boolean b = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), "Information", "Do you want to delete all instances?");
+				if (b) {
+					try {
+						QueryClass queryClass = new QueryClass(databaseUrl);
+						queryClass.deleteInstance();
+						abstractionObject.clear();
+						List<String> lstAbstraction= queryClass.getAbstractions();
+						for (String abstraction :lstAbstraction )
+							abstractionObject.add(new Abstraction(Integer.valueOf(abstraction.split(Pattern.quote("|"))[0]),
+									abstraction.split(Pattern.quote("|"))[1], 
+									abstraction.split(Pattern.quote("|"))[2],
+									abstraction.split(Pattern.quote("|"))[3]));
+
+						tableAbstraction.setInput(abstractionObject);
+						tableAbstraction.refresh();
+
+						instanceObject.clear();
+						List<String> lstInstance= queryClass.selectInstance(0);
+						for (String instance :lstInstance )
+							instanceObject.add(new Instance(Integer.valueOf(instance.split(Pattern.quote("|"))[0]),instance.split(Pattern.quote("|"))[1] , false));
+
+						tableInstance.setInput(instanceObject);
+						tableInstance.refresh();
+
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
+		});
 
-			if(hmax==-1){
+		Button removeInstances = new Button(abstractionGroup, SWT.NONE);
+		removeInstances.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		removeInstances.setBounds(255, 460, 80, 25);
+		removeInstances.setText("Remove");
+		removeInstances.addSelectionListener(new SelectionAdapter() {
 
-			}else if(max > hmax){
-				max=hmax;
+			public void widgetSelected(SelectionEvent e) {
+
+				List<Instance> lstInstance = (List<Instance>) tableInstance.getInput();
+				for (Instance instance : lstInstance)
+				{
+					if (instance.getIsSelected()) {
+
+						try {
+							QueryClass queryClass = new QueryClass(databaseUrl);
+							queryClass.deleteInstance(instance.getInstance());
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+
+				try {
+					QueryClass queryClass = new QueryClass(databaseUrl);
+					abstractionObject.clear();
+					List<String> lstAbstraction= queryClass.getAbstractions();
+					for (String abstraction :lstAbstraction )
+						abstractionObject.add(new Abstraction(Integer.valueOf(abstraction.split(Pattern.quote("|"))[0]),
+								abstraction.split(Pattern.quote("|"))[1], 
+								abstraction.split(Pattern.quote("|"))[2],
+								abstraction.split(Pattern.quote("|"))[3]));
+
+					tableAbstraction.setInput(abstractionObject);
+					tableAbstraction.refresh();
+
+					instanceObject.clear();
+					List<String> lstInst= queryClass.selectInstance(0);
+					for (String instance :lstInst )
+						instanceObject.add(new Instance(Integer.valueOf(instance.split(Pattern.quote("|"))[0]),instance.split(Pattern.quote("|"))[1] , false));
+
+					tableInstance.setInput(instanceObject);
+					tableInstance.refresh();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+		});
 
-			gc.dispose();
-			item.setHeight(max);
-		}
+		InstanceFilter instanceFilter = new InstanceFilter();
+
+		Button clearFilter = new Button(abstractionGroup, SWT.NONE);
+		clearFilter.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		clearFilter.setBounds(415, 460, 80, 25);
+		clearFilter.setText("Unfilter");
+		clearFilter.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+
+				tableInstance.removeFilter(instanceFilter);
+				tableInstance.refresh();
+				
+			}
+		});
+
+		
+		
+		tableAbstraction.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+
+				IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+				if (!selection.isEmpty()) {
+					Object element = selection.getFirstElement();
+					if (element instanceof Abstraction) {
+						tableInstance.setFilters(instanceFilter);
+						Abstraction abstraction = (Abstraction) element;
+						instanceFilter.setInstanceFilter(abstraction.getId());
+						tableInstance.refresh();
+					}
+				}
+			}
+		});
+
+
+		//Drifts 
+
+		/*
+		 * Group tableViewGroup = new Group(group, SWT.NONE);
+		 * tableViewGroup.setText("Architectural Drifts"); tableViewGroup.setBounds(10,
+		 * 520, 500, 300); tableViewGroup.setLayout(new FillLayout());
+		 * tab1.setControl(group);
+		 * 
+		 * GridTableViewer gridTableViewer = new GridTableViewer(tableViewGroup,
+		 * SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
+		 * gridTableViewer.setUseHashlookup(true);
+		 * gridTableViewer.getGrid().setLinesVisible(true);
+		 * gridTableViewer.getGrid().setHeaderVisible(true);
+		 * gridTableViewer.getGrid().setVisibleLinesColumnPack(true);
+		 * gridTableViewer.getGrid().setBounds(0, 0, 500, 300);
+		 * 
+		 * GridColumn column1 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		 * column1.setResizeable(false); column1.setWidth(75); column1.setText("Drift");
+		 * 
+		 * GridColumn column2 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		 * column2.setResizeable(false); column2.setWidth(210); column2.setText("Name");
+		 * 
+		 * GridColumn column3 = new GridColumn(gridTableViewer.getGrid(), SWT.NONE);
+		 * column3.setResizeable(false); column3.setWidth(210);
+		 * column3.setWordWrap(true); column3.setText("Description");
+		 * 
+		 * gridTableViewer.setContentProvider(new ArrayContentProvider());
+		 * gridTableViewer.setLabelProvider(new TableLabelAnomalyProvider());
+		 * 
+		 * DataConstraint dataConstraint = null; List<Anomaly> anomalyObject = new
+		 * ArrayList<Anomaly>();
+		 * 
+		 * try { dataConstraint = new DataConstraint(databaseUrl); List<String>
+		 * lstAnomaly= dataConstraint.getAnomalies(); for (String anomaly :lstAnomaly )
+		 * anomalyObject.add(new Anomaly(anomaly.split(Pattern.quote("|"))[0],
+		 * anomaly.split(Pattern.quote("|"))[1], anomaly.split(Pattern.quote("|"))[2]
+		 * ));
+		 * 
+		 * gridTableViewer.setInput(anomalyObject);
+		 * 
+		 * } catch (SQLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (Exception e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); }
+		 * 
+		 * GridColumn []cols = gridTableViewer.getGrid().getColumns(); for (GridItem
+		 * item : gridTableViewer.getGrid().getItems()) { GC gc = new
+		 * GC(item.getDisplay()); int hmax = 80; int max = 0; Point tb=null;
+		 * for(GridColumn col : cols){ tb = col.getCellRenderer().computeSize(gc,
+		 * col.getWidth(), SWT.DEFAULT, item); max = Math.max(max, tb.y); if(max >
+		 * hmax){ break; } }
+		 * 
+		 * if(hmax==-1){
+		 * 
+		 * }else if(max > hmax){ max=hmax; }
+		 * 
+		 * gc.dispose(); item.setHeight(max); }
+		 */
 	}
 
 	private void UIAnnotation(TabFolder tabFolder, String projectName) {
@@ -647,16 +671,16 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		TabItem tab1 = new TabItem(tabFolder, SWT.NONE);
 		tab1.setText("Control Panel");
-		
+
 		ScrolledComposite scroller = new ScrolledComposite(tabFolder, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		scroller.setExpandVertical(true);
 		scroller.setExpandHorizontal(true);
-		
+
 		Composite group = new Composite(scroller, SWT.NONE);
 		scroller.setContent(group);
 		scroller.setMinSize(group.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-	
+
 		Button generateReport = new Button(group, SWT.NONE);
 		generateReport.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		generateReport.setBounds(120, 10, 100, 25);
@@ -798,7 +822,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		Label lblInfo6 =  new Label(controlGroup2, SWT.NONE);
 		lblInfo6.setText("access rules ignored");
 		lblInfo6.setBounds(50, 175, 250, 20);
-		
+
 		Text txtIgnoredDomain =  new Text(controlGroup2, SWT.NONE);
 		txtIgnoredDomain.setText("0");
 		txtIgnoredDomain.setBounds(10, 205, 30, 20);
@@ -816,7 +840,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		txtDrifts1.setText("0");
 		txtDrifts1.setBounds(10, 245, 30, 20);
 		txtDrifts1.setEditable(false);
-		
+
 		Label lblDrifts1 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts1.setText("unchecked abstractions (in current but not in planned)");
 		lblDrifts1.setBounds(50, 245, 330, 20);
@@ -825,7 +849,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		txtDrifts2.setText("0");
 		txtDrifts2.setBounds(10, 275, 30, 20);
 		txtDrifts2.setEditable(false);
-	
+
 		Label lblDrifts2 =  new Label(controlGroup2, SWT.NONE);
 		lblDrifts2.setText("unchecked relations (in current but not in planned)");
 		lblDrifts2.setBounds(50, 275, 330, 20);
@@ -872,7 +896,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		controlGroup8.setText("Ignored Architectural Rules");
 		controlGroup8.setBounds(930, 0, 450,260);
 		controlGroup8.setLayout(new GridLayout());
-		
+
 		//************* JFreeChart *************
 		Group controlGroup9 = new Group(group, SWT.NONE);
 		controlGroup9.setText("Pie Chart with All Rules");
@@ -1072,7 +1096,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
-					
+
 					try {
 						final List<Integer> lstValues = checkConstraintMethod.getIgnoredValues();
 						txtIgnoredComposite.setText(lstValues.get(0).toString());
@@ -1082,7 +1106,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
-					
+
 					try {
 						final List<Integer> lstValues = checkConstraintMethod.getUntestedValues();
 						int value = lstValues.get(0) + lstValues.get(1);
@@ -1119,7 +1143,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-					
+
 
 					//Graph
 					JFreeChart jchart = ChartFactory.createPieChart3D("", dataset, true, true, false);
@@ -1129,8 +1153,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 					plot.setForegroundAlpha(0.5f);
 					ChartComposite chartComposite = new ChartComposite(controlGroup7, SWT.NONE, jchart, true);
 					chartComposite.setSize(450,240);
-					
-					
+
+
 					final DefaultPieDataset dataset2 = new DefaultPieDataset();
 					try {
 						dataset2.setValue("Violations", Integer.parseInt(checkConstraintMethod.getTotalViolations()));
@@ -1141,7 +1165,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-					
+
 					try {
 						dataset2.setValue("Passed", Integer.parseInt(checkConstraintMethod.getTotalPassed()));
 					} catch (NumberFormatException e2) {
@@ -1151,7 +1175,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-					
+
 					try {
 						dataset2.setValue("Ignored",checkConstraintMethod.getIgnoredValues().get(0)+ checkConstraintMethod.getIgnoredValues().get(1)+checkConstraintMethod.getIgnoredValues().get(2));
 					} catch (NumberFormatException e2) {
@@ -1161,7 +1185,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-					
+
 					JFreeChart jchart2 = ChartFactory.createPieChart3D("", dataset2, true, true, false);
 					final PiePlot3D plot2 = (PiePlot3D) jchart2.getPlot();
 					plot2.setStartAngle(290);
@@ -1169,7 +1193,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 					plot2.setForegroundAlpha(0.5f);
 					ChartComposite chartComposite2 = new ChartComposite(controlGroup9, SWT.NONE, jchart2, true);
 					chartComposite2.setSize(450,240);
-					
+
 
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "The model was checked against ocl restrictions.");
 				}
@@ -1431,18 +1455,6 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		viewerRules.setInput(ruleContainer);
 
-	}
-
-	private ColumnLabelProvider createColumnLabelProvider() {
-		return new ColumnLabelProvider() {
-
-			@Override
-			public String getText(Object element) {
-
-				return ((TreeModel) element).getNodeName();
-			}
-
-		};
 	}
 
 	public void moveFile(String in, String out) {
@@ -1767,32 +1779,4 @@ public class MainView extends ViewPart implements IPartListener2 {
 		return databaseUrl;
 	}
 
-	private TreeModel getParentAbstactions() throws Exception{
-
-		QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-		List<String> abstractions = queryClass.getAbstractions();
-		List<String> instances = queryClass.selectInstance(1);
-
-		TreeModel treeModel = new TreeModel("root", null);
-		TreeModel treeModelRoot = treeModel;
-
-		for (String abs:abstractions) {
-
-			treeModel.addAbstraction(abs, "root");
-			treeModel = treeModel.getChild(abs);
-			List<TreeModel> temp = treeModel.getChildren();
-			Predicate<String> strAbs = str -> str.split(Pattern.quote("|"))[0].equals(abs);
-			List<String> filteredInstance = instances.stream().filter(strAbs).collect(Collectors.toList());
-
-			for (int i = 0; i< filteredInstance.size() ; i++)
-				filteredInstance.set(i, filteredInstance.get(i).split(Pattern.quote("|"))[1]);	
-
-			for (int i=0; i< filteredInstance.size(); i++)
-				temp.add(new TreeModel(filteredInstance.get(i),filteredInstance.get(i).split(Pattern.quote("_"))[0]));
-
-			treeModel.setChildren(temp);
-			treeModel = treeModelRoot;
-		}
-		return treeModel;
-	}
 }

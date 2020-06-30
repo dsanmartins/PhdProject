@@ -30,7 +30,7 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS field_annotation (project_name text, class_name text, field_name text, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS method_annotation (project_name text, class_name text, method_name text,file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS variable_annotation (project_name text, class_name text, method_name text, variable_name, file text, annotation text, belongs text) ");
-		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");
+		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text, quantity integer) ");
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS relation (package_from text, class_from text, field_from text, method_from text, variable_from text, "
 				+ "package_to text, class_to text, field_to text, method_to text, variable_to text, modisco_path text, type_relation text) ");
@@ -47,6 +47,24 @@ public class QueryClass {
 				"        UNION ALL \n" + 
 				"        select annotation A ,belongs B from variable_annotation ) \n" + 
 				" T where T.A <> 'None' and T.B <> 'None' ;");
+		
+		mydb.executeStmt("CREATE VIEW IF NOT EXISTS relation_class (abstraction_from, from_, abstraction_to, to_, modisco_path)\n" + 
+				"AS \n" + 
+				"select abstraction1, package_from || '.' ||  class_from, abstraction2, package_to || '.' ||class_to, a.modisco_path  \n" + 
+				"from (\n" + 
+				"        select DISTINCT (select annotation from summary_annotation where class = a.class_from) abstraction1,\n" + 
+				"			           a.package_from, \n" + 
+				"			           a.class_from, \n" + 
+				"			           (select annotation from summary_annotation where class = a.class_to) abstraction2,\n" + 
+				"				           a.package_to, \n" + 
+				"				           a.class_to,\n" + 
+				"				           a.modisco_path\n" + 
+				"				    from relation a inner join summary_annotation  b on  a.class_to = b.class                                                 \n" + 
+				"				    where a.package_from <> a.package_to AND\n" + 
+				"				        a.class_from <> a.class_to \n" + 
+				"				    ) a\n" + 
+				"where a.class_from in (select class from summary_annotation)\n" + 
+				"Order by abstraction1;");
 		mydb.executeStmt("create table IF NOT EXISTS summary_annotation(package text,class text, field text ,method text,variable text,annotation text) ");	
 		mydb.executeStmt("delete from abstractions"); 
 		mydb.executeStmt("delete from relation"); 
@@ -57,20 +75,20 @@ public class QueryClass {
 	public void populateAbstractions() throws SQLException, Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('1','Managed');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('2','Managing');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('3','LoopManager');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('4','Loop');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('5','Monitor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('6','Analyzer');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('7','Planner');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('8','Executor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('9','Knowledge');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('10','Sensor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('11','Effector');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','MeasuredOutput');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','ReferenceInput');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('14','Alternative');");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('1','Managed', 0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('2','Managing',0 );");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('3','LoopManager',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('4','Loop',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('5','Monitor',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('6','Analyzer',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('7','Planner',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('8','Executor',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('9','Knowledge',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('10','Sensor',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('11','Effector',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('12','MeasuredOutput',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('13','ReferenceInput',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('14','Alternative',0);");
 		mydb.closeConnection();
 	}
 
@@ -116,10 +134,32 @@ public class QueryClass {
 
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select annotation from abstractions order by id");
-		lst = this.resultSetToArrayList1(rs);
+		ResultSet rs = mydb.executeQry("select c.id, c.annotation, ifnull(d.quantity,c.quantity), c.quantity \n" + 
+				"from abstractions c left join \n" + 
+				"\n" + 
+				"    (\n" + 
+				"        select (select annotation \n" + 
+				"                from abstractions \n" + 
+				"                where id = a.abstraction_id) as annotation, \n" + 
+				"            count(*) as quantity\n" + 
+				"        from instances a left join abstractions b on a.abstraction_id  = b.id \n" + 
+				"        group by a.abstraction_id \n" + 
+				"    ) d\n" + 
+				"    on c.annotation = d.annotation\n" + 
+				"order by c.id;");
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() + "|" + rs.getObject(3).toString()+ "|" + rs.getObject(4).toString());
+		}
 		mydb.closeConnection();
 		return lst;
+	}
+	
+	public void updateAbstraction(String abstraction, String quantity) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update abstractions set  quantity= " + Integer.valueOf(quantity) + 
+				" where annotation = '" + abstraction + "';");		
+		mydb.closeConnection();
 	}
 
 	public boolean checkAbstractionExist(String abs) throws Exception {
@@ -461,10 +501,18 @@ public class QueryClass {
 		}
 	}
 
+	public void deleteInstance() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("delete from instances;"); 
+		mydb.executeStmt("update abstractions set quantity = 0;"); 
+		mydb.closeConnection();
+	}
+	
 	public void deleteInstance(String instance) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("delete from instances where annotation = '" +   instance + "';"); 
+		mydb.executeStmt("delete from instances where annotation = '" + instance + "';"); 
 		mydb.closeConnection();
 	}
 	
@@ -496,6 +544,16 @@ public class QueryClass {
 					lst.add(rs.getObject(1).toString());
 
 				lst.add(0,"None");
+			}
+			else
+			{
+
+				if (op == 0)
+				{
+					rs = mydb.executeQry("select abstraction_id, annotation from instances order by annotation;");
+					while (rs.next())
+						lst.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString());
+				}
 			}
 		}
 		mydb.closeConnection();
@@ -562,23 +620,7 @@ public class QueryClass {
 
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
-		ResultSet rs = mydb.executeQry("select abstraction1, package_from || '.' ||  class_from, abstraction2, package_to || '.' ||class_to, a.modisco_path  \n" + 
-				"from (\n" + 
-				"    select DISTINCT (select annotation from summary_annotation where package = a.package_from and class = a.class_from) abstraction1,\n" + 
-				"           a.package_from, \n" + 
-				"           a.class_from, \n" + 
-				"           (select annotation from summary_annotation where package = a.package_to and class = a.class_to) abstraction2,\n" + 
-				"           a.package_to, \n" + 
-				"           a.class_to,\n" + 
-				"           a.modisco_path\n" + 
-				"    from relation a inner join summary_annotation  b on  a.package_to = b.package and \n" + 
-				"                                                        a.class_to = b.class                                                 \n" + 
-				"    where a.package_from <> a.package_to AND\n" + 
-				"        a.class_from <> a.class_to\n" + 
-				"    ) a\n" + 
-				"where a.package_from in (select package from summary_annotation) AND\n" + 
-				"      a.class_from in (select class from summary_annotation);");		
-
+		ResultSet rs = mydb.executeQry("select * from relation_class;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
 		}
@@ -791,5 +833,46 @@ public class QueryClass {
 		return lst;	
 	}
 
-
+	public int getMaxValueInstance(int abstraction, String annotation) throws Exception {
+		
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
+				"    from(\n" + 
+				"        select annotation, instr(annotation,'_') as pos\n" + 
+				"        from instances where abstraction_id = " + abstraction + " and annotation like '" + annotation +"%' );");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+	
+	public int getQuantityAbstraction(String instance) throws Exception {
+		
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select ifnull(count(*),0) from instances where annotation like '" + instance + "%';");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+	
+	public int getMaxValueInstance(String annotation) throws Exception {
+		
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
+				"    from(\n" + 
+				"        select annotation, instr(annotation,'_') as pos\n" + 
+				"        from instances where annotation like '" + annotation +"%' );");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+	
 }

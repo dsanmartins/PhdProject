@@ -531,11 +531,19 @@ public class GenerateStructure {
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
-		rtn = baseXManager.getActionRelation("action:UsesTypes");
+		rtn = baseXManager.getActionRelation("action:UsesType");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 
 		rtn = baseXManager.getActionRelation("action:Creates");
+		if (!rtn.equals(""))
+			relation.add(rtn);
+		
+		rtn = baseXManager.getActionRelation("action:ExceptionFlow");
+		if (!rtn.equals(""))
+			relation.add(rtn);
+		
+		rtn = baseXManager.getActionRelation("action:Throws");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 		
@@ -544,6 +552,10 @@ public class GenerateStructure {
 			relation.add(rtn);
 		
 		rtn = baseXManager.getActionRelation("action:Writes");
+		if (!rtn.equals(""))
+			relation.add(rtn);
+		
+		rtn = baseXManager.getActionRelation("action:Reads");
 		if (!rtn.equals(""))
 			relation.add(rtn);
 

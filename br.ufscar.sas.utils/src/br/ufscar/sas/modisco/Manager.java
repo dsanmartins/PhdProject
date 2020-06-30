@@ -437,7 +437,7 @@ public class Manager   {
 
 			if (error1 == 0 && error2 ==0)
 			{
-				if (result1.length()>0 && !result1.startsWith(".java") && result2.length()>0 && !result2.startsWith(".java")) {
+				if (result1.length()>0 && result2.length()>0) {
 					
 					resultFrom.add(result1.substring(1));
 					resultTo.add(result2.substring(1));
