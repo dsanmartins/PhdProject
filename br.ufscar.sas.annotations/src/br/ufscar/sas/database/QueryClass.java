@@ -47,7 +47,7 @@ public class QueryClass {
 				"        UNION ALL \n" + 
 				"        select annotation A ,belongs B from variable_annotation ) \n" + 
 				" T where T.A <> 'None' and T.B <> 'None' ;");
-		
+
 		mydb.executeStmt("CREATE VIEW IF NOT EXISTS relation_class (abstraction_from, from_, abstraction_to, to_, modisco_path)\n" + 
 				"AS \n" + 
 				"select abstraction1, package_from || '.' ||  class_from, abstraction2, package_to || '.' ||class_to, a.modisco_path  \n" + 
@@ -153,7 +153,7 @@ public class QueryClass {
 		mydb.closeConnection();
 		return lst;
 	}
-	
+
 	public void updateAbstraction(String abstraction, String quantity) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -461,7 +461,7 @@ public class QueryClass {
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		for (int i=0; i < summary.size(); i++) {
-			
+
 			String query = "insert into summary_annotation (package, class, field, method, variable, annotation) values (" +
 					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[0] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[0] + "' END," +
 					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[1] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[1] + "' END," +
@@ -508,14 +508,14 @@ public class QueryClass {
 		mydb.executeStmt("update abstractions set quantity = 0;"); 
 		mydb.closeConnection();
 	}
-	
+
 	public void deleteInstance(String instance) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("delete from instances where annotation = '" + instance + "';"); 
 		mydb.closeConnection();
 	}
-	
+
 	public List<String> selectInstance(int op) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -710,7 +710,7 @@ public class QueryClass {
 
 		mydb.closeConnection();
 	}
-	
+
 	public void methodBelongsTo() throws Exception {
 
 		List<String> values = new ArrayList<String>();
@@ -811,7 +811,7 @@ public class QueryClass {
 
 
 	}
-		
+
 	public List<String> getSummaryAnnotation() throws Exception{
 
 		List<String> lst = new ArrayList<String>();
@@ -834,7 +834,7 @@ public class QueryClass {
 	}
 
 	public int getMaxValueInstance(int abstraction, String annotation) throws Exception {
-		
+
 		int max = 0;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
@@ -847,9 +847,9 @@ public class QueryClass {
 		mydb.closeConnection();
 		return max;
 	}
-	
+
 	public int getQuantityAbstraction(String instance) throws Exception {
-		
+
 		int max = 0;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry("select ifnull(count(*),0) from instances where annotation like '" + instance + "%';");	
@@ -859,9 +859,9 @@ public class QueryClass {
 		mydb.closeConnection();
 		return max;
 	}
-	
+
 	public int getMaxValueInstance(String annotation) throws Exception {
-		
+
 		int max = 0;
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
@@ -874,5 +874,124 @@ public class QueryClass {
 		mydb.closeConnection();
 		return max;
 	}
+
+	public int getInnerAnnotationClass(String package_name, String class_name, String path , String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad\n" + 
+				"from package_annotation a where a.name = '" + package_name + "' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad \n" + 
+				"from field_annotation a where a.file = '" +  path +"'  and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from method_annotation a where a.file = '" +  path +"' and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from variable_annotation a where a.file = '" +  path +"' and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				");");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+
+	public int getInnerAnnotationMethod(String class_name, String method_name, String newRealPath, String path , String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select substr(file, 1, (select length(file) from package_annotation where file='" + newRealPath + "' and annotation <> 'None' and annotation = '" + annotation + "')) as method_file\n" + 
+				"from method_annotation where method_name = '" + method_name + "') a inner join package_annotation b on a.method_file = b.file \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from class_annotation a inner join method_annotation b on a.name = b.class_name \n" + 
+				"where a.annotation = '" + annotation + "' and a.annotation <> 'None' and a.name = '" + class_name + "' and b.method_name = '" + method_name + "' and a.file = '" + path + "' " + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from variable_annotation a where a.annotation = '" + annotation + "' and a.annotation <> 'None' and a.method_name = '" + method_name + "' and a.file = '" + path  +"');");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+
+	public int getInnerAnnotationField(String class_name, String field_name, String newRealPath, String path , String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select substr(file, 1, (select length(file) from package_annotation where file='"+ newRealPath + "' and annotation <> 'None' and annotation = '" + annotation +"')) as field_file\n" + 
+				"from field_annotation where field_name = '"+ field_name +"') a inner join package_annotation b on a.field_file = b.file \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from class_annotation a inner join field_annotation b on a.name = b.class_name \n" + 
+				"where a.annotation = '" + annotation + "' and a.annotation <> 'None' and a.name = '" + class_name + "' and b.field_name = '" + field_name + "' and a.file = '" + path +"');");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
 	
+	public int getInnerAnnotationVariable(String class_name, String method_name, String variable_name, String newRealPath, String path , String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select substr(file, 1, (select length(file) from package_annotation where file='"+ newRealPath +"' and annotation <> 'None' and annotation = '" + annotation +"')) as variable_file\n" + 
+				"from variable_annotation where variable_name = '"+ variable_name + "') a inner join package_annotation b on a.variable_file = b.file\n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from class_annotation a inner join variable_annotation b on a.name = b.class_name \n" + 
+				"where a.annotation = '" + annotation +"' and a.annotation <> 'None' and a.name = '" + class_name + "' and b.variable_name = '" + variable_name + "' and a.file = '" +  path + "'\n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from method_annotation a where a.method_name = '" + method_name +"' and a.annotation <> 'None' and a.file = '" + path +"');");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+	
+	public int getInnerAnnotationPackage(String package_name, String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as field_file\n" + 
+				"from field_annotation) a inner join package_annotation b on a.field_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None';\n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as class_file\n" + 
+				"from class_annotation) a inner join package_annotation b on a.class_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None';\n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as method_file\n" + 
+				"from method_annotation) a inner join package_annotation b on a.method_file = b.file where a.annotation = '"+ annotation + "' and a.annotation <> 'None';\n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad from (\n" + 
+				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as variable_file\n" + 
+				"from variable_annotation) a inner join package_annotation b on a.variable_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None');");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+
 }
