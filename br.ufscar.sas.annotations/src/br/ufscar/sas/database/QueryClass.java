@@ -974,15 +974,15 @@ public class QueryClass {
 				"from (\n" + 
 				"select count(*) as cantidad from (\n" + 
 				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as field_file\n" + 
-				"from field_annotation) a inner join package_annotation b on a.field_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None';\n" + 
+				"from field_annotation) a inner join package_annotation b on a.field_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
 				"UNION ALL\n" + 
 				"select count(*) as cantidad from (\n" + 
 				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as class_file\n" + 
-				"from class_annotation) a inner join package_annotation b on a.class_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None';\n" + 
+				"from class_annotation) a inner join package_annotation b on a.class_file = b.file where a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
 				"UNION ALL\n" + 
 				"select count(*) as cantidad from (\n" + 
 				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as method_file\n" + 
-				"from method_annotation) a inner join package_annotation b on a.method_file = b.file where a.annotation = '"+ annotation + "' and a.annotation <> 'None';\n" + 
+				"from method_annotation) a inner join package_annotation b on a.method_file = b.file where a.annotation = '"+ annotation + "' and a.annotation <> 'None' \n" + 
 				"UNION ALL\n" + 
 				"select count(*) as cantidad from (\n" + 
 				"select annotation, substr(file, 1, (select length(file) from package_annotation where name='" + package_name +"')) as variable_file\n" + 
