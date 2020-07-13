@@ -363,7 +363,7 @@ class SasDslGenerator extends AbstractGenerator {
 						}
 						
 						level2++
-						depth.set(2,level2)
+						depth.set(2,0)
 					}
 
 					level1++

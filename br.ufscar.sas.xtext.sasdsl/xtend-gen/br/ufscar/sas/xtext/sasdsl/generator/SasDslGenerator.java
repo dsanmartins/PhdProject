@@ -399,7 +399,7 @@ public class SasDslGenerator extends AbstractGenerator {
                   }
                 }
                 level2++;
-                this.depth.set(2, level2);
+                this.depth.set(2, Integer.valueOf(0));
               }
             }
             level1++;

@@ -60,11 +60,38 @@ public class QueryClass {
 				"				           a.class_to,\n" + 
 				"				           a.modisco_path\n" + 
 				"				    from relation a inner join summary_annotation  b on  a.class_to = b.class                                                 \n" + 
-				"				    where a.package_from <> a.package_to AND\n" + 
-				"				        a.class_from <> a.class_to \n" + 
+				"				    where a.class_from <> a.class_to \n" + 
 				"				    ) a\n" + 
 				"where a.class_from in (select class from summary_annotation)\n" + 
 				"Order by abstraction1;");
+		mydb.executeStmt("CREATE VIEW IF NOT EXISTS relation_method (abstraction_from, from_, abstraction_to, to_, modisco_path) AS \n" + 
+				"select abstraction1, package_from || '.' ||  class_from || '.' || method_from , abstraction2, package_to || '.' ||class_to || '.' || method_to, modisco_path  \n" + 
+				"from ( 				\n" + 
+				"select DISTINCT (select annotation \n" + 
+				"                 from summary_annotation \n" + 
+				"                 where class = a.class_from and\n" + 
+				"                       package = a.package_from) abstraction1,  \n" + 
+				"                    a.package_from,   \n" + 
+				"					a.class_from,\n" + 
+				"					a.field_from,\n" + 
+				"					a.method_from,\n" + 
+				"					a.variable_from,\n" + 
+				"					(select annotation \n" + 
+				"					 from summary_annotation \n" + 
+				"					 where method = a.method_to and \n" + 
+				"                           class = a.class_to and\n" + 
+				"                           package = a.package_to) abstraction2,  \n" + 
+				"                    a.package_to,   \n" + 
+				"					a.class_to, \n" + 
+				"					a.field_to,\n" + 
+				"					a.method_to,\n" + 
+				"					'',\n" + 
+				"					a.modisco_path  \n" + 
+				"from relation a inner join summary_annotation  b on  a.method_to = b.method and\n" + 
+				"                                                     a.class_to = b.class and\n" + 
+				"                                                     a.package_to = b.package\n" + 
+				"where abstraction1 <> abstraction2\n" + 
+				");");
 		mydb.executeStmt("create table IF NOT EXISTS summary_annotation(package text,class text, field text ,method text,variable text,annotation text) ");	
 		mydb.executeStmt("delete from abstractions"); 
 		mydb.executeStmt("delete from relation"); 
@@ -621,6 +648,18 @@ public class QueryClass {
 		List<String> lst = new ArrayList<String>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
 		ResultSet rs = mydb.executeQry("select * from relation_class;");		
+		while (rs.next()) {
+			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
+		}
+		mydb.closeConnection();
+		return lst;	
+	}
+	
+	public List<String> getActionRelationMethod() throws Exception {
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select * from relation_method;");		
 		while (rs.next()) {
 			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
 		}

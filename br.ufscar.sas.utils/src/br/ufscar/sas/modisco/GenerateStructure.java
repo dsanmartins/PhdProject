@@ -803,6 +803,7 @@ public class GenerateStructure {
 
 		QueryClass queryClass = new QueryClass(path_);
 		List<String> lstActionRelation = queryClass.getActionRelationClass();
+		lstActionRelation.addAll(queryClass.getActionRelationMethod());
 		if (lstActionRelation.size() != 0)
 		{
 

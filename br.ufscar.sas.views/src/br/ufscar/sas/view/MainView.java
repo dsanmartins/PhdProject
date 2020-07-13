@@ -48,14 +48,11 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.GridColumn;
-import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -89,6 +86,7 @@ import org.jfree.util.Rotation;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
@@ -98,12 +96,12 @@ import br.ufscar.sas.createKDM.CreateKDM;
 import br.ufscar.sas.cripto.CriptoBase64;
 import br.ufscar.sas.database.QueryClass;
 import br.ufscar.sas.dataconstraint.DataConstraint;
+import br.ufscar.sas.parser.ConstructorVisitor;
 import br.ufscar.sas.parser.FieldClassVisitor;
 import br.ufscar.sas.parser.MethodVisitor;
 import br.ufscar.sas.parser.VariableVisitor;
 import br.ufscar.sas.recommendation.RefactoringRecommendation;
 import br.ufscar.sas.report.Report;
-import br.ufscar.sas.tableviewer.Anomaly;
 import br.ufscar.sas.tableviewer.ColumnLabelProviderFifth;
 import br.ufscar.sas.tableviewer.ColumnLabelProviderFirst;
 import br.ufscar.sas.tableviewer.ColumnLabelProviderFourth;
@@ -112,18 +110,17 @@ import br.ufscar.sas.tableviewer.ColumnLabelProviderThird;
 import br.ufscar.sas.tableviewer.Data;
 import br.ufscar.sas.tableviewer.EditingAnnotationInstance;
 import br.ufscar.sas.tableviewer.EditingRulesInstance;
-import br.ufscar.sas.tableviewer.TableLabelAnomalyProvider;
 import br.ufscar.sas.tableviewer.TableLabelProvider;
 import br.ufscar.sas.tableviewer.TableMetaData;
 import br.ufscar.sas.tableviewer.abstractions.Abstraction;
 import br.ufscar.sas.tableviewer.abstractions.EditingAbstractionQuantityInstance;
 import br.ufscar.sas.tableviewer.abstractions.TableLabelAbstractionProvider;
 import br.ufscar.sas.tableviewer.instances.ColumnLabelProviderCheckbox;
+import br.ufscar.sas.tableviewer.instances.ColumnLabelProviderInstance;
+import br.ufscar.sas.tableviewer.instances.EditingInstanceCheck;
 import br.ufscar.sas.tableviewer.instances.EditingInstanceName;
 import br.ufscar.sas.tableviewer.instances.Instance;
 import br.ufscar.sas.tableviewer.instances.InstanceFilter;
-import br.ufscar.sas.tableviewer.instances.ColumnLabelProviderInstance;
-import br.ufscar.sas.tableviewer.instances.EditingInstanceCheck;
 import br.ufscar.sas.tableviewer.result.MappedAnomaly;
 import br.ufscar.sas.tableviewer.result.TableLabelAnomalyMappedProvider;
 import br.ufscar.sas.transformation.AdaptiveSystemUMLProfile;
@@ -607,7 +604,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		Button processAnnotation = new Button(controlGroup, SWT.NONE);
 		processAnnotation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		processAnnotation.setBounds(350, 0, 140, 25);
-		processAnnotation.setText("Process Annotations");
+		processAnnotation.setText("Mapping Process");
 
 		processAnnotation.addSelectionListener(new SelectionAdapter() {
 
@@ -1658,7 +1655,8 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 					// methods and variables
 					try {
-						List<String> nl = this.methodAndVariables(new File(resource.getLocation().toOSString()));
+						List<String> nl = this.constructor(new File(resource.getLocation().toOSString()));
+						nl.addAll(this.methodAndVariables(new File(resource.getLocation().toOSString())));
 						queryClass = new QueryClass(databaseUrl);
 						String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
 						String realPath = criptoBase64.decodeBase64Path(pathCode);
@@ -1713,6 +1711,28 @@ public class MainView extends ViewPart implements IPartListener2 {
 		return nl;
 	}
 
+	private List<String> constructor(File file) throws FileNotFoundException {
+		
+		List<String> methodAndVariables = new ArrayList<String>();
+		String str = "";
+		ConstructorVisitor md = new ConstructorVisitor();
+		CompilationUnit cu = JavaParser.parse(file);
+		List<ConstructorDeclaration> listMd = md.getMethodClasses(cu);
+		for (int i = 0; i < listMd.size(); i++) {
+			String methodName = listMd.get(i).getName().toString();
+			VariableVisitor vv = new VariableVisitor();
+			List<VariableDeclarator> listVD = vv.getVariableExprConstructor(listMd.get(i));
+			for (int j = 0; j < listVD.size(); j++) {
+				String variable = listVD.get(j).getNameAsString().toString();
+				str = str + "|" + variable;
+			}
+			methodAndVariables.add(methodName + str);
+			str = "";
+		}
+		return methodAndVariables;
+		
+	}
+ 	
 	private List<String> methodAndVariables(File file) throws FileNotFoundException {
 		// Methods and variables
 		List<String> methodAndVariables = new ArrayList<String>();
