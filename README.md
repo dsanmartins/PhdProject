@@ -7,7 +7,7 @@ The purpose of this application is to aid software engineers on detecting archit
 ### Applictation Details
 
 The application was developed in several eclipse plugins in order to separate the functionalities and maintain them properly. 
-The developing environment:  Eclipse 2018-12 (v4.10).
+The developing environment:  Eclipse 2020-03 (v4.15).
 The list of plugins are:
 
   - AspectJ with equinox weaving
