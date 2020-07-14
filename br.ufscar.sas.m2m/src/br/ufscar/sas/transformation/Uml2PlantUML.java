@@ -21,6 +21,8 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
 
 import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.structurizr.Workspace;
 import com.structurizr.io.plantuml.PlantUMLWriter;
 import com.structurizr.model.Container;
@@ -39,7 +41,7 @@ public class Uml2PlantUML {
 	LinkedListMultimap<String,String>  packagedList;
 	Map<String, String> mappingMap = new HashedMap<String, String>();
 	private static final String END_NODE = "End Node";
-	
+
 	private void loadMappings(String mappingPath) {
 
 		Path path = Paths.get(mappingPath);
@@ -64,7 +66,7 @@ public class Uml2PlantUML {
 		Model model = workspace.getModel();
 		ViewSet views = workspace.getViews();
 		SoftwareSystem adaptiveSystem = model.addSoftwareSystem(Location.Internal, "Adaptive System Architecture", "Allows customers to view information about their bank accounts, and make payments.");
-		
+
 		List<Package> memory1 = new ArrayList<Package>();
 		List<String> roots = new ArrayList<String>();
 
@@ -109,38 +111,33 @@ public class Uml2PlantUML {
 		}
 
 		this.loadMappings(mappingPath);
-		DeploymentNode parent = null;
-		for (String key : packagedList.keySet()) {
 
-			DeploymentNode node = null;
-			//Check if it is a root node
+		List<DeploymentNode> architecture = new ArrayList<DeploymentNode>();
+		for (String key : packagedList.keySet()) {
 			if (roots.contains(key))
 			{
-				node = model.addDeploymentNode(key, key, key, mappingMap.get(key));
+				architecture.add(model.addDeploymentNode(key, key, key, mappingMap.get(key)));
 				roots.remove(key);
 			}
-			else 
-			{
-				//We have to obtain the parent of the node
-				if (parent.getDeploymentNodeWithName(key) != null)			
-					node = parent.getDeploymentNodeWithName(key);
-			}
-
-			List<String> children = new ArrayList<String>(packagedList.get(key));
-			for (String child : children) {
-
-				if (this.hasChildren(child))
-					node.addDeploymentNode(child, child,  mappingMap.get(child));
-				else 
-				{
-					DeploymentNode nNode = node.addDeploymentNode(child, child,  mappingMap.get(child));
-					nNode.addTags(END_NODE);
-					Container container = adaptiveSystem.addContainer("c"+child, "c"+child, "");
-					nNode.add(container);
-				}
-			}
-			parent = node;
 		}
+
+		while (!architecture.isEmpty())
+		{
+			DeploymentNode n1 = architecture.remove(0);
+			List<String> children = packagedList.get(n1.getName());
+			if (!children.isEmpty()){
+				for (int i =0; i< children.size(); i++)
+					architecture.add(0, n1.addDeploymentNode(children.get(i), children.get(i),  mappingMap.get(children.get(i))));
+			}
+			else
+			{
+				n1.addTags(END_NODE);
+				Container container = adaptiveSystem.addContainer("c"+n1.getName(), "c"+n1.getName(), "");
+				n1.add(container);
+			}
+		}
+
+
 		//Root nodes without children
 		for (int i = 0; i< roots.size(); i++)
 		{
@@ -148,9 +145,9 @@ public class Uml2PlantUML {
 			Container container = adaptiveSystem.addContainer("NULL_"+i, "NULL", "NULL"); 
 			node.add(container);
 		}
-		
+
 		List<Relationship> lRelationships = new ArrayList<Relationship>();
-		
+
 		for (Element element : model.getElements())
 		{
 			if (element instanceof DeploymentNode || element instanceof Container )
@@ -170,12 +167,12 @@ public class Uml2PlantUML {
 				}
 			}
 		}
-		
+
 		DeploymentView developmentView = views.createDeploymentView(adaptiveSystem, "LiveDeployment", title);
 		developmentView.setEnvironment("");
 		for (DeploymentNode node : model.getDeploymentNodes())	
 			developmentView.add(node);
-	
+
 		for (Relationship relation : lRelationships)	
 			developmentView.add(relation);
 
@@ -186,32 +183,32 @@ public class Uml2PlantUML {
 		String diagram = stringWriter.toString();
 		diagram = diagram.replaceAll("(?m)rectangle.*", "");
 		diagram = diagram.replaceAll("(?m)@enduml.*", "");
-		
+
 		String style = "skinparam node {\n" + 
-						"\n" + 
-					   "	backgroundColor<<Reference Input>> #3498db\n" + 
-					   "	backgroundColor<<Alternative>> #3498db\n" + 
-					   "	backgroundColor<<Measured Output>> #3498db\n" + 
-					   "	backgroundColor<<Executor>> #3498db\n" + 
-					   "	backgroundColor<<Sensor>> #3498db\n" + 
-					   "	backgroundColor<<Monitor>> #3498db\n" + 
-					   "	backgroundColor<<Analyzer>> #3498db\n" + 
-					   "	backgroundColor<<Planner>> #3498db\n" + 
-					   "	backgroundColor<<Effector>> #3498db\n" + 
-					   "	FontColor<<Reference Input>> white\n" + 
-					   "	FontColor<<Alternative>> white\n" + 
-					   "	FontColor<<Measured Output>> white\n" + 
-					   "	FontColor<<Executor>> white\n" + 
-					   "	FontColor<<Sensor>> white\n" + 
-					   "	FontColor<<Monitor>> white\n" + 
-					   "	FontColor<<Analyzer>> white\n" + 
-					   "	FontColor<<Planner>> white\n" + 
-					   "	FontColor<<Effector>> white\n" + 
-					   "}\n" +
-					   "@enduml";
-		
+				"\n" + 
+				"	backgroundColor<<Reference Input>> #3498db\n" + 
+				"	backgroundColor<<Alternative>> #3498db\n" + 
+				"	backgroundColor<<Measured Output>> #3498db\n" + 
+				"	backgroundColor<<Executor>> #3498db\n" + 
+				"	backgroundColor<<Sensor>> #3498db\n" + 
+				"	backgroundColor<<Monitor>> #3498db\n" + 
+				"	backgroundColor<<Analyzer>> #3498db\n" + 
+				"	backgroundColor<<Planner>> #3498db\n" + 
+				"	backgroundColor<<Effector>> #3498db\n" + 
+				"	FontColor<<Reference Input>> white\n" + 
+				"	FontColor<<Alternative>> white\n" + 
+				"	FontColor<<Measured Output>> white\n" + 
+				"	FontColor<<Executor>> white\n" + 
+				"	FontColor<<Sensor>> white\n" + 
+				"	FontColor<<Monitor>> white\n" + 
+				"	FontColor<<Analyzer>> white\n" + 
+				"	FontColor<<Planner>> white\n" + 
+				"	FontColor<<Effector>> white\n" + 
+				"}\n" +
+				"@enduml";
+
 		diagram = diagram + style;
-		
+
 		try {
 			Files.write(Paths.get(path + "ComponentDiagram.txt"), diagram.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING );
 		} catch (IOException e) {
@@ -219,6 +216,25 @@ public class Uml2PlantUML {
 			e.printStackTrace();
 		}
 	}
+
+	private String returnParent(LinkedListMultimap<String, String> list, String child) {
+
+		LinkedListMultimap<String, String> invertAbstraction = Multimaps.invertFrom(list, LinkedListMultimap.<String, String> create());
+		return invertAbstraction.get(child).get(0);
+
+	}
+
+	private DeploymentNode returnDeploymentNode(Model model, String parent) {
+
+		for (DeploymentNode deploymentNode: model.getDeploymentNodes()) {
+
+			if (deploymentNode.getName().equals(parent))
+				return deploymentNode;
+
+		}
+		return null;
+	}
+
 
 	private boolean hasChildren(String parent) {
 
