@@ -536,10 +536,11 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
-	public void deleteInstance(String instance) throws Exception {
+	public void deleteInstance(String instance, int id) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("delete from instances where annotation = '" + instance + "';"); 
+		mydb.executeStmt("update abstractions set quantity = (select count(*)-1 from abstractions where id=" + id + ") where id =" + id + ";"); 
 		mydb.closeConnection();
 	}
 

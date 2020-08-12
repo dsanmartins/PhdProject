@@ -411,7 +411,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 						try {
 							QueryClass queryClass = new QueryClass(databaseUrl);
-							queryClass.deleteInstance(instance.getInstance());
+							queryClass.deleteInstance(instance.getInstance(), instance.getAbstractionID());
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -428,7 +428,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 								abstraction.split(Pattern.quote("|"))[1], 
 								abstraction.split(Pattern.quote("|"))[2],
 								abstraction.split(Pattern.quote("|"))[3]));
-
+					
 					tableAbstraction.setInput(abstractionObject);
 					tableAbstraction.refresh();
 
