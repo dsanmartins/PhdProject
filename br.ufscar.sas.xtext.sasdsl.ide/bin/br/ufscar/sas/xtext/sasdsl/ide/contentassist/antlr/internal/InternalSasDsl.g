@@ -7730,16 +7730,9 @@ rule__DSLController__Group__4__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
-		(rule__DSLController__MonitorAssignment_4)
-		{ after(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
-	)
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
-		(rule__DSLController__MonitorAssignment_4)*
-		{ after(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
-	)
+	{ before(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
+	(rule__DSLController__MonitorAssignment_4)*
+	{ after(grammarAccess.getDSLControllerAccess().getMonitorAssignment_4()); }
 )
 ;
 finally {
@@ -7764,16 +7757,9 @@ rule__DSLController__Group__5__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
-		(rule__DSLController__AnalyzerAssignment_5)
-		{ after(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
-	)
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
-		(rule__DSLController__AnalyzerAssignment_5)*
-		{ after(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
-	)
+	{ before(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
+	(rule__DSLController__AnalyzerAssignment_5)*
+	{ after(grammarAccess.getDSLControllerAccess().getAnalyzerAssignment_5()); }
 )
 ;
 finally {
@@ -7825,16 +7811,9 @@ rule__DSLController__Group__7__Impl
 	}
 :
 (
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
-		(rule__DSLController__ExecutorAssignment_7)
-		{ after(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
-	)
-	(
-		{ before(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
-		(rule__DSLController__ExecutorAssignment_7)*
-		{ after(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
-	)
+	{ before(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
+	(rule__DSLController__ExecutorAssignment_7)*
+	{ after(grammarAccess.getDSLControllerAccess().getExecutorAssignment_7()); }
 )
 ;
 finally {

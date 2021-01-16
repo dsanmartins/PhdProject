@@ -2231,16 +2231,16 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DSLController:
 		//	'Loop' name=ID domain=DSLDomainRule? '{'
-		//	monitor+=DSLMonitor+
-		//	analyzer+=DSLAnalyzer+
+		//	monitor+=DSLMonitor*
+		//	analyzer+=DSLAnalyzer*
 		//	planner+=DSLPlanner*
-		//	executor+=DSLExecutor+
+		//	executor+=DSLExecutor*
 		//	knowledge+=DSLKnowledge*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Loop' name=ID domain=DSLDomainRule? '{' monitor+=DSLMonitor+ analyzer+=DSLAnalyzer+ planner+=DSLPlanner*
-		//executor+=DSLExecutor+ knowledge+=DSLKnowledge* '}'
+		//'Loop' name=ID domain=DSLDomainRule? '{' monitor+=DSLMonitor* analyzer+=DSLAnalyzer* planner+=DSLPlanner*
+		//executor+=DSLExecutor* knowledge+=DSLKnowledge* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'Loop'
@@ -2261,13 +2261,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//monitor+=DSLMonitor+
+		//monitor+=DSLMonitor*
 		public Assignment getMonitorAssignment_4() { return cMonitorAssignment_4; }
 		
 		//DSLMonitor
 		public RuleCall getMonitorDSLMonitorParserRuleCall_4_0() { return cMonitorDSLMonitorParserRuleCall_4_0; }
 		
-		//analyzer+=DSLAnalyzer+
+		//analyzer+=DSLAnalyzer*
 		public Assignment getAnalyzerAssignment_5() { return cAnalyzerAssignment_5; }
 		
 		//DSLAnalyzer
@@ -2279,7 +2279,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//DSLPlanner
 		public RuleCall getPlannerDSLPlannerParserRuleCall_6_0() { return cPlannerDSLPlannerParserRuleCall_6_0; }
 		
-		//executor+=DSLExecutor+
+		//executor+=DSLExecutor*
 		public Assignment getExecutorAssignment_7() { return cExecutorAssignment_7; }
 		
 		//DSLExecutor
@@ -2872,10 +2872,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DSLController:
 	//	'Loop' name=ID domain=DSLDomainRule? '{'
-	//	monitor+=DSLMonitor+
-	//	analyzer+=DSLAnalyzer+
+	//	monitor+=DSLMonitor*
+	//	analyzer+=DSLAnalyzer*
 	//	planner+=DSLPlanner*
-	//	executor+=DSLExecutor+
+	//	executor+=DSLExecutor*
 	//	knowledge+=DSLKnowledge*
 	//	'}';
 	public DSLControllerElements getDSLControllerAccess() {

@@ -45,6 +45,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
@@ -1281,7 +1282,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
   }
   
   @Check
-  public void checkAccessAnalyzer2Planner(final DSLRuleMonitor dslRuleAnalyzer) {
+  public void checkAccessAnalyzer2Planner(final DSLRuleAnalyzer dslRuleAnalyzer) {
     try {
       List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
       boolean _isEmpty = dslDomain.isEmpty();
@@ -1305,7 +1306,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
   }
   
   @Check
-  public void checkAccessAnalyzer2Executor(final DSLRuleMonitor dslRuleAnalyzer) {
+  public void checkAccessAnalyzer2Executor(final DSLRuleAnalyzer dslRuleAnalyzer) {
     try {
       List<DSLDomainRule> dslDomain = IterableExtensions.<DSLDomainRule>toList(Iterables.<DSLDomainRule>filter(dslRuleAnalyzer.getAnalyzer().eContainer().eContents(), DSLDomainRule.class));
       boolean _isEmpty = dslDomain.isEmpty();
@@ -1445,6 +1446,57 @@ public class SasDslValidator extends AbstractSasDslValidator {
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Check
+  public void checkAccessMonitor2Monitor(final DSLRuleMonitor dslRuleMonitor) {
+    EObject _eContainer = dslRuleMonitor.getMonitor().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleMonitor.getMonitor2().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleMonitor.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessMonitor2Analyzer(final DSLRuleMonitor dslRuleMonitor) {
+    EObject _eContainer = dslRuleMonitor.getMonitor().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleMonitor.getAnalyzer().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleMonitor.eContainer().eContents(), DSLRuleController.class));
+    for (final DSLRuleController r : rules) {
+      if (((r.getController1() != dslController1) || (r.getController2() != dslController2))) {
+        if ((dslController1 != dslController2)) {
+          String _name = dslController1.getName();
+          String _plus = ("The " + _name);
+          String _plus_1 = (_plus + " does not have access to ");
+          String _name_1 = dslController2.getName();
+          String _plus_2 = (_plus_1 + _name_1);
+          this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor());
+        }
+      }
     }
   }
 }

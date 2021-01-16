@@ -188,10 +188,10 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         name=ID 
 	 *         domain=DSLDomainRule? 
-	 *         monitor+=DSLMonitor+ 
-	 *         analyzer+=DSLAnalyzer+ 
+	 *         monitor+=DSLMonitor* 
+	 *         analyzer+=DSLAnalyzer* 
 	 *         planner+=DSLPlanner* 
-	 *         executor+=DSLExecutor+ 
+	 *         executor+=DSLExecutor* 
 	 *         knowledge+=DSLKnowledge*
 	 *     )
 	 */

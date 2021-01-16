@@ -849,7 +849,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	}
 	
 	@Check
-	def checkAccessAnalyzer2Planner(DSLRuleMonitor dslRuleAnalyzer){
+	def checkAccessAnalyzer2Planner(DSLRuleAnalyzer dslRuleAnalyzer){
 		
 		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
 		if (!dslDomain.isEmpty)
@@ -865,7 +865,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	}
 	
 	@Check
-	def checkAccessAnalyzer2Executor(DSLRuleMonitor dslRuleAnalyzer){
+	def checkAccessAnalyzer2Executor(DSLRuleAnalyzer dslRuleAnalyzer){
 		
 		var dslDomain = dslRuleAnalyzer.analyzer.eContainer.eContents.filter(DSLDomainRule).toList
 		if (!dslDomain.isEmpty)
@@ -954,4 +954,34 @@ class SasDslValidator extends AbstractSasDslValidator {
 		}	
 	}
 	
+	@Check
+	def checkAccessMonitor2Monitor(DSLRuleMonitor dslRuleMonitor){
+		
+		val dslController1 = dslRuleMonitor.monitor.eContainer as DSLController
+		val dslController2 = dslRuleMonitor.monitor2.eContainer as DSLController
+		var rules = dslRuleMonitor.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2)	
+		}
+	}
+	
+	@Check
+	def checkAccessMonitor2Analyzer(DSLRuleMonitor dslRuleMonitor){
+		
+		val dslController1 = dslRuleMonitor.monitor.eContainer as DSLController
+		val dslController2 = dslRuleMonitor.analyzer.eContainer as DSLController
+	
+		var rules = dslRuleMonitor.eContainer.eContents.filter(DSLRuleController).toList
+		for (r : rules)
+			if (r.controller1 !== dslController1 || r.controller2 !== dslController2)
+				if (dslController1 !== dslController2)
+					error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor)
+	}
 }
+

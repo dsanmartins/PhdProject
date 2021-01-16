@@ -2922,7 +2922,7 @@ ruleDSLController returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
@@ -2941,7 +2941,7 @@ ruleDSLController returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
@@ -2979,7 +2979,7 @@ ruleDSLController returns [EObject current=null]
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)+
+		)*
 		(
 			(
 				{
