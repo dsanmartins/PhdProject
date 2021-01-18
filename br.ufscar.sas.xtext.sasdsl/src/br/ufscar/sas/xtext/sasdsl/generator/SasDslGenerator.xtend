@@ -231,7 +231,7 @@ class SasDslGenerator extends AbstractGenerator {
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 + 
 															"/" + "@structureElement."+ level3 +
-															"/" + "@structureElement."+ level4)
+															"/" + "@structureElement."+ m)
 							lRInput.add(r)					
 							level4++
 							depth.set(4,level4)
@@ -246,7 +246,7 @@ class SasDslGenerator extends AbstractGenerator {
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 +
 															"/" + "@structureElement."+ level3 +
-															"/" + "@structureElement."+ level4)		
+															"/" + "@structureElement."+ s)		
 							lAlternative.add(r)		
 							level4++
 							depth.set(4,level4)
@@ -495,7 +495,7 @@ class SasDslGenerator extends AbstractGenerator {
 							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 +
-															"/" + "@structureElement."+ level3)			
+															"/" + "@structureElement."+ m)			
 							lRInput.add(r)		
 							level3++
 							depth.set(3,level3)
@@ -509,7 +509,7 @@ class SasDslGenerator extends AbstractGenerator {
 							structureElementPath.put(r.name,"//@model.1/@structureElement."+ level0 + 
 															"/" + "@structureElement."+ level1 + 
 															"/" + "@structureElement."+ level2 +
-															"/" + "@structureElement."+ level3)			
+															"/" + "@structureElement."+ s)			
 							lAlternative.add(r)		
 							level3++
 							depth.set(3,level3)
@@ -693,7 +693,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var level1 = depth.get(1)
 				var sen = sensor.get(k)
 				structureElementPath.put(sen.name, "//@model.1/@structureElement."+ level0 + 
-															"/"+ "@structureElement."+ level1 )
+															"/"+ "@structureElement."+ k )
 				lSensor.add(sen)
 				level1++
 				depth.set(1,level1)			
@@ -705,7 +705,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var level1 = depth.get(1)
 				var efe = effector.get(k)
 				structureElementPath.put(efe.name, "//@model.1/@structureElement."+ level0 + 
-															"/"+ "@structureElement."+ level1 )
+															"/"+ "@structureElement."+ k )
 				lEffector.add(efe)
 				level1++
 				depth.set(1,level1)			
@@ -717,7 +717,7 @@ class SasDslGenerator extends AbstractGenerator {
 				var level1 = depth.get(1)
 				var me = mea.get(k)
 				structureElementPath.put(me.name, "//@model.1/@structureElement."+ level0 + 
-															"/"+ "@structureElement."+ level1 )
+															"/"+ "@structureElement."+ k )
 				lMOutput.add(me)
 				level1++
 				depth.set(1,level1)			
@@ -780,6 +780,7 @@ class SasDslGenerator extends AbstractGenerator {
 					}
 					else
 					{
+						rController = 0
 						pathAggregated = "outAggregated='" + structureElementPath.get(r.controller1.name) + "/@aggregated."+rController + " '"
 						outAggregatedPath.put(r.controller1.name,pathAggregated)
 						
@@ -881,7 +882,6 @@ class SasDslGenerator extends AbstractGenerator {
 								else
 								{
 									pathInAggregated = "inAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '";
-									System.out.println(pathInAggregated)
 									inAggregatedPath.put(r.monitor2.name,pathInAggregated)
 								}
 							}
@@ -919,6 +919,7 @@ class SasDslGenerator extends AbstractGenerator {
 						}
 						else
 						{
+							rMonitor = 0
 							pathAggregated = "outAggregated='" + structureElementPath.get(r.monitor.name) + "/@aggregated."+rMonitor + " '"
 							outAggregatedPath.put(r.monitor.name,pathAggregated)
 							
@@ -1177,6 +1178,7 @@ class SasDslGenerator extends AbstractGenerator {
 								}
 								else
 								{
+									rAnalyzer = 0
 									pathAggregated = "outAggregated='" + structureElementPath.get(r.analyzer.name) + "/@aggregated."+rAnalyzer + " '"
 									outAggregatedPath.put(r.analyzer.name,pathAggregated)
 									if (r.monitor !==null)
@@ -1428,6 +1430,7 @@ class SasDslGenerator extends AbstractGenerator {
 										}
 										else
 										{
+											rPlanner = 0
 											pathAggregated = "outAggregated='" + structureElementPath.get(r.planner.name) + "/@aggregated."+rPlanner + " '"
 											outAggregatedPath.put(r.planner.name,pathAggregated)
 											
@@ -1663,6 +1666,7 @@ class SasDslGenerator extends AbstractGenerator {
 										}
 										else
 										{
+											rExecutor = 0
 											pathAggregated = "outAggregated='" + structureElementPath.get(r.executor.name) + "/@aggregated."+rExecutor + " '"
 											outAggregatedPath.put(r.executor.name,pathAggregated)
 											
@@ -1820,6 +1824,7 @@ class SasDslGenerator extends AbstractGenerator {
 										}
 										else
 										{
+											rMO = 0
 											pathAggregated = "outAggregated='" + structureElementPath.get(r.sensor.name) + "/@aggregated."+rMO + " '"
 											outAggregatedPath.put(r.sensor.name,pathAggregated)		
 											if (r.measured !==null)
@@ -1883,6 +1888,7 @@ class SasDslGenerator extends AbstractGenerator {
 											}
 											else
 											{
+												rMController = 0
 												pathAggregated = "outAggregated='" + structureElementPath.get(r.mcontroller1.name) + "/@aggregated."+rMController + " '"
 												outAggregatedPath.put(r.mcontroller1.name,pathAggregated)
 												

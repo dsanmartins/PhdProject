@@ -273,7 +273,7 @@ public class SasDslGenerator extends AbstractGenerator {
                             "/") + "@structureElement.") + level1) + 
                             "/") + "@structureElement.") + level2) + 
                             "/") + "@structureElement.") + level3) + 
-                            "/") + "@structureElement.") + level4));
+                            "/") + "@structureElement.") + Integer.valueOf(m)));
                           this.lRInput.add(r);
                           level4++;
                           this.depth.set(4, level4);
@@ -288,7 +288,7 @@ public class SasDslGenerator extends AbstractGenerator {
                             "/") + "@structureElement.") + level1) + 
                             "/") + "@structureElement.") + level2) + 
                             "/") + "@structureElement.") + level3) + 
-                            "/") + "@structureElement.") + level4));
+                            "/") + "@structureElement.") + Integer.valueOf(s)));
                           this.lAlternative.add(r);
                           level4++;
                           this.depth.set(4, level4);
@@ -607,7 +607,7 @@ public class SasDslGenerator extends AbstractGenerator {
                       this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
                         "/") + "@structureElement.") + level1) + 
                         "/") + "@structureElement.") + level2) + 
-                        "/") + "@structureElement.") + level3));
+                        "/") + "@structureElement.") + Integer.valueOf(m)));
                       this.lRInput.add(r);
                       level3++;
                       this.depth.set(3, level3);
@@ -621,7 +621,7 @@ public class SasDslGenerator extends AbstractGenerator {
                       this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
                         "/") + "@structureElement.") + level1) + 
                         "/") + "@structureElement.") + level2) + 
-                        "/") + "@structureElement.") + level3));
+                        "/") + "@structureElement.") + Integer.valueOf(s)));
                       this.lAlternative.add(r);
                       level3++;
                       this.depth.set(3, level3);
@@ -879,7 +879,7 @@ public class SasDslGenerator extends AbstractGenerator {
               Integer level1 = this.depth.get(1);
               DSLSensor sen = sensor.get(k);
               this.structureElementPath.put(sen.getName(), (((("//@model.1/@structureElement." + level0) + 
-                "/") + "@structureElement.") + level1));
+                "/") + "@structureElement.") + Integer.valueOf(k)));
               this.lSensor.add(sen);
               level1++;
               this.depth.set(1, level1);
@@ -891,7 +891,7 @@ public class SasDslGenerator extends AbstractGenerator {
               Integer level1 = this.depth.get(1);
               DSLEffector efe = effector.get(k);
               this.structureElementPath.put(efe.getName(), (((("//@model.1/@structureElement." + level0) + 
-                "/") + "@structureElement.") + level1));
+                "/") + "@structureElement.") + Integer.valueOf(k)));
               this.lEffector.add(efe);
               level1++;
               this.depth.set(1, level1);
@@ -903,7 +903,7 @@ public class SasDslGenerator extends AbstractGenerator {
               Integer level1 = this.depth.get(1);
               DSLMeasuredOutput me = mea.get(k);
               this.structureElementPath.put(me.getName(), (((("//@model.1/@structureElement." + level0) + 
-                "/") + "@structureElement.") + level1));
+                "/") + "@structureElement.") + Integer.valueOf(k)));
               this.lMOutput.add(me);
               level1++;
               this.depth.set(1, level1);
@@ -977,6 +977,7 @@ public class SasDslGenerator extends AbstractGenerator {
                   }
                 }
               } else {
+                rController = 0;
                 String _get_3 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
                 String _plus_12 = ("outAggregated=\'" + _get_3);
                 String _plus_13 = (_plus_12 + "/@aggregated.");
@@ -1148,7 +1149,6 @@ public class SasDslGenerator extends AbstractGenerator {
                       String _plus_64 = (_plus_63 + Integer.valueOf(rMonitor));
                       String _plus_65 = (_plus_64 + " \'");
                       pathInAggregated_5 = _plus_65;
-                      System.out.println(pathInAggregated_5);
                       this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
                     }
                   }
@@ -1203,6 +1203,7 @@ public class SasDslGenerator extends AbstractGenerator {
                     }
                   }
                 } else {
+                  rMonitor = 0;
                   String _get_22 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
                   String _plus_82 = ("outAggregated=\'" + _get_22);
                   String _plus_83 = (_plus_82 + "/@aggregated.");
@@ -1678,6 +1679,7 @@ public class SasDslGenerator extends AbstractGenerator {
                       }
                     }
                   } else {
+                    rAnalyzer = 0;
                     String _get_68 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
                     String _plus_230 = ("outAggregated=\'" + _get_68);
                     String _plus_231 = (_plus_230 + "/@aggregated.");
@@ -2173,6 +2175,7 @@ public class SasDslGenerator extends AbstractGenerator {
                         }
                       }
                     } else {
+                      rPlanner = 0;
                       String _get_117 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
                       String _plus_384 = ("outAggregated=\'" + _get_117);
                       String _plus_385 = (_plus_384 + "/@aggregated.");
@@ -2623,6 +2626,7 @@ public class SasDslGenerator extends AbstractGenerator {
                           }
                         }
                       } else {
+                        rExecutor = 0;
                         String _get_161 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
                         String _plus_524 = ("outAggregated=\'" + _get_161);
                         String _plus_525 = (_plus_524 + "/@aggregated.");
@@ -2948,6 +2952,7 @@ public class SasDslGenerator extends AbstractGenerator {
                             }
                           }
                         } else {
+                          rMO = 0;
                           String _get_195 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
                           String _plus_624 = ("outAggregated=\'" + _get_195);
                           String _plus_625 = (_plus_624 + "/@aggregated.");
@@ -3048,6 +3053,7 @@ public class SasDslGenerator extends AbstractGenerator {
                               }
                             }
                           } else {
+                            rMController = 0;
                             String _get_204 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
                             String _plus_654 = ("outAggregated=\'" + _get_204);
                             String _plus_655 = (_plus_654 + "/@aggregated.");
