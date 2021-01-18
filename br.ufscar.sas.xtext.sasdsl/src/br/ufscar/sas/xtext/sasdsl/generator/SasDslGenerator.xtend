@@ -3,6 +3,8 @@
  */
 package br.ufscar.sas.xtext.sasdsl.generator
 
+import br.ufscar.sas.database.QueryClass
+import br.ufscar.sas.view.MainView
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer
@@ -28,16 +30,16 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor
+import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslFactory
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
+import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import java.util.regex.Pattern
-import br.ufscar.sas.database.QueryClass
-import br.ufscar.sas.view.MainView
 
 /**
  * Generates code from your model files on save.
@@ -88,6 +90,7 @@ class SasDslGenerator extends AbstractGenerator {
 	var lDomainAnalyzerKnowledge = new ArrayList<DSLKnowledge>
 	var lDomainPlannerKnowledge = new ArrayList<DSLKnowledge>
 	var lDomainExecutorKnowledge = new ArrayList<DSLKnowledge>
+	var withDomainRules = new ArrayList<DSLRules>
 			
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 				
@@ -150,6 +153,7 @@ class SasDslGenerator extends AbstractGenerator {
 														"/" + "@structureElement."+ level1 +
 														 "/" + "@structureElement."+ level2)
 					lController.add(con)
+					
 					var monitor = con.monitor
 					for (var l=0; l< monitor.size; l++){
 						
@@ -206,6 +210,7 @@ class SasDslGenerator extends AbstractGenerator {
 						depth.set(3,level3)
 					}
 					
+		
 					var knowledge = con.knowledge
 					for (var l=0; l< knowledge.size; l++){
 						
@@ -250,6 +255,154 @@ class SasDslGenerator extends AbstractGenerator {
 						level3++
 						depth.set(3,level3)
 					}
+					
+					
+					var queryClass = new QueryClass(MainView.getDatabaseUrl())
+					var rule = queryClass.getRuleIsActiveForGeneration("Monitor",8594,"Analyzer")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && monitor.size !== 0 && analyzer.size !== 0)
+						{
+							for (m:monitor){
+								for (a:analyzer)
+								{
+									var ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor
+									var dslMonitor = EcoreUtil2.getAllContentsOfType(architecture,DSLMonitor).findFirst[it.name === m.name]
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									ruleMonitor.monitor = dslMonitor
+									ruleMonitor.analyzer = dslAnalyzer
+									ruleMonitor.access = "must-use"
+									withDomainRules.add(ruleMonitor)
+								}
+							}
+						}	
+					}	
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Analyzer",8594,"Planner")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && analyzer.size !== 0 && planner.size !== 0)
+						{
+							for (a:analyzer){
+								for (p:planner)
+								{
+									var ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									ruleAnalyzer.analyzer = dslAnalyzer
+									ruleAnalyzer.planner = dslPlanner
+									ruleAnalyzer.access = "must-use"
+									withDomainRules.add(ruleAnalyzer)
+								}
+							}
+						}	
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Planner",8594,"Executor")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && planner.size !== 0 && executor.size !== 0)
+						{
+							for (p:planner){
+								for (e:executor)
+								{
+									var rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									var dslExecutor = EcoreUtil2.getAllContentsOfType(architecture,DSLExecutor).findFirst[it.name === e.name]
+									rulePlanner.planner = dslPlanner
+									rulePlanner.executor = dslExecutor
+									rulePlanner.access = "must-use"
+									withDomainRules.add(rulePlanner)
+								}
+							}
+						}				
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Monitor",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && monitor.size !== 0 && knowledge.size !== 0)
+						{
+							for (m:monitor){
+								for (kn:knowledge)
+								{
+									var ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor
+									var dslMonitor = EcoreUtil2.getAllContentsOfType(architecture,DSLMonitor).findFirst[it.name === m.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleMonitor.monitor = dslMonitor
+									ruleMonitor.knowledge = dslKnowledge
+									ruleMonitor.access = "must-use"
+									withDomainRules.add(ruleMonitor)
+								}
+							}
+						}					
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Analyzer",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && analyzer.size !== 0 && knowledge.size !== 0)
+						{
+							for (a:analyzer){
+								for (kn:knowledge)
+								{
+									var ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleAnalyzer.analyzer = dslAnalyzer
+									ruleAnalyzer.knowledge = dslKnowledge
+									ruleAnalyzer.access = "must-use"
+									withDomainRules.add(ruleAnalyzer)
+								}
+							}
+						}		
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Planner",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && planner.size !== 0 && knowledge.size !== 0)
+						{
+							for (p:planner){
+								for (kn:knowledge)
+								{
+									var rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									rulePlanner.planner = dslPlanner
+									rulePlanner.knowledge = dslKnowledge
+									rulePlanner.access = "must-use"
+									withDomainRules.add(rulePlanner)
+								}
+							}
+						}
+					}		
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Executor",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && executor.size !== 0 && knowledge.size !== 0)
+						{
+							for (e:executor){
+								for (kn:knowledge)
+								{
+									var ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor
+									var dslExecutor = EcoreUtil2.getAllContentsOfType(architecture,DSLExecutor).findFirst[it.name === e.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleExecutor.executor = dslExecutor
+									ruleExecutor.knowledge = dslKnowledge
+									ruleExecutor.access = "must-use"
+									withDomainRules.add(ruleExecutor)
+								}
+							}
+						}		
+					}			 
 					
 					depth.set(3,0)
 
@@ -365,7 +518,154 @@ class SasDslGenerator extends AbstractGenerator {
 						level2++
 						depth.set(2,0)
 					}
-
+					
+					var queryClass = new QueryClass(MainView.getDatabaseUrl())
+					var rule = queryClass.getRuleIsActiveForGeneration("Monitor",8594,"Analyzer")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && monitor.size !== 0 && analyzer.size !== 0)
+						{
+							for (m:monitor){
+								for (a:analyzer)
+								{
+									var ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor
+									var dslMonitor = EcoreUtil2.getAllContentsOfType(architecture,DSLMonitor).findFirst[it.name === m.name]
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									ruleMonitor.monitor = dslMonitor
+									ruleMonitor.analyzer = dslAnalyzer
+									ruleMonitor.access = "must-use"
+									withDomainRules.add(ruleMonitor)
+								}
+							}
+						}	
+					}	
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Analyzer",8594,"Planner")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && analyzer.size !== 0 && planner.size !== 0)
+						{
+							for (a:analyzer){
+								for (p:planner)
+								{
+									var ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									ruleAnalyzer.analyzer = dslAnalyzer
+									ruleAnalyzer.planner = dslPlanner
+									ruleAnalyzer.access = "must-use"
+									withDomainRules.add(ruleAnalyzer)
+								}
+							}
+						}	
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Planner",8594,"Executor")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && planner.size !== 0 && executor.size !== 0)
+						{
+							for (p:planner){
+								for (e:executor)
+								{
+									var rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									var dslExecutor = EcoreUtil2.getAllContentsOfType(architecture,DSLExecutor).findFirst[it.name === e.name]
+									rulePlanner.planner = dslPlanner
+									rulePlanner.executor = dslExecutor
+									rulePlanner.access = "must-use"
+									withDomainRules.add(rulePlanner)
+								}
+							}
+						}				
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Monitor",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && monitor.size !== 0 && knowledge.size !== 0)
+						{
+							for (m:monitor){
+								for (kn:knowledge)
+								{
+									var ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor
+									var dslMonitor = EcoreUtil2.getAllContentsOfType(architecture,DSLMonitor).findFirst[it.name === m.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleMonitor.monitor = dslMonitor
+									ruleMonitor.knowledge = dslKnowledge
+									ruleMonitor.access = "must-use"
+									withDomainRules.add(ruleMonitor)
+								}
+							}
+						}					
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Analyzer",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && analyzer.size !== 0 && knowledge.size !== 0)
+						{
+							for (a:analyzer){
+								for (kn:knowledge)
+								{
+									var ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer
+									var dslAnalyzer = EcoreUtil2.getAllContentsOfType(architecture,DSLAnalyzer).findFirst[it.name === a.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleAnalyzer.analyzer = dslAnalyzer
+									ruleAnalyzer.knowledge = dslKnowledge
+									ruleAnalyzer.access = "must-use"
+									withDomainRules.add(ruleAnalyzer)
+								}
+							}
+						}		
+					}
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Planner",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && planner.size !== 0 && knowledge.size !== 0)
+						{
+							for (p:planner){
+								for (kn:knowledge)
+								{
+									var rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner
+									var dslPlanner = EcoreUtil2.getAllContentsOfType(architecture,DSLPlanner).findFirst[it.name === p.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									rulePlanner.planner = dslPlanner
+									rulePlanner.knowledge = dslKnowledge
+									rulePlanner.access = "must-use"
+									withDomainRules.add(rulePlanner)
+								}
+							}
+						}
+					}		
+					
+					queryClass = new QueryClass(MainView.getDatabaseUrl())
+					rule = queryClass.getRuleIsActiveForGeneration("Executor",8594,"Knowledge")
+					if (rule.equals("true"))
+					{
+						if (con.domain.value.equals("withDomainRules") && executor.size !== 0 && knowledge.size !== 0)
+						{
+							for (e:executor){
+								for (kn:knowledge)
+								{
+									var ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor
+									var dslExecutor = EcoreUtil2.getAllContentsOfType(architecture,DSLExecutor).findFirst[it.name === e.name]
+									var dslKnowledge = EcoreUtil2.getAllContentsOfType(architecture,DSLKnowledge).findFirst[it.name === kn.name]
+									ruleExecutor.executor = dslExecutor
+									ruleExecutor.knowledge = dslKnowledge
+									ruleExecutor.access = "must-use"
+									withDomainRules.add(ruleExecutor)
+								}
+							}
+						}		
+					}		
+					
 					level1++
 					depth.set(1,level1)
 					
@@ -443,7 +743,8 @@ class SasDslGenerator extends AbstractGenerator {
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 " +
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2' " +
 								  "density='6'/> \n"
-		
+		rule.addAll(withDomainRules)
+		withDomainRules.clear
 		for (var i=0; i< rule.size ; i++){
 			
 			var r = rule.get(i)
@@ -495,7 +796,6 @@ class SasDslGenerator extends AbstractGenerator {
 								inAggregatedPath.put(r.controller2.name,pathAggregated.replaceFirst("outAggregated","inAggregated"))
 						}
 					}
-					rController++
 					var aggregated = aggregatedPath.get(r.controller1.name); 
 					if (aggregated !== null)
 					{

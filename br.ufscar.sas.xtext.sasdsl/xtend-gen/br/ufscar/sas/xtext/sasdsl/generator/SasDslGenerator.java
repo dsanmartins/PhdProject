@@ -30,6 +30,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslFactory;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +41,13 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
@@ -133,6 +136,8 @@ public class SasDslGenerator extends AbstractGenerator {
   
   private ArrayList<DSLKnowledge> lDomainExecutorKnowledge = new ArrayList<DSLKnowledge>();
   
+  private ArrayList<DSLRules> withDomainRules = new ArrayList<DSLRules>();
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     Iterable<ArchitectureDefinition> _filter = Iterables.<ArchitectureDefinition>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ArchitectureDefinition.class);
@@ -146,2511 +151,2960 @@ public class SasDslGenerator extends AbstractGenerator {
   }
   
   public void createPath(final ArchitectureDefinition architecture) {
-    this.depth.clear();
-    this.depth.add(0, Integer.valueOf(0));
-    this.depth.add(1, Integer.valueOf(0));
-    this.depth.add(2, Integer.valueOf(0));
-    this.depth.add(3, Integer.valueOf(0));
-    this.depth.add(4, Integer.valueOf(0));
-    this.lManaging.clear();
-    this.lManaged.clear();
-    this.lMController.clear();
-    this.lController.clear();
-    this.lMonitor.clear();
-    this.lAnalyzer.clear();
-    this.lPlanner.clear();
-    this.lExecutor.clear();
-    this.lEffector.clear();
-    this.lKnowledge.clear();
-    this.lSensor.clear();
-    this.lRInput.clear();
-    this.lAlternative.clear();
-    this.outAggregatedPath.clear();
-    this.inAggregatedPath.clear();
-    this.structureElementPath.clear();
-    this.aggregatedPath.clear();
-    EList<DSLManaging> managing = architecture.getManaging();
-    for (int i = 0; (i < managing.size()); i++) {
-      {
-        Integer level0 = this.depth.get(0);
-        DSLManaging man = managing.get(i);
-        this.structureElementPath.put(man.getName(), ("//@model.1/@structureElement." + level0));
-        this.lManaging.add(man);
-        EList<DSLManagerController> mcontroller = man.getManagerController();
-        for (int j = 0; (j < mcontroller.size()); j++) {
-          {
-            Integer level1 = this.depth.get(1);
-            DSLManagerController mcon = mcontroller.get(j);
-            this.structureElementPath.put(mcon.getName(), (((("//@model.1/@structureElement." + level0) + "/") + "@structureElement.") + level1));
-            this.lMController.add(mcon);
-            EList<DSLController> controller = mcon.getController();
-            for (int k = 0; (k < controller.size()); k++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLController con = controller.get(k);
-                this.structureElementPath.put(con.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lController.add(con);
-                EList<DSLMonitor> monitor = con.getMonitor();
-                for (int l = 0; (l < monitor.size()); l++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLMonitor mon = monitor.get(l);
-                    this.structureElementPath.put(mon.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lMonitor.add(mon);
-                    level3++;
-                    this.depth.set(3, level3);
+    try {
+      this.depth.clear();
+      this.depth.add(0, Integer.valueOf(0));
+      this.depth.add(1, Integer.valueOf(0));
+      this.depth.add(2, Integer.valueOf(0));
+      this.depth.add(3, Integer.valueOf(0));
+      this.depth.add(4, Integer.valueOf(0));
+      this.lManaging.clear();
+      this.lManaged.clear();
+      this.lMController.clear();
+      this.lController.clear();
+      this.lMonitor.clear();
+      this.lAnalyzer.clear();
+      this.lPlanner.clear();
+      this.lExecutor.clear();
+      this.lEffector.clear();
+      this.lKnowledge.clear();
+      this.lSensor.clear();
+      this.lRInput.clear();
+      this.lAlternative.clear();
+      this.outAggregatedPath.clear();
+      this.inAggregatedPath.clear();
+      this.structureElementPath.clear();
+      this.aggregatedPath.clear();
+      EList<DSLManaging> managing = architecture.getManaging();
+      for (int i = 0; (i < managing.size()); i++) {
+        {
+          Integer level0 = this.depth.get(0);
+          DSLManaging man = managing.get(i);
+          this.structureElementPath.put(man.getName(), ("//@model.1/@structureElement." + level0));
+          this.lManaging.add(man);
+          EList<DSLManagerController> mcontroller = man.getManagerController();
+          for (int j = 0; (j < mcontroller.size()); j++) {
+            {
+              Integer level1 = this.depth.get(1);
+              DSLManagerController mcon = mcontroller.get(j);
+              this.structureElementPath.put(mcon.getName(), (((("//@model.1/@structureElement." + level0) + "/") + "@structureElement.") + level1));
+              this.lMController.add(mcon);
+              EList<DSLController> controller = mcon.getController();
+              for (int k = 0; (k < controller.size()); k++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLController con = controller.get(k);
+                  this.structureElementPath.put(con.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lController.add(con);
+                  EList<DSLMonitor> monitor = con.getMonitor();
+                  for (int l = 0; (l < monitor.size()); l++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLMonitor mon = monitor.get(l);
+                      this.structureElementPath.put(mon.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lMonitor.add(mon);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
                   }
-                }
-                EList<DSLAnalyzer> analyzer = con.getAnalyzer();
-                for (int l = 0; (l < analyzer.size()); l++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLAnalyzer ana = analyzer.get(l);
-                    this.structureElementPath.put(ana.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lAnalyzer.add(ana);
-                    level3++;
-                    this.depth.set(3, level3);
+                  EList<DSLAnalyzer> analyzer = con.getAnalyzer();
+                  for (int l = 0; (l < analyzer.size()); l++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLAnalyzer ana = analyzer.get(l);
+                      this.structureElementPath.put(ana.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lAnalyzer.add(ana);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
                   }
-                }
-                EList<DSLPlanner> planner = con.getPlanner();
-                for (int l = 0; (l < planner.size()); l++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLPlanner pla = planner.get(l);
-                    this.structureElementPath.put(pla.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lPlanner.add(pla);
-                    level3++;
-                    this.depth.set(3, level3);
+                  EList<DSLPlanner> planner = con.getPlanner();
+                  for (int l = 0; (l < planner.size()); l++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLPlanner pla = planner.get(l);
+                      this.structureElementPath.put(pla.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lPlanner.add(pla);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
                   }
-                }
-                EList<DSLExecutor> executor = con.getExecutor();
-                for (int l = 0; (l < executor.size()); l++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLExecutor exe = executor.get(l);
-                    this.structureElementPath.put(exe.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lExecutor.add(exe);
-                    level3++;
-                    this.depth.set(3, level3);
+                  EList<DSLExecutor> executor = con.getExecutor();
+                  for (int l = 0; (l < executor.size()); l++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLExecutor exe = executor.get(l);
+                      this.structureElementPath.put(exe.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lExecutor.add(exe);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
                   }
+                  EList<DSLKnowledge> knowledge = con.getKnowledge();
+                  for (int l = 0; (l < knowledge.size()); l++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLKnowledge kno = knowledge.get(l);
+                      this.structureElementPath.put(kno.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lKnowledge.add(kno);
+                      EList<DSLReferenceInput> ri = kno.getReferenceInput();
+                      for (int m = 0; (m < ri.size()); m++) {
+                        {
+                          Integer level4 = this.depth.get(4);
+                          DSLReferenceInput r = ri.get(m);
+                          this.structureElementPath.put(r.getName(), ((((((((((((("//@model.1/@structureElement." + level0) + 
+                            "/") + "@structureElement.") + level1) + 
+                            "/") + "@structureElement.") + level2) + 
+                            "/") + "@structureElement.") + level3) + 
+                            "/") + "@structureElement.") + level4));
+                          this.lRInput.add(r);
+                          level4++;
+                          this.depth.set(4, level4);
+                        }
+                      }
+                      EList<DSLAlternative> selfHeal = kno.getShalt();
+                      for (int s = 0; (s < selfHeal.size()); s++) {
+                        {
+                          Integer level4 = this.depth.get(4);
+                          DSLAlternative r = selfHeal.get(s);
+                          this.structureElementPath.put(r.getName(), ((((((((((((("//@model.1/@structureElement." + level0) + 
+                            "/") + "@structureElement.") + level1) + 
+                            "/") + "@structureElement.") + level2) + 
+                            "/") + "@structureElement.") + level3) + 
+                            "/") + "@structureElement.") + level4));
+                          this.lAlternative.add(r);
+                          level4++;
+                          this.depth.set(4, level4);
+                        }
+                      }
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
+                  }
+                  String _databaseUrl = MainView.getDatabaseUrl();
+                  QueryClass queryClass = new QueryClass(_databaseUrl);
+                  String rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Analyzer");
+                  boolean _equals = rule.equals("true");
+                  if (_equals) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
+                      for (final DSLMonitor m : monitor) {
+                        for (final DSLAnalyzer a : analyzer) {
+                          {
+                            DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                            final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                              String _name = it.getName();
+                              String _name_1 = m.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                            final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
+                              String _name = it.getName();
+                              String _name_1 = a.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
+                            ruleMonitor.setMonitor(dslMonitor);
+                            ruleMonitor.setAnalyzer(dslAnalyzer);
+                            ruleMonitor.setAccess("must-use");
+                            this.withDomainRules.add(ruleMonitor);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_1 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass = new QueryClass(_databaseUrl_1);
+                  queryClass = _queryClass;
+                  rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Planner");
+                  boolean _equals_1 = rule.equals("true");
+                  if (_equals_1) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
+                      for (final DSLAnalyzer a_1 : analyzer) {
+                        for (final DSLPlanner p : planner) {
+                          {
+                            DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                            final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                              String _name = it.getName();
+                              String _name_1 = a_1.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                            final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
+                              String _name = it.getName();
+                              String _name_1 = p.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
+                            ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                            ruleAnalyzer.setPlanner(dslPlanner);
+                            ruleAnalyzer.setAccess("must-use");
+                            this.withDomainRules.add(ruleAnalyzer);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_2 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass_1 = new QueryClass(_databaseUrl_2);
+                  queryClass = _queryClass_1;
+                  rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Executor");
+                  boolean _equals_2 = rule.equals("true");
+                  if (_equals_2) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
+                      for (final DSLPlanner p_1 : planner) {
+                        for (final DSLExecutor e : executor) {
+                          {
+                            DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                            final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                              String _name = it.getName();
+                              String _name_1 = p_1.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                            final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
+                              String _name = it.getName();
+                              String _name_1 = e.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
+                            rulePlanner.setPlanner(dslPlanner);
+                            rulePlanner.setExecutor(dslExecutor);
+                            rulePlanner.setAccess("must-use");
+                            this.withDomainRules.add(rulePlanner);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_3 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass_2 = new QueryClass(_databaseUrl_3);
+                  queryClass = _queryClass_2;
+                  rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Knowledge");
+                  boolean _equals_3 = rule.equals("true");
+                  if (_equals_3) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
+                      for (final DSLMonitor m_1 : monitor) {
+                        for (final DSLKnowledge kn : knowledge) {
+                          {
+                            DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                            final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                              String _name = it.getName();
+                              String _name_1 = m_1.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                              String _name = it.getName();
+                              String _name_1 = kn.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                            ruleMonitor.setMonitor(dslMonitor);
+                            ruleMonitor.setKnowledge(dslKnowledge);
+                            ruleMonitor.setAccess("must-use");
+                            this.withDomainRules.add(ruleMonitor);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_4 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass_3 = new QueryClass(_databaseUrl_4);
+                  queryClass = _queryClass_3;
+                  rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Knowledge");
+                  boolean _equals_4 = rule.equals("true");
+                  if (_equals_4) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (knowledge.size() != 0))) {
+                      for (final DSLAnalyzer a_2 : analyzer) {
+                        for (final DSLKnowledge kn_1 : knowledge) {
+                          {
+                            DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                            final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                              String _name = it.getName();
+                              String _name_1 = a_2.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                              String _name = it.getName();
+                              String _name_1 = kn_1.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                            ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                            ruleAnalyzer.setKnowledge(dslKnowledge);
+                            ruleAnalyzer.setAccess("must-use");
+                            this.withDomainRules.add(ruleAnalyzer);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_5 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass_4 = new QueryClass(_databaseUrl_5);
+                  queryClass = _queryClass_4;
+                  rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Knowledge");
+                  boolean _equals_5 = rule.equals("true");
+                  if (_equals_5) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
+                      for (final DSLPlanner p_2 : planner) {
+                        for (final DSLKnowledge kn_2 : knowledge) {
+                          {
+                            DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                            final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                              String _name = it.getName();
+                              String _name_1 = p_2.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                              String _name = it.getName();
+                              String _name_1 = kn_2.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                            rulePlanner.setPlanner(dslPlanner);
+                            rulePlanner.setKnowledge(dslKnowledge);
+                            rulePlanner.setAccess("must-use");
+                            this.withDomainRules.add(rulePlanner);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  String _databaseUrl_6 = MainView.getDatabaseUrl();
+                  QueryClass _queryClass_5 = new QueryClass(_databaseUrl_6);
+                  queryClass = _queryClass_5;
+                  rule = queryClass.getRuleIsActiveForGeneration("Executor", 8594, "Knowledge");
+                  boolean _equals_6 = rule.equals("true");
+                  if (_equals_6) {
+                    if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
+                      for (final DSLExecutor e_1 : executor) {
+                        for (final DSLKnowledge kn_3 : knowledge) {
+                          {
+                            DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
+                            final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
+                              String _name = it.getName();
+                              String _name_1 = e_1.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
+                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                              String _name = it.getName();
+                              String _name_1 = kn_3.getName();
+                              return Boolean.valueOf((_name == _name_1));
+                            };
+                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                            ruleExecutor.setExecutor(dslExecutor);
+                            ruleExecutor.setKnowledge(dslKnowledge);
+                            ruleExecutor.setAccess("must-use");
+                            this.withDomainRules.add(ruleExecutor);
+                          }
+                        }
+                      }
+                    }
+                  }
+                  this.depth.set(3, Integer.valueOf(0));
+                  level2++;
+                  this.depth.set(2, level2);
                 }
-                EList<DSLKnowledge> knowledge = con.getKnowledge();
-                for (int l = 0; (l < knowledge.size()); l++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLKnowledge kno = knowledge.get(l);
-                    this.structureElementPath.put(kno.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lKnowledge.add(kno);
-                    EList<DSLReferenceInput> ri = kno.getReferenceInput();
-                    for (int m = 0; (m < ri.size()); m++) {
+              }
+              level1++;
+              this.depth.set(1, level1);
+            }
+          }
+          EList<DSLController> controller = man.getController();
+          for (int k = 0; (k < controller.size()); k++) {
+            {
+              Integer level1 = this.depth.get(1);
+              DSLController con = controller.get(k);
+              this.structureElementPath.put(con.getName(), (((("//@model.1/@structureElement." + level0) + 
+                "/") + "@structureElement.") + level1));
+              this.lController.add(con);
+              EList<DSLMonitor> monitor = con.getMonitor();
+              for (int l = 0; (l < monitor.size()); l++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLMonitor mon = monitor.get(l);
+                  this.structureElementPath.put(mon.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lMonitor.add(mon);
+                  level2++;
+                  this.depth.set(2, level2);
+                }
+              }
+              EList<DSLAnalyzer> analyzer = con.getAnalyzer();
+              for (int l = 0; (l < analyzer.size()); l++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLAnalyzer ana = analyzer.get(l);
+                  this.structureElementPath.put(ana.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lAnalyzer.add(ana);
+                  level2++;
+                  this.depth.set(2, level2);
+                }
+              }
+              EList<DSLPlanner> planner = con.getPlanner();
+              for (int l = 0; (l < planner.size()); l++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLPlanner pla = planner.get(l);
+                  this.structureElementPath.put(pla.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lPlanner.add(pla);
+                  level2++;
+                  this.depth.set(2, level2);
+                }
+              }
+              EList<DSLExecutor> executor = con.getExecutor();
+              for (int l = 0; (l < executor.size()); l++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLExecutor exe = executor.get(l);
+                  this.structureElementPath.put(exe.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lExecutor.add(exe);
+                  level2++;
+                  this.depth.set(2, level2);
+                }
+              }
+              EList<DSLKnowledge> knowledge = con.getKnowledge();
+              for (int l = 0; (l < knowledge.size()); l++) {
+                {
+                  Integer level2 = this.depth.get(2);
+                  DSLKnowledge kno = knowledge.get(l);
+                  this.structureElementPath.put(kno.getName(), ((((((("//@model.1/@structureElement." + level0) + 
+                    "/") + "@structureElement.") + level1) + 
+                    "/") + "@structureElement.") + level2));
+                  this.lKnowledge.add(kno);
+                  EList<DSLReferenceInput> ri = kno.getReferenceInput();
+                  for (int m = 0; (m < ri.size()); m++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLReferenceInput r = ri.get(m);
+                      this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lRInput.add(r);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
+                  }
+                  EList<DSLAlternative> selfHeal = kno.getShalt();
+                  for (int s = 0; (s < selfHeal.size()); s++) {
+                    {
+                      Integer level3 = this.depth.get(3);
+                      DSLAlternative r = selfHeal.get(s);
+                      this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
+                        "/") + "@structureElement.") + level1) + 
+                        "/") + "@structureElement.") + level2) + 
+                        "/") + "@structureElement.") + level3));
+                      this.lAlternative.add(r);
+                      level3++;
+                      this.depth.set(3, level3);
+                    }
+                  }
+                  level2++;
+                  this.depth.set(2, Integer.valueOf(0));
+                }
+              }
+              String _databaseUrl = MainView.getDatabaseUrl();
+              QueryClass queryClass = new QueryClass(_databaseUrl);
+              String rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Analyzer");
+              boolean _equals = rule.equals("true");
+              if (_equals) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
+                  for (final DSLMonitor m : monitor) {
+                    for (final DSLAnalyzer a : analyzer) {
                       {
-                        Integer level4 = this.depth.get(4);
-                        DSLReferenceInput r = ri.get(m);
-                        this.structureElementPath.put(r.getName(), ((((((((((((("//@model.1/@structureElement." + level0) + 
-                          "/") + "@structureElement.") + level1) + 
-                          "/") + "@structureElement.") + level2) + 
-                          "/") + "@structureElement.") + level3) + 
-                          "/") + "@structureElement.") + level4));
-                        this.lRInput.add(r);
-                        level4++;
-                        this.depth.set(4, level4);
+                        DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                        final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                          String _name = it.getName();
+                          String _name_1 = m.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                        final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
+                          String _name = it.getName();
+                          String _name_1 = a.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
+                        ruleMonitor.setMonitor(dslMonitor);
+                        ruleMonitor.setAnalyzer(dslAnalyzer);
+                        ruleMonitor.setAccess("must-use");
+                        this.withDomainRules.add(ruleMonitor);
                       }
                     }
-                    EList<DSLAlternative> selfHeal = kno.getShalt();
-                    for (int s = 0; (s < selfHeal.size()); s++) {
+                  }
+                }
+              }
+              String _databaseUrl_1 = MainView.getDatabaseUrl();
+              QueryClass _queryClass = new QueryClass(_databaseUrl_1);
+              queryClass = _queryClass;
+              rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Planner");
+              boolean _equals_1 = rule.equals("true");
+              if (_equals_1) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
+                  for (final DSLAnalyzer a_1 : analyzer) {
+                    for (final DSLPlanner p : planner) {
                       {
-                        Integer level4 = this.depth.get(4);
-                        DSLAlternative r = selfHeal.get(s);
-                        this.structureElementPath.put(r.getName(), ((((((((((((("//@model.1/@structureElement." + level0) + 
-                          "/") + "@structureElement.") + level1) + 
-                          "/") + "@structureElement.") + level2) + 
-                          "/") + "@structureElement.") + level3) + 
-                          "/") + "@structureElement.") + level4));
-                        this.lAlternative.add(r);
-                        level4++;
-                        this.depth.set(4, level4);
+                        DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                        final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                          String _name = it.getName();
+                          String _name_1 = a_1.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                        final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
+                          String _name = it.getName();
+                          String _name_1 = p.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
+                        ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                        ruleAnalyzer.setPlanner(dslPlanner);
+                        ruleAnalyzer.setAccess("must-use");
+                        this.withDomainRules.add(ruleAnalyzer);
                       }
                     }
-                    level3++;
-                    this.depth.set(3, level3);
                   }
                 }
-                this.depth.set(3, Integer.valueOf(0));
-                level2++;
-                this.depth.set(2, level2);
               }
+              String _databaseUrl_2 = MainView.getDatabaseUrl();
+              QueryClass _queryClass_1 = new QueryClass(_databaseUrl_2);
+              queryClass = _queryClass_1;
+              rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Executor");
+              boolean _equals_2 = rule.equals("true");
+              if (_equals_2) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
+                  for (final DSLPlanner p_1 : planner) {
+                    for (final DSLExecutor e : executor) {
+                      {
+                        DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                        final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                          String _name = it.getName();
+                          String _name_1 = p_1.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                        final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
+                          String _name = it.getName();
+                          String _name_1 = e.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
+                        rulePlanner.setPlanner(dslPlanner);
+                        rulePlanner.setExecutor(dslExecutor);
+                        rulePlanner.setAccess("must-use");
+                        this.withDomainRules.add(rulePlanner);
+                      }
+                    }
+                  }
+                }
+              }
+              String _databaseUrl_3 = MainView.getDatabaseUrl();
+              QueryClass _queryClass_2 = new QueryClass(_databaseUrl_3);
+              queryClass = _queryClass_2;
+              rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Knowledge");
+              boolean _equals_3 = rule.equals("true");
+              if (_equals_3) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
+                  for (final DSLMonitor m_1 : monitor) {
+                    for (final DSLKnowledge kn : knowledge) {
+                      {
+                        DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                        final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                          String _name = it.getName();
+                          String _name_1 = m_1.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                          String _name = it.getName();
+                          String _name_1 = kn.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                        ruleMonitor.setMonitor(dslMonitor);
+                        ruleMonitor.setKnowledge(dslKnowledge);
+                        ruleMonitor.setAccess("must-use");
+                        this.withDomainRules.add(ruleMonitor);
+                      }
+                    }
+                  }
+                }
+              }
+              String _databaseUrl_4 = MainView.getDatabaseUrl();
+              QueryClass _queryClass_3 = new QueryClass(_databaseUrl_4);
+              queryClass = _queryClass_3;
+              rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Knowledge");
+              boolean _equals_4 = rule.equals("true");
+              if (_equals_4) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (knowledge.size() != 0))) {
+                  for (final DSLAnalyzer a_2 : analyzer) {
+                    for (final DSLKnowledge kn_1 : knowledge) {
+                      {
+                        DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                        final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                          String _name = it.getName();
+                          String _name_1 = a_2.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                          String _name = it.getName();
+                          String _name_1 = kn_1.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                        ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                        ruleAnalyzer.setKnowledge(dslKnowledge);
+                        ruleAnalyzer.setAccess("must-use");
+                        this.withDomainRules.add(ruleAnalyzer);
+                      }
+                    }
+                  }
+                }
+              }
+              String _databaseUrl_5 = MainView.getDatabaseUrl();
+              QueryClass _queryClass_4 = new QueryClass(_databaseUrl_5);
+              queryClass = _queryClass_4;
+              rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Knowledge");
+              boolean _equals_5 = rule.equals("true");
+              if (_equals_5) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
+                  for (final DSLPlanner p_2 : planner) {
+                    for (final DSLKnowledge kn_2 : knowledge) {
+                      {
+                        DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                        final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                          String _name = it.getName();
+                          String _name_1 = p_2.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                          String _name = it.getName();
+                          String _name_1 = kn_2.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                        rulePlanner.setPlanner(dslPlanner);
+                        rulePlanner.setKnowledge(dslKnowledge);
+                        rulePlanner.setAccess("must-use");
+                        this.withDomainRules.add(rulePlanner);
+                      }
+                    }
+                  }
+                }
+              }
+              String _databaseUrl_6 = MainView.getDatabaseUrl();
+              QueryClass _queryClass_5 = new QueryClass(_databaseUrl_6);
+              queryClass = _queryClass_5;
+              rule = queryClass.getRuleIsActiveForGeneration("Executor", 8594, "Knowledge");
+              boolean _equals_6 = rule.equals("true");
+              if (_equals_6) {
+                if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
+                  for (final DSLExecutor e_1 : executor) {
+                    for (final DSLKnowledge kn_3 : knowledge) {
+                      {
+                        DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
+                        final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
+                          String _name = it.getName();
+                          String _name_1 = e_1.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
+                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                          String _name = it.getName();
+                          String _name_1 = kn_3.getName();
+                          return Boolean.valueOf((_name == _name_1));
+                        };
+                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                        ruleExecutor.setExecutor(dslExecutor);
+                        ruleExecutor.setKnowledge(dslKnowledge);
+                        ruleExecutor.setAccess("must-use");
+                        this.withDomainRules.add(ruleExecutor);
+                      }
+                    }
+                  }
+                }
+              }
+              level1++;
+              this.depth.set(1, level1);
             }
-            level1++;
-            this.depth.set(1, level1);
           }
+          level0++;
+          this.depth.set(0, level0);
         }
-        EList<DSLController> controller = man.getController();
-        for (int k = 0; (k < controller.size()); k++) {
-          {
-            Integer level1 = this.depth.get(1);
-            DSLController con = controller.get(k);
-            this.structureElementPath.put(con.getName(), (((("//@model.1/@structureElement." + level0) + 
-              "/") + "@structureElement.") + level1));
-            this.lController.add(con);
-            EList<DSLMonitor> monitor = con.getMonitor();
-            for (int l = 0; (l < monitor.size()); l++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLMonitor mon = monitor.get(l);
-                this.structureElementPath.put(mon.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lMonitor.add(mon);
-                level2++;
-                this.depth.set(2, level2);
-              }
-            }
-            EList<DSLAnalyzer> analyzer = con.getAnalyzer();
-            for (int l = 0; (l < analyzer.size()); l++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLAnalyzer ana = analyzer.get(l);
-                this.structureElementPath.put(ana.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lAnalyzer.add(ana);
-                level2++;
-                this.depth.set(2, level2);
-              }
-            }
-            EList<DSLPlanner> planner = con.getPlanner();
-            for (int l = 0; (l < planner.size()); l++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLPlanner pla = planner.get(l);
-                this.structureElementPath.put(pla.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lPlanner.add(pla);
-                level2++;
-                this.depth.set(2, level2);
-              }
-            }
-            EList<DSLExecutor> executor = con.getExecutor();
-            for (int l = 0; (l < executor.size()); l++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLExecutor exe = executor.get(l);
-                this.structureElementPath.put(exe.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lExecutor.add(exe);
-                level2++;
-                this.depth.set(2, level2);
-              }
-            }
-            EList<DSLKnowledge> knowledge = con.getKnowledge();
-            for (int l = 0; (l < knowledge.size()); l++) {
-              {
-                Integer level2 = this.depth.get(2);
-                DSLKnowledge kno = knowledge.get(l);
-                this.structureElementPath.put(kno.getName(), ((((((("//@model.1/@structureElement." + level0) + 
-                  "/") + "@structureElement.") + level1) + 
-                  "/") + "@structureElement.") + level2));
-                this.lKnowledge.add(kno);
-                EList<DSLReferenceInput> ri = kno.getReferenceInput();
-                for (int m = 0; (m < ri.size()); m++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLReferenceInput r = ri.get(m);
-                    this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lRInput.add(r);
-                    level3++;
-                    this.depth.set(3, level3);
-                  }
-                }
-                EList<DSLAlternative> selfHeal = kno.getShalt();
-                for (int s = 0; (s < selfHeal.size()); s++) {
-                  {
-                    Integer level3 = this.depth.get(3);
-                    DSLAlternative r = selfHeal.get(s);
-                    this.structureElementPath.put(r.getName(), (((((((((("//@model.1/@structureElement." + level0) + 
-                      "/") + "@structureElement.") + level1) + 
-                      "/") + "@structureElement.") + level2) + 
-                      "/") + "@structureElement.") + level3));
-                    this.lAlternative.add(r);
-                    level3++;
-                    this.depth.set(3, level3);
-                  }
-                }
-                level2++;
-                this.depth.set(2, Integer.valueOf(0));
-              }
-            }
-            level1++;
-            this.depth.set(1, level1);
-          }
-        }
-        level0++;
-        this.depth.set(0, level0);
       }
-    }
-    this.depth.set(1, Integer.valueOf(0));
-    this.depth.set(2, Integer.valueOf(0));
-    this.depth.set(3, Integer.valueOf(0));
-    this.depth.set(4, Integer.valueOf(0));
-    EList<DSLManaged> managed = architecture.getManaged();
-    for (int i = 0; (i < managed.size()); i++) {
-      {
-        Integer level0 = this.depth.get(0);
-        DSLManaged man = managed.get(i);
-        this.structureElementPath.put(man.getName(), ("//@model.1/@structureElement." + level0));
-        this.lManaged.add(man);
-        EList<DSLSensor> sensor = man.getSensor();
-        for (int k = 0; (k < sensor.size()); k++) {
-          {
-            Integer level1 = this.depth.get(1);
-            DSLSensor sen = sensor.get(k);
-            this.structureElementPath.put(sen.getName(), (((("//@model.1/@structureElement." + level0) + 
-              "/") + "@structureElement.") + level1));
-            this.lSensor.add(sen);
-            level1++;
-            this.depth.set(1, level1);
+      this.depth.set(1, Integer.valueOf(0));
+      this.depth.set(2, Integer.valueOf(0));
+      this.depth.set(3, Integer.valueOf(0));
+      this.depth.set(4, Integer.valueOf(0));
+      EList<DSLManaged> managed = architecture.getManaged();
+      for (int i = 0; (i < managed.size()); i++) {
+        {
+          Integer level0 = this.depth.get(0);
+          DSLManaged man = managed.get(i);
+          this.structureElementPath.put(man.getName(), ("//@model.1/@structureElement." + level0));
+          this.lManaged.add(man);
+          EList<DSLSensor> sensor = man.getSensor();
+          for (int k = 0; (k < sensor.size()); k++) {
+            {
+              Integer level1 = this.depth.get(1);
+              DSLSensor sen = sensor.get(k);
+              this.structureElementPath.put(sen.getName(), (((("//@model.1/@structureElement." + level0) + 
+                "/") + "@structureElement.") + level1));
+              this.lSensor.add(sen);
+              level1++;
+              this.depth.set(1, level1);
+            }
           }
-        }
-        EList<DSLEffector> effector = man.getEffector();
-        for (int k = 0; (k < effector.size()); k++) {
-          {
-            Integer level1 = this.depth.get(1);
-            DSLEffector efe = effector.get(k);
-            this.structureElementPath.put(efe.getName(), (((("//@model.1/@structureElement." + level0) + 
-              "/") + "@structureElement.") + level1));
-            this.lEffector.add(efe);
-            level1++;
-            this.depth.set(1, level1);
+          EList<DSLEffector> effector = man.getEffector();
+          for (int k = 0; (k < effector.size()); k++) {
+            {
+              Integer level1 = this.depth.get(1);
+              DSLEffector efe = effector.get(k);
+              this.structureElementPath.put(efe.getName(), (((("//@model.1/@structureElement." + level0) + 
+                "/") + "@structureElement.") + level1));
+              this.lEffector.add(efe);
+              level1++;
+              this.depth.set(1, level1);
+            }
           }
-        }
-        EList<DSLMeasuredOutput> mea = man.getMeasuredOutput();
-        for (int k = 0; (k < mea.size()); k++) {
-          {
-            Integer level1 = this.depth.get(1);
-            DSLMeasuredOutput me = mea.get(k);
-            this.structureElementPath.put(me.getName(), (((("//@model.1/@structureElement." + level0) + 
-              "/") + "@structureElement.") + level1));
-            this.lMOutput.add(me);
-            level1++;
-            this.depth.set(1, level1);
+          EList<DSLMeasuredOutput> mea = man.getMeasuredOutput();
+          for (int k = 0; (k < mea.size()); k++) {
+            {
+              Integer level1 = this.depth.get(1);
+              DSLMeasuredOutput me = mea.get(k);
+              this.structureElementPath.put(me.getName(), (((("//@model.1/@structureElement." + level0) + 
+                "/") + "@structureElement.") + level1));
+              this.lMOutput.add(me);
+              level1++;
+              this.depth.set(1, level1);
+            }
           }
+          level0++;
+          this.depth.set(0, level0);
         }
-        level0++;
-        this.depth.set(0, level0);
       }
-    }
-    EList<DSLRules> rule = architecture.getRules();
-    int rMController = 0;
-    int rController = 0;
-    int rMonitor = 0;
-    int rAnalyzer = 0;
-    int rPlanner = 0;
-    int rExecutor = 0;
-    int rMO = 0;
-    String relation = ((((((" relation=\'//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
-      "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.1 ") + 
-      "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.2 ") + 
-      "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 ") + 
-      "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 ") + 
-      "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2\' ") + 
-      "density=\'6\'/> \n");
-    for (int i = 0; (i < rule.size()); i++) {
-      {
-        DSLRules r = rule.get(i);
-        boolean _equals = r.getAccess().equals("must-use");
-        if (_equals) {
-          if ((r instanceof DSLRuleController)) {
-            String pathAggregated = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName());
-            if ((pathAggregated != null)) {
-              int _length = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName()).split(Pattern.quote("//")).length;
-              int _minus = (_length - 1);
-              rController = _minus;
-              int _length_1 = pathAggregated.length();
-              int _minus_1 = (_length_1 - 1);
-              pathAggregated = pathAggregated.substring(0, _minus_1);
-              String _get = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-              String _plus = (pathAggregated + _get);
-              String _plus_1 = (_plus + "/@aggregated.");
-              String _plus_2 = (_plus_1 + Integer.valueOf(rController));
-              String _plus_3 = (_plus_2 + " \'");
-              pathAggregated = _plus_3;
-              this.outAggregatedPath.replace(((DSLRuleController)r).getController1().getName(), pathAggregated);
-              DSLController _controller2 = ((DSLRuleController)r).getController2();
-              boolean _tripleNotEquals = (_controller2 != null);
-              if (_tripleNotEquals) {
-                String pathInAggregated = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
-                if ((pathInAggregated != null)) {
-                  int _length_2 = pathInAggregated.length();
-                  int _minus_2 = (_length_2 - 1);
-                  pathInAggregated = pathInAggregated.substring(0, _minus_2);
-                  String _get_1 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-                  String _plus_4 = (pathInAggregated + _get_1);
-                  String _plus_5 = (_plus_4 + "/@aggregated.");
-                  String _plus_6 = (_plus_5 + Integer.valueOf(rController));
-                  String _plus_7 = (_plus_6 + " \'");
-                  pathInAggregated = _plus_7;
-                  this.inAggregatedPath.replace(((DSLRuleController)r).getController2().getName(), pathInAggregated);
-                } else {
-                  String _get_2 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-                  String _plus_8 = ("inAggregated=\'" + _get_2);
-                  String _plus_9 = (_plus_8 + "/@aggregated.");
-                  String _plus_10 = (_plus_9 + Integer.valueOf(rController));
-                  String _plus_11 = (_plus_10 + " \'");
-                  pathInAggregated = _plus_11;
-                  this.inAggregatedPath.put(((DSLRuleController)r).getController2().getName(), pathInAggregated);
-                }
-              }
-            } else {
-              String _get_3 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-              String _plus_12 = ("outAggregated=\'" + _get_3);
-              String _plus_13 = (_plus_12 + "/@aggregated.");
-              String _plus_14 = (_plus_13 + Integer.valueOf(rController));
-              String _plus_15 = (_plus_14 + " \'");
-              pathAggregated = _plus_15;
-              this.outAggregatedPath.put(((DSLRuleController)r).getController1().getName(), pathAggregated);
-              DSLController _controller2_1 = ((DSLRuleController)r).getController2();
-              boolean _tripleNotEquals_1 = (_controller2_1 != null);
-              if (_tripleNotEquals_1) {
-                String pathInAggregated_1 = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
-                if ((pathInAggregated_1 != null)) {
-                  int _length_3 = pathInAggregated_1.length();
-                  int _minus_3 = (_length_3 - 1);
-                  pathInAggregated_1 = pathInAggregated_1.substring(0, _minus_3);
-                  String _get_4 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-                  String _plus_16 = (pathInAggregated_1 + _get_4);
-                  String _plus_17 = (_plus_16 + "/@aggregated.");
-                  String _plus_18 = (_plus_17 + Integer.valueOf(rController));
-                  String _plus_19 = (_plus_18 + " \'");
-                  pathInAggregated_1 = _plus_19;
-                  this.inAggregatedPath.replace(((DSLRuleController)r).getController2().getName(), pathInAggregated_1);
-                } else {
-                  this.inAggregatedPath.put(((DSLRuleController)r).getController2().getName(), pathAggregated.replaceFirst("outAggregated", "inAggregated"));
-                }
-              }
-            }
-            rController++;
-            String aggregated = this.aggregatedPath.get(((DSLRuleController)r).getController1().getName());
-            if ((aggregated != null)) {
-              DSLController _controller2_2 = ((DSLRuleController)r).getController2();
-              boolean _tripleNotEquals_2 = (_controller2_2 != null);
-              if (_tripleNotEquals_2) {
-                String _get_5 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-                String _plus_20 = ((aggregated + "<aggregated from=\'") + _get_5);
-                String _plus_21 = (_plus_20 + "\' to=\'");
-                String _get_6 = this.structureElementPath.get(((DSLRuleController)r).getController2().getName());
-                String _plus_22 = (_plus_21 + _get_6);
-                String _plus_23 = (_plus_22 + "\'");
-                String _plus_24 = (_plus_23 + relation);
-                aggregated = _plus_24;
-              }
-              this.aggregatedPath.replace(((DSLRuleController)r).getController1().getName(), aggregated);
-            } else {
-              DSLController _controller2_3 = ((DSLRuleController)r).getController2();
-              boolean _tripleNotEquals_3 = (_controller2_3 != null);
-              if (_tripleNotEquals_3) {
-                String _get_7 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
-                String _plus_25 = ("<aggregated from=\'" + _get_7);
-                String _plus_26 = (_plus_25 + "\' to=\'");
-                String _get_8 = this.structureElementPath.get(((DSLRuleController)r).getController2().getName());
-                String _plus_27 = (_plus_26 + _get_8);
-                String _plus_28 = (_plus_27 + "\'");
-                String _plus_29 = (_plus_28 + relation);
-                aggregated = _plus_29;
-              }
-              this.aggregatedPath.put(((DSLRuleController)r).getController1().getName(), aggregated);
-            }
-          } else {
-            if ((r instanceof DSLRuleMonitor)) {
-              String pathAggregated_1 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-              if ((pathAggregated_1 != null)) {
-                int _length_4 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName()).split(Pattern.quote("//")).length;
-                int _minus_4 = (_length_4 - 1);
-                rMonitor = _minus_4;
-                int _length_5 = pathAggregated_1.length();
-                int _minus_5 = (_length_5 - 1);
-                pathAggregated_1 = pathAggregated_1.substring(0, _minus_5);
-                String _get_9 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                String _plus_30 = (pathAggregated_1 + _get_9);
-                String _plus_31 = (_plus_30 + "/@aggregated.");
-                String _plus_32 = (_plus_31 + Integer.valueOf(rMonitor));
-                String _plus_33 = (_plus_32 + " \'");
-                pathAggregated_1 = _plus_33;
-                this.outAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor().getName(), pathAggregated_1);
-                DSLAnalyzer _analyzer = ((DSLRuleMonitor)r).getAnalyzer();
-                boolean _tripleNotEquals_4 = (_analyzer != null);
-                if (_tripleNotEquals_4) {
-                  String pathInAggregated_2 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
-                  if ((pathInAggregated_2 != null)) {
-                    int _length_6 = pathInAggregated_2.length();
-                    int _minus_6 = (_length_6 - 1);
-                    pathInAggregated_2 = pathInAggregated_2.substring(0, _minus_6);
-                    String _get_10 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_34 = (pathInAggregated_2 + _get_10);
-                    String _plus_35 = (_plus_34 + "/@aggregated.");
-                    String _plus_36 = (_plus_35 + Integer.valueOf(rMonitor));
-                    String _plus_37 = (_plus_36 + " \'");
-                    pathInAggregated_2 = _plus_37;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_2);
+      EList<DSLRules> rule = architecture.getRules();
+      int rMController = 0;
+      int rController = 0;
+      int rMonitor = 0;
+      int rAnalyzer = 0;
+      int rPlanner = 0;
+      int rExecutor = 0;
+      int rMO = 0;
+      String relation = ((((((" relation=\'//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.1 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.2 ") + 
+        "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 ") + 
+        "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 ") + 
+        "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2\' ") + 
+        "density=\'6\'/> \n");
+      rule.addAll(this.withDomainRules);
+      this.withDomainRules.clear();
+      for (int i = 0; (i < rule.size()); i++) {
+        {
+          DSLRules r = rule.get(i);
+          boolean _equals = r.getAccess().equals("must-use");
+          if (_equals) {
+            if ((r instanceof DSLRuleController)) {
+              String pathAggregated = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName());
+              if ((pathAggregated != null)) {
+                int _length = this.outAggregatedPath.get(((DSLRuleController)r).getController1().getName()).split(Pattern.quote("//")).length;
+                int _minus = (_length - 1);
+                rController = _minus;
+                int _length_1 = pathAggregated.length();
+                int _minus_1 = (_length_1 - 1);
+                pathAggregated = pathAggregated.substring(0, _minus_1);
+                String _get = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                String _plus = (pathAggregated + _get);
+                String _plus_1 = (_plus + "/@aggregated.");
+                String _plus_2 = (_plus_1 + Integer.valueOf(rController));
+                String _plus_3 = (_plus_2 + " \'");
+                pathAggregated = _plus_3;
+                this.outAggregatedPath.replace(((DSLRuleController)r).getController1().getName(), pathAggregated);
+                DSLController _controller2 = ((DSLRuleController)r).getController2();
+                boolean _tripleNotEquals = (_controller2 != null);
+                if (_tripleNotEquals) {
+                  String pathInAggregated = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
+                  if ((pathInAggregated != null)) {
+                    int _length_2 = pathInAggregated.length();
+                    int _minus_2 = (_length_2 - 1);
+                    pathInAggregated = pathInAggregated.substring(0, _minus_2);
+                    String _get_1 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                    String _plus_4 = (pathInAggregated + _get_1);
+                    String _plus_5 = (_plus_4 + "/@aggregated.");
+                    String _plus_6 = (_plus_5 + Integer.valueOf(rController));
+                    String _plus_7 = (_plus_6 + " \'");
+                    pathInAggregated = _plus_7;
+                    this.inAggregatedPath.replace(((DSLRuleController)r).getController2().getName(), pathInAggregated);
                   } else {
-                    String _get_11 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_38 = ("inAggregated=\'" + _get_11);
-                    String _plus_39 = (_plus_38 + "/@aggregated.");
-                    String _plus_40 = (_plus_39 + Integer.valueOf(rMonitor));
-                    String _plus_41 = (_plus_40 + " \'");
-                    pathInAggregated_2 = _plus_41;
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_2);
-                  }
-                }
-                DSLKnowledge _knowledge = ((DSLRuleMonitor)r).getKnowledge();
-                boolean _tripleNotEquals_5 = (_knowledge != null);
-                if (_tripleNotEquals_5) {
-                  String pathInAggregated_3 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
-                  if ((pathInAggregated_3 != null)) {
-                    int _length_7 = pathInAggregated_3.length();
-                    int _minus_7 = (_length_7 - 1);
-                    pathInAggregated_3 = pathInAggregated_3.substring(0, _minus_7);
-                    String _get_12 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_42 = (pathInAggregated_3 + _get_12);
-                    String _plus_43 = (_plus_42 + "/@aggregated.");
-                    String _plus_44 = (_plus_43 + Integer.valueOf(rMonitor));
-                    String _plus_45 = (_plus_44 + " \'");
-                    pathInAggregated_3 = _plus_45;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_3);
-                  } else {
-                    String _get_13 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_46 = ("inAggregated=\'" + _get_13);
-                    String _plus_47 = (_plus_46 + "/@aggregated.");
-                    String _plus_48 = (_plus_47 + Integer.valueOf(rMonitor));
-                    String _plus_49 = (_plus_48 + " \'");
-                    pathInAggregated_3 = _plus_49;
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_3);
-                  }
-                }
-                DSLSensor _sensor = ((DSLRuleMonitor)r).getSensor();
-                boolean _tripleNotEquals_6 = (_sensor != null);
-                if (_tripleNotEquals_6) {
-                  String pathInAggregated_4 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
-                  if ((pathInAggregated_4 != null)) {
-                    int _length_8 = pathInAggregated_4.length();
-                    int _minus_8 = (_length_8 - 1);
-                    pathInAggregated_4 = pathInAggregated_4.substring(0, _minus_8);
-                    String _get_14 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_50 = (pathInAggregated_4 + _get_14);
-                    String _plus_51 = (_plus_50 + "/@aggregated.");
-                    String _plus_52 = (_plus_51 + Integer.valueOf(rMonitor));
-                    String _plus_53 = (_plus_52 + " \'");
-                    pathInAggregated_4 = _plus_53;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_4);
-                  } else {
-                    String _get_15 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_54 = ("inAggregated=\'" + _get_15);
-                    String _plus_55 = (_plus_54 + "/@aggregated.");
-                    String _plus_56 = (_plus_55 + Integer.valueOf(rMonitor));
-                    String _plus_57 = (_plus_56 + " \'");
-                    pathInAggregated_4 = _plus_57;
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_4);
-                  }
-                }
-                DSLMonitor _monitor2 = ((DSLRuleMonitor)r).getMonitor2();
-                boolean _tripleNotEquals_7 = (_monitor2 != null);
-                if (_tripleNotEquals_7) {
-                  String pathInAggregated_5 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
-                  if ((pathInAggregated_5 != null)) {
-                    int _length_9 = pathInAggregated_5.length();
-                    int _minus_9 = (_length_9 - 1);
-                    pathInAggregated_5 = pathInAggregated_5.substring(0, _minus_9);
-                    String _get_16 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_58 = (pathInAggregated_5 + _get_16);
-                    String _plus_59 = (_plus_58 + "/@aggregated.");
-                    String _plus_60 = (_plus_59 + Integer.valueOf(rMonitor));
-                    String _plus_61 = (_plus_60 + " \'");
-                    pathInAggregated_5 = _plus_61;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
-                  } else {
-                    String _get_17 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_62 = ("inAggregated=\'" + _get_17);
-                    String _plus_63 = (_plus_62 + "/@aggregated.");
-                    String _plus_64 = (_plus_63 + Integer.valueOf(rMonitor));
-                    String _plus_65 = (_plus_64 + " \'");
-                    pathInAggregated_5 = _plus_65;
-                    System.out.println(pathInAggregated_5);
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
-                  }
-                }
-                DSLPlanner _planner = ((DSLRuleMonitor)r).getPlanner();
-                boolean _tripleNotEquals_8 = (_planner != null);
-                if (_tripleNotEquals_8) {
-                  String pathInAggregated_6 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
-                  if ((pathInAggregated_6 != null)) {
-                    int _length_10 = pathInAggregated_6.length();
-                    int _minus_10 = (_length_10 - 1);
-                    pathInAggregated_6 = pathInAggregated_6.substring(0, _minus_10);
-                    String _get_18 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_66 = (pathInAggregated_6 + _get_18);
-                    String _plus_67 = (_plus_66 + "/@aggregated.");
-                    String _plus_68 = (_plus_67 + Integer.valueOf(rMonitor));
-                    String _plus_69 = (_plus_68 + " \'");
-                    pathInAggregated_6 = _plus_69;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_6);
-                  } else {
-                    String _get_19 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_70 = ("inAggregated=\'" + _get_19);
-                    String _plus_71 = (_plus_70 + "/@aggregated.");
-                    String _plus_72 = (_plus_71 + Integer.valueOf(rMonitor));
-                    String _plus_73 = (_plus_72 + " \'");
-                    pathInAggregated_6 = _plus_73;
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_6);
-                  }
-                }
-                DSLExecutor _executor = ((DSLRuleMonitor)r).getExecutor();
-                boolean _tripleNotEquals_9 = (_executor != null);
-                if (_tripleNotEquals_9) {
-                  String pathInAggregated_7 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
-                  if ((pathInAggregated_7 != null)) {
-                    int _length_11 = pathInAggregated_7.length();
-                    int _minus_11 = (_length_11 - 1);
-                    pathInAggregated_7 = pathInAggregated_7.substring(0, _minus_11);
-                    String _get_20 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_74 = (pathInAggregated_7 + _get_20);
-                    String _plus_75 = (_plus_74 + "/@aggregated.");
-                    String _plus_76 = (_plus_75 + Integer.valueOf(rMonitor));
-                    String _plus_77 = (_plus_76 + " \'");
-                    pathInAggregated_7 = _plus_77;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_7);
-                  } else {
-                    String _get_21 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_78 = ("inAggregated=\'" + _get_21);
-                    String _plus_79 = (_plus_78 + "/@aggregated.");
-                    String _plus_80 = (_plus_79 + Integer.valueOf(rMonitor));
-                    String _plus_81 = (_plus_80 + " \'");
-                    pathInAggregated_7 = _plus_81;
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_7);
+                    String _get_2 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                    String _plus_8 = ("inAggregated=\'" + _get_2);
+                    String _plus_9 = (_plus_8 + "/@aggregated.");
+                    String _plus_10 = (_plus_9 + Integer.valueOf(rController));
+                    String _plus_11 = (_plus_10 + " \'");
+                    pathInAggregated = _plus_11;
+                    this.inAggregatedPath.put(((DSLRuleController)r).getController2().getName(), pathInAggregated);
                   }
                 }
               } else {
-                String _get_22 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                String _plus_82 = ("outAggregated=\'" + _get_22);
-                String _plus_83 = (_plus_82 + "/@aggregated.");
-                String _plus_84 = (_plus_83 + Integer.valueOf(rMonitor));
-                String _plus_85 = (_plus_84 + " \'");
-                pathAggregated_1 = _plus_85;
-                this.outAggregatedPath.put(((DSLRuleMonitor)r).getMonitor().getName(), pathAggregated_1);
-                DSLAnalyzer _analyzer_1 = ((DSLRuleMonitor)r).getAnalyzer();
-                boolean _tripleNotEquals_10 = (_analyzer_1 != null);
-                if (_tripleNotEquals_10) {
-                  String pathInAggregated_8 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
-                  if ((pathInAggregated_8 != null)) {
-                    int _length_12 = pathInAggregated_8.length();
-                    int _minus_12 = (_length_12 - 1);
-                    pathInAggregated_8 = pathInAggregated_8.substring(0, _minus_12);
-                    String _get_23 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_86 = (pathInAggregated_8 + _get_23);
-                    String _plus_87 = (_plus_86 + "/@aggregated.");
-                    String _plus_88 = (_plus_87 + Integer.valueOf(rMonitor));
-                    String _plus_89 = (_plus_88 + " \'");
-                    pathInAggregated_8 = _plus_89;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_8);
+                String _get_3 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                String _plus_12 = ("outAggregated=\'" + _get_3);
+                String _plus_13 = (_plus_12 + "/@aggregated.");
+                String _plus_14 = (_plus_13 + Integer.valueOf(rController));
+                String _plus_15 = (_plus_14 + " \'");
+                pathAggregated = _plus_15;
+                this.outAggregatedPath.put(((DSLRuleController)r).getController1().getName(), pathAggregated);
+                DSLController _controller2_1 = ((DSLRuleController)r).getController2();
+                boolean _tripleNotEquals_1 = (_controller2_1 != null);
+                if (_tripleNotEquals_1) {
+                  String pathInAggregated_1 = this.inAggregatedPath.get(((DSLRuleController)r).getController2().getName());
+                  if ((pathInAggregated_1 != null)) {
+                    int _length_3 = pathInAggregated_1.length();
+                    int _minus_3 = (_length_3 - 1);
+                    pathInAggregated_1 = pathInAggregated_1.substring(0, _minus_3);
+                    String _get_4 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                    String _plus_16 = (pathInAggregated_1 + _get_4);
+                    String _plus_17 = (_plus_16 + "/@aggregated.");
+                    String _plus_18 = (_plus_17 + Integer.valueOf(rController));
+                    String _plus_19 = (_plus_18 + " \'");
+                    pathInAggregated_1 = _plus_19;
+                    this.inAggregatedPath.replace(((DSLRuleController)r).getController2().getName(), pathInAggregated_1);
                   } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getAnalyzer().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
-                  }
-                }
-                DSLKnowledge _knowledge_1 = ((DSLRuleMonitor)r).getKnowledge();
-                boolean _tripleNotEquals_11 = (_knowledge_1 != null);
-                if (_tripleNotEquals_11) {
-                  String pathInAggregated_9 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
-                  if ((pathInAggregated_9 != null)) {
-                    int _length_13 = pathInAggregated_9.length();
-                    int _minus_13 = (_length_13 - 1);
-                    pathInAggregated_9 = pathInAggregated_9.substring(0, _minus_13);
-                    String _get_24 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_90 = (pathInAggregated_9 + _get_24);
-                    String _plus_91 = (_plus_90 + "/@aggregated.");
-                    String _plus_92 = (_plus_91 + Integer.valueOf(rMonitor));
-                    String _plus_93 = (_plus_92 + " \'");
-                    pathInAggregated_9 = _plus_93;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_9);
-                  } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getKnowledge().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
-                  }
-                }
-                DSLSensor _sensor_1 = ((DSLRuleMonitor)r).getSensor();
-                boolean _tripleNotEquals_12 = (_sensor_1 != null);
-                if (_tripleNotEquals_12) {
-                  String pathInAggregated_10 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
-                  if ((pathInAggregated_10 != null)) {
-                    int _length_14 = pathInAggregated_10.length();
-                    int _minus_14 = (_length_14 - 1);
-                    pathInAggregated_10 = pathInAggregated_10.substring(0, _minus_14);
-                    String _get_25 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_94 = (pathInAggregated_10 + _get_25);
-                    String _plus_95 = (_plus_94 + "/@aggregated.");
-                    String _plus_96 = (_plus_95 + Integer.valueOf(rMonitor));
-                    String _plus_97 = (_plus_96 + " \'");
-                    pathInAggregated_10 = _plus_97;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_10);
-                  } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getSensor().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
-                  }
-                }
-                DSLMonitor _monitor2_1 = ((DSLRuleMonitor)r).getMonitor2();
-                boolean _tripleNotEquals_13 = (_monitor2_1 != null);
-                if (_tripleNotEquals_13) {
-                  String pathInAggregated_11 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
-                  if ((pathInAggregated_11 != null)) {
-                    int _length_15 = pathInAggregated_11.length();
-                    int _minus_15 = (_length_15 - 1);
-                    pathInAggregated_11 = pathInAggregated_11.substring(0, _minus_15);
-                    String _get_26 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_98 = (pathInAggregated_11 + _get_26);
-                    String _plus_99 = (_plus_98 + "/@aggregated.");
-                    String _plus_100 = (_plus_99 + Integer.valueOf(rMonitor));
-                    String _plus_101 = (_plus_100 + " \'");
-                    pathInAggregated_11 = _plus_101;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_11);
-                  } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
-                  }
-                }
-                DSLPlanner _planner_1 = ((DSLRuleMonitor)r).getPlanner();
-                boolean _tripleNotEquals_14 = (_planner_1 != null);
-                if (_tripleNotEquals_14) {
-                  String pathInAggregated_12 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
-                  if ((pathInAggregated_12 != null)) {
-                    int _length_16 = pathInAggregated_12.length();
-                    int _minus_16 = (_length_16 - 1);
-                    pathInAggregated_12 = pathInAggregated_12.substring(0, _minus_16);
-                    String _get_27 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_102 = (pathInAggregated_12 + _get_27);
-                    String _plus_103 = (_plus_102 + "/@aggregated.");
-                    String _plus_104 = (_plus_103 + Integer.valueOf(rMonitor));
-                    String _plus_105 = (_plus_104 + " \'");
-                    pathInAggregated_12 = _plus_105;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_12);
-                  } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getPlanner().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
-                  }
-                }
-                DSLExecutor _executor_1 = ((DSLRuleMonitor)r).getExecutor();
-                boolean _tripleNotEquals_15 = (_executor_1 != null);
-                if (_tripleNotEquals_15) {
-                  String pathInAggregated_13 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
-                  if ((pathInAggregated_13 != null)) {
-                    int _length_17 = pathInAggregated_13.length();
-                    int _minus_17 = (_length_17 - 1);
-                    pathInAggregated_13 = pathInAggregated_13.substring(0, _minus_17);
-                    String _get_28 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_106 = (pathInAggregated_13 + _get_28);
-                    String _plus_107 = (_plus_106 + "/@aggregated.");
-                    String _plus_108 = (_plus_107 + Integer.valueOf(rMonitor));
-                    String _plus_109 = (_plus_108 + " \'");
-                    pathInAggregated_13 = _plus_109;
-                    this.inAggregatedPath.replace(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_13);
-                  } else {
-                    this.inAggregatedPath.put(((DSLRuleMonitor)r).getExecutor().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
+                    this.inAggregatedPath.put(((DSLRuleController)r).getController2().getName(), pathAggregated.replaceFirst("outAggregated", "inAggregated"));
                   }
                 }
               }
-              String aggregated_1 = this.aggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-              if ((aggregated_1 != null)) {
-                DSLAnalyzer _analyzer_2 = ((DSLRuleMonitor)r).getAnalyzer();
-                boolean _tripleNotEquals_16 = (_analyzer_2 != null);
-                if (_tripleNotEquals_16) {
-                  String _get_29 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                  String _plus_110 = ((aggregated_1 + "<aggregated from=\'") + _get_29);
-                  String _plus_111 = (_plus_110 + "\' to=\'");
-                  String _get_30 = this.structureElementPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
-                  String _plus_112 = (_plus_111 + _get_30);
-                  String _plus_113 = (_plus_112 + "\'");
-                  String _plus_114 = (_plus_113 + relation);
-                  aggregated_1 = _plus_114;
-                } else {
-                  DSLKnowledge _knowledge_2 = ((DSLRuleMonitor)r).getKnowledge();
-                  boolean _tripleNotEquals_17 = (_knowledge_2 != null);
-                  if (_tripleNotEquals_17) {
-                    String _get_31 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_115 = ((aggregated_1 + "<aggregated from=\'") + _get_31);
-                    String _plus_116 = (_plus_115 + "\' to=\'");
-                    String _get_32 = this.structureElementPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
-                    String _plus_117 = (_plus_116 + _get_32);
-                    String _plus_118 = (_plus_117 + "\'");
-                    String _plus_119 = (_plus_118 + relation);
-                    aggregated_1 = _plus_119;
-                  } else {
-                    DSLSensor _sensor_2 = ((DSLRuleMonitor)r).getSensor();
-                    boolean _tripleNotEquals_18 = (_sensor_2 != null);
-                    if (_tripleNotEquals_18) {
-                      String _get_33 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                      String _plus_120 = ((aggregated_1 + "<aggregated from=\'") + _get_33);
-                      String _plus_121 = (_plus_120 + "\' to=\'");
-                      String _get_34 = this.structureElementPath.get(((DSLRuleMonitor)r).getSensor().getName());
-                      String _plus_122 = (_plus_121 + _get_34);
-                      String _plus_123 = (_plus_122 + "\'");
-                      String _plus_124 = (_plus_123 + relation);
-                      aggregated_1 = _plus_124;
-                    } else {
-                      DSLMonitor _monitor2_2 = ((DSLRuleMonitor)r).getMonitor2();
-                      boolean _tripleNotEquals_19 = (_monitor2_2 != null);
-                      if (_tripleNotEquals_19) {
-                        String _get_35 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                        String _plus_125 = ((aggregated_1 + "<aggregated from=\'") + _get_35);
-                        String _plus_126 = (_plus_125 + "\' to=\'");
-                        String _get_36 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
-                        String _plus_127 = (_plus_126 + _get_36);
-                        String _plus_128 = (_plus_127 + "\'");
-                        String _plus_129 = (_plus_128 + relation);
-                        aggregated_1 = _plus_129;
-                      } else {
-                        DSLPlanner _planner_2 = ((DSLRuleMonitor)r).getPlanner();
-                        boolean _tripleNotEquals_20 = (_planner_2 != null);
-                        if (_tripleNotEquals_20) {
-                          String _get_37 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                          String _plus_130 = ((aggregated_1 + "<aggregated from=\'") + _get_37);
-                          String _plus_131 = (_plus_130 + "\' to=\'");
-                          String _get_38 = this.structureElementPath.get(((DSLRuleMonitor)r).getPlanner().getName());
-                          String _plus_132 = (_plus_131 + _get_38);
-                          String _plus_133 = (_plus_132 + "\'");
-                          String _plus_134 = (_plus_133 + relation);
-                          aggregated_1 = _plus_134;
-                        } else {
-                          DSLExecutor _executor_2 = ((DSLRuleMonitor)r).getExecutor();
-                          boolean _tripleNotEquals_21 = (_executor_2 != null);
-                          if (_tripleNotEquals_21) {
-                            String _get_39 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                            String _plus_135 = ((aggregated_1 + "<aggregated from=\'") + _get_39);
-                            String _plus_136 = (_plus_135 + "\' to=\'");
-                            String _get_40 = this.structureElementPath.get(((DSLRuleMonitor)r).getExecutor().getName());
-                            String _plus_137 = (_plus_136 + _get_40);
-                            String _plus_138 = (_plus_137 + "\'");
-                            String _plus_139 = (_plus_138 + relation);
-                            aggregated_1 = _plus_139;
-                          }
-                        }
-                      }
-                    }
-                  }
+              String aggregated = this.aggregatedPath.get(((DSLRuleController)r).getController1().getName());
+              if ((aggregated != null)) {
+                DSLController _controller2_2 = ((DSLRuleController)r).getController2();
+                boolean _tripleNotEquals_2 = (_controller2_2 != null);
+                if (_tripleNotEquals_2) {
+                  String _get_5 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                  String _plus_20 = ((aggregated + "<aggregated from=\'") + _get_5);
+                  String _plus_21 = (_plus_20 + "\' to=\'");
+                  String _get_6 = this.structureElementPath.get(((DSLRuleController)r).getController2().getName());
+                  String _plus_22 = (_plus_21 + _get_6);
+                  String _plus_23 = (_plus_22 + "\'");
+                  String _plus_24 = (_plus_23 + relation);
+                  aggregated = _plus_24;
                 }
-                this.aggregatedPath.replace(((DSLRuleMonitor)r).getMonitor().getName(), aggregated_1);
+                this.aggregatedPath.replace(((DSLRuleController)r).getController1().getName(), aggregated);
               } else {
-                DSLAnalyzer _analyzer_3 = ((DSLRuleMonitor)r).getAnalyzer();
-                boolean _tripleNotEquals_22 = (_analyzer_3 != null);
-                if (_tripleNotEquals_22) {
-                  String _get_41 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                  String _plus_140 = ("<aggregated from=\'" + _get_41);
-                  String _plus_141 = (_plus_140 + "\' to=\'");
-                  String _get_42 = this.structureElementPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
-                  String _plus_142 = (_plus_141 + _get_42);
-                  String _plus_143 = (_plus_142 + "\'");
-                  String _plus_144 = (_plus_143 + relation);
-                  aggregated_1 = _plus_144;
-                } else {
-                  DSLKnowledge _knowledge_3 = ((DSLRuleMonitor)r).getKnowledge();
-                  boolean _tripleNotEquals_23 = (_knowledge_3 != null);
-                  if (_tripleNotEquals_23) {
-                    String _get_43 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                    String _plus_145 = ("<aggregated from=\'" + _get_43);
-                    String _plus_146 = (_plus_145 + "\' to=\'");
-                    String _get_44 = this.structureElementPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
-                    String _plus_147 = (_plus_146 + _get_44);
-                    String _plus_148 = (_plus_147 + "\'");
-                    String _plus_149 = (_plus_148 + relation);
-                    aggregated_1 = _plus_149;
-                  } else {
-                    DSLSensor _sensor_3 = ((DSLRuleMonitor)r).getSensor();
-                    boolean _tripleNotEquals_24 = (_sensor_3 != null);
-                    if (_tripleNotEquals_24) {
-                      String _get_45 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                      String _plus_150 = ("<aggregated from=\'" + _get_45);
-                      String _plus_151 = (_plus_150 + "\' to=\'");
-                      String _get_46 = this.structureElementPath.get(((DSLRuleMonitor)r).getSensor().getName());
-                      String _plus_152 = (_plus_151 + _get_46);
-                      String _plus_153 = (_plus_152 + "\'");
-                      String _plus_154 = (_plus_153 + relation);
-                      aggregated_1 = _plus_154;
-                    } else {
-                      DSLMonitor _monitor2_3 = ((DSLRuleMonitor)r).getMonitor2();
-                      boolean _tripleNotEquals_25 = (_monitor2_3 != null);
-                      if (_tripleNotEquals_25) {
-                        String _get_47 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                        String _plus_155 = ("<aggregated from=\'" + _get_47);
-                        String _plus_156 = (_plus_155 + "\' to=\'");
-                        String _get_48 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
-                        String _plus_157 = (_plus_156 + _get_48);
-                        String _plus_158 = (_plus_157 + "\'");
-                        String _plus_159 = (_plus_158 + relation);
-                        aggregated_1 = _plus_159;
-                      } else {
-                        DSLPlanner _planner_3 = ((DSLRuleMonitor)r).getPlanner();
-                        boolean _tripleNotEquals_26 = (_planner_3 != null);
-                        if (_tripleNotEquals_26) {
-                          String _get_49 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                          String _plus_160 = ("<aggregated from=\'" + _get_49);
-                          String _plus_161 = (_plus_160 + "\' to=\'");
-                          String _get_50 = this.structureElementPath.get(((DSLRuleMonitor)r).getPlanner().getName());
-                          String _plus_162 = (_plus_161 + _get_50);
-                          String _plus_163 = (_plus_162 + "\'");
-                          String _plus_164 = (_plus_163 + relation);
-                          aggregated_1 = _plus_164;
-                        } else {
-                          DSLExecutor _executor_3 = ((DSLRuleMonitor)r).getExecutor();
-                          boolean _tripleNotEquals_27 = (_executor_3 != null);
-                          if (_tripleNotEquals_27) {
-                            String _get_51 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
-                            String _plus_165 = ("<aggregated from=\'" + _get_51);
-                            String _plus_166 = (_plus_165 + "\' to=\'");
-                            String _get_52 = this.structureElementPath.get(((DSLRuleMonitor)r).getExecutor().getName());
-                            String _plus_167 = (_plus_166 + _get_52);
-                            String _plus_168 = (_plus_167 + "\'");
-                            String _plus_169 = (_plus_168 + relation);
-                            aggregated_1 = _plus_169;
-                          }
-                        }
-                      }
-                    }
-                  }
+                DSLController _controller2_3 = ((DSLRuleController)r).getController2();
+                boolean _tripleNotEquals_3 = (_controller2_3 != null);
+                if (_tripleNotEquals_3) {
+                  String _get_7 = this.structureElementPath.get(((DSLRuleController)r).getController1().getName());
+                  String _plus_25 = ("<aggregated from=\'" + _get_7);
+                  String _plus_26 = (_plus_25 + "\' to=\'");
+                  String _get_8 = this.structureElementPath.get(((DSLRuleController)r).getController2().getName());
+                  String _plus_27 = (_plus_26 + _get_8);
+                  String _plus_28 = (_plus_27 + "\'");
+                  String _plus_29 = (_plus_28 + relation);
+                  aggregated = _plus_29;
                 }
-                this.aggregatedPath.put(((DSLRuleMonitor)r).getMonitor().getName(), aggregated_1);
+                this.aggregatedPath.put(((DSLRuleController)r).getController1().getName(), aggregated);
               }
             } else {
-              if ((r instanceof DSLRuleAnalyzer)) {
-                String pathAggregated_2 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                if ((pathAggregated_2 != null)) {
-                  int _length_18 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName()).split(Pattern.quote("//")).length;
-                  int _minus_18 = (_length_18 - 1);
-                  rAnalyzer = _minus_18;
-                  int _length_19 = pathAggregated_2.length();
-                  int _minus_19 = (_length_19 - 1);
-                  pathAggregated_2 = pathAggregated_2.substring(0, _minus_19);
-                  String _get_53 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                  String _plus_170 = (pathAggregated_2 + _get_53);
-                  String _plus_171 = (_plus_170 + "/@aggregated.");
-                  String _plus_172 = (_plus_171 + Integer.valueOf(rAnalyzer));
-                  String _plus_173 = (_plus_172 + " \'");
-                  pathAggregated_2 = _plus_173;
-                  this.outAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer().getName(), pathAggregated_2);
-                  DSLMonitor _monitor = ((DSLRuleAnalyzer)r).getMonitor();
-                  boolean _tripleNotEquals_28 = (_monitor != null);
-                  if (_tripleNotEquals_28) {
-                    String pathInAggregated_14 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
-                    if ((pathInAggregated_14 != null)) {
-                      int _length_20 = pathInAggregated_14.length();
-                      int _minus_20 = (_length_20 - 1);
-                      pathInAggregated_14 = pathInAggregated_14.substring(0, _minus_20);
-                      String _get_54 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_174 = (pathInAggregated_14 + _get_54);
-                      String _plus_175 = (_plus_174 + "/@aggregated.");
-                      String _plus_176 = (_plus_175 + Integer.valueOf(rAnalyzer));
-                      String _plus_177 = (_plus_176 + " \'");
-                      pathInAggregated_14 = _plus_177;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_14);
+              if ((r instanceof DSLRuleMonitor)) {
+                String pathAggregated_1 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                if ((pathAggregated_1 != null)) {
+                  int _length_4 = this.outAggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName()).split(Pattern.quote("//")).length;
+                  int _minus_4 = (_length_4 - 1);
+                  rMonitor = _minus_4;
+                  int _length_5 = pathAggregated_1.length();
+                  int _minus_5 = (_length_5 - 1);
+                  pathAggregated_1 = pathAggregated_1.substring(0, _minus_5);
+                  String _get_9 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                  String _plus_30 = (pathAggregated_1 + _get_9);
+                  String _plus_31 = (_plus_30 + "/@aggregated.");
+                  String _plus_32 = (_plus_31 + Integer.valueOf(rMonitor));
+                  String _plus_33 = (_plus_32 + " \'");
+                  pathAggregated_1 = _plus_33;
+                  this.outAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor().getName(), pathAggregated_1);
+                  DSLAnalyzer _analyzer = ((DSLRuleMonitor)r).getAnalyzer();
+                  boolean _tripleNotEquals_4 = (_analyzer != null);
+                  if (_tripleNotEquals_4) {
+                    String pathInAggregated_2 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
+                    if ((pathInAggregated_2 != null)) {
+                      int _length_6 = pathInAggregated_2.length();
+                      int _minus_6 = (_length_6 - 1);
+                      pathInAggregated_2 = pathInAggregated_2.substring(0, _minus_6);
+                      String _get_10 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_34 = (pathInAggregated_2 + _get_10);
+                      String _plus_35 = (_plus_34 + "/@aggregated.");
+                      String _plus_36 = (_plus_35 + Integer.valueOf(rMonitor));
+                      String _plus_37 = (_plus_36 + " \'");
+                      pathInAggregated_2 = _plus_37;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_2);
                     } else {
-                      String _get_55 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_178 = ("inAggregated=\'" + _get_55);
-                      String _plus_179 = (_plus_178 + "/@aggregated.");
-                      String _plus_180 = (_plus_179 + Integer.valueOf(rAnalyzer));
-                      String _plus_181 = (_plus_180 + " \'");
-                      pathInAggregated_14 = _plus_181;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_14);
+                      String _get_11 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_38 = ("inAggregated=\'" + _get_11);
+                      String _plus_39 = (_plus_38 + "/@aggregated.");
+                      String _plus_40 = (_plus_39 + Integer.valueOf(rMonitor));
+                      String _plus_41 = (_plus_40 + " \'");
+                      pathInAggregated_2 = _plus_41;
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_2);
                     }
                   }
-                  DSLKnowledge _knowledge_4 = ((DSLRuleAnalyzer)r).getKnowledge();
-                  boolean _tripleNotEquals_29 = (_knowledge_4 != null);
-                  if (_tripleNotEquals_29) {
-                    String pathInAggregated_15 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
-                    if ((pathInAggregated_15 != null)) {
-                      int _length_21 = pathInAggregated_15.length();
-                      int _minus_21 = (_length_21 - 1);
-                      pathInAggregated_15 = pathInAggregated_15.substring(0, _minus_21);
-                      String _get_56 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_182 = (pathInAggregated_15 + _get_56);
-                      String _plus_183 = (_plus_182 + "/@aggregated.");
-                      String _plus_184 = (_plus_183 + Integer.valueOf(rAnalyzer));
-                      String _plus_185 = (_plus_184 + " \'");
-                      pathInAggregated_15 = _plus_185;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_15);
+                  DSLKnowledge _knowledge = ((DSLRuleMonitor)r).getKnowledge();
+                  boolean _tripleNotEquals_5 = (_knowledge != null);
+                  if (_tripleNotEquals_5) {
+                    String pathInAggregated_3 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
+                    if ((pathInAggregated_3 != null)) {
+                      int _length_7 = pathInAggregated_3.length();
+                      int _minus_7 = (_length_7 - 1);
+                      pathInAggregated_3 = pathInAggregated_3.substring(0, _minus_7);
+                      String _get_12 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_42 = (pathInAggregated_3 + _get_12);
+                      String _plus_43 = (_plus_42 + "/@aggregated.");
+                      String _plus_44 = (_plus_43 + Integer.valueOf(rMonitor));
+                      String _plus_45 = (_plus_44 + " \'");
+                      pathInAggregated_3 = _plus_45;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_3);
                     } else {
-                      String _get_57 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_186 = ("inAggregated=\'" + _get_57);
-                      String _plus_187 = (_plus_186 + "/@aggregated.");
-                      String _plus_188 = (_plus_187 + Integer.valueOf(rAnalyzer));
-                      String _plus_189 = (_plus_188 + " \'");
-                      pathInAggregated_15 = _plus_189;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_15);
+                      String _get_13 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_46 = ("inAggregated=\'" + _get_13);
+                      String _plus_47 = (_plus_46 + "/@aggregated.");
+                      String _plus_48 = (_plus_47 + Integer.valueOf(rMonitor));
+                      String _plus_49 = (_plus_48 + " \'");
+                      pathInAggregated_3 = _plus_49;
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_3);
                     }
                   }
-                  DSLPlanner _planner_4 = ((DSLRuleAnalyzer)r).getPlanner();
-                  boolean _tripleNotEquals_30 = (_planner_4 != null);
-                  if (_tripleNotEquals_30) {
-                    String pathInAggregated_16 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
-                    if ((pathInAggregated_16 != null)) {
-                      int _length_22 = pathInAggregated_16.length();
-                      int _minus_22 = (_length_22 - 1);
-                      pathInAggregated_16 = pathInAggregated_16.substring(0, _minus_22);
-                      String _get_58 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_190 = (pathInAggregated_16 + _get_58);
-                      String _plus_191 = (_plus_190 + "/@aggregated.");
-                      String _plus_192 = (_plus_191 + Integer.valueOf(rAnalyzer));
-                      String _plus_193 = (_plus_192 + " \'");
-                      pathInAggregated_16 = _plus_193;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_16);
+                  DSLSensor _sensor = ((DSLRuleMonitor)r).getSensor();
+                  boolean _tripleNotEquals_6 = (_sensor != null);
+                  if (_tripleNotEquals_6) {
+                    String pathInAggregated_4 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
+                    if ((pathInAggregated_4 != null)) {
+                      int _length_8 = pathInAggregated_4.length();
+                      int _minus_8 = (_length_8 - 1);
+                      pathInAggregated_4 = pathInAggregated_4.substring(0, _minus_8);
+                      String _get_14 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_50 = (pathInAggregated_4 + _get_14);
+                      String _plus_51 = (_plus_50 + "/@aggregated.");
+                      String _plus_52 = (_plus_51 + Integer.valueOf(rMonitor));
+                      String _plus_53 = (_plus_52 + " \'");
+                      pathInAggregated_4 = _plus_53;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_4);
                     } else {
-                      String _get_59 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_194 = ("inAggregated=\'" + _get_59);
-                      String _plus_195 = (_plus_194 + "/@aggregated.");
-                      String _plus_196 = (_plus_195 + Integer.valueOf(rAnalyzer));
-                      String _plus_197 = (_plus_196 + " \'");
-                      pathInAggregated_16 = _plus_197;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_16);
+                      String _get_15 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_54 = ("inAggregated=\'" + _get_15);
+                      String _plus_55 = (_plus_54 + "/@aggregated.");
+                      String _plus_56 = (_plus_55 + Integer.valueOf(rMonitor));
+                      String _plus_57 = (_plus_56 + " \'");
+                      pathInAggregated_4 = _plus_57;
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_4);
                     }
                   }
-                  DSLReferenceInput _rreference = ((DSLRuleAnalyzer)r).getRreference();
-                  boolean _tripleNotEquals_31 = (_rreference != null);
-                  if (_tripleNotEquals_31) {
-                    String pathInAggregated_17 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
-                    if ((pathInAggregated_17 != null)) {
-                      int _length_23 = pathInAggregated_17.length();
-                      int _minus_23 = (_length_23 - 1);
-                      pathInAggregated_17 = pathInAggregated_17.substring(0, _minus_23);
-                      String _get_60 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_198 = (pathInAggregated_17 + _get_60);
-                      String _plus_199 = (_plus_198 + "/@aggregated.");
-                      String _plus_200 = (_plus_199 + Integer.valueOf(rAnalyzer));
-                      String _plus_201 = (_plus_200 + " \'");
-                      pathInAggregated_17 = _plus_201;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_17);
+                  DSLMonitor _monitor2 = ((DSLRuleMonitor)r).getMonitor2();
+                  boolean _tripleNotEquals_7 = (_monitor2 != null);
+                  if (_tripleNotEquals_7) {
+                    String pathInAggregated_5 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
+                    if ((pathInAggregated_5 != null)) {
+                      int _length_9 = pathInAggregated_5.length();
+                      int _minus_9 = (_length_9 - 1);
+                      pathInAggregated_5 = pathInAggregated_5.substring(0, _minus_9);
+                      String _get_16 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_58 = (pathInAggregated_5 + _get_16);
+                      String _plus_59 = (_plus_58 + "/@aggregated.");
+                      String _plus_60 = (_plus_59 + Integer.valueOf(rMonitor));
+                      String _plus_61 = (_plus_60 + " \'");
+                      pathInAggregated_5 = _plus_61;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
                     } else {
-                      String _get_61 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_202 = ("inAggregated=\'" + _get_61);
-                      String _plus_203 = (_plus_202 + "/@aggregated.");
-                      String _plus_204 = (_plus_203 + Integer.valueOf(rAnalyzer));
-                      String _plus_205 = (_plus_204 + " \'");
-                      pathInAggregated_17 = _plus_205;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_17);
+                      String _get_17 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_62 = ("inAggregated=\'" + _get_17);
+                      String _plus_63 = (_plus_62 + "/@aggregated.");
+                      String _plus_64 = (_plus_63 + Integer.valueOf(rMonitor));
+                      String _plus_65 = (_plus_64 + " \'");
+                      pathInAggregated_5 = _plus_65;
+                      System.out.println(pathInAggregated_5);
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_5);
                     }
                   }
-                  DSLAnalyzer _analyzer2 = ((DSLRuleAnalyzer)r).getAnalyzer2();
-                  boolean _tripleNotEquals_32 = (_analyzer2 != null);
-                  if (_tripleNotEquals_32) {
-                    String pathInAggregated_18 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
-                    if ((pathInAggregated_18 != null)) {
-                      int _length_24 = pathInAggregated_18.length();
-                      int _minus_24 = (_length_24 - 1);
-                      pathInAggregated_18 = pathInAggregated_18.substring(0, _minus_24);
-                      String _get_62 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_206 = (pathInAggregated_18 + _get_62);
-                      String _plus_207 = (_plus_206 + "/@aggregated.");
-                      String _plus_208 = (_plus_207 + Integer.valueOf(rAnalyzer));
-                      String _plus_209 = (_plus_208 + " \'");
-                      pathInAggregated_18 = _plus_209;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_18);
+                  DSLPlanner _planner = ((DSLRuleMonitor)r).getPlanner();
+                  boolean _tripleNotEquals_8 = (_planner != null);
+                  if (_tripleNotEquals_8) {
+                    String pathInAggregated_6 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
+                    if ((pathInAggregated_6 != null)) {
+                      int _length_10 = pathInAggregated_6.length();
+                      int _minus_10 = (_length_10 - 1);
+                      pathInAggregated_6 = pathInAggregated_6.substring(0, _minus_10);
+                      String _get_18 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_66 = (pathInAggregated_6 + _get_18);
+                      String _plus_67 = (_plus_66 + "/@aggregated.");
+                      String _plus_68 = (_plus_67 + Integer.valueOf(rMonitor));
+                      String _plus_69 = (_plus_68 + " \'");
+                      pathInAggregated_6 = _plus_69;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_6);
                     } else {
-                      String _get_63 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_210 = ("inAggregated=\'" + _get_63);
-                      String _plus_211 = (_plus_210 + "/@aggregated.");
-                      String _plus_212 = (_plus_211 + Integer.valueOf(rAnalyzer));
-                      String _plus_213 = (_plus_212 + " \'");
-                      pathInAggregated_18 = _plus_213;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_18);
+                      String _get_19 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_70 = ("inAggregated=\'" + _get_19);
+                      String _plus_71 = (_plus_70 + "/@aggregated.");
+                      String _plus_72 = (_plus_71 + Integer.valueOf(rMonitor));
+                      String _plus_73 = (_plus_72 + " \'");
+                      pathInAggregated_6 = _plus_73;
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_6);
                     }
                   }
-                  DSLExecutor _executor_4 = ((DSLRuleAnalyzer)r).getExecutor();
-                  boolean _tripleNotEquals_33 = (_executor_4 != null);
-                  if (_tripleNotEquals_33) {
-                    String pathInAggregated_19 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
-                    if ((pathInAggregated_19 != null)) {
-                      int _length_25 = pathInAggregated_19.length();
-                      int _minus_25 = (_length_25 - 1);
-                      pathInAggregated_19 = pathInAggregated_19.substring(0, _minus_25);
-                      String _get_64 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_214 = (pathInAggregated_19 + _get_64);
-                      String _plus_215 = (_plus_214 + "/@aggregated.");
-                      String _plus_216 = (_plus_215 + Integer.valueOf(rAnalyzer));
-                      String _plus_217 = (_plus_216 + " \'");
-                      pathInAggregated_19 = _plus_217;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_19);
+                  DSLExecutor _executor = ((DSLRuleMonitor)r).getExecutor();
+                  boolean _tripleNotEquals_9 = (_executor != null);
+                  if (_tripleNotEquals_9) {
+                    String pathInAggregated_7 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
+                    if ((pathInAggregated_7 != null)) {
+                      int _length_11 = pathInAggregated_7.length();
+                      int _minus_11 = (_length_11 - 1);
+                      pathInAggregated_7 = pathInAggregated_7.substring(0, _minus_11);
+                      String _get_20 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_74 = (pathInAggregated_7 + _get_20);
+                      String _plus_75 = (_plus_74 + "/@aggregated.");
+                      String _plus_76 = (_plus_75 + Integer.valueOf(rMonitor));
+                      String _plus_77 = (_plus_76 + " \'");
+                      pathInAggregated_7 = _plus_77;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_7);
                     } else {
-                      String _get_65 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_218 = ("inAggregated=\'" + _get_65);
-                      String _plus_219 = (_plus_218 + "/@aggregated.");
-                      String _plus_220 = (_plus_219 + Integer.valueOf(rAnalyzer));
-                      String _plus_221 = (_plus_220 + " \'");
-                      pathInAggregated_19 = _plus_221;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_19);
-                    }
-                  }
-                  DSLAlternative _shalt = ((DSLRuleAnalyzer)r).getShalt();
-                  boolean _tripleNotEquals_34 = (_shalt != null);
-                  if (_tripleNotEquals_34) {
-                    String pathInAggregated_20 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
-                    if ((pathInAggregated_20 != null)) {
-                      int _length_26 = pathInAggregated_20.length();
-                      int _minus_26 = (_length_26 - 1);
-                      pathInAggregated_20 = pathInAggregated_20.substring(0, _minus_26);
-                      String _get_66 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_222 = (pathInAggregated_20 + _get_66);
-                      String _plus_223 = (_plus_222 + "/@aggregated.");
-                      String _plus_224 = (_plus_223 + Integer.valueOf(rAnalyzer));
-                      String _plus_225 = (_plus_224 + " \'");
-                      pathInAggregated_20 = _plus_225;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_20);
-                    } else {
-                      String _get_67 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_226 = ("inAggregated=\'" + _get_67);
-                      String _plus_227 = (_plus_226 + "/@aggregated.");
-                      String _plus_228 = (_plus_227 + Integer.valueOf(rAnalyzer));
-                      String _plus_229 = (_plus_228 + " \'");
-                      pathInAggregated_20 = _plus_229;
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_20);
+                      String _get_21 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_78 = ("inAggregated=\'" + _get_21);
+                      String _plus_79 = (_plus_78 + "/@aggregated.");
+                      String _plus_80 = (_plus_79 + Integer.valueOf(rMonitor));
+                      String _plus_81 = (_plus_80 + " \'");
+                      pathInAggregated_7 = _plus_81;
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_7);
                     }
                   }
                 } else {
-                  String _get_68 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                  String _plus_230 = ("outAggregated=\'" + _get_68);
-                  String _plus_231 = (_plus_230 + "/@aggregated.");
-                  String _plus_232 = (_plus_231 + Integer.valueOf(rAnalyzer));
-                  String _plus_233 = (_plus_232 + " \'");
-                  pathAggregated_2 = _plus_233;
-                  this.outAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer().getName(), pathAggregated_2);
-                  DSLMonitor _monitor_1 = ((DSLRuleAnalyzer)r).getMonitor();
-                  boolean _tripleNotEquals_35 = (_monitor_1 != null);
-                  if (_tripleNotEquals_35) {
-                    String pathInAggregated_21 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
-                    if ((pathInAggregated_21 != null)) {
-                      int _length_27 = pathInAggregated_21.length();
-                      int _minus_27 = (_length_27 - 1);
-                      pathInAggregated_21 = pathInAggregated_21.substring(0, _minus_27);
-                      String _get_69 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_234 = (pathInAggregated_21 + _get_69);
-                      String _plus_235 = (_plus_234 + "/@aggregated.");
-                      String _plus_236 = (_plus_235 + Integer.valueOf(rAnalyzer));
-                      String _plus_237 = (_plus_236 + " \'");
-                      pathInAggregated_21 = _plus_237;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_21);
+                  String _get_22 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                  String _plus_82 = ("outAggregated=\'" + _get_22);
+                  String _plus_83 = (_plus_82 + "/@aggregated.");
+                  String _plus_84 = (_plus_83 + Integer.valueOf(rMonitor));
+                  String _plus_85 = (_plus_84 + " \'");
+                  pathAggregated_1 = _plus_85;
+                  this.outAggregatedPath.put(((DSLRuleMonitor)r).getMonitor().getName(), pathAggregated_1);
+                  DSLAnalyzer _analyzer_1 = ((DSLRuleMonitor)r).getAnalyzer();
+                  boolean _tripleNotEquals_10 = (_analyzer_1 != null);
+                  if (_tripleNotEquals_10) {
+                    String pathInAggregated_8 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
+                    if ((pathInAggregated_8 != null)) {
+                      int _length_12 = pathInAggregated_8.length();
+                      int _minus_12 = (_length_12 - 1);
+                      pathInAggregated_8 = pathInAggregated_8.substring(0, _minus_12);
+                      String _get_23 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_86 = (pathInAggregated_8 + _get_23);
+                      String _plus_87 = (_plus_86 + "/@aggregated.");
+                      String _plus_88 = (_plus_87 + Integer.valueOf(rMonitor));
+                      String _plus_89 = (_plus_88 + " \'");
+                      pathInAggregated_8 = _plus_89;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getAnalyzer().getName(), pathInAggregated_8);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getMonitor().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getAnalyzer().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
-                  DSLKnowledge _knowledge_5 = ((DSLRuleAnalyzer)r).getKnowledge();
-                  boolean _tripleNotEquals_36 = (_knowledge_5 != null);
-                  if (_tripleNotEquals_36) {
-                    String pathInAggregated_22 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
-                    if ((pathInAggregated_22 != null)) {
-                      int _length_28 = pathInAggregated_22.length();
-                      int _minus_28 = (_length_28 - 1);
-                      pathInAggregated_22 = pathInAggregated_22.substring(0, _minus_28);
-                      String _get_70 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_238 = (pathInAggregated_22 + _get_70);
-                      String _plus_239 = (_plus_238 + "/@aggregated.");
-                      String _plus_240 = (_plus_239 + Integer.valueOf(rAnalyzer));
-                      String _plus_241 = (_plus_240 + " \'");
-                      pathInAggregated_22 = _plus_241;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_22);
+                  DSLKnowledge _knowledge_1 = ((DSLRuleMonitor)r).getKnowledge();
+                  boolean _tripleNotEquals_11 = (_knowledge_1 != null);
+                  if (_tripleNotEquals_11) {
+                    String pathInAggregated_9 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
+                    if ((pathInAggregated_9 != null)) {
+                      int _length_13 = pathInAggregated_9.length();
+                      int _minus_13 = (_length_13 - 1);
+                      pathInAggregated_9 = pathInAggregated_9.substring(0, _minus_13);
+                      String _get_24 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_90 = (pathInAggregated_9 + _get_24);
+                      String _plus_91 = (_plus_90 + "/@aggregated.");
+                      String _plus_92 = (_plus_91 + Integer.valueOf(rMonitor));
+                      String _plus_93 = (_plus_92 + " \'");
+                      pathInAggregated_9 = _plus_93;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getKnowledge().getName(), pathInAggregated_9);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getKnowledge().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
-                  DSLPlanner _planner_5 = ((DSLRuleAnalyzer)r).getPlanner();
-                  boolean _tripleNotEquals_37 = (_planner_5 != null);
-                  if (_tripleNotEquals_37) {
-                    String pathInAggregated_23 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
-                    if ((pathInAggregated_23 != null)) {
-                      int _length_29 = pathInAggregated_23.length();
-                      int _minus_29 = (_length_29 - 1);
-                      pathInAggregated_23 = pathInAggregated_23.substring(0, _minus_29);
-                      String _get_71 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_242 = (pathInAggregated_23 + _get_71);
-                      String _plus_243 = (_plus_242 + "/@aggregated.");
-                      String _plus_244 = (_plus_243 + Integer.valueOf(rAnalyzer));
-                      String _plus_245 = (_plus_244 + " \'");
-                      pathInAggregated_23 = _plus_245;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_23);
+                  DSLSensor _sensor_1 = ((DSLRuleMonitor)r).getSensor();
+                  boolean _tripleNotEquals_12 = (_sensor_1 != null);
+                  if (_tripleNotEquals_12) {
+                    String pathInAggregated_10 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getSensor().getName());
+                    if ((pathInAggregated_10 != null)) {
+                      int _length_14 = pathInAggregated_10.length();
+                      int _minus_14 = (_length_14 - 1);
+                      pathInAggregated_10 = pathInAggregated_10.substring(0, _minus_14);
+                      String _get_25 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_94 = (pathInAggregated_10 + _get_25);
+                      String _plus_95 = (_plus_94 + "/@aggregated.");
+                      String _plus_96 = (_plus_95 + Integer.valueOf(rMonitor));
+                      String _plus_97 = (_plus_96 + " \'");
+                      pathInAggregated_10 = _plus_97;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getSensor().getName(), pathInAggregated_10);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getPlanner().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getSensor().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
-                  DSLReferenceInput _rreference_1 = ((DSLRuleAnalyzer)r).getRreference();
-                  boolean _tripleNotEquals_38 = (_rreference_1 != null);
-                  if (_tripleNotEquals_38) {
-                    String pathInAggregated_24 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
-                    if ((pathInAggregated_24 != null)) {
-                      int _length_30 = pathInAggregated_24.length();
-                      int _minus_30 = (_length_30 - 1);
-                      pathInAggregated_24 = pathInAggregated_24.substring(0, _minus_30);
-                      String _get_72 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_246 = (pathInAggregated_24 + _get_72);
-                      String _plus_247 = (_plus_246 + "/@aggregated.");
-                      String _plus_248 = (_plus_247 + Integer.valueOf(rAnalyzer));
-                      String _plus_249 = (_plus_248 + " \'");
-                      pathInAggregated_24 = _plus_249;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_24);
+                  DSLMonitor _monitor2_1 = ((DSLRuleMonitor)r).getMonitor2();
+                  boolean _tripleNotEquals_13 = (_monitor2_1 != null);
+                  if (_tripleNotEquals_13) {
+                    String pathInAggregated_11 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
+                    if ((pathInAggregated_11 != null)) {
+                      int _length_15 = pathInAggregated_11.length();
+                      int _minus_15 = (_length_15 - 1);
+                      pathInAggregated_11 = pathInAggregated_11.substring(0, _minus_15);
+                      String _get_26 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_98 = (pathInAggregated_11 + _get_26);
+                      String _plus_99 = (_plus_98 + "/@aggregated.");
+                      String _plus_100 = (_plus_99 + Integer.valueOf(rMonitor));
+                      String _plus_101 = (_plus_100 + " \'");
+                      pathInAggregated_11 = _plus_101;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getMonitor2().getName(), pathInAggregated_11);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getRreference().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getMonitor2().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
-                  DSLAnalyzer _analyzer2_1 = ((DSLRuleAnalyzer)r).getAnalyzer2();
-                  boolean _tripleNotEquals_39 = (_analyzer2_1 != null);
-                  if (_tripleNotEquals_39) {
-                    String pathInAggregated_25 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
-                    if ((pathInAggregated_25 != null)) {
-                      int _length_31 = pathInAggregated_25.length();
-                      int _minus_31 = (_length_31 - 1);
-                      pathInAggregated_25 = pathInAggregated_25.substring(0, _minus_31);
-                      String _get_73 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_250 = (pathInAggregated_25 + _get_73);
-                      String _plus_251 = (_plus_250 + "/@aggregated.");
-                      String _plus_252 = (_plus_251 + Integer.valueOf(rAnalyzer));
-                      String _plus_253 = (_plus_252 + " \'");
-                      pathInAggregated_25 = _plus_253;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_25);
+                  DSLPlanner _planner_1 = ((DSLRuleMonitor)r).getPlanner();
+                  boolean _tripleNotEquals_14 = (_planner_1 != null);
+                  if (_tripleNotEquals_14) {
+                    String pathInAggregated_12 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getPlanner().getName());
+                    if ((pathInAggregated_12 != null)) {
+                      int _length_16 = pathInAggregated_12.length();
+                      int _minus_16 = (_length_16 - 1);
+                      pathInAggregated_12 = pathInAggregated_12.substring(0, _minus_16);
+                      String _get_27 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_102 = (pathInAggregated_12 + _get_27);
+                      String _plus_103 = (_plus_102 + "/@aggregated.");
+                      String _plus_104 = (_plus_103 + Integer.valueOf(rMonitor));
+                      String _plus_105 = (_plus_104 + " \'");
+                      pathInAggregated_12 = _plus_105;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getPlanner().getName(), pathInAggregated_12);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getPlanner().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
-                  DSLAlternative _shalt_1 = ((DSLRuleAnalyzer)r).getShalt();
-                  boolean _tripleNotEquals_40 = (_shalt_1 != null);
-                  if (_tripleNotEquals_40) {
-                    String pathInAggregated_26 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
-                    if ((pathInAggregated_26 != null)) {
-                      int _length_32 = pathInAggregated_26.length();
-                      int _minus_32 = (_length_32 - 1);
-                      pathInAggregated_26 = pathInAggregated_26.substring(0, _minus_32);
-                      String _get_74 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_254 = (pathInAggregated_26 + _get_74);
-                      String _plus_255 = (_plus_254 + "/@aggregated.");
-                      String _plus_256 = (_plus_255 + Integer.valueOf(rAnalyzer));
-                      String _plus_257 = (_plus_256 + " \'");
-                      pathInAggregated_26 = _plus_257;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_26);
+                  DSLExecutor _executor_1 = ((DSLRuleMonitor)r).getExecutor();
+                  boolean _tripleNotEquals_15 = (_executor_1 != null);
+                  if (_tripleNotEquals_15) {
+                    String pathInAggregated_13 = this.inAggregatedPath.get(((DSLRuleMonitor)r).getExecutor().getName());
+                    if ((pathInAggregated_13 != null)) {
+                      int _length_17 = pathInAggregated_13.length();
+                      int _minus_17 = (_length_17 - 1);
+                      pathInAggregated_13 = pathInAggregated_13.substring(0, _minus_17);
+                      String _get_28 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_106 = (pathInAggregated_13 + _get_28);
+                      String _plus_107 = (_plus_106 + "/@aggregated.");
+                      String _plus_108 = (_plus_107 + Integer.valueOf(rMonitor));
+                      String _plus_109 = (_plus_108 + " \'");
+                      pathInAggregated_13 = _plus_109;
+                      this.inAggregatedPath.replace(((DSLRuleMonitor)r).getExecutor().getName(), pathInAggregated_13);
                     } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getShalt().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
-                    }
-                  }
-                  DSLExecutor _executor_5 = ((DSLRuleAnalyzer)r).getExecutor();
-                  boolean _tripleNotEquals_41 = (_executor_5 != null);
-                  if (_tripleNotEquals_41) {
-                    String pathInAggregated_27 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
-                    if ((pathInAggregated_27 != null)) {
-                      int _length_33 = pathInAggregated_27.length();
-                      int _minus_33 = (_length_33 - 1);
-                      pathInAggregated_27 = pathInAggregated_27.substring(0, _minus_33);
-                      String _get_75 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_258 = (pathInAggregated_27 + _get_75);
-                      String _plus_259 = (_plus_258 + "/@aggregated.");
-                      String _plus_260 = (_plus_259 + Integer.valueOf(rAnalyzer));
-                      String _plus_261 = (_plus_260 + " \'");
-                      pathInAggregated_27 = _plus_261;
-                      this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_27);
-                    } else {
-                      this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getExecutor().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      this.inAggregatedPath.put(((DSLRuleMonitor)r).getExecutor().getName(), pathAggregated_1.replaceFirst("outAggregated", "inAggregated"));
                     }
                   }
                 }
-                String aggregated_2 = this.aggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                if ((aggregated_2 != null)) {
-                  DSLMonitor _monitor_2 = ((DSLRuleAnalyzer)r).getMonitor();
-                  boolean _tripleNotEquals_42 = (_monitor_2 != null);
-                  if (_tripleNotEquals_42) {
-                    String _get_76 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                    String _plus_262 = ((aggregated_2 + "<aggregated from=\'") + _get_76);
-                    String _plus_263 = (_plus_262 + "\' to=\'");
-                    String _get_77 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
-                    String _plus_264 = (_plus_263 + _get_77);
-                    String _plus_265 = (_plus_264 + "\'");
-                    String _plus_266 = (_plus_265 + relation);
-                    aggregated_2 = _plus_266;
+                String aggregated_1 = this.aggregatedPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                if ((aggregated_1 != null)) {
+                  DSLAnalyzer _analyzer_2 = ((DSLRuleMonitor)r).getAnalyzer();
+                  boolean _tripleNotEquals_16 = (_analyzer_2 != null);
+                  if (_tripleNotEquals_16) {
+                    String _get_29 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                    String _plus_110 = ((aggregated_1 + "<aggregated from=\'") + _get_29);
+                    String _plus_111 = (_plus_110 + "\' to=\'");
+                    String _get_30 = this.structureElementPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
+                    String _plus_112 = (_plus_111 + _get_30);
+                    String _plus_113 = (_plus_112 + "\'");
+                    String _plus_114 = (_plus_113 + relation);
+                    aggregated_1 = _plus_114;
                   } else {
-                    DSLKnowledge _knowledge_6 = ((DSLRuleAnalyzer)r).getKnowledge();
-                    boolean _tripleNotEquals_43 = (_knowledge_6 != null);
-                    if (_tripleNotEquals_43) {
-                      String _get_78 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_267 = ((aggregated_2 + "<aggregated from=\'") + _get_78);
-                      String _plus_268 = (_plus_267 + "\' to=\'");
-                      String _get_79 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
-                      String _plus_269 = (_plus_268 + _get_79);
-                      String _plus_270 = (_plus_269 + "\'");
-                      String _plus_271 = (_plus_270 + relation);
-                      aggregated_2 = _plus_271;
+                    DSLKnowledge _knowledge_2 = ((DSLRuleMonitor)r).getKnowledge();
+                    boolean _tripleNotEquals_17 = (_knowledge_2 != null);
+                    if (_tripleNotEquals_17) {
+                      String _get_31 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_115 = ((aggregated_1 + "<aggregated from=\'") + _get_31);
+                      String _plus_116 = (_plus_115 + "\' to=\'");
+                      String _get_32 = this.structureElementPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
+                      String _plus_117 = (_plus_116 + _get_32);
+                      String _plus_118 = (_plus_117 + "\'");
+                      String _plus_119 = (_plus_118 + relation);
+                      aggregated_1 = _plus_119;
                     } else {
-                      DSLPlanner _planner_6 = ((DSLRuleAnalyzer)r).getPlanner();
-                      boolean _tripleNotEquals_44 = (_planner_6 != null);
-                      if (_tripleNotEquals_44) {
-                        String _get_80 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                        String _plus_272 = ((aggregated_2 + "<aggregated from=\'") + _get_80);
-                        String _plus_273 = (_plus_272 + "\' to=\'");
-                        String _get_81 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
-                        String _plus_274 = (_plus_273 + _get_81);
-                        String _plus_275 = (_plus_274 + "\'");
-                        String _plus_276 = (_plus_275 + relation);
-                        aggregated_2 = _plus_276;
+                      DSLSensor _sensor_2 = ((DSLRuleMonitor)r).getSensor();
+                      boolean _tripleNotEquals_18 = (_sensor_2 != null);
+                      if (_tripleNotEquals_18) {
+                        String _get_33 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                        String _plus_120 = ((aggregated_1 + "<aggregated from=\'") + _get_33);
+                        String _plus_121 = (_plus_120 + "\' to=\'");
+                        String _get_34 = this.structureElementPath.get(((DSLRuleMonitor)r).getSensor().getName());
+                        String _plus_122 = (_plus_121 + _get_34);
+                        String _plus_123 = (_plus_122 + "\'");
+                        String _plus_124 = (_plus_123 + relation);
+                        aggregated_1 = _plus_124;
                       } else {
-                        DSLReferenceInput _rreference_2 = ((DSLRuleAnalyzer)r).getRreference();
-                        boolean _tripleNotEquals_45 = (_rreference_2 != null);
-                        if (_tripleNotEquals_45) {
-                          String _get_82 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                          String _plus_277 = ((aggregated_2 + "<aggregated from=\'") + _get_82);
-                          String _plus_278 = (_plus_277 + "\' to=\'");
-                          String _get_83 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
-                          String _plus_279 = (_plus_278 + _get_83);
-                          String _plus_280 = (_plus_279 + "\'");
-                          String _plus_281 = (_plus_280 + relation);
-                          aggregated_2 = _plus_281;
+                        DSLMonitor _monitor2_2 = ((DSLRuleMonitor)r).getMonitor2();
+                        boolean _tripleNotEquals_19 = (_monitor2_2 != null);
+                        if (_tripleNotEquals_19) {
+                          String _get_35 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                          String _plus_125 = ((aggregated_1 + "<aggregated from=\'") + _get_35);
+                          String _plus_126 = (_plus_125 + "\' to=\'");
+                          String _get_36 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
+                          String _plus_127 = (_plus_126 + _get_36);
+                          String _plus_128 = (_plus_127 + "\'");
+                          String _plus_129 = (_plus_128 + relation);
+                          aggregated_1 = _plus_129;
                         } else {
-                          DSLAnalyzer _analyzer2_2 = ((DSLRuleAnalyzer)r).getAnalyzer2();
-                          boolean _tripleNotEquals_46 = (_analyzer2_2 != null);
-                          if (_tripleNotEquals_46) {
-                            String _get_84 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                            String _plus_282 = ((aggregated_2 + "<aggregated from=\'") + _get_84);
-                            String _plus_283 = (_plus_282 + "\' to=\'");
-                            String _get_85 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
-                            String _plus_284 = (_plus_283 + _get_85);
-                            String _plus_285 = (_plus_284 + "\'");
-                            String _plus_286 = (_plus_285 + relation);
-                            aggregated_2 = _plus_286;
+                          DSLPlanner _planner_2 = ((DSLRuleMonitor)r).getPlanner();
+                          boolean _tripleNotEquals_20 = (_planner_2 != null);
+                          if (_tripleNotEquals_20) {
+                            String _get_37 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                            String _plus_130 = ((aggregated_1 + "<aggregated from=\'") + _get_37);
+                            String _plus_131 = (_plus_130 + "\' to=\'");
+                            String _get_38 = this.structureElementPath.get(((DSLRuleMonitor)r).getPlanner().getName());
+                            String _plus_132 = (_plus_131 + _get_38);
+                            String _plus_133 = (_plus_132 + "\'");
+                            String _plus_134 = (_plus_133 + relation);
+                            aggregated_1 = _plus_134;
                           } else {
-                            DSLAlternative _shalt_2 = ((DSLRuleAnalyzer)r).getShalt();
-                            boolean _tripleNotEquals_47 = (_shalt_2 != null);
-                            if (_tripleNotEquals_47) {
-                              String _get_86 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                              String _plus_287 = ((aggregated_2 + "<aggregated from=\'") + _get_86);
-                              String _plus_288 = (_plus_287 + "\' to=\'");
-                              String _get_87 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
-                              String _plus_289 = (_plus_288 + _get_87);
-                              String _plus_290 = (_plus_289 + "\'");
-                              String _plus_291 = (_plus_290 + relation);
-                              aggregated_2 = _plus_291;
-                            } else {
-                              DSLExecutor _executor_6 = ((DSLRuleAnalyzer)r).getExecutor();
-                              boolean _tripleNotEquals_48 = (_executor_6 != null);
-                              if (_tripleNotEquals_48) {
-                                String _get_88 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                                String _plus_292 = ((aggregated_2 + "<aggregated from=\'") + _get_88);
-                                String _plus_293 = (_plus_292 + "\' to=\'");
-                                String _get_89 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
-                                String _plus_294 = (_plus_293 + _get_89);
-                                String _plus_295 = (_plus_294 + "\'");
-                                String _plus_296 = (_plus_295 + relation);
-                                aggregated_2 = _plus_296;
-                              }
+                            DSLExecutor _executor_2 = ((DSLRuleMonitor)r).getExecutor();
+                            boolean _tripleNotEquals_21 = (_executor_2 != null);
+                            if (_tripleNotEquals_21) {
+                              String _get_39 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                              String _plus_135 = ((aggregated_1 + "<aggregated from=\'") + _get_39);
+                              String _plus_136 = (_plus_135 + "\' to=\'");
+                              String _get_40 = this.structureElementPath.get(((DSLRuleMonitor)r).getExecutor().getName());
+                              String _plus_137 = (_plus_136 + _get_40);
+                              String _plus_138 = (_plus_137 + "\'");
+                              String _plus_139 = (_plus_138 + relation);
+                              aggregated_1 = _plus_139;
                             }
                           }
                         }
                       }
                     }
                   }
-                  this.aggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer().getName(), aggregated_2);
+                  this.aggregatedPath.replace(((DSLRuleMonitor)r).getMonitor().getName(), aggregated_1);
                 } else {
-                  DSLMonitor _monitor_3 = ((DSLRuleAnalyzer)r).getMonitor();
-                  boolean _tripleNotEquals_49 = (_monitor_3 != null);
-                  if (_tripleNotEquals_49) {
-                    String _get_90 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                    String _plus_297 = ("<aggregated from=\'" + _get_90);
-                    String _plus_298 = (_plus_297 + "\' to=\'");
-                    String _get_91 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                    String _plus_299 = (_plus_298 + _get_91);
-                    String _plus_300 = (_plus_299 + "\'");
-                    String _plus_301 = (_plus_300 + relation);
-                    aggregated_2 = _plus_301;
+                  DSLAnalyzer _analyzer_3 = ((DSLRuleMonitor)r).getAnalyzer();
+                  boolean _tripleNotEquals_22 = (_analyzer_3 != null);
+                  if (_tripleNotEquals_22) {
+                    String _get_41 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                    String _plus_140 = ("<aggregated from=\'" + _get_41);
+                    String _plus_141 = (_plus_140 + "\' to=\'");
+                    String _get_42 = this.structureElementPath.get(((DSLRuleMonitor)r).getAnalyzer().getName());
+                    String _plus_142 = (_plus_141 + _get_42);
+                    String _plus_143 = (_plus_142 + "\'");
+                    String _plus_144 = (_plus_143 + relation);
+                    aggregated_1 = _plus_144;
                   } else {
-                    DSLKnowledge _knowledge_7 = ((DSLRuleAnalyzer)r).getKnowledge();
-                    boolean _tripleNotEquals_50 = (_knowledge_7 != null);
-                    if (_tripleNotEquals_50) {
-                      String _get_92 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                      String _plus_302 = ("<aggregated from=\'" + _get_92);
-                      String _plus_303 = (_plus_302 + "\' to=\'");
-                      String _get_93 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
-                      String _plus_304 = (_plus_303 + _get_93);
-                      String _plus_305 = (_plus_304 + "\'");
-                      String _plus_306 = (_plus_305 + relation);
-                      aggregated_2 = _plus_306;
+                    DSLKnowledge _knowledge_3 = ((DSLRuleMonitor)r).getKnowledge();
+                    boolean _tripleNotEquals_23 = (_knowledge_3 != null);
+                    if (_tripleNotEquals_23) {
+                      String _get_43 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                      String _plus_145 = ("<aggregated from=\'" + _get_43);
+                      String _plus_146 = (_plus_145 + "\' to=\'");
+                      String _get_44 = this.structureElementPath.get(((DSLRuleMonitor)r).getKnowledge().getName());
+                      String _plus_147 = (_plus_146 + _get_44);
+                      String _plus_148 = (_plus_147 + "\'");
+                      String _plus_149 = (_plus_148 + relation);
+                      aggregated_1 = _plus_149;
                     } else {
-                      DSLPlanner _planner_7 = ((DSLRuleAnalyzer)r).getPlanner();
-                      boolean _tripleNotEquals_51 = (_planner_7 != null);
-                      if (_tripleNotEquals_51) {
-                        String _get_94 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                        String _plus_307 = ("<aggregated from=\'" + _get_94);
-                        String _plus_308 = (_plus_307 + "\' to=\'");
-                        String _get_95 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
-                        String _plus_309 = (_plus_308 + _get_95);
-                        String _plus_310 = (_plus_309 + "\'");
-                        String _plus_311 = (_plus_310 + relation);
-                        aggregated_2 = _plus_311;
+                      DSLSensor _sensor_3 = ((DSLRuleMonitor)r).getSensor();
+                      boolean _tripleNotEquals_24 = (_sensor_3 != null);
+                      if (_tripleNotEquals_24) {
+                        String _get_45 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                        String _plus_150 = ("<aggregated from=\'" + _get_45);
+                        String _plus_151 = (_plus_150 + "\' to=\'");
+                        String _get_46 = this.structureElementPath.get(((DSLRuleMonitor)r).getSensor().getName());
+                        String _plus_152 = (_plus_151 + _get_46);
+                        String _plus_153 = (_plus_152 + "\'");
+                        String _plus_154 = (_plus_153 + relation);
+                        aggregated_1 = _plus_154;
                       } else {
-                        DSLReferenceInput _rreference_3 = ((DSLRuleAnalyzer)r).getRreference();
-                        boolean _tripleNotEquals_52 = (_rreference_3 != null);
-                        if (_tripleNotEquals_52) {
-                          String _get_96 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                          String _plus_312 = ("<aggregated from=\'" + _get_96);
-                          String _plus_313 = (_plus_312 + "\' to=\'");
-                          String _get_97 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
-                          String _plus_314 = (_plus_313 + _get_97);
-                          String _plus_315 = (_plus_314 + "\'");
-                          String _plus_316 = (_plus_315 + relation);
-                          aggregated_2 = _plus_316;
+                        DSLMonitor _monitor2_3 = ((DSLRuleMonitor)r).getMonitor2();
+                        boolean _tripleNotEquals_25 = (_monitor2_3 != null);
+                        if (_tripleNotEquals_25) {
+                          String _get_47 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                          String _plus_155 = ("<aggregated from=\'" + _get_47);
+                          String _plus_156 = (_plus_155 + "\' to=\'");
+                          String _get_48 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor2().getName());
+                          String _plus_157 = (_plus_156 + _get_48);
+                          String _plus_158 = (_plus_157 + "\'");
+                          String _plus_159 = (_plus_158 + relation);
+                          aggregated_1 = _plus_159;
                         } else {
-                          DSLAnalyzer _analyzer2_3 = ((DSLRuleAnalyzer)r).getAnalyzer2();
-                          boolean _tripleNotEquals_53 = (_analyzer2_3 != null);
-                          if (_tripleNotEquals_53) {
-                            String _get_98 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                            String _plus_317 = ("<aggregated from=\'" + _get_98);
-                            String _plus_318 = (_plus_317 + "\' to=\'");
-                            String _get_99 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
-                            String _plus_319 = (_plus_318 + _get_99);
-                            String _plus_320 = (_plus_319 + "\'");
-                            String _plus_321 = (_plus_320 + relation);
-                            aggregated_2 = _plus_321;
+                          DSLPlanner _planner_3 = ((DSLRuleMonitor)r).getPlanner();
+                          boolean _tripleNotEquals_26 = (_planner_3 != null);
+                          if (_tripleNotEquals_26) {
+                            String _get_49 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                            String _plus_160 = ("<aggregated from=\'" + _get_49);
+                            String _plus_161 = (_plus_160 + "\' to=\'");
+                            String _get_50 = this.structureElementPath.get(((DSLRuleMonitor)r).getPlanner().getName());
+                            String _plus_162 = (_plus_161 + _get_50);
+                            String _plus_163 = (_plus_162 + "\'");
+                            String _plus_164 = (_plus_163 + relation);
+                            aggregated_1 = _plus_164;
                           } else {
-                            DSLAlternative _shalt_3 = ((DSLRuleAnalyzer)r).getShalt();
-                            boolean _tripleNotEquals_54 = (_shalt_3 != null);
-                            if (_tripleNotEquals_54) {
-                              String _get_100 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                              String _plus_322 = ("<aggregated from=\'" + _get_100);
-                              String _plus_323 = (_plus_322 + "\' to=\'");
-                              String _get_101 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
-                              String _plus_324 = (_plus_323 + _get_101);
-                              String _plus_325 = (_plus_324 + "\'");
-                              String _plus_326 = (_plus_325 + relation);
-                              aggregated_2 = _plus_326;
-                            } else {
-                              DSLExecutor _executor_7 = ((DSLRuleAnalyzer)r).getExecutor();
-                              boolean _tripleNotEquals_55 = (_executor_7 != null);
-                              if (_tripleNotEquals_55) {
-                                String _get_102 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
-                                String _plus_327 = ("<aggregated from=\'" + _get_102);
-                                String _plus_328 = (_plus_327 + "\' to=\'");
-                                String _get_103 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
-                                String _plus_329 = (_plus_328 + _get_103);
-                                String _plus_330 = (_plus_329 + "\'");
-                                String _plus_331 = (_plus_330 + relation);
-                                aggregated_2 = _plus_331;
-                              }
+                            DSLExecutor _executor_3 = ((DSLRuleMonitor)r).getExecutor();
+                            boolean _tripleNotEquals_27 = (_executor_3 != null);
+                            if (_tripleNotEquals_27) {
+                              String _get_51 = this.structureElementPath.get(((DSLRuleMonitor)r).getMonitor().getName());
+                              String _plus_165 = ("<aggregated from=\'" + _get_51);
+                              String _plus_166 = (_plus_165 + "\' to=\'");
+                              String _get_52 = this.structureElementPath.get(((DSLRuleMonitor)r).getExecutor().getName());
+                              String _plus_167 = (_plus_166 + _get_52);
+                              String _plus_168 = (_plus_167 + "\'");
+                              String _plus_169 = (_plus_168 + relation);
+                              aggregated_1 = _plus_169;
                             }
                           }
                         }
                       }
                     }
                   }
-                  this.aggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer().getName(), aggregated_2);
+                  this.aggregatedPath.put(((DSLRuleMonitor)r).getMonitor().getName(), aggregated_1);
                 }
               } else {
-                if ((r instanceof DSLRulePlanner)) {
-                  String pathAggregated_3 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                  if ((pathAggregated_3 != null)) {
-                    int _length_34 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName()).split(Pattern.quote("//")).length;
-                    int _minus_34 = (_length_34 - 1);
-                    rPlanner = _minus_34;
-                    int _length_35 = pathAggregated_3.length();
-                    int _minus_35 = (_length_35 - 1);
-                    pathAggregated_3 = pathAggregated_3.substring(0, _minus_35);
-                    String _get_104 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                    String _plus_332 = (pathAggregated_3 + _get_104);
-                    String _plus_333 = (_plus_332 + "/@aggregated.");
-                    String _plus_334 = (_plus_333 + Integer.valueOf(rPlanner));
-                    String _plus_335 = (_plus_334 + " \'");
-                    pathAggregated_3 = _plus_335;
-                    this.outAggregatedPath.replace(((DSLRulePlanner)r).getPlanner().getName(), pathAggregated_3);
-                    DSLAnalyzer _analyzer_4 = ((DSLRulePlanner)r).getAnalyzer();
-                    boolean _tripleNotEquals_56 = (_analyzer_4 != null);
-                    if (_tripleNotEquals_56) {
-                      String pathInAggregated_28 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
-                      if ((pathInAggregated_28 != null)) {
-                        int _length_36 = pathInAggregated_28.length();
-                        int _minus_36 = (_length_36 - 1);
-                        pathInAggregated_28 = pathInAggregated_28.substring(0, _minus_36);
-                        String _get_105 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_336 = (pathInAggregated_28 + _get_105);
-                        String _plus_337 = (_plus_336 + "/@aggregated.");
-                        String _plus_338 = (_plus_337 + Integer.valueOf(rPlanner));
-                        String _plus_339 = (_plus_338 + " \'");
-                        pathInAggregated_28 = _plus_339;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_28);
+                if ((r instanceof DSLRuleAnalyzer)) {
+                  String pathAggregated_2 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                  if ((pathAggregated_2 != null)) {
+                    int _length_18 = this.outAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName()).split(Pattern.quote("//")).length;
+                    int _minus_18 = (_length_18 - 1);
+                    rAnalyzer = _minus_18;
+                    int _length_19 = pathAggregated_2.length();
+                    int _minus_19 = (_length_19 - 1);
+                    pathAggregated_2 = pathAggregated_2.substring(0, _minus_19);
+                    String _get_53 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                    String _plus_170 = (pathAggregated_2 + _get_53);
+                    String _plus_171 = (_plus_170 + "/@aggregated.");
+                    String _plus_172 = (_plus_171 + Integer.valueOf(rAnalyzer));
+                    String _plus_173 = (_plus_172 + " \'");
+                    pathAggregated_2 = _plus_173;
+                    this.outAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer().getName(), pathAggregated_2);
+                    DSLMonitor _monitor = ((DSLRuleAnalyzer)r).getMonitor();
+                    boolean _tripleNotEquals_28 = (_monitor != null);
+                    if (_tripleNotEquals_28) {
+                      String pathInAggregated_14 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
+                      if ((pathInAggregated_14 != null)) {
+                        int _length_20 = pathInAggregated_14.length();
+                        int _minus_20 = (_length_20 - 1);
+                        pathInAggregated_14 = pathInAggregated_14.substring(0, _minus_20);
+                        String _get_54 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_174 = (pathInAggregated_14 + _get_54);
+                        String _plus_175 = (_plus_174 + "/@aggregated.");
+                        String _plus_176 = (_plus_175 + Integer.valueOf(rAnalyzer));
+                        String _plus_177 = (_plus_176 + " \'");
+                        pathInAggregated_14 = _plus_177;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_14);
                       } else {
-                        String _get_106 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_340 = ("inAggregated=\'" + _get_106);
-                        String _plus_341 = (_plus_340 + "/@aggregated.");
-                        String _plus_342 = (_plus_341 + Integer.valueOf(rPlanner));
-                        String _plus_343 = (_plus_342 + " \'");
-                        pathInAggregated_28 = _plus_343;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_28);
+                        String _get_55 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_178 = ("inAggregated=\'" + _get_55);
+                        String _plus_179 = (_plus_178 + "/@aggregated.");
+                        String _plus_180 = (_plus_179 + Integer.valueOf(rAnalyzer));
+                        String _plus_181 = (_plus_180 + " \'");
+                        pathInAggregated_14 = _plus_181;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_14);
                       }
                     }
-                    DSLKnowledge _knowledge_8 = ((DSLRulePlanner)r).getKnowledge();
-                    boolean _tripleNotEquals_57 = (_knowledge_8 != null);
-                    if (_tripleNotEquals_57) {
-                      String pathInAggregated_29 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
-                      if ((pathInAggregated_29 != null)) {
-                        int _length_37 = pathInAggregated_29.length();
-                        int _minus_37 = (_length_37 - 1);
-                        pathInAggregated_29 = pathInAggregated_29.substring(0, _minus_37);
-                        String _get_107 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_344 = (pathInAggregated_29 + _get_107);
-                        String _plus_345 = (_plus_344 + "/@aggregated.");
-                        String _plus_346 = (_plus_345 + Integer.valueOf(rPlanner));
-                        String _plus_347 = (_plus_346 + " \'");
-                        pathInAggregated_29 = _plus_347;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_29);
+                    DSLKnowledge _knowledge_4 = ((DSLRuleAnalyzer)r).getKnowledge();
+                    boolean _tripleNotEquals_29 = (_knowledge_4 != null);
+                    if (_tripleNotEquals_29) {
+                      String pathInAggregated_15 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
+                      if ((pathInAggregated_15 != null)) {
+                        int _length_21 = pathInAggregated_15.length();
+                        int _minus_21 = (_length_21 - 1);
+                        pathInAggregated_15 = pathInAggregated_15.substring(0, _minus_21);
+                        String _get_56 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_182 = (pathInAggregated_15 + _get_56);
+                        String _plus_183 = (_plus_182 + "/@aggregated.");
+                        String _plus_184 = (_plus_183 + Integer.valueOf(rAnalyzer));
+                        String _plus_185 = (_plus_184 + " \'");
+                        pathInAggregated_15 = _plus_185;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_15);
                       } else {
-                        String _get_108 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_348 = ("inAggregated=\'" + _get_108);
-                        String _plus_349 = (_plus_348 + "/@aggregated.");
-                        String _plus_350 = (_plus_349 + Integer.valueOf(rPlanner));
-                        String _plus_351 = (_plus_350 + " \'");
-                        pathInAggregated_29 = _plus_351;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_29);
+                        String _get_57 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_186 = ("inAggregated=\'" + _get_57);
+                        String _plus_187 = (_plus_186 + "/@aggregated.");
+                        String _plus_188 = (_plus_187 + Integer.valueOf(rAnalyzer));
+                        String _plus_189 = (_plus_188 + " \'");
+                        pathInAggregated_15 = _plus_189;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_15);
                       }
                     }
-                    DSLExecutor _executor_8 = ((DSLRulePlanner)r).getExecutor();
-                    boolean _tripleNotEquals_58 = (_executor_8 != null);
-                    if (_tripleNotEquals_58) {
-                      String pathInAggregated_30 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
-                      if ((pathInAggregated_30 != null)) {
-                        int _length_38 = pathInAggregated_30.length();
-                        int _minus_38 = (_length_38 - 1);
-                        pathInAggregated_30 = pathInAggregated_30.substring(0, _minus_38);
-                        String _get_109 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_352 = (pathInAggregated_30 + _get_109);
-                        String _plus_353 = (_plus_352 + "/@aggregated.");
-                        String _plus_354 = (_plus_353 + Integer.valueOf(rPlanner));
-                        String _plus_355 = (_plus_354 + " \'");
-                        pathInAggregated_30 = _plus_355;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_30);
+                    DSLPlanner _planner_4 = ((DSLRuleAnalyzer)r).getPlanner();
+                    boolean _tripleNotEquals_30 = (_planner_4 != null);
+                    if (_tripleNotEquals_30) {
+                      String pathInAggregated_16 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
+                      if ((pathInAggregated_16 != null)) {
+                        int _length_22 = pathInAggregated_16.length();
+                        int _minus_22 = (_length_22 - 1);
+                        pathInAggregated_16 = pathInAggregated_16.substring(0, _minus_22);
+                        String _get_58 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_190 = (pathInAggregated_16 + _get_58);
+                        String _plus_191 = (_plus_190 + "/@aggregated.");
+                        String _plus_192 = (_plus_191 + Integer.valueOf(rAnalyzer));
+                        String _plus_193 = (_plus_192 + " \'");
+                        pathInAggregated_16 = _plus_193;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_16);
                       } else {
-                        String _get_110 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_356 = ("inAggregated=\'" + _get_110);
-                        String _plus_357 = (_plus_356 + "/@aggregated.");
-                        String _plus_358 = (_plus_357 + Integer.valueOf(rPlanner));
-                        String _plus_359 = (_plus_358 + " \'");
-                        pathInAggregated_30 = _plus_359;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_30);
+                        String _get_59 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_194 = ("inAggregated=\'" + _get_59);
+                        String _plus_195 = (_plus_194 + "/@aggregated.");
+                        String _plus_196 = (_plus_195 + Integer.valueOf(rAnalyzer));
+                        String _plus_197 = (_plus_196 + " \'");
+                        pathInAggregated_16 = _plus_197;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_16);
                       }
                     }
-                    DSLPlanner _planner2 = ((DSLRulePlanner)r).getPlanner2();
-                    boolean _tripleNotEquals_59 = (_planner2 != null);
-                    if (_tripleNotEquals_59) {
-                      String pathInAggregated_31 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
-                      if ((pathInAggregated_31 != null)) {
-                        int _length_39 = pathInAggregated_31.length();
-                        int _minus_39 = (_length_39 - 1);
-                        pathInAggregated_31 = pathInAggregated_31.substring(0, _minus_39);
-                        String _get_111 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_360 = (pathInAggregated_31 + _get_111);
-                        String _plus_361 = (_plus_360 + "/@aggregated.");
-                        String _plus_362 = (_plus_361 + Integer.valueOf(rPlanner));
-                        String _plus_363 = (_plus_362 + " \'");
-                        pathInAggregated_31 = _plus_363;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_31);
+                    DSLReferenceInput _rreference = ((DSLRuleAnalyzer)r).getRreference();
+                    boolean _tripleNotEquals_31 = (_rreference != null);
+                    if (_tripleNotEquals_31) {
+                      String pathInAggregated_17 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
+                      if ((pathInAggregated_17 != null)) {
+                        int _length_23 = pathInAggregated_17.length();
+                        int _minus_23 = (_length_23 - 1);
+                        pathInAggregated_17 = pathInAggregated_17.substring(0, _minus_23);
+                        String _get_60 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_198 = (pathInAggregated_17 + _get_60);
+                        String _plus_199 = (_plus_198 + "/@aggregated.");
+                        String _plus_200 = (_plus_199 + Integer.valueOf(rAnalyzer));
+                        String _plus_201 = (_plus_200 + " \'");
+                        pathInAggregated_17 = _plus_201;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_17);
                       } else {
-                        String _get_112 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_364 = ("inAggregated=\'" + _get_112);
-                        String _plus_365 = (_plus_364 + "/@aggregated.");
-                        String _plus_366 = (_plus_365 + Integer.valueOf(rPlanner));
-                        String _plus_367 = (_plus_366 + " \'");
-                        pathInAggregated_31 = _plus_367;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_31);
+                        String _get_61 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_202 = ("inAggregated=\'" + _get_61);
+                        String _plus_203 = (_plus_202 + "/@aggregated.");
+                        String _plus_204 = (_plus_203 + Integer.valueOf(rAnalyzer));
+                        String _plus_205 = (_plus_204 + " \'");
+                        pathInAggregated_17 = _plus_205;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_17);
                       }
                     }
-                    DSLAlternative _shalt_4 = ((DSLRulePlanner)r).getShalt();
-                    boolean _tripleNotEquals_60 = (_shalt_4 != null);
-                    if (_tripleNotEquals_60) {
-                      String pathInAggregated_32 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
-                      if ((pathInAggregated_32 != null)) {
-                        int _length_40 = pathInAggregated_32.length();
-                        int _minus_40 = (_length_40 - 1);
-                        pathInAggregated_32 = pathInAggregated_32.substring(0, _minus_40);
-                        String _get_113 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_368 = (pathInAggregated_32 + _get_113);
-                        String _plus_369 = (_plus_368 + "/@aggregated.");
-                        String _plus_370 = (_plus_369 + Integer.valueOf(rPlanner));
-                        String _plus_371 = (_plus_370 + " \'");
-                        pathInAggregated_32 = _plus_371;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_32);
+                    DSLAnalyzer _analyzer2 = ((DSLRuleAnalyzer)r).getAnalyzer2();
+                    boolean _tripleNotEquals_32 = (_analyzer2 != null);
+                    if (_tripleNotEquals_32) {
+                      String pathInAggregated_18 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
+                      if ((pathInAggregated_18 != null)) {
+                        int _length_24 = pathInAggregated_18.length();
+                        int _minus_24 = (_length_24 - 1);
+                        pathInAggregated_18 = pathInAggregated_18.substring(0, _minus_24);
+                        String _get_62 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_206 = (pathInAggregated_18 + _get_62);
+                        String _plus_207 = (_plus_206 + "/@aggregated.");
+                        String _plus_208 = (_plus_207 + Integer.valueOf(rAnalyzer));
+                        String _plus_209 = (_plus_208 + " \'");
+                        pathInAggregated_18 = _plus_209;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_18);
                       } else {
-                        String _get_114 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_372 = ("inAggregated=\'" + _get_114);
-                        String _plus_373 = (_plus_372 + "/@aggregated.");
-                        String _plus_374 = (_plus_373 + Integer.valueOf(rPlanner));
-                        String _plus_375 = (_plus_374 + " \'");
-                        pathInAggregated_32 = _plus_375;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_32);
+                        String _get_63 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_210 = ("inAggregated=\'" + _get_63);
+                        String _plus_211 = (_plus_210 + "/@aggregated.");
+                        String _plus_212 = (_plus_211 + Integer.valueOf(rAnalyzer));
+                        String _plus_213 = (_plus_212 + " \'");
+                        pathInAggregated_18 = _plus_213;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_18);
                       }
                     }
-                    DSLMonitor _monitor_4 = ((DSLRulePlanner)r).getMonitor();
-                    boolean _tripleNotEquals_61 = (_monitor_4 != null);
-                    if (_tripleNotEquals_61) {
-                      String pathInAggregated_33 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
-                      if ((pathInAggregated_33 != null)) {
-                        int _length_41 = pathInAggregated_33.length();
-                        int _minus_41 = (_length_41 - 1);
-                        pathInAggregated_33 = pathInAggregated_33.substring(0, _minus_41);
-                        String _get_115 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_376 = (pathInAggregated_33 + _get_115);
-                        String _plus_377 = (_plus_376 + "/@aggregated.");
-                        String _plus_378 = (_plus_377 + Integer.valueOf(rPlanner));
-                        String _plus_379 = (_plus_378 + " \'");
-                        pathInAggregated_33 = _plus_379;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_33);
+                    DSLExecutor _executor_4 = ((DSLRuleAnalyzer)r).getExecutor();
+                    boolean _tripleNotEquals_33 = (_executor_4 != null);
+                    if (_tripleNotEquals_33) {
+                      String pathInAggregated_19 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
+                      if ((pathInAggregated_19 != null)) {
+                        int _length_25 = pathInAggregated_19.length();
+                        int _minus_25 = (_length_25 - 1);
+                        pathInAggregated_19 = pathInAggregated_19.substring(0, _minus_25);
+                        String _get_64 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_214 = (pathInAggregated_19 + _get_64);
+                        String _plus_215 = (_plus_214 + "/@aggregated.");
+                        String _plus_216 = (_plus_215 + Integer.valueOf(rAnalyzer));
+                        String _plus_217 = (_plus_216 + " \'");
+                        pathInAggregated_19 = _plus_217;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_19);
                       } else {
-                        String _get_116 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_380 = ("inAggregated=\'" + _get_116);
-                        String _plus_381 = (_plus_380 + "/@aggregated.");
-                        String _plus_382 = (_plus_381 + Integer.valueOf(rPlanner));
-                        String _plus_383 = (_plus_382 + " \'");
-                        pathInAggregated_33 = _plus_383;
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_33);
+                        String _get_65 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_218 = ("inAggregated=\'" + _get_65);
+                        String _plus_219 = (_plus_218 + "/@aggregated.");
+                        String _plus_220 = (_plus_219 + Integer.valueOf(rAnalyzer));
+                        String _plus_221 = (_plus_220 + " \'");
+                        pathInAggregated_19 = _plus_221;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_19);
+                      }
+                    }
+                    DSLAlternative _shalt = ((DSLRuleAnalyzer)r).getShalt();
+                    boolean _tripleNotEquals_34 = (_shalt != null);
+                    if (_tripleNotEquals_34) {
+                      String pathInAggregated_20 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
+                      if ((pathInAggregated_20 != null)) {
+                        int _length_26 = pathInAggregated_20.length();
+                        int _minus_26 = (_length_26 - 1);
+                        pathInAggregated_20 = pathInAggregated_20.substring(0, _minus_26);
+                        String _get_66 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_222 = (pathInAggregated_20 + _get_66);
+                        String _plus_223 = (_plus_222 + "/@aggregated.");
+                        String _plus_224 = (_plus_223 + Integer.valueOf(rAnalyzer));
+                        String _plus_225 = (_plus_224 + " \'");
+                        pathInAggregated_20 = _plus_225;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_20);
+                      } else {
+                        String _get_67 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_226 = ("inAggregated=\'" + _get_67);
+                        String _plus_227 = (_plus_226 + "/@aggregated.");
+                        String _plus_228 = (_plus_227 + Integer.valueOf(rAnalyzer));
+                        String _plus_229 = (_plus_228 + " \'");
+                        pathInAggregated_20 = _plus_229;
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_20);
                       }
                     }
                   } else {
-                    String _get_117 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                    String _plus_384 = ("outAggregated=\'" + _get_117);
-                    String _plus_385 = (_plus_384 + "/@aggregated.");
-                    String _plus_386 = (_plus_385 + Integer.valueOf(rPlanner));
-                    String _plus_387 = (_plus_386 + " \'");
-                    pathAggregated_3 = _plus_387;
-                    this.outAggregatedPath.put(((DSLRulePlanner)r).getPlanner().getName(), pathAggregated_3);
-                    DSLAnalyzer _analyzer_5 = ((DSLRulePlanner)r).getAnalyzer();
-                    boolean _tripleNotEquals_62 = (_analyzer_5 != null);
-                    if (_tripleNotEquals_62) {
-                      String pathInAggregated_34 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
-                      if ((pathInAggregated_34 != null)) {
-                        int _length_42 = pathInAggregated_34.length();
-                        int _minus_42 = (_length_42 - 1);
-                        pathInAggregated_34 = pathInAggregated_34.substring(0, _minus_42);
-                        String _get_118 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_388 = (pathInAggregated_34 + _get_118);
-                        String _plus_389 = (_plus_388 + "/@aggregated.");
-                        String _plus_390 = (_plus_389 + Integer.valueOf(rPlanner));
-                        String _plus_391 = (_plus_390 + " \'");
-                        pathInAggregated_34 = _plus_391;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_34);
+                    String _get_68 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                    String _plus_230 = ("outAggregated=\'" + _get_68);
+                    String _plus_231 = (_plus_230 + "/@aggregated.");
+                    String _plus_232 = (_plus_231 + Integer.valueOf(rAnalyzer));
+                    String _plus_233 = (_plus_232 + " \'");
+                    pathAggregated_2 = _plus_233;
+                    this.outAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer().getName(), pathAggregated_2);
+                    DSLMonitor _monitor_1 = ((DSLRuleAnalyzer)r).getMonitor();
+                    boolean _tripleNotEquals_35 = (_monitor_1 != null);
+                    if (_tripleNotEquals_35) {
+                      String pathInAggregated_21 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
+                      if ((pathInAggregated_21 != null)) {
+                        int _length_27 = pathInAggregated_21.length();
+                        int _minus_27 = (_length_27 - 1);
+                        pathInAggregated_21 = pathInAggregated_21.substring(0, _minus_27);
+                        String _get_69 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_234 = (pathInAggregated_21 + _get_69);
+                        String _plus_235 = (_plus_234 + "/@aggregated.");
+                        String _plus_236 = (_plus_235 + Integer.valueOf(rAnalyzer));
+                        String _plus_237 = (_plus_236 + " \'");
+                        pathInAggregated_21 = _plus_237;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getMonitor().getName(), pathInAggregated_21);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getAnalyzer().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getMonitor().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
-                    DSLKnowledge _knowledge_9 = ((DSLRulePlanner)r).getKnowledge();
-                    boolean _tripleNotEquals_63 = (_knowledge_9 != null);
-                    if (_tripleNotEquals_63) {
-                      String pathInAggregated_35 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
-                      if ((pathInAggregated_35 != null)) {
-                        int _length_43 = pathInAggregated_35.length();
-                        int _minus_43 = (_length_43 - 1);
-                        pathInAggregated_35 = pathInAggregated_35.substring(0, _minus_43);
-                        String _get_119 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_392 = (pathInAggregated_35 + _get_119);
-                        String _plus_393 = (_plus_392 + "/@aggregated.");
-                        String _plus_394 = (_plus_393 + Integer.valueOf(rPlanner));
-                        String _plus_395 = (_plus_394 + " \'");
-                        pathInAggregated_35 = _plus_395;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_35);
+                    DSLKnowledge _knowledge_5 = ((DSLRuleAnalyzer)r).getKnowledge();
+                    boolean _tripleNotEquals_36 = (_knowledge_5 != null);
+                    if (_tripleNotEquals_36) {
+                      String pathInAggregated_22 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
+                      if ((pathInAggregated_22 != null)) {
+                        int _length_28 = pathInAggregated_22.length();
+                        int _minus_28 = (_length_28 - 1);
+                        pathInAggregated_22 = pathInAggregated_22.substring(0, _minus_28);
+                        String _get_70 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_238 = (pathInAggregated_22 + _get_70);
+                        String _plus_239 = (_plus_238 + "/@aggregated.");
+                        String _plus_240 = (_plus_239 + Integer.valueOf(rAnalyzer));
+                        String _plus_241 = (_plus_240 + " \'");
+                        pathInAggregated_22 = _plus_241;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathInAggregated_22);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getKnowledge().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getKnowledge().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
-                    DSLExecutor _executor_9 = ((DSLRulePlanner)r).getExecutor();
-                    boolean _tripleNotEquals_64 = (_executor_9 != null);
-                    if (_tripleNotEquals_64) {
-                      String pathInAggregated_36 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
-                      if ((pathInAggregated_36 != null)) {
-                        int _length_44 = pathInAggregated_36.length();
-                        int _minus_44 = (_length_44 - 1);
-                        pathInAggregated_36 = pathInAggregated_36.substring(0, _minus_44);
-                        String _get_120 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_396 = (pathInAggregated_36 + _get_120);
-                        String _plus_397 = (_plus_396 + "/@aggregated.");
-                        String _plus_398 = (_plus_397 + Integer.valueOf(rPlanner));
-                        String _plus_399 = (_plus_398 + " \'");
-                        pathInAggregated_36 = _plus_399;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_36);
+                    DSLPlanner _planner_5 = ((DSLRuleAnalyzer)r).getPlanner();
+                    boolean _tripleNotEquals_37 = (_planner_5 != null);
+                    if (_tripleNotEquals_37) {
+                      String pathInAggregated_23 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
+                      if ((pathInAggregated_23 != null)) {
+                        int _length_29 = pathInAggregated_23.length();
+                        int _minus_29 = (_length_29 - 1);
+                        pathInAggregated_23 = pathInAggregated_23.substring(0, _minus_29);
+                        String _get_71 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_242 = (pathInAggregated_23 + _get_71);
+                        String _plus_243 = (_plus_242 + "/@aggregated.");
+                        String _plus_244 = (_plus_243 + Integer.valueOf(rAnalyzer));
+                        String _plus_245 = (_plus_244 + " \'");
+                        pathInAggregated_23 = _plus_245;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getPlanner().getName(), pathInAggregated_23);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getExecutor().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getPlanner().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
-                    DSLPlanner _planner2_1 = ((DSLRulePlanner)r).getPlanner2();
-                    boolean _tripleNotEquals_65 = (_planner2_1 != null);
-                    if (_tripleNotEquals_65) {
-                      String pathInAggregated_37 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
-                      if ((pathInAggregated_37 != null)) {
-                        int _length_45 = pathInAggregated_37.length();
-                        int _minus_45 = (_length_45 - 1);
-                        pathInAggregated_37 = pathInAggregated_37.substring(0, _minus_45);
-                        String _get_121 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_400 = (pathInAggregated_37 + _get_121);
-                        String _plus_401 = (_plus_400 + "/@aggregated.");
-                        String _plus_402 = (_plus_401 + Integer.valueOf(rPlanner));
-                        String _plus_403 = (_plus_402 + " \'");
-                        pathInAggregated_37 = _plus_403;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_37);
+                    DSLReferenceInput _rreference_1 = ((DSLRuleAnalyzer)r).getRreference();
+                    boolean _tripleNotEquals_38 = (_rreference_1 != null);
+                    if (_tripleNotEquals_38) {
+                      String pathInAggregated_24 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
+                      if ((pathInAggregated_24 != null)) {
+                        int _length_30 = pathInAggregated_24.length();
+                        int _minus_30 = (_length_30 - 1);
+                        pathInAggregated_24 = pathInAggregated_24.substring(0, _minus_30);
+                        String _get_72 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_246 = (pathInAggregated_24 + _get_72);
+                        String _plus_247 = (_plus_246 + "/@aggregated.");
+                        String _plus_248 = (_plus_247 + Integer.valueOf(rAnalyzer));
+                        String _plus_249 = (_plus_248 + " \'");
+                        pathInAggregated_24 = _plus_249;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getRreference().getName(), pathInAggregated_24);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getPlanner2().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getRreference().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
-                    DSLAlternative _shalt_5 = ((DSLRulePlanner)r).getShalt();
-                    boolean _tripleNotEquals_66 = (_shalt_5 != null);
-                    if (_tripleNotEquals_66) {
-                      String pathInAggregated_38 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
-                      if ((pathInAggregated_38 != null)) {
-                        int _length_46 = pathInAggregated_38.length();
-                        int _minus_46 = (_length_46 - 1);
-                        pathInAggregated_38 = pathInAggregated_38.substring(0, _minus_46);
-                        String _get_122 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_404 = (pathInAggregated_38 + _get_122);
-                        String _plus_405 = (_plus_404 + "/@aggregated.");
-                        String _plus_406 = (_plus_405 + Integer.valueOf(rPlanner));
-                        String _plus_407 = (_plus_406 + " \'");
-                        pathInAggregated_38 = _plus_407;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_38);
+                    DSLAnalyzer _analyzer2_1 = ((DSLRuleAnalyzer)r).getAnalyzer2();
+                    boolean _tripleNotEquals_39 = (_analyzer2_1 != null);
+                    if (_tripleNotEquals_39) {
+                      String pathInAggregated_25 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
+                      if ((pathInAggregated_25 != null)) {
+                        int _length_31 = pathInAggregated_25.length();
+                        int _minus_31 = (_length_31 - 1);
+                        pathInAggregated_25 = pathInAggregated_25.substring(0, _minus_31);
+                        String _get_73 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_250 = (pathInAggregated_25 + _get_73);
+                        String _plus_251 = (_plus_250 + "/@aggregated.");
+                        String _plus_252 = (_plus_251 + Integer.valueOf(rAnalyzer));
+                        String _plus_253 = (_plus_252 + " \'");
+                        pathInAggregated_25 = _plus_253;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathInAggregated_25);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getShalt().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer2().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
-                    DSLMonitor _monitor_5 = ((DSLRulePlanner)r).getMonitor();
-                    boolean _tripleNotEquals_67 = (_monitor_5 != null);
-                    if (_tripleNotEquals_67) {
-                      String pathInAggregated_39 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
-                      if ((pathInAggregated_39 != null)) {
-                        int _length_47 = pathInAggregated_39.length();
-                        int _minus_47 = (_length_47 - 1);
-                        pathInAggregated_39 = pathInAggregated_39.substring(0, _minus_47);
-                        String _get_123 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_408 = (pathInAggregated_39 + _get_123);
-                        String _plus_409 = (_plus_408 + "/@aggregated.");
-                        String _plus_410 = (_plus_409 + Integer.valueOf(rPlanner));
-                        String _plus_411 = (_plus_410 + " \'");
-                        pathInAggregated_39 = _plus_411;
-                        this.inAggregatedPath.replace(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_39);
+                    DSLAlternative _shalt_1 = ((DSLRuleAnalyzer)r).getShalt();
+                    boolean _tripleNotEquals_40 = (_shalt_1 != null);
+                    if (_tripleNotEquals_40) {
+                      String pathInAggregated_26 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
+                      if ((pathInAggregated_26 != null)) {
+                        int _length_32 = pathInAggregated_26.length();
+                        int _minus_32 = (_length_32 - 1);
+                        pathInAggregated_26 = pathInAggregated_26.substring(0, _minus_32);
+                        String _get_74 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_254 = (pathInAggregated_26 + _get_74);
+                        String _plus_255 = (_plus_254 + "/@aggregated.");
+                        String _plus_256 = (_plus_255 + Integer.valueOf(rAnalyzer));
+                        String _plus_257 = (_plus_256 + " \'");
+                        pathInAggregated_26 = _plus_257;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getShalt().getName(), pathInAggregated_26);
                       } else {
-                        this.inAggregatedPath.put(((DSLRulePlanner)r).getMonitor().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getShalt().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
+                      }
+                    }
+                    DSLExecutor _executor_5 = ((DSLRuleAnalyzer)r).getExecutor();
+                    boolean _tripleNotEquals_41 = (_executor_5 != null);
+                    if (_tripleNotEquals_41) {
+                      String pathInAggregated_27 = this.inAggregatedPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
+                      if ((pathInAggregated_27 != null)) {
+                        int _length_33 = pathInAggregated_27.length();
+                        int _minus_33 = (_length_33 - 1);
+                        pathInAggregated_27 = pathInAggregated_27.substring(0, _minus_33);
+                        String _get_75 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_258 = (pathInAggregated_27 + _get_75);
+                        String _plus_259 = (_plus_258 + "/@aggregated.");
+                        String _plus_260 = (_plus_259 + Integer.valueOf(rAnalyzer));
+                        String _plus_261 = (_plus_260 + " \'");
+                        pathInAggregated_27 = _plus_261;
+                        this.inAggregatedPath.replace(((DSLRuleAnalyzer)r).getExecutor().getName(), pathInAggregated_27);
+                      } else {
+                        this.inAggregatedPath.put(((DSLRuleAnalyzer)r).getExecutor().getName(), pathAggregated_2.replaceFirst("outAggregated", "inAggregated"));
                       }
                     }
                   }
-                  String aggregated_3 = this.aggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                  if ((aggregated_3 != null)) {
-                    DSLAnalyzer _analyzer_6 = ((DSLRulePlanner)r).getAnalyzer();
-                    boolean _tripleNotEquals_68 = (_analyzer_6 != null);
-                    if (_tripleNotEquals_68) {
-                      String _get_124 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                      String _plus_412 = ((aggregated_3 + "<aggregated from=\'") + _get_124);
-                      String _plus_413 = (_plus_412 + "\' to=\'");
-                      String _get_125 = this.structureElementPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
-                      String _plus_414 = (_plus_413 + _get_125);
-                      String _plus_415 = (_plus_414 + "\'");
-                      String _plus_416 = (_plus_415 + relation);
-                      aggregated_3 = _plus_416;
+                  String aggregated_2 = this.aggregatedPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                  if ((aggregated_2 != null)) {
+                    DSLMonitor _monitor_2 = ((DSLRuleAnalyzer)r).getMonitor();
+                    boolean _tripleNotEquals_42 = (_monitor_2 != null);
+                    if (_tripleNotEquals_42) {
+                      String _get_76 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                      String _plus_262 = ((aggregated_2 + "<aggregated from=\'") + _get_76);
+                      String _plus_263 = (_plus_262 + "\' to=\'");
+                      String _get_77 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getMonitor().getName());
+                      String _plus_264 = (_plus_263 + _get_77);
+                      String _plus_265 = (_plus_264 + "\'");
+                      String _plus_266 = (_plus_265 + relation);
+                      aggregated_2 = _plus_266;
                     } else {
-                      DSLKnowledge _knowledge_10 = ((DSLRulePlanner)r).getKnowledge();
-                      boolean _tripleNotEquals_69 = (_knowledge_10 != null);
-                      if (_tripleNotEquals_69) {
-                        String _get_126 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_417 = ((aggregated_3 + "<aggregated from=\'") + _get_126);
-                        String _plus_418 = (_plus_417 + "\' to=\'");
-                        String _get_127 = this.structureElementPath.get(((DSLRulePlanner)r).getKnowledge().getName());
-                        String _plus_419 = (_plus_418 + _get_127);
-                        String _plus_420 = (_plus_419 + "\'");
-                        String _plus_421 = (_plus_420 + relation);
-                        aggregated_3 = _plus_421;
+                      DSLKnowledge _knowledge_6 = ((DSLRuleAnalyzer)r).getKnowledge();
+                      boolean _tripleNotEquals_43 = (_knowledge_6 != null);
+                      if (_tripleNotEquals_43) {
+                        String _get_78 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_267 = ((aggregated_2 + "<aggregated from=\'") + _get_78);
+                        String _plus_268 = (_plus_267 + "\' to=\'");
+                        String _get_79 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
+                        String _plus_269 = (_plus_268 + _get_79);
+                        String _plus_270 = (_plus_269 + "\'");
+                        String _plus_271 = (_plus_270 + relation);
+                        aggregated_2 = _plus_271;
                       } else {
-                        DSLExecutor _executor_10 = ((DSLRulePlanner)r).getExecutor();
-                        boolean _tripleNotEquals_70 = (_executor_10 != null);
-                        if (_tripleNotEquals_70) {
-                          String _get_128 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                          String _plus_422 = ((aggregated_3 + "<aggregated from=\'") + _get_128);
-                          String _plus_423 = (_plus_422 + "\' to=\'");
-                          String _get_129 = this.structureElementPath.get(((DSLRulePlanner)r).getExecutor().getName());
-                          String _plus_424 = (_plus_423 + _get_129);
-                          String _plus_425 = (_plus_424 + "\'");
-                          String _plus_426 = (_plus_425 + relation);
-                          aggregated_3 = _plus_426;
+                        DSLPlanner _planner_6 = ((DSLRuleAnalyzer)r).getPlanner();
+                        boolean _tripleNotEquals_44 = (_planner_6 != null);
+                        if (_tripleNotEquals_44) {
+                          String _get_80 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                          String _plus_272 = ((aggregated_2 + "<aggregated from=\'") + _get_80);
+                          String _plus_273 = (_plus_272 + "\' to=\'");
+                          String _get_81 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
+                          String _plus_274 = (_plus_273 + _get_81);
+                          String _plus_275 = (_plus_274 + "\'");
+                          String _plus_276 = (_plus_275 + relation);
+                          aggregated_2 = _plus_276;
                         } else {
-                          DSLPlanner _planner2_2 = ((DSLRulePlanner)r).getPlanner2();
-                          boolean _tripleNotEquals_71 = (_planner2_2 != null);
-                          if (_tripleNotEquals_71) {
-                            String _get_130 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                            String _plus_427 = ((aggregated_3 + "<aggregated from=\'") + _get_130);
-                            String _plus_428 = (_plus_427 + "\' to=\'");
-                            String _get_131 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner2().getName());
-                            String _plus_429 = (_plus_428 + _get_131);
-                            String _plus_430 = (_plus_429 + "\'");
-                            String _plus_431 = (_plus_430 + relation);
-                            aggregated_3 = _plus_431;
+                          DSLReferenceInput _rreference_2 = ((DSLRuleAnalyzer)r).getRreference();
+                          boolean _tripleNotEquals_45 = (_rreference_2 != null);
+                          if (_tripleNotEquals_45) {
+                            String _get_82 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                            String _plus_277 = ((aggregated_2 + "<aggregated from=\'") + _get_82);
+                            String _plus_278 = (_plus_277 + "\' to=\'");
+                            String _get_83 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
+                            String _plus_279 = (_plus_278 + _get_83);
+                            String _plus_280 = (_plus_279 + "\'");
+                            String _plus_281 = (_plus_280 + relation);
+                            aggregated_2 = _plus_281;
                           } else {
-                            DSLAlternative _shalt_6 = ((DSLRulePlanner)r).getShalt();
-                            boolean _tripleNotEquals_72 = (_shalt_6 != null);
-                            if (_tripleNotEquals_72) {
-                              String _get_132 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                              String _plus_432 = ((aggregated_3 + "<aggregated from=\'") + _get_132);
-                              String _plus_433 = (_plus_432 + "\' to=\'");
-                              String _get_133 = this.structureElementPath.get(((DSLRulePlanner)r).getShalt().getName());
-                              String _plus_434 = (_plus_433 + _get_133);
-                              String _plus_435 = (_plus_434 + "\'");
-                              String _plus_436 = (_plus_435 + relation);
-                              aggregated_3 = _plus_436;
+                            DSLAnalyzer _analyzer2_2 = ((DSLRuleAnalyzer)r).getAnalyzer2();
+                            boolean _tripleNotEquals_46 = (_analyzer2_2 != null);
+                            if (_tripleNotEquals_46) {
+                              String _get_84 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                              String _plus_282 = ((aggregated_2 + "<aggregated from=\'") + _get_84);
+                              String _plus_283 = (_plus_282 + "\' to=\'");
+                              String _get_85 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
+                              String _plus_284 = (_plus_283 + _get_85);
+                              String _plus_285 = (_plus_284 + "\'");
+                              String _plus_286 = (_plus_285 + relation);
+                              aggregated_2 = _plus_286;
                             } else {
-                              DSLMonitor _monitor_6 = ((DSLRulePlanner)r).getMonitor();
-                              boolean _tripleNotEquals_73 = (_monitor_6 != null);
-                              if (_tripleNotEquals_73) {
-                                String _get_134 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                                String _plus_437 = ((aggregated_3 + "<aggregated from=\'") + _get_134);
-                                String _plus_438 = (_plus_437 + "\' to=\'");
-                                String _get_135 = this.structureElementPath.get(((DSLRulePlanner)r).getMonitor().getName());
-                                String _plus_439 = (_plus_438 + _get_135);
-                                String _plus_440 = (_plus_439 + "\'");
-                                String _plus_441 = (_plus_440 + relation);
-                                aggregated_3 = _plus_441;
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                    this.aggregatedPath.replace(((DSLRulePlanner)r).getPlanner().getName(), aggregated_3);
-                  } else {
-                    DSLAnalyzer _analyzer_7 = ((DSLRulePlanner)r).getAnalyzer();
-                    boolean _tripleNotEquals_74 = (_analyzer_7 != null);
-                    if (_tripleNotEquals_74) {
-                      String _get_136 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                      String _plus_442 = ("<aggregated from=\'" + _get_136);
-                      String _plus_443 = (_plus_442 + "\' to=\'");
-                      String _get_137 = this.structureElementPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
-                      String _plus_444 = (_plus_443 + _get_137);
-                      String _plus_445 = (_plus_444 + "\'");
-                      String _plus_446 = (_plus_445 + relation);
-                      aggregated_3 = _plus_446;
-                    } else {
-                      DSLKnowledge _knowledge_11 = ((DSLRulePlanner)r).getKnowledge();
-                      boolean _tripleNotEquals_75 = (_knowledge_11 != null);
-                      if (_tripleNotEquals_75) {
-                        String _get_138 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                        String _plus_447 = ("<aggregated from=\'" + _get_138);
-                        String _plus_448 = (_plus_447 + "\' to=\'");
-                        String _get_139 = this.structureElementPath.get(((DSLRulePlanner)r).getKnowledge().getName());
-                        String _plus_449 = (_plus_448 + _get_139);
-                        String _plus_450 = (_plus_449 + "\'");
-                        String _plus_451 = (_plus_450 + relation);
-                        aggregated_3 = _plus_451;
-                      } else {
-                        DSLExecutor _executor_11 = ((DSLRulePlanner)r).getExecutor();
-                        boolean _tripleNotEquals_76 = (_executor_11 != null);
-                        if (_tripleNotEquals_76) {
-                          String _get_140 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                          String _plus_452 = ("<aggregated from=\'" + _get_140);
-                          String _plus_453 = (_plus_452 + "\' to=\'");
-                          String _get_141 = this.structureElementPath.get(((DSLRulePlanner)r).getExecutor().getName());
-                          String _plus_454 = (_plus_453 + _get_141);
-                          String _plus_455 = (_plus_454 + "\'");
-                          String _plus_456 = (_plus_455 + relation);
-                          aggregated_3 = _plus_456;
-                        } else {
-                          DSLPlanner _planner2_3 = ((DSLRulePlanner)r).getPlanner2();
-                          boolean _tripleNotEquals_77 = (_planner2_3 != null);
-                          if (_tripleNotEquals_77) {
-                            String _get_142 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                            String _plus_457 = ("<aggregated from=\'" + _get_142);
-                            String _plus_458 = (_plus_457 + "\' to=\'");
-                            String _get_143 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner2().getName());
-                            String _plus_459 = (_plus_458 + _get_143);
-                            String _plus_460 = (_plus_459 + "\'");
-                            String _plus_461 = (_plus_460 + relation);
-                            aggregated_3 = _plus_461;
-                          } else {
-                            DSLAlternative _shalt_7 = ((DSLRulePlanner)r).getShalt();
-                            boolean _tripleNotEquals_78 = (_shalt_7 != null);
-                            if (_tripleNotEquals_78) {
-                              String _get_144 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                              String _plus_462 = ("<aggregated from=\'" + _get_144);
-                              String _plus_463 = (_plus_462 + "\' to=\'");
-                              String _get_145 = this.structureElementPath.get(((DSLRulePlanner)r).getShalt().getName());
-                              String _plus_464 = (_plus_463 + _get_145);
-                              String _plus_465 = (_plus_464 + "\'");
-                              String _plus_466 = (_plus_465 + relation);
-                              aggregated_3 = _plus_466;
-                            } else {
-                              DSLMonitor _monitor_7 = ((DSLRulePlanner)r).getMonitor();
-                              boolean _tripleNotEquals_79 = (_monitor_7 != null);
-                              if (_tripleNotEquals_79) {
-                                String _get_146 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
-                                String _plus_467 = ("<aggregated from=\'" + _get_146);
-                                String _plus_468 = (_plus_467 + "\' to=\'");
-                                String _get_147 = this.structureElementPath.get(((DSLRulePlanner)r).getMonitor().getName());
-                                String _plus_469 = (_plus_468 + _get_147);
-                                String _plus_470 = (_plus_469 + "\'");
-                                String _plus_471 = (_plus_470 + relation);
-                                aggregated_3 = _plus_471;
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                    this.aggregatedPath.put(((DSLRulePlanner)r).getPlanner().getName(), aggregated_3);
-                  }
-                } else {
-                  if ((r instanceof DSLRuleExecutor)) {
-                    String pathAggregated_4 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                    if ((pathAggregated_4 != null)) {
-                      int _length_48 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName()).split(Pattern.quote("//")).length;
-                      int _minus_48 = (_length_48 - 1);
-                      rExecutor = _minus_48;
-                      int _length_49 = pathAggregated_4.length();
-                      int _minus_49 = (_length_49 - 1);
-                      pathAggregated_4 = pathAggregated_4.substring(0, _minus_49);
-                      String _get_148 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                      String _plus_472 = (pathAggregated_4 + _get_148);
-                      String _plus_473 = (_plus_472 + "/@aggregated.");
-                      String _plus_474 = (_plus_473 + Integer.valueOf(rExecutor));
-                      String _plus_475 = (_plus_474 + " \'");
-                      pathAggregated_4 = _plus_475;
-                      this.outAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor().getName(), pathAggregated_4);
-                      DSLPlanner _planner_8 = ((DSLRuleExecutor)r).getPlanner();
-                      boolean _tripleNotEquals_80 = (_planner_8 != null);
-                      if (_tripleNotEquals_80) {
-                        String pathInAggregated_40 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
-                        if ((pathInAggregated_40 != null)) {
-                          int _length_50 = pathInAggregated_40.length();
-                          int _minus_50 = (_length_50 - 1);
-                          pathInAggregated_40 = pathInAggregated_40.substring(0, _minus_50);
-                          String _get_149 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_476 = (pathInAggregated_40 + _get_149);
-                          String _plus_477 = (_plus_476 + "/@aggregated.");
-                          String _plus_478 = (_plus_477 + Integer.valueOf(rExecutor));
-                          String _plus_479 = (_plus_478 + " \'");
-                          pathInAggregated_40 = _plus_479;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_40);
-                        } else {
-                          String _get_150 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_480 = ("inAggregated=\'" + _get_150);
-                          String _plus_481 = (_plus_480 + "/@aggregated.");
-                          String _plus_482 = (_plus_481 + Integer.valueOf(rExecutor));
-                          String _plus_483 = (_plus_482 + " \'");
-                          pathInAggregated_40 = _plus_483;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_40);
-                        }
-                      }
-                      DSLKnowledge _knowledge_12 = ((DSLRuleExecutor)r).getKnowledge();
-                      boolean _tripleNotEquals_81 = (_knowledge_12 != null);
-                      if (_tripleNotEquals_81) {
-                        String pathInAggregated_41 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
-                        if ((pathInAggregated_41 != null)) {
-                          int _length_51 = pathInAggregated_41.length();
-                          int _minus_51 = (_length_51 - 1);
-                          pathInAggregated_41 = pathInAggregated_41.substring(0, _minus_51);
-                          String _get_151 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_484 = (pathInAggregated_41 + _get_151);
-                          String _plus_485 = (_plus_484 + "/@aggregated.");
-                          String _plus_486 = (_plus_485 + Integer.valueOf(rExecutor));
-                          String _plus_487 = (_plus_486 + " \'");
-                          pathInAggregated_41 = _plus_487;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_41);
-                        } else {
-                          String _get_152 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_488 = ("inAggregated=\'" + _get_152);
-                          String _plus_489 = (_plus_488 + "/@aggregated.");
-                          String _plus_490 = (_plus_489 + Integer.valueOf(rExecutor));
-                          String _plus_491 = (_plus_490 + " \'");
-                          pathInAggregated_41 = _plus_491;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_41);
-                        }
-                      }
-                      DSLEffector _effector = ((DSLRuleExecutor)r).getEffector();
-                      boolean _tripleNotEquals_82 = (_effector != null);
-                      if (_tripleNotEquals_82) {
-                        String pathInAggregated_42 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
-                        if ((pathInAggregated_42 != null)) {
-                          int _length_52 = pathInAggregated_42.length();
-                          int _minus_52 = (_length_52 - 1);
-                          pathInAggregated_42 = pathInAggregated_42.substring(0, _minus_52);
-                          String _get_153 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_492 = (pathInAggregated_42 + _get_153);
-                          String _plus_493 = (_plus_492 + "/@aggregated.");
-                          String _plus_494 = (_plus_493 + Integer.valueOf(rExecutor));
-                          String _plus_495 = (_plus_494 + " \'");
-                          pathInAggregated_42 = _plus_495;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_42);
-                        } else {
-                          String _get_154 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_496 = ("inAggregated=\'" + _get_154);
-                          String _plus_497 = (_plus_496 + "/@aggregated.");
-                          String _plus_498 = (_plus_497 + Integer.valueOf(rExecutor));
-                          String _plus_499 = (_plus_498 + " \'");
-                          pathInAggregated_42 = _plus_499;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_42);
-                        }
-                      }
-                      DSLExecutor _executor2 = ((DSLRuleExecutor)r).getExecutor2();
-                      boolean _tripleNotEquals_83 = (_executor2 != null);
-                      if (_tripleNotEquals_83) {
-                        String pathInAggregated_43 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                        if ((pathInAggregated_43 != null)) {
-                          int _length_53 = pathInAggregated_43.length();
-                          int _minus_53 = (_length_53 - 1);
-                          pathInAggregated_43 = pathInAggregated_43.substring(0, _minus_53);
-                          String _get_155 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_500 = (pathInAggregated_43 + _get_155);
-                          String _plus_501 = (_plus_500 + "/@aggregated.");
-                          String _plus_502 = (_plus_501 + Integer.valueOf(rExecutor));
-                          String _plus_503 = (_plus_502 + " \'");
-                          pathInAggregated_43 = _plus_503;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_43);
-                        } else {
-                          String _get_156 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_504 = ("inAggregated=\'" + _get_156);
-                          String _plus_505 = (_plus_504 + "/@aggregated.");
-                          String _plus_506 = (_plus_505 + Integer.valueOf(rExecutor));
-                          String _plus_507 = (_plus_506 + " \'");
-                          pathInAggregated_43 = _plus_507;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_43);
-                        }
-                      }
-                      DSLMonitor _monitor_8 = ((DSLRuleExecutor)r).getMonitor();
-                      boolean _tripleNotEquals_84 = (_monitor_8 != null);
-                      if (_tripleNotEquals_84) {
-                        String pathInAggregated_44 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                        if ((pathInAggregated_44 != null)) {
-                          int _length_54 = pathInAggregated_44.length();
-                          int _minus_54 = (_length_54 - 1);
-                          pathInAggregated_44 = pathInAggregated_44.substring(0, _minus_54);
-                          String _get_157 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_508 = (pathInAggregated_44 + _get_157);
-                          String _plus_509 = (_plus_508 + "/@aggregated.");
-                          String _plus_510 = (_plus_509 + Integer.valueOf(rExecutor));
-                          String _plus_511 = (_plus_510 + " \'");
-                          pathInAggregated_44 = _plus_511;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_44);
-                        } else {
-                          String _get_158 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_512 = ("inAggregated=\'" + _get_158);
-                          String _plus_513 = (_plus_512 + "/@aggregated.");
-                          String _plus_514 = (_plus_513 + Integer.valueOf(rExecutor));
-                          String _plus_515 = (_plus_514 + " \'");
-                          pathInAggregated_44 = _plus_515;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_44);
-                        }
-                      }
-                      DSLAnalyzer _analyzer_8 = ((DSLRuleExecutor)r).getAnalyzer();
-                      boolean _tripleNotEquals_85 = (_analyzer_8 != null);
-                      if (_tripleNotEquals_85) {
-                        String pathInAggregated_45 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                        if ((pathInAggregated_45 != null)) {
-                          int _length_55 = pathInAggregated_45.length();
-                          int _minus_55 = (_length_55 - 1);
-                          pathInAggregated_45 = pathInAggregated_45.substring(0, _minus_55);
-                          String _get_159 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_516 = (pathInAggregated_45 + _get_159);
-                          String _plus_517 = (_plus_516 + "/@aggregated.");
-                          String _plus_518 = (_plus_517 + Integer.valueOf(rExecutor));
-                          String _plus_519 = (_plus_518 + " \'");
-                          pathInAggregated_45 = _plus_519;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_45);
-                        } else {
-                          String _get_160 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_520 = ("inAggregated=\'" + _get_160);
-                          String _plus_521 = (_plus_520 + "/@aggregated.");
-                          String _plus_522 = (_plus_521 + Integer.valueOf(rExecutor));
-                          String _plus_523 = (_plus_522 + " \'");
-                          pathInAggregated_45 = _plus_523;
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_45);
-                        }
-                      }
-                    } else {
-                      String _get_161 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                      String _plus_524 = ("outAggregated=\'" + _get_161);
-                      String _plus_525 = (_plus_524 + "/@aggregated.");
-                      String _plus_526 = (_plus_525 + Integer.valueOf(rExecutor));
-                      String _plus_527 = (_plus_526 + " \'");
-                      pathAggregated_4 = _plus_527;
-                      this.outAggregatedPath.put(((DSLRuleExecutor)r).getExecutor().getName(), pathAggregated_4);
-                      DSLPlanner _planner_9 = ((DSLRuleExecutor)r).getPlanner();
-                      boolean _tripleNotEquals_86 = (_planner_9 != null);
-                      if (_tripleNotEquals_86) {
-                        String pathInAggregated_46 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
-                        if ((pathInAggregated_46 != null)) {
-                          int _length_56 = pathInAggregated_46.length();
-                          int _minus_56 = (_length_56 - 1);
-                          pathInAggregated_46 = pathInAggregated_46.substring(0, _minus_56);
-                          String _get_162 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_528 = (pathInAggregated_46 + _get_162);
-                          String _plus_529 = (_plus_528 + "/@aggregated.");
-                          String _plus_530 = (_plus_529 + Integer.valueOf(rExecutor));
-                          String _plus_531 = (_plus_530 + " \'");
-                          pathInAggregated_46 = _plus_531;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_46);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getPlanner().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                      DSLKnowledge _knowledge_13 = ((DSLRuleExecutor)r).getKnowledge();
-                      boolean _tripleNotEquals_87 = (_knowledge_13 != null);
-                      if (_tripleNotEquals_87) {
-                        String pathInAggregated_47 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
-                        if ((pathInAggregated_47 != null)) {
-                          int _length_57 = pathInAggregated_47.length();
-                          int _minus_57 = (_length_57 - 1);
-                          pathInAggregated_47 = pathInAggregated_47.substring(0, _minus_57);
-                          String _get_163 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_532 = (pathInAggregated_47 + _get_163);
-                          String _plus_533 = (_plus_532 + "/@aggregated.");
-                          String _plus_534 = (_plus_533 + Integer.valueOf(rExecutor));
-                          String _plus_535 = (_plus_534 + " \'");
-                          pathInAggregated_47 = _plus_535;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_47);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getKnowledge().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                      DSLEffector _effector_1 = ((DSLRuleExecutor)r).getEffector();
-                      boolean _tripleNotEquals_88 = (_effector_1 != null);
-                      if (_tripleNotEquals_88) {
-                        String pathInAggregated_48 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
-                        if ((pathInAggregated_48 != null)) {
-                          int _length_58 = pathInAggregated_48.length();
-                          int _minus_58 = (_length_58 - 1);
-                          pathInAggregated_48 = pathInAggregated_48.substring(0, _minus_58);
-                          String _get_164 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_536 = (pathInAggregated_48 + _get_164);
-                          String _plus_537 = (_plus_536 + "/@aggregated.");
-                          String _plus_538 = (_plus_537 + Integer.valueOf(rExecutor));
-                          String _plus_539 = (_plus_538 + " \'");
-                          pathInAggregated_48 = _plus_539;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_48);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getEffector().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                      DSLExecutor _executor2_1 = ((DSLRuleExecutor)r).getExecutor2();
-                      boolean _tripleNotEquals_89 = (_executor2_1 != null);
-                      if (_tripleNotEquals_89) {
-                        String pathInAggregated_49 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                        if ((pathInAggregated_49 != null)) {
-                          int _length_59 = pathInAggregated_49.length();
-                          int _minus_59 = (_length_59 - 1);
-                          pathInAggregated_49 = pathInAggregated_49.substring(0, _minus_59);
-                          String _get_165 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_540 = (pathInAggregated_49 + _get_165);
-                          String _plus_541 = (_plus_540 + "/@aggregated.");
-                          String _plus_542 = (_plus_541 + Integer.valueOf(rExecutor));
-                          String _plus_543 = (_plus_542 + " \'");
-                          pathInAggregated_49 = _plus_543;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_49);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getExecutor2().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                      DSLMonitor _monitor_9 = ((DSLRuleExecutor)r).getMonitor();
-                      boolean _tripleNotEquals_90 = (_monitor_9 != null);
-                      if (_tripleNotEquals_90) {
-                        String pathInAggregated_50 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getMonitor().getName());
-                        if ((pathInAggregated_50 != null)) {
-                          int _length_60 = pathInAggregated_50.length();
-                          int _minus_60 = (_length_60 - 1);
-                          pathInAggregated_50 = pathInAggregated_50.substring(0, _minus_60);
-                          String _get_166 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_544 = (pathInAggregated_50 + _get_166);
-                          String _plus_545 = (_plus_544 + "/@aggregated.");
-                          String _plus_546 = (_plus_545 + Integer.valueOf(rExecutor));
-                          String _plus_547 = (_plus_546 + " \'");
-                          pathInAggregated_50 = _plus_547;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_50);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getMonitor().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                      DSLAnalyzer _analyzer_9 = ((DSLRuleExecutor)r).getAnalyzer();
-                      boolean _tripleNotEquals_91 = (_analyzer_9 != null);
-                      if (_tripleNotEquals_91) {
-                        String pathInAggregated_51 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
-                        if ((pathInAggregated_51 != null)) {
-                          int _length_61 = pathInAggregated_51.length();
-                          int _minus_61 = (_length_61 - 1);
-                          pathInAggregated_51 = pathInAggregated_51.substring(0, _minus_61);
-                          String _get_167 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_548 = (pathInAggregated_51 + _get_167);
-                          String _plus_549 = (_plus_548 + "/@aggregated.");
-                          String _plus_550 = (_plus_549 + Integer.valueOf(rExecutor));
-                          String _plus_551 = (_plus_550 + " \'");
-                          pathInAggregated_51 = _plus_551;
-                          this.inAggregatedPath.replace(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_51);
-                        } else {
-                          this.inAggregatedPath.put(((DSLRuleExecutor)r).getAnalyzer().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
-                        }
-                      }
-                    }
-                    String aggregated_4 = this.aggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                    if ((aggregated_4 != null)) {
-                      DSLPlanner _planner_10 = ((DSLRuleExecutor)r).getPlanner();
-                      boolean _tripleNotEquals_92 = (_planner_10 != null);
-                      if (_tripleNotEquals_92) {
-                        String _get_168 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                        String _plus_552 = ((aggregated_4 + "<aggregated from=\'") + _get_168);
-                        String _plus_553 = (_plus_552 + "\' to=\'");
-                        String _get_169 = this.structureElementPath.get(((DSLRuleExecutor)r).getPlanner().getName());
-                        String _plus_554 = (_plus_553 + _get_169);
-                        String _plus_555 = (_plus_554 + "\'");
-                        String _plus_556 = (_plus_555 + relation);
-                        aggregated_4 = _plus_556;
-                      } else {
-                        DSLKnowledge _knowledge_14 = ((DSLRuleExecutor)r).getKnowledge();
-                        boolean _tripleNotEquals_93 = (_knowledge_14 != null);
-                        if (_tripleNotEquals_93) {
-                          String _get_170 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_557 = ((aggregated_4 + "<aggregated from=\'") + _get_170);
-                          String _plus_558 = (_plus_557 + "\' to=\'");
-                          String _get_171 = this.structureElementPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
-                          String _plus_559 = (_plus_558 + _get_171);
-                          String _plus_560 = (_plus_559 + "\'");
-                          String _plus_561 = (_plus_560 + relation);
-                          aggregated_4 = _plus_561;
-                        } else {
-                          DSLEffector _effector_2 = ((DSLRuleExecutor)r).getEffector();
-                          boolean _tripleNotEquals_94 = (_effector_2 != null);
-                          if (_tripleNotEquals_94) {
-                            String _get_172 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                            String _plus_562 = ((aggregated_4 + "<aggregated from=\'") + _get_172);
-                            String _plus_563 = (_plus_562 + "\' to=\'");
-                            String _get_173 = this.structureElementPath.get(((DSLRuleExecutor)r).getEffector().getName());
-                            String _plus_564 = (_plus_563 + _get_173);
-                            String _plus_565 = (_plus_564 + "\'");
-                            String _plus_566 = (_plus_565 + relation);
-                            aggregated_4 = _plus_566;
-                          } else {
-                            DSLExecutor _executor2_2 = ((DSLRuleExecutor)r).getExecutor2();
-                            boolean _tripleNotEquals_95 = (_executor2_2 != null);
-                            if (_tripleNotEquals_95) {
-                              String _get_174 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                              String _plus_567 = ((aggregated_4 + "<aggregated from=\'") + _get_174);
-                              String _plus_568 = (_plus_567 + "\' to=\'");
-                              String _get_175 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                              String _plus_569 = (_plus_568 + _get_175);
-                              String _plus_570 = (_plus_569 + "\'");
-                              String _plus_571 = (_plus_570 + relation);
-                              aggregated_4 = _plus_571;
-                            } else {
-                              DSLMonitor _monitor_10 = ((DSLRuleExecutor)r).getMonitor();
-                              boolean _tripleNotEquals_96 = (_monitor_10 != null);
-                              if (_tripleNotEquals_96) {
-                                String _get_176 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                                String _plus_572 = ((aggregated_4 + "<aggregated from=\'") + _get_176);
-                                String _plus_573 = (_plus_572 + "\' to=\'");
-                                String _get_177 = this.structureElementPath.get(((DSLRuleExecutor)r).getMonitor().getName());
-                                String _plus_574 = (_plus_573 + _get_177);
-                                String _plus_575 = (_plus_574 + "\'");
-                                String _plus_576 = (_plus_575 + relation);
-                                aggregated_4 = _plus_576;
+                              DSLAlternative _shalt_2 = ((DSLRuleAnalyzer)r).getShalt();
+                              boolean _tripleNotEquals_47 = (_shalt_2 != null);
+                              if (_tripleNotEquals_47) {
+                                String _get_86 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                                String _plus_287 = ((aggregated_2 + "<aggregated from=\'") + _get_86);
+                                String _plus_288 = (_plus_287 + "\' to=\'");
+                                String _get_87 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
+                                String _plus_289 = (_plus_288 + _get_87);
+                                String _plus_290 = (_plus_289 + "\'");
+                                String _plus_291 = (_plus_290 + relation);
+                                aggregated_2 = _plus_291;
                               } else {
-                                DSLAnalyzer _analyzer_10 = ((DSLRuleExecutor)r).getAnalyzer();
-                                boolean _tripleNotEquals_97 = (_analyzer_10 != null);
-                                if (_tripleNotEquals_97) {
-                                  String _get_178 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                                  String _plus_577 = ((aggregated_4 + "<aggregated from=\'") + _get_178);
-                                  String _plus_578 = (_plus_577 + "\' to=\'");
-                                  String _get_179 = this.structureElementPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
-                                  String _plus_579 = (_plus_578 + _get_179);
-                                  String _plus_580 = (_plus_579 + "\'");
-                                  String _plus_581 = (_plus_580 + relation);
-                                  aggregated_4 = _plus_581;
+                                DSLExecutor _executor_6 = ((DSLRuleAnalyzer)r).getExecutor();
+                                boolean _tripleNotEquals_48 = (_executor_6 != null);
+                                if (_tripleNotEquals_48) {
+                                  String _get_88 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                                  String _plus_292 = ((aggregated_2 + "<aggregated from=\'") + _get_88);
+                                  String _plus_293 = (_plus_292 + "\' to=\'");
+                                  String _get_89 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
+                                  String _plus_294 = (_plus_293 + _get_89);
+                                  String _plus_295 = (_plus_294 + "\'");
+                                  String _plus_296 = (_plus_295 + relation);
+                                  aggregated_2 = _plus_296;
                                 }
                               }
                             }
                           }
                         }
                       }
-                      this.aggregatedPath.replace(((DSLRuleExecutor)r).getExecutor().getName(), aggregated_4);
+                    }
+                    this.aggregatedPath.replace(((DSLRuleAnalyzer)r).getAnalyzer().getName(), aggregated_2);
+                  } else {
+                    DSLMonitor _monitor_3 = ((DSLRuleAnalyzer)r).getMonitor();
+                    boolean _tripleNotEquals_49 = (_monitor_3 != null);
+                    if (_tripleNotEquals_49) {
+                      String _get_90 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                      String _plus_297 = ("<aggregated from=\'" + _get_90);
+                      String _plus_298 = (_plus_297 + "\' to=\'");
+                      String _get_91 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                      String _plus_299 = (_plus_298 + _get_91);
+                      String _plus_300 = (_plus_299 + "\'");
+                      String _plus_301 = (_plus_300 + relation);
+                      aggregated_2 = _plus_301;
                     } else {
-                      DSLPlanner _planner_11 = ((DSLRuleExecutor)r).getPlanner();
-                      boolean _tripleNotEquals_98 = (_planner_11 != null);
-                      if (_tripleNotEquals_98) {
-                        String _get_180 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                        String _plus_582 = ("<aggregated from=\'" + _get_180);
-                        String _plus_583 = (_plus_582 + "\' to=\'");
-                        String _get_181 = this.structureElementPath.get(((DSLRuleExecutor)r).getPlanner().getName());
-                        String _plus_584 = (_plus_583 + _get_181);
-                        String _plus_585 = (_plus_584 + "\'");
-                        String _plus_586 = (_plus_585 + relation);
-                        aggregated_4 = _plus_586;
+                      DSLKnowledge _knowledge_7 = ((DSLRuleAnalyzer)r).getKnowledge();
+                      boolean _tripleNotEquals_50 = (_knowledge_7 != null);
+                      if (_tripleNotEquals_50) {
+                        String _get_92 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                        String _plus_302 = ("<aggregated from=\'" + _get_92);
+                        String _plus_303 = (_plus_302 + "\' to=\'");
+                        String _get_93 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getKnowledge().getName());
+                        String _plus_304 = (_plus_303 + _get_93);
+                        String _plus_305 = (_plus_304 + "\'");
+                        String _plus_306 = (_plus_305 + relation);
+                        aggregated_2 = _plus_306;
                       } else {
-                        DSLKnowledge _knowledge_15 = ((DSLRuleExecutor)r).getKnowledge();
-                        boolean _tripleNotEquals_99 = (_knowledge_15 != null);
-                        if (_tripleNotEquals_99) {
-                          String _get_182 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                          String _plus_587 = ("<aggregated from=\'" + _get_182);
-                          String _plus_588 = (_plus_587 + "\' to=\'");
-                          String _get_183 = this.structureElementPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
-                          String _plus_589 = (_plus_588 + _get_183);
-                          String _plus_590 = (_plus_589 + "\'");
-                          String _plus_591 = (_plus_590 + relation);
-                          aggregated_4 = _plus_591;
+                        DSLPlanner _planner_7 = ((DSLRuleAnalyzer)r).getPlanner();
+                        boolean _tripleNotEquals_51 = (_planner_7 != null);
+                        if (_tripleNotEquals_51) {
+                          String _get_94 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                          String _plus_307 = ("<aggregated from=\'" + _get_94);
+                          String _plus_308 = (_plus_307 + "\' to=\'");
+                          String _get_95 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getPlanner().getName());
+                          String _plus_309 = (_plus_308 + _get_95);
+                          String _plus_310 = (_plus_309 + "\'");
+                          String _plus_311 = (_plus_310 + relation);
+                          aggregated_2 = _plus_311;
                         } else {
-                          DSLEffector _effector_3 = ((DSLRuleExecutor)r).getEffector();
-                          boolean _tripleNotEquals_100 = (_effector_3 != null);
-                          if (_tripleNotEquals_100) {
-                            String _get_184 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                            String _plus_592 = ("<aggregated from=\'" + _get_184);
-                            String _plus_593 = (_plus_592 + "\' to=\'");
-                            String _get_185 = this.structureElementPath.get(((DSLRuleExecutor)r).getEffector().getName());
-                            String _plus_594 = (_plus_593 + _get_185);
-                            String _plus_595 = (_plus_594 + "\'");
-                            String _plus_596 = (_plus_595 + relation);
-                            aggregated_4 = _plus_596;
+                          DSLReferenceInput _rreference_3 = ((DSLRuleAnalyzer)r).getRreference();
+                          boolean _tripleNotEquals_52 = (_rreference_3 != null);
+                          if (_tripleNotEquals_52) {
+                            String _get_96 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                            String _plus_312 = ("<aggregated from=\'" + _get_96);
+                            String _plus_313 = (_plus_312 + "\' to=\'");
+                            String _get_97 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getRreference().getName());
+                            String _plus_314 = (_plus_313 + _get_97);
+                            String _plus_315 = (_plus_314 + "\'");
+                            String _plus_316 = (_plus_315 + relation);
+                            aggregated_2 = _plus_316;
                           } else {
-                            DSLExecutor _executor2_3 = ((DSLRuleExecutor)r).getExecutor2();
-                            boolean _tripleNotEquals_101 = (_executor2_3 != null);
-                            if (_tripleNotEquals_101) {
-                              String _get_186 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                              String _plus_597 = ("<aggregated from=\'" + _get_186);
-                              String _plus_598 = (_plus_597 + "\' to=\'");
-                              String _get_187 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
-                              String _plus_599 = (_plus_598 + _get_187);
-                              String _plus_600 = (_plus_599 + "\'");
-                              String _plus_601 = (_plus_600 + relation);
-                              aggregated_4 = _plus_601;
+                            DSLAnalyzer _analyzer2_3 = ((DSLRuleAnalyzer)r).getAnalyzer2();
+                            boolean _tripleNotEquals_53 = (_analyzer2_3 != null);
+                            if (_tripleNotEquals_53) {
+                              String _get_98 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                              String _plus_317 = ("<aggregated from=\'" + _get_98);
+                              String _plus_318 = (_plus_317 + "\' to=\'");
+                              String _get_99 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer2().getName());
+                              String _plus_319 = (_plus_318 + _get_99);
+                              String _plus_320 = (_plus_319 + "\'");
+                              String _plus_321 = (_plus_320 + relation);
+                              aggregated_2 = _plus_321;
                             } else {
-                              DSLMonitor _monitor_11 = ((DSLRuleExecutor)r).getMonitor();
-                              boolean _tripleNotEquals_102 = (_monitor_11 != null);
-                              if (_tripleNotEquals_102) {
-                                String _get_188 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                                String _plus_602 = ("<aggregated from=\'" + _get_188);
-                                String _plus_603 = (_plus_602 + "\' to=\'");
-                                String _get_189 = this.structureElementPath.get(((DSLRuleExecutor)r).getMonitor().getName());
-                                String _plus_604 = (_plus_603 + _get_189);
-                                String _plus_605 = (_plus_604 + "\'");
-                                String _plus_606 = (_plus_605 + relation);
-                                aggregated_4 = _plus_606;
+                              DSLAlternative _shalt_3 = ((DSLRuleAnalyzer)r).getShalt();
+                              boolean _tripleNotEquals_54 = (_shalt_3 != null);
+                              if (_tripleNotEquals_54) {
+                                String _get_100 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                                String _plus_322 = ("<aggregated from=\'" + _get_100);
+                                String _plus_323 = (_plus_322 + "\' to=\'");
+                                String _get_101 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getShalt().getName());
+                                String _plus_324 = (_plus_323 + _get_101);
+                                String _plus_325 = (_plus_324 + "\'");
+                                String _plus_326 = (_plus_325 + relation);
+                                aggregated_2 = _plus_326;
                               } else {
-                                DSLAnalyzer _analyzer_11 = ((DSLRuleExecutor)r).getAnalyzer();
-                                boolean _tripleNotEquals_103 = (_analyzer_11 != null);
-                                if (_tripleNotEquals_103) {
-                                  String _get_190 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
-                                  String _plus_607 = ("<aggregated from=\'" + _get_190);
-                                  String _plus_608 = (_plus_607 + "\' to=\'");
-                                  String _get_191 = this.structureElementPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
-                                  String _plus_609 = (_plus_608 + _get_191);
-                                  String _plus_610 = (_plus_609 + "\'");
-                                  String _plus_611 = (_plus_610 + relation);
-                                  aggregated_4 = _plus_611;
+                                DSLExecutor _executor_7 = ((DSLRuleAnalyzer)r).getExecutor();
+                                boolean _tripleNotEquals_55 = (_executor_7 != null);
+                                if (_tripleNotEquals_55) {
+                                  String _get_102 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getAnalyzer().getName());
+                                  String _plus_327 = ("<aggregated from=\'" + _get_102);
+                                  String _plus_328 = (_plus_327 + "\' to=\'");
+                                  String _get_103 = this.structureElementPath.get(((DSLRuleAnalyzer)r).getExecutor().getName());
+                                  String _plus_329 = (_plus_328 + _get_103);
+                                  String _plus_330 = (_plus_329 + "\'");
+                                  String _plus_331 = (_plus_330 + relation);
+                                  aggregated_2 = _plus_331;
                                 }
                               }
                             }
                           }
                         }
                       }
-                      this.aggregatedPath.put(((DSLRuleExecutor)r).getExecutor().getName(), aggregated_4);
                     }
-                  } else {
-                    if ((r instanceof DSLRuleMO)) {
-                      String pathAggregated_5 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
-                      if ((pathAggregated_5 != null)) {
-                        int _length_62 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName()).split(Pattern.quote("//")).length;
-                        int _minus_62 = (_length_62 - 1);
-                        rMO = _minus_62;
-                        int _length_63 = pathAggregated_5.length();
-                        int _minus_63 = (_length_63 - 1);
-                        pathAggregated_5 = pathAggregated_5.substring(0, _minus_63);
-                        String _get_192 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                        String _plus_612 = (pathAggregated_5 + _get_192);
-                        String _plus_613 = (_plus_612 + "/@aggregated.");
-                        String _plus_614 = (_plus_613 + Integer.valueOf(rMO));
-                        String _plus_615 = (_plus_614 + " \'");
-                        pathAggregated_5 = _plus_615;
-                        this.outAggregatedPath.replace(((DSLRuleMO)r).getSensor().getName(), pathAggregated_5);
-                        DSLMeasuredOutput _measured = ((DSLRuleMO)r).getMeasured();
-                        boolean _tripleNotEquals_104 = (_measured != null);
-                        if (_tripleNotEquals_104) {
-                          String pathInAggregated_52 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
-                          if ((pathInAggregated_52 != null)) {
-                            int _length_64 = pathInAggregated_52.length();
-                            int _minus_64 = (_length_64 - 1);
-                            pathInAggregated_52 = pathInAggregated_52.substring(0, _minus_64);
-                            String _get_193 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                            String _plus_616 = (pathInAggregated_52 + _get_193);
-                            String _plus_617 = (_plus_616 + "/@aggregated.");
-                            String _plus_618 = (_plus_617 + Integer.valueOf(rMO));
-                            String _plus_619 = (_plus_618 + " \'");
-                            pathInAggregated_52 = _plus_619;
-                            this.inAggregatedPath.replace(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_52);
-                          } else {
-                            String _get_194 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                            String _plus_620 = ("inAggregated=\'" + _get_194);
-                            String _plus_621 = (_plus_620 + "/@aggregated.");
-                            String _plus_622 = (_plus_621 + Integer.valueOf(rMO));
-                            String _plus_623 = (_plus_622 + " \'");
-                            pathInAggregated_52 = _plus_623;
-                            this.inAggregatedPath.put(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_52);
-                          }
-                        }
-                      } else {
-                        String _get_195 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                        String _plus_624 = ("outAggregated=\'" + _get_195);
-                        String _plus_625 = (_plus_624 + "/@aggregated.");
-                        String _plus_626 = (_plus_625 + Integer.valueOf(rMO));
-                        String _plus_627 = (_plus_626 + " \'");
-                        pathAggregated_5 = _plus_627;
-                        this.outAggregatedPath.put(((DSLRuleMO)r).getSensor().getName(), pathAggregated_5);
-                        DSLMeasuredOutput _measured_1 = ((DSLRuleMO)r).getMeasured();
-                        boolean _tripleNotEquals_105 = (_measured_1 != null);
-                        if (_tripleNotEquals_105) {
-                          String pathInAggregated_53 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
-                          if ((pathInAggregated_53 != null)) {
-                            int _length_65 = pathInAggregated_53.length();
-                            int _minus_65 = (_length_65 - 1);
-                            pathInAggregated_53 = pathInAggregated_53.substring(0, _minus_65);
-                            String _get_196 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                            String _plus_628 = (pathInAggregated_53 + _get_196);
-                            String _plus_629 = (_plus_628 + "/@aggregated.");
-                            String _plus_630 = (_plus_629 + Integer.valueOf(rMO));
-                            String _plus_631 = (_plus_630 + " \'");
-                            pathInAggregated_53 = _plus_631;
-                            this.inAggregatedPath.replace(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_53);
-                          } else {
-                            this.inAggregatedPath.put(((DSLRuleMO)r).getMeasured().getName(), pathAggregated_5.replaceFirst("outAggregated", "inAggregated"));
-                          }
+                    this.aggregatedPath.put(((DSLRuleAnalyzer)r).getAnalyzer().getName(), aggregated_2);
+                  }
+                } else {
+                  if ((r instanceof DSLRulePlanner)) {
+                    String pathAggregated_3 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                    if ((pathAggregated_3 != null)) {
+                      int _length_34 = this.outAggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName()).split(Pattern.quote("//")).length;
+                      int _minus_34 = (_length_34 - 1);
+                      rPlanner = _minus_34;
+                      int _length_35 = pathAggregated_3.length();
+                      int _minus_35 = (_length_35 - 1);
+                      pathAggregated_3 = pathAggregated_3.substring(0, _minus_35);
+                      String _get_104 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                      String _plus_332 = (pathAggregated_3 + _get_104);
+                      String _plus_333 = (_plus_332 + "/@aggregated.");
+                      String _plus_334 = (_plus_333 + Integer.valueOf(rPlanner));
+                      String _plus_335 = (_plus_334 + " \'");
+                      pathAggregated_3 = _plus_335;
+                      this.outAggregatedPath.replace(((DSLRulePlanner)r).getPlanner().getName(), pathAggregated_3);
+                      DSLAnalyzer _analyzer_4 = ((DSLRulePlanner)r).getAnalyzer();
+                      boolean _tripleNotEquals_56 = (_analyzer_4 != null);
+                      if (_tripleNotEquals_56) {
+                        String pathInAggregated_28 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
+                        if ((pathInAggregated_28 != null)) {
+                          int _length_36 = pathInAggregated_28.length();
+                          int _minus_36 = (_length_36 - 1);
+                          pathInAggregated_28 = pathInAggregated_28.substring(0, _minus_36);
+                          String _get_105 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_336 = (pathInAggregated_28 + _get_105);
+                          String _plus_337 = (_plus_336 + "/@aggregated.");
+                          String _plus_338 = (_plus_337 + Integer.valueOf(rPlanner));
+                          String _plus_339 = (_plus_338 + " \'");
+                          pathInAggregated_28 = _plus_339;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_28);
+                        } else {
+                          String _get_106 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_340 = ("inAggregated=\'" + _get_106);
+                          String _plus_341 = (_plus_340 + "/@aggregated.");
+                          String _plus_342 = (_plus_341 + Integer.valueOf(rPlanner));
+                          String _plus_343 = (_plus_342 + " \'");
+                          pathInAggregated_28 = _plus_343;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_28);
                         }
                       }
-                      String aggregated_5 = this.aggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
-                      if ((aggregated_5 != null)) {
-                        DSLSensor _sensor_4 = ((DSLRuleMO)r).getSensor();
-                        boolean _tripleNotEquals_106 = (_sensor_4 != null);
-                        if (_tripleNotEquals_106) {
-                          String _get_197 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                          String _plus_632 = ((aggregated_5 + "<aggregated from=\'") + _get_197);
-                          String _plus_633 = (_plus_632 + "\' to=\'");
-                          String _get_198 = this.structureElementPath.get(((DSLRuleMO)r).getMeasured().getName());
-                          String _plus_634 = (_plus_633 + _get_198);
-                          String _plus_635 = (_plus_634 + "\'");
-                          String _plus_636 = (_plus_635 + relation);
-                          aggregated_5 = _plus_636;
+                      DSLKnowledge _knowledge_8 = ((DSLRulePlanner)r).getKnowledge();
+                      boolean _tripleNotEquals_57 = (_knowledge_8 != null);
+                      if (_tripleNotEquals_57) {
+                        String pathInAggregated_29 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
+                        if ((pathInAggregated_29 != null)) {
+                          int _length_37 = pathInAggregated_29.length();
+                          int _minus_37 = (_length_37 - 1);
+                          pathInAggregated_29 = pathInAggregated_29.substring(0, _minus_37);
+                          String _get_107 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_344 = (pathInAggregated_29 + _get_107);
+                          String _plus_345 = (_plus_344 + "/@aggregated.");
+                          String _plus_346 = (_plus_345 + Integer.valueOf(rPlanner));
+                          String _plus_347 = (_plus_346 + " \'");
+                          pathInAggregated_29 = _plus_347;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_29);
+                        } else {
+                          String _get_108 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_348 = ("inAggregated=\'" + _get_108);
+                          String _plus_349 = (_plus_348 + "/@aggregated.");
+                          String _plus_350 = (_plus_349 + Integer.valueOf(rPlanner));
+                          String _plus_351 = (_plus_350 + " \'");
+                          pathInAggregated_29 = _plus_351;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_29);
                         }
-                        this.aggregatedPath.replace(((DSLRuleMO)r).getSensor().getName(), aggregated_5);
-                      } else {
-                        DSLSensor _sensor_5 = ((DSLRuleMO)r).getSensor();
-                        boolean _tripleNotEquals_107 = (_sensor_5 != null);
-                        if (_tripleNotEquals_107) {
-                          String _get_199 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
-                          String _plus_637 = ("<aggregated from=\'" + _get_199);
-                          String _plus_638 = (_plus_637 + "\' to=\'");
-                          String _get_200 = this.structureElementPath.get(((DSLRuleMO)r).getMeasured().getName());
-                          String _plus_639 = (_plus_638 + _get_200);
-                          String _plus_640 = (_plus_639 + "\'");
-                          String _plus_641 = (_plus_640 + relation);
-                          aggregated_5 = _plus_641;
+                      }
+                      DSLExecutor _executor_8 = ((DSLRulePlanner)r).getExecutor();
+                      boolean _tripleNotEquals_58 = (_executor_8 != null);
+                      if (_tripleNotEquals_58) {
+                        String pathInAggregated_30 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
+                        if ((pathInAggregated_30 != null)) {
+                          int _length_38 = pathInAggregated_30.length();
+                          int _minus_38 = (_length_38 - 1);
+                          pathInAggregated_30 = pathInAggregated_30.substring(0, _minus_38);
+                          String _get_109 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_352 = (pathInAggregated_30 + _get_109);
+                          String _plus_353 = (_plus_352 + "/@aggregated.");
+                          String _plus_354 = (_plus_353 + Integer.valueOf(rPlanner));
+                          String _plus_355 = (_plus_354 + " \'");
+                          pathInAggregated_30 = _plus_355;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_30);
+                        } else {
+                          String _get_110 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_356 = ("inAggregated=\'" + _get_110);
+                          String _plus_357 = (_plus_356 + "/@aggregated.");
+                          String _plus_358 = (_plus_357 + Integer.valueOf(rPlanner));
+                          String _plus_359 = (_plus_358 + " \'");
+                          pathInAggregated_30 = _plus_359;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_30);
                         }
-                        this.aggregatedPath.put(((DSLRuleMO)r).getSensor().getName(), aggregated_5);
+                      }
+                      DSLPlanner _planner2 = ((DSLRulePlanner)r).getPlanner2();
+                      boolean _tripleNotEquals_59 = (_planner2 != null);
+                      if (_tripleNotEquals_59) {
+                        String pathInAggregated_31 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
+                        if ((pathInAggregated_31 != null)) {
+                          int _length_39 = pathInAggregated_31.length();
+                          int _minus_39 = (_length_39 - 1);
+                          pathInAggregated_31 = pathInAggregated_31.substring(0, _minus_39);
+                          String _get_111 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_360 = (pathInAggregated_31 + _get_111);
+                          String _plus_361 = (_plus_360 + "/@aggregated.");
+                          String _plus_362 = (_plus_361 + Integer.valueOf(rPlanner));
+                          String _plus_363 = (_plus_362 + " \'");
+                          pathInAggregated_31 = _plus_363;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_31);
+                        } else {
+                          String _get_112 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_364 = ("inAggregated=\'" + _get_112);
+                          String _plus_365 = (_plus_364 + "/@aggregated.");
+                          String _plus_366 = (_plus_365 + Integer.valueOf(rPlanner));
+                          String _plus_367 = (_plus_366 + " \'");
+                          pathInAggregated_31 = _plus_367;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_31);
+                        }
+                      }
+                      DSLAlternative _shalt_4 = ((DSLRulePlanner)r).getShalt();
+                      boolean _tripleNotEquals_60 = (_shalt_4 != null);
+                      if (_tripleNotEquals_60) {
+                        String pathInAggregated_32 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
+                        if ((pathInAggregated_32 != null)) {
+                          int _length_40 = pathInAggregated_32.length();
+                          int _minus_40 = (_length_40 - 1);
+                          pathInAggregated_32 = pathInAggregated_32.substring(0, _minus_40);
+                          String _get_113 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_368 = (pathInAggregated_32 + _get_113);
+                          String _plus_369 = (_plus_368 + "/@aggregated.");
+                          String _plus_370 = (_plus_369 + Integer.valueOf(rPlanner));
+                          String _plus_371 = (_plus_370 + " \'");
+                          pathInAggregated_32 = _plus_371;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_32);
+                        } else {
+                          String _get_114 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_372 = ("inAggregated=\'" + _get_114);
+                          String _plus_373 = (_plus_372 + "/@aggregated.");
+                          String _plus_374 = (_plus_373 + Integer.valueOf(rPlanner));
+                          String _plus_375 = (_plus_374 + " \'");
+                          pathInAggregated_32 = _plus_375;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_32);
+                        }
+                      }
+                      DSLMonitor _monitor_4 = ((DSLRulePlanner)r).getMonitor();
+                      boolean _tripleNotEquals_61 = (_monitor_4 != null);
+                      if (_tripleNotEquals_61) {
+                        String pathInAggregated_33 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
+                        if ((pathInAggregated_33 != null)) {
+                          int _length_41 = pathInAggregated_33.length();
+                          int _minus_41 = (_length_41 - 1);
+                          pathInAggregated_33 = pathInAggregated_33.substring(0, _minus_41);
+                          String _get_115 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_376 = (pathInAggregated_33 + _get_115);
+                          String _plus_377 = (_plus_376 + "/@aggregated.");
+                          String _plus_378 = (_plus_377 + Integer.valueOf(rPlanner));
+                          String _plus_379 = (_plus_378 + " \'");
+                          pathInAggregated_33 = _plus_379;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_33);
+                        } else {
+                          String _get_116 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_380 = ("inAggregated=\'" + _get_116);
+                          String _plus_381 = (_plus_380 + "/@aggregated.");
+                          String _plus_382 = (_plus_381 + Integer.valueOf(rPlanner));
+                          String _plus_383 = (_plus_382 + " \'");
+                          pathInAggregated_33 = _plus_383;
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_33);
+                        }
                       }
                     } else {
-                      if ((r instanceof DSLRuleMController)) {
-                        String pathAggregated_6 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1());
-                        if ((pathAggregated_6 != null)) {
-                          int _length_66 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName()).split(Pattern.quote("//")).length;
-                          int _minus_66 = (_length_66 - 1);
-                          rMController = _minus_66;
-                          int _length_67 = pathAggregated_6.length();
-                          int _minus_67 = (_length_67 - 1);
-                          pathAggregated_6 = pathAggregated_6.substring(0, _minus_67);
-                          String _get_201 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                          String _plus_642 = (pathAggregated_6 + _get_201);
-                          String _plus_643 = (_plus_642 + "/@aggregated.");
-                          String _plus_644 = (_plus_643 + Integer.valueOf(rMController));
-                          String _plus_645 = (_plus_644 + " \'");
-                          pathAggregated_6 = _plus_645;
-                          this.outAggregatedPath.replace(((DSLRuleMController)r).getMcontroller1().getName(), pathAggregated_6);
-                          DSLManagerController _mcontroller2 = ((DSLRuleMController)r).getMcontroller2();
-                          boolean _tripleNotEquals_108 = (_mcontroller2 != null);
-                          if (_tripleNotEquals_108) {
-                            String pathInAggregated_54 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
-                            if ((pathInAggregated_54 != null)) {
-                              int _length_68 = pathInAggregated_54.length();
-                              int _minus_68 = (_length_68 - 1);
-                              pathInAggregated_54 = pathInAggregated_54.substring(0, _minus_68);
-                              String _get_202 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                              String _plus_646 = (pathInAggregated_54 + _get_202);
-                              String _plus_647 = (_plus_646 + "/@aggregated.");
-                              String _plus_648 = (_plus_647 + Integer.valueOf(rMController));
-                              String _plus_649 = (_plus_648 + " \'");
-                              pathInAggregated_54 = _plus_649;
-                              this.inAggregatedPath.replace(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_54);
-                            } else {
-                              String _get_203 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                              String _plus_650 = ("inAggregated=\'" + _get_203);
-                              String _plus_651 = (_plus_650 + "/@aggregated.");
-                              String _plus_652 = (_plus_651 + Integer.valueOf(rMController));
-                              String _plus_653 = (_plus_652 + " \'");
-                              pathInAggregated_54 = _plus_653;
-                              this.inAggregatedPath.put(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_54);
-                            }
-                          }
+                      String _get_117 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                      String _plus_384 = ("outAggregated=\'" + _get_117);
+                      String _plus_385 = (_plus_384 + "/@aggregated.");
+                      String _plus_386 = (_plus_385 + Integer.valueOf(rPlanner));
+                      String _plus_387 = (_plus_386 + " \'");
+                      pathAggregated_3 = _plus_387;
+                      this.outAggregatedPath.put(((DSLRulePlanner)r).getPlanner().getName(), pathAggregated_3);
+                      DSLAnalyzer _analyzer_5 = ((DSLRulePlanner)r).getAnalyzer();
+                      boolean _tripleNotEquals_62 = (_analyzer_5 != null);
+                      if (_tripleNotEquals_62) {
+                        String pathInAggregated_34 = this.inAggregatedPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
+                        if ((pathInAggregated_34 != null)) {
+                          int _length_42 = pathInAggregated_34.length();
+                          int _minus_42 = (_length_42 - 1);
+                          pathInAggregated_34 = pathInAggregated_34.substring(0, _minus_42);
+                          String _get_118 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_388 = (pathInAggregated_34 + _get_118);
+                          String _plus_389 = (_plus_388 + "/@aggregated.");
+                          String _plus_390 = (_plus_389 + Integer.valueOf(rPlanner));
+                          String _plus_391 = (_plus_390 + " \'");
+                          pathInAggregated_34 = _plus_391;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getAnalyzer().getName(), pathInAggregated_34);
                         } else {
-                          String _get_204 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                          String _plus_654 = ("outAggregated=\'" + _get_204);
-                          String _plus_655 = (_plus_654 + "/@aggregated.");
-                          String _plus_656 = (_plus_655 + Integer.valueOf(rMController));
-                          String _plus_657 = (_plus_656 + " \'");
-                          pathAggregated_6 = _plus_657;
-                          this.outAggregatedPath.put(((DSLRuleMController)r).getMcontroller1().getName(), pathAggregated_6);
-                          DSLManagerController _mcontroller2_1 = ((DSLRuleMController)r).getMcontroller2();
-                          boolean _tripleNotEquals_109 = (_mcontroller2_1 != null);
-                          if (_tripleNotEquals_109) {
-                            String pathInAggregated_55 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
-                            if ((pathInAggregated_55 != null)) {
-                              int _length_69 = pathInAggregated_55.length();
-                              int _minus_69 = (_length_69 - 1);
-                              pathInAggregated_55 = pathInAggregated_55.substring(0, _minus_69);
-                              String _get_205 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                              String _plus_658 = (pathInAggregated_55 + _get_205);
-                              String _plus_659 = (_plus_658 + "/@aggregated.");
-                              String _plus_660 = (_plus_659 + Integer.valueOf(rMController));
-                              String _plus_661 = (_plus_660 + " \'");
-                              pathInAggregated_55 = _plus_661;
-                              this.inAggregatedPath.replace(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_55);
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getAnalyzer().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                      DSLKnowledge _knowledge_9 = ((DSLRulePlanner)r).getKnowledge();
+                      boolean _tripleNotEquals_63 = (_knowledge_9 != null);
+                      if (_tripleNotEquals_63) {
+                        String pathInAggregated_35 = this.inAggregatedPath.get(((DSLRulePlanner)r).getKnowledge().getName());
+                        if ((pathInAggregated_35 != null)) {
+                          int _length_43 = pathInAggregated_35.length();
+                          int _minus_43 = (_length_43 - 1);
+                          pathInAggregated_35 = pathInAggregated_35.substring(0, _minus_43);
+                          String _get_119 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_392 = (pathInAggregated_35 + _get_119);
+                          String _plus_393 = (_plus_392 + "/@aggregated.");
+                          String _plus_394 = (_plus_393 + Integer.valueOf(rPlanner));
+                          String _plus_395 = (_plus_394 + " \'");
+                          pathInAggregated_35 = _plus_395;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getKnowledge().getName(), pathInAggregated_35);
+                        } else {
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getKnowledge().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                      DSLExecutor _executor_9 = ((DSLRulePlanner)r).getExecutor();
+                      boolean _tripleNotEquals_64 = (_executor_9 != null);
+                      if (_tripleNotEquals_64) {
+                        String pathInAggregated_36 = this.inAggregatedPath.get(((DSLRulePlanner)r).getExecutor().getName());
+                        if ((pathInAggregated_36 != null)) {
+                          int _length_44 = pathInAggregated_36.length();
+                          int _minus_44 = (_length_44 - 1);
+                          pathInAggregated_36 = pathInAggregated_36.substring(0, _minus_44);
+                          String _get_120 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_396 = (pathInAggregated_36 + _get_120);
+                          String _plus_397 = (_plus_396 + "/@aggregated.");
+                          String _plus_398 = (_plus_397 + Integer.valueOf(rPlanner));
+                          String _plus_399 = (_plus_398 + " \'");
+                          pathInAggregated_36 = _plus_399;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getExecutor().getName(), pathInAggregated_36);
+                        } else {
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getExecutor().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                      DSLPlanner _planner2_1 = ((DSLRulePlanner)r).getPlanner2();
+                      boolean _tripleNotEquals_65 = (_planner2_1 != null);
+                      if (_tripleNotEquals_65) {
+                        String pathInAggregated_37 = this.inAggregatedPath.get(((DSLRulePlanner)r).getPlanner2().getName());
+                        if ((pathInAggregated_37 != null)) {
+                          int _length_45 = pathInAggregated_37.length();
+                          int _minus_45 = (_length_45 - 1);
+                          pathInAggregated_37 = pathInAggregated_37.substring(0, _minus_45);
+                          String _get_121 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_400 = (pathInAggregated_37 + _get_121);
+                          String _plus_401 = (_plus_400 + "/@aggregated.");
+                          String _plus_402 = (_plus_401 + Integer.valueOf(rPlanner));
+                          String _plus_403 = (_plus_402 + " \'");
+                          pathInAggregated_37 = _plus_403;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getPlanner2().getName(), pathInAggregated_37);
+                        } else {
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getPlanner2().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                      DSLAlternative _shalt_5 = ((DSLRulePlanner)r).getShalt();
+                      boolean _tripleNotEquals_66 = (_shalt_5 != null);
+                      if (_tripleNotEquals_66) {
+                        String pathInAggregated_38 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
+                        if ((pathInAggregated_38 != null)) {
+                          int _length_46 = pathInAggregated_38.length();
+                          int _minus_46 = (_length_46 - 1);
+                          pathInAggregated_38 = pathInAggregated_38.substring(0, _minus_46);
+                          String _get_122 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_404 = (pathInAggregated_38 + _get_122);
+                          String _plus_405 = (_plus_404 + "/@aggregated.");
+                          String _plus_406 = (_plus_405 + Integer.valueOf(rPlanner));
+                          String _plus_407 = (_plus_406 + " \'");
+                          pathInAggregated_38 = _plus_407;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getShalt().getName(), pathInAggregated_38);
+                        } else {
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getShalt().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                      DSLMonitor _monitor_5 = ((DSLRulePlanner)r).getMonitor();
+                      boolean _tripleNotEquals_67 = (_monitor_5 != null);
+                      if (_tripleNotEquals_67) {
+                        String pathInAggregated_39 = this.inAggregatedPath.get(((DSLRulePlanner)r).getShalt().getName());
+                        if ((pathInAggregated_39 != null)) {
+                          int _length_47 = pathInAggregated_39.length();
+                          int _minus_47 = (_length_47 - 1);
+                          pathInAggregated_39 = pathInAggregated_39.substring(0, _minus_47);
+                          String _get_123 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_408 = (pathInAggregated_39 + _get_123);
+                          String _plus_409 = (_plus_408 + "/@aggregated.");
+                          String _plus_410 = (_plus_409 + Integer.valueOf(rPlanner));
+                          String _plus_411 = (_plus_410 + " \'");
+                          pathInAggregated_39 = _plus_411;
+                          this.inAggregatedPath.replace(((DSLRulePlanner)r).getMonitor().getName(), pathInAggregated_39);
+                        } else {
+                          this.inAggregatedPath.put(((DSLRulePlanner)r).getMonitor().getName(), pathAggregated_3.replaceFirst("outAggregated", "inAggregated"));
+                        }
+                      }
+                    }
+                    String aggregated_3 = this.aggregatedPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                    if ((aggregated_3 != null)) {
+                      DSLAnalyzer _analyzer_6 = ((DSLRulePlanner)r).getAnalyzer();
+                      boolean _tripleNotEquals_68 = (_analyzer_6 != null);
+                      if (_tripleNotEquals_68) {
+                        String _get_124 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                        String _plus_412 = ((aggregated_3 + "<aggregated from=\'") + _get_124);
+                        String _plus_413 = (_plus_412 + "\' to=\'");
+                        String _get_125 = this.structureElementPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
+                        String _plus_414 = (_plus_413 + _get_125);
+                        String _plus_415 = (_plus_414 + "\'");
+                        String _plus_416 = (_plus_415 + relation);
+                        aggregated_3 = _plus_416;
+                      } else {
+                        DSLKnowledge _knowledge_10 = ((DSLRulePlanner)r).getKnowledge();
+                        boolean _tripleNotEquals_69 = (_knowledge_10 != null);
+                        if (_tripleNotEquals_69) {
+                          String _get_126 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_417 = ((aggregated_3 + "<aggregated from=\'") + _get_126);
+                          String _plus_418 = (_plus_417 + "\' to=\'");
+                          String _get_127 = this.structureElementPath.get(((DSLRulePlanner)r).getKnowledge().getName());
+                          String _plus_419 = (_plus_418 + _get_127);
+                          String _plus_420 = (_plus_419 + "\'");
+                          String _plus_421 = (_plus_420 + relation);
+                          aggregated_3 = _plus_421;
+                        } else {
+                          DSLExecutor _executor_10 = ((DSLRulePlanner)r).getExecutor();
+                          boolean _tripleNotEquals_70 = (_executor_10 != null);
+                          if (_tripleNotEquals_70) {
+                            String _get_128 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                            String _plus_422 = ((aggregated_3 + "<aggregated from=\'") + _get_128);
+                            String _plus_423 = (_plus_422 + "\' to=\'");
+                            String _get_129 = this.structureElementPath.get(((DSLRulePlanner)r).getExecutor().getName());
+                            String _plus_424 = (_plus_423 + _get_129);
+                            String _plus_425 = (_plus_424 + "\'");
+                            String _plus_426 = (_plus_425 + relation);
+                            aggregated_3 = _plus_426;
+                          } else {
+                            DSLPlanner _planner2_2 = ((DSLRulePlanner)r).getPlanner2();
+                            boolean _tripleNotEquals_71 = (_planner2_2 != null);
+                            if (_tripleNotEquals_71) {
+                              String _get_130 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                              String _plus_427 = ((aggregated_3 + "<aggregated from=\'") + _get_130);
+                              String _plus_428 = (_plus_427 + "\' to=\'");
+                              String _get_131 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner2().getName());
+                              String _plus_429 = (_plus_428 + _get_131);
+                              String _plus_430 = (_plus_429 + "\'");
+                              String _plus_431 = (_plus_430 + relation);
+                              aggregated_3 = _plus_431;
                             } else {
-                              this.inAggregatedPath.put(((DSLRuleMController)r).getMcontroller2().getName(), pathAggregated_6.replaceFirst("outAggregated", "inAggregated"));
+                              DSLAlternative _shalt_6 = ((DSLRulePlanner)r).getShalt();
+                              boolean _tripleNotEquals_72 = (_shalt_6 != null);
+                              if (_tripleNotEquals_72) {
+                                String _get_132 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                                String _plus_432 = ((aggregated_3 + "<aggregated from=\'") + _get_132);
+                                String _plus_433 = (_plus_432 + "\' to=\'");
+                                String _get_133 = this.structureElementPath.get(((DSLRulePlanner)r).getShalt().getName());
+                                String _plus_434 = (_plus_433 + _get_133);
+                                String _plus_435 = (_plus_434 + "\'");
+                                String _plus_436 = (_plus_435 + relation);
+                                aggregated_3 = _plus_436;
+                              } else {
+                                DSLMonitor _monitor_6 = ((DSLRulePlanner)r).getMonitor();
+                                boolean _tripleNotEquals_73 = (_monitor_6 != null);
+                                if (_tripleNotEquals_73) {
+                                  String _get_134 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                                  String _plus_437 = ((aggregated_3 + "<aggregated from=\'") + _get_134);
+                                  String _plus_438 = (_plus_437 + "\' to=\'");
+                                  String _get_135 = this.structureElementPath.get(((DSLRulePlanner)r).getMonitor().getName());
+                                  String _plus_439 = (_plus_438 + _get_135);
+                                  String _plus_440 = (_plus_439 + "\'");
+                                  String _plus_441 = (_plus_440 + relation);
+                                  aggregated_3 = _plus_441;
+                                }
+                              }
                             }
                           }
                         }
-                        String aggregated_6 = this.aggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                        if ((aggregated_6 != null)) {
-                          DSLManagerController _mcontroller2_2 = ((DSLRuleMController)r).getMcontroller2();
-                          boolean _tripleNotEquals_110 = (_mcontroller2_2 != null);
-                          if (_tripleNotEquals_110) {
-                            String _get_206 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                            String _plus_662 = ((aggregated_6 + "<aggregated from=\'") + _get_206);
-                            String _plus_663 = (_plus_662 + "\' to=\'");
-                            String _get_207 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller2().getName());
-                            String _plus_664 = (_plus_663 + _get_207);
-                            String _plus_665 = (_plus_664 + "\'");
-                            String _plus_666 = (_plus_665 + relation);
-                            aggregated_6 = _plus_666;
-                          }
-                          this.aggregatedPath.replace(((DSLRuleMController)r).getMcontroller1().getName(), aggregated_6);
+                      }
+                      this.aggregatedPath.replace(((DSLRulePlanner)r).getPlanner().getName(), aggregated_3);
+                    } else {
+                      DSLAnalyzer _analyzer_7 = ((DSLRulePlanner)r).getAnalyzer();
+                      boolean _tripleNotEquals_74 = (_analyzer_7 != null);
+                      if (_tripleNotEquals_74) {
+                        String _get_136 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                        String _plus_442 = ("<aggregated from=\'" + _get_136);
+                        String _plus_443 = (_plus_442 + "\' to=\'");
+                        String _get_137 = this.structureElementPath.get(((DSLRulePlanner)r).getAnalyzer().getName());
+                        String _plus_444 = (_plus_443 + _get_137);
+                        String _plus_445 = (_plus_444 + "\'");
+                        String _plus_446 = (_plus_445 + relation);
+                        aggregated_3 = _plus_446;
+                      } else {
+                        DSLKnowledge _knowledge_11 = ((DSLRulePlanner)r).getKnowledge();
+                        boolean _tripleNotEquals_75 = (_knowledge_11 != null);
+                        if (_tripleNotEquals_75) {
+                          String _get_138 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                          String _plus_447 = ("<aggregated from=\'" + _get_138);
+                          String _plus_448 = (_plus_447 + "\' to=\'");
+                          String _get_139 = this.structureElementPath.get(((DSLRulePlanner)r).getKnowledge().getName());
+                          String _plus_449 = (_plus_448 + _get_139);
+                          String _plus_450 = (_plus_449 + "\'");
+                          String _plus_451 = (_plus_450 + relation);
+                          aggregated_3 = _plus_451;
                         } else {
-                          DSLManagerController _mcontroller2_3 = ((DSLRuleMController)r).getMcontroller2();
-                          boolean _tripleNotEquals_111 = (_mcontroller2_3 != null);
-                          if (_tripleNotEquals_111) {
-                            String _get_208 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
-                            String _plus_667 = ("<aggregated from=\'" + _get_208);
-                            String _plus_668 = (_plus_667 + "\' to=\'");
-                            String _get_209 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller2().getName());
-                            String _plus_669 = (_plus_668 + _get_209);
-                            String _plus_670 = (_plus_669 + "\'");
-                            String _plus_671 = (_plus_670 + relation);
-                            aggregated_6 = _plus_671;
+                          DSLExecutor _executor_11 = ((DSLRulePlanner)r).getExecutor();
+                          boolean _tripleNotEquals_76 = (_executor_11 != null);
+                          if (_tripleNotEquals_76) {
+                            String _get_140 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                            String _plus_452 = ("<aggregated from=\'" + _get_140);
+                            String _plus_453 = (_plus_452 + "\' to=\'");
+                            String _get_141 = this.structureElementPath.get(((DSLRulePlanner)r).getExecutor().getName());
+                            String _plus_454 = (_plus_453 + _get_141);
+                            String _plus_455 = (_plus_454 + "\'");
+                            String _plus_456 = (_plus_455 + relation);
+                            aggregated_3 = _plus_456;
+                          } else {
+                            DSLPlanner _planner2_3 = ((DSLRulePlanner)r).getPlanner2();
+                            boolean _tripleNotEquals_77 = (_planner2_3 != null);
+                            if (_tripleNotEquals_77) {
+                              String _get_142 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                              String _plus_457 = ("<aggregated from=\'" + _get_142);
+                              String _plus_458 = (_plus_457 + "\' to=\'");
+                              String _get_143 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner2().getName());
+                              String _plus_459 = (_plus_458 + _get_143);
+                              String _plus_460 = (_plus_459 + "\'");
+                              String _plus_461 = (_plus_460 + relation);
+                              aggregated_3 = _plus_461;
+                            } else {
+                              DSLAlternative _shalt_7 = ((DSLRulePlanner)r).getShalt();
+                              boolean _tripleNotEquals_78 = (_shalt_7 != null);
+                              if (_tripleNotEquals_78) {
+                                String _get_144 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                                String _plus_462 = ("<aggregated from=\'" + _get_144);
+                                String _plus_463 = (_plus_462 + "\' to=\'");
+                                String _get_145 = this.structureElementPath.get(((DSLRulePlanner)r).getShalt().getName());
+                                String _plus_464 = (_plus_463 + _get_145);
+                                String _plus_465 = (_plus_464 + "\'");
+                                String _plus_466 = (_plus_465 + relation);
+                                aggregated_3 = _plus_466;
+                              } else {
+                                DSLMonitor _monitor_7 = ((DSLRulePlanner)r).getMonitor();
+                                boolean _tripleNotEquals_79 = (_monitor_7 != null);
+                                if (_tripleNotEquals_79) {
+                                  String _get_146 = this.structureElementPath.get(((DSLRulePlanner)r).getPlanner().getName());
+                                  String _plus_467 = ("<aggregated from=\'" + _get_146);
+                                  String _plus_468 = (_plus_467 + "\' to=\'");
+                                  String _get_147 = this.structureElementPath.get(((DSLRulePlanner)r).getMonitor().getName());
+                                  String _plus_469 = (_plus_468 + _get_147);
+                                  String _plus_470 = (_plus_469 + "\'");
+                                  String _plus_471 = (_plus_470 + relation);
+                                  aggregated_3 = _plus_471;
+                                }
+                              }
+                            }
                           }
-                          this.aggregatedPath.put(((DSLRuleMController)r).getMcontroller1().getName(), aggregated_6);
+                        }
+                      }
+                      this.aggregatedPath.put(((DSLRulePlanner)r).getPlanner().getName(), aggregated_3);
+                    }
+                  } else {
+                    if ((r instanceof DSLRuleExecutor)) {
+                      String pathAggregated_4 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                      if ((pathAggregated_4 != null)) {
+                        int _length_48 = this.outAggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName()).split(Pattern.quote("//")).length;
+                        int _minus_48 = (_length_48 - 1);
+                        rExecutor = _minus_48;
+                        int _length_49 = pathAggregated_4.length();
+                        int _minus_49 = (_length_49 - 1);
+                        pathAggregated_4 = pathAggregated_4.substring(0, _minus_49);
+                        String _get_148 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                        String _plus_472 = (pathAggregated_4 + _get_148);
+                        String _plus_473 = (_plus_472 + "/@aggregated.");
+                        String _plus_474 = (_plus_473 + Integer.valueOf(rExecutor));
+                        String _plus_475 = (_plus_474 + " \'");
+                        pathAggregated_4 = _plus_475;
+                        this.outAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor().getName(), pathAggregated_4);
+                        DSLPlanner _planner_8 = ((DSLRuleExecutor)r).getPlanner();
+                        boolean _tripleNotEquals_80 = (_planner_8 != null);
+                        if (_tripleNotEquals_80) {
+                          String pathInAggregated_40 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
+                          if ((pathInAggregated_40 != null)) {
+                            int _length_50 = pathInAggregated_40.length();
+                            int _minus_50 = (_length_50 - 1);
+                            pathInAggregated_40 = pathInAggregated_40.substring(0, _minus_50);
+                            String _get_149 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_476 = (pathInAggregated_40 + _get_149);
+                            String _plus_477 = (_plus_476 + "/@aggregated.");
+                            String _plus_478 = (_plus_477 + Integer.valueOf(rExecutor));
+                            String _plus_479 = (_plus_478 + " \'");
+                            pathInAggregated_40 = _plus_479;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_40);
+                          } else {
+                            String _get_150 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_480 = ("inAggregated=\'" + _get_150);
+                            String _plus_481 = (_plus_480 + "/@aggregated.");
+                            String _plus_482 = (_plus_481 + Integer.valueOf(rExecutor));
+                            String _plus_483 = (_plus_482 + " \'");
+                            pathInAggregated_40 = _plus_483;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_40);
+                          }
+                        }
+                        DSLKnowledge _knowledge_12 = ((DSLRuleExecutor)r).getKnowledge();
+                        boolean _tripleNotEquals_81 = (_knowledge_12 != null);
+                        if (_tripleNotEquals_81) {
+                          String pathInAggregated_41 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
+                          if ((pathInAggregated_41 != null)) {
+                            int _length_51 = pathInAggregated_41.length();
+                            int _minus_51 = (_length_51 - 1);
+                            pathInAggregated_41 = pathInAggregated_41.substring(0, _minus_51);
+                            String _get_151 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_484 = (pathInAggregated_41 + _get_151);
+                            String _plus_485 = (_plus_484 + "/@aggregated.");
+                            String _plus_486 = (_plus_485 + Integer.valueOf(rExecutor));
+                            String _plus_487 = (_plus_486 + " \'");
+                            pathInAggregated_41 = _plus_487;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_41);
+                          } else {
+                            String _get_152 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_488 = ("inAggregated=\'" + _get_152);
+                            String _plus_489 = (_plus_488 + "/@aggregated.");
+                            String _plus_490 = (_plus_489 + Integer.valueOf(rExecutor));
+                            String _plus_491 = (_plus_490 + " \'");
+                            pathInAggregated_41 = _plus_491;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_41);
+                          }
+                        }
+                        DSLEffector _effector = ((DSLRuleExecutor)r).getEffector();
+                        boolean _tripleNotEquals_82 = (_effector != null);
+                        if (_tripleNotEquals_82) {
+                          String pathInAggregated_42 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
+                          if ((pathInAggregated_42 != null)) {
+                            int _length_52 = pathInAggregated_42.length();
+                            int _minus_52 = (_length_52 - 1);
+                            pathInAggregated_42 = pathInAggregated_42.substring(0, _minus_52);
+                            String _get_153 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_492 = (pathInAggregated_42 + _get_153);
+                            String _plus_493 = (_plus_492 + "/@aggregated.");
+                            String _plus_494 = (_plus_493 + Integer.valueOf(rExecutor));
+                            String _plus_495 = (_plus_494 + " \'");
+                            pathInAggregated_42 = _plus_495;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_42);
+                          } else {
+                            String _get_154 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_496 = ("inAggregated=\'" + _get_154);
+                            String _plus_497 = (_plus_496 + "/@aggregated.");
+                            String _plus_498 = (_plus_497 + Integer.valueOf(rExecutor));
+                            String _plus_499 = (_plus_498 + " \'");
+                            pathInAggregated_42 = _plus_499;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_42);
+                          }
+                        }
+                        DSLExecutor _executor2 = ((DSLRuleExecutor)r).getExecutor2();
+                        boolean _tripleNotEquals_83 = (_executor2 != null);
+                        if (_tripleNotEquals_83) {
+                          String pathInAggregated_43 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                          if ((pathInAggregated_43 != null)) {
+                            int _length_53 = pathInAggregated_43.length();
+                            int _minus_53 = (_length_53 - 1);
+                            pathInAggregated_43 = pathInAggregated_43.substring(0, _minus_53);
+                            String _get_155 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_500 = (pathInAggregated_43 + _get_155);
+                            String _plus_501 = (_plus_500 + "/@aggregated.");
+                            String _plus_502 = (_plus_501 + Integer.valueOf(rExecutor));
+                            String _plus_503 = (_plus_502 + " \'");
+                            pathInAggregated_43 = _plus_503;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_43);
+                          } else {
+                            String _get_156 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_504 = ("inAggregated=\'" + _get_156);
+                            String _plus_505 = (_plus_504 + "/@aggregated.");
+                            String _plus_506 = (_plus_505 + Integer.valueOf(rExecutor));
+                            String _plus_507 = (_plus_506 + " \'");
+                            pathInAggregated_43 = _plus_507;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_43);
+                          }
+                        }
+                        DSLMonitor _monitor_8 = ((DSLRuleExecutor)r).getMonitor();
+                        boolean _tripleNotEquals_84 = (_monitor_8 != null);
+                        if (_tripleNotEquals_84) {
+                          String pathInAggregated_44 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                          if ((pathInAggregated_44 != null)) {
+                            int _length_54 = pathInAggregated_44.length();
+                            int _minus_54 = (_length_54 - 1);
+                            pathInAggregated_44 = pathInAggregated_44.substring(0, _minus_54);
+                            String _get_157 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_508 = (pathInAggregated_44 + _get_157);
+                            String _plus_509 = (_plus_508 + "/@aggregated.");
+                            String _plus_510 = (_plus_509 + Integer.valueOf(rExecutor));
+                            String _plus_511 = (_plus_510 + " \'");
+                            pathInAggregated_44 = _plus_511;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_44);
+                          } else {
+                            String _get_158 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_512 = ("inAggregated=\'" + _get_158);
+                            String _plus_513 = (_plus_512 + "/@aggregated.");
+                            String _plus_514 = (_plus_513 + Integer.valueOf(rExecutor));
+                            String _plus_515 = (_plus_514 + " \'");
+                            pathInAggregated_44 = _plus_515;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_44);
+                          }
+                        }
+                        DSLAnalyzer _analyzer_8 = ((DSLRuleExecutor)r).getAnalyzer();
+                        boolean _tripleNotEquals_85 = (_analyzer_8 != null);
+                        if (_tripleNotEquals_85) {
+                          String pathInAggregated_45 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                          if ((pathInAggregated_45 != null)) {
+                            int _length_55 = pathInAggregated_45.length();
+                            int _minus_55 = (_length_55 - 1);
+                            pathInAggregated_45 = pathInAggregated_45.substring(0, _minus_55);
+                            String _get_159 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_516 = (pathInAggregated_45 + _get_159);
+                            String _plus_517 = (_plus_516 + "/@aggregated.");
+                            String _plus_518 = (_plus_517 + Integer.valueOf(rExecutor));
+                            String _plus_519 = (_plus_518 + " \'");
+                            pathInAggregated_45 = _plus_519;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_45);
+                          } else {
+                            String _get_160 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_520 = ("inAggregated=\'" + _get_160);
+                            String _plus_521 = (_plus_520 + "/@aggregated.");
+                            String _plus_522 = (_plus_521 + Integer.valueOf(rExecutor));
+                            String _plus_523 = (_plus_522 + " \'");
+                            pathInAggregated_45 = _plus_523;
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_45);
+                          }
+                        }
+                      } else {
+                        String _get_161 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                        String _plus_524 = ("outAggregated=\'" + _get_161);
+                        String _plus_525 = (_plus_524 + "/@aggregated.");
+                        String _plus_526 = (_plus_525 + Integer.valueOf(rExecutor));
+                        String _plus_527 = (_plus_526 + " \'");
+                        pathAggregated_4 = _plus_527;
+                        this.outAggregatedPath.put(((DSLRuleExecutor)r).getExecutor().getName(), pathAggregated_4);
+                        DSLPlanner _planner_9 = ((DSLRuleExecutor)r).getPlanner();
+                        boolean _tripleNotEquals_86 = (_planner_9 != null);
+                        if (_tripleNotEquals_86) {
+                          String pathInAggregated_46 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getPlanner().getName());
+                          if ((pathInAggregated_46 != null)) {
+                            int _length_56 = pathInAggregated_46.length();
+                            int _minus_56 = (_length_56 - 1);
+                            pathInAggregated_46 = pathInAggregated_46.substring(0, _minus_56);
+                            String _get_162 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_528 = (pathInAggregated_46 + _get_162);
+                            String _plus_529 = (_plus_528 + "/@aggregated.");
+                            String _plus_530 = (_plus_529 + Integer.valueOf(rExecutor));
+                            String _plus_531 = (_plus_530 + " \'");
+                            pathInAggregated_46 = _plus_531;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getPlanner().getName(), pathInAggregated_46);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getPlanner().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                        DSLKnowledge _knowledge_13 = ((DSLRuleExecutor)r).getKnowledge();
+                        boolean _tripleNotEquals_87 = (_knowledge_13 != null);
+                        if (_tripleNotEquals_87) {
+                          String pathInAggregated_47 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
+                          if ((pathInAggregated_47 != null)) {
+                            int _length_57 = pathInAggregated_47.length();
+                            int _minus_57 = (_length_57 - 1);
+                            pathInAggregated_47 = pathInAggregated_47.substring(0, _minus_57);
+                            String _get_163 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_532 = (pathInAggregated_47 + _get_163);
+                            String _plus_533 = (_plus_532 + "/@aggregated.");
+                            String _plus_534 = (_plus_533 + Integer.valueOf(rExecutor));
+                            String _plus_535 = (_plus_534 + " \'");
+                            pathInAggregated_47 = _plus_535;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getKnowledge().getName(), pathInAggregated_47);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getKnowledge().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                        DSLEffector _effector_1 = ((DSLRuleExecutor)r).getEffector();
+                        boolean _tripleNotEquals_88 = (_effector_1 != null);
+                        if (_tripleNotEquals_88) {
+                          String pathInAggregated_48 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getEffector().getName());
+                          if ((pathInAggregated_48 != null)) {
+                            int _length_58 = pathInAggregated_48.length();
+                            int _minus_58 = (_length_58 - 1);
+                            pathInAggregated_48 = pathInAggregated_48.substring(0, _minus_58);
+                            String _get_164 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_536 = (pathInAggregated_48 + _get_164);
+                            String _plus_537 = (_plus_536 + "/@aggregated.");
+                            String _plus_538 = (_plus_537 + Integer.valueOf(rExecutor));
+                            String _plus_539 = (_plus_538 + " \'");
+                            pathInAggregated_48 = _plus_539;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getEffector().getName(), pathInAggregated_48);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getEffector().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                        DSLExecutor _executor2_1 = ((DSLRuleExecutor)r).getExecutor2();
+                        boolean _tripleNotEquals_89 = (_executor2_1 != null);
+                        if (_tripleNotEquals_89) {
+                          String pathInAggregated_49 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                          if ((pathInAggregated_49 != null)) {
+                            int _length_59 = pathInAggregated_49.length();
+                            int _minus_59 = (_length_59 - 1);
+                            pathInAggregated_49 = pathInAggregated_49.substring(0, _minus_59);
+                            String _get_165 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_540 = (pathInAggregated_49 + _get_165);
+                            String _plus_541 = (_plus_540 + "/@aggregated.");
+                            String _plus_542 = (_plus_541 + Integer.valueOf(rExecutor));
+                            String _plus_543 = (_plus_542 + " \'");
+                            pathInAggregated_49 = _plus_543;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getExecutor2().getName(), pathInAggregated_49);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getExecutor2().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                        DSLMonitor _monitor_9 = ((DSLRuleExecutor)r).getMonitor();
+                        boolean _tripleNotEquals_90 = (_monitor_9 != null);
+                        if (_tripleNotEquals_90) {
+                          String pathInAggregated_50 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getMonitor().getName());
+                          if ((pathInAggregated_50 != null)) {
+                            int _length_60 = pathInAggregated_50.length();
+                            int _minus_60 = (_length_60 - 1);
+                            pathInAggregated_50 = pathInAggregated_50.substring(0, _minus_60);
+                            String _get_166 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_544 = (pathInAggregated_50 + _get_166);
+                            String _plus_545 = (_plus_544 + "/@aggregated.");
+                            String _plus_546 = (_plus_545 + Integer.valueOf(rExecutor));
+                            String _plus_547 = (_plus_546 + " \'");
+                            pathInAggregated_50 = _plus_547;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getMonitor().getName(), pathInAggregated_50);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getMonitor().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                        DSLAnalyzer _analyzer_9 = ((DSLRuleExecutor)r).getAnalyzer();
+                        boolean _tripleNotEquals_91 = (_analyzer_9 != null);
+                        if (_tripleNotEquals_91) {
+                          String pathInAggregated_51 = this.inAggregatedPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
+                          if ((pathInAggregated_51 != null)) {
+                            int _length_61 = pathInAggregated_51.length();
+                            int _minus_61 = (_length_61 - 1);
+                            pathInAggregated_51 = pathInAggregated_51.substring(0, _minus_61);
+                            String _get_167 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_548 = (pathInAggregated_51 + _get_167);
+                            String _plus_549 = (_plus_548 + "/@aggregated.");
+                            String _plus_550 = (_plus_549 + Integer.valueOf(rExecutor));
+                            String _plus_551 = (_plus_550 + " \'");
+                            pathInAggregated_51 = _plus_551;
+                            this.inAggregatedPath.replace(((DSLRuleExecutor)r).getAnalyzer().getName(), pathInAggregated_51);
+                          } else {
+                            this.inAggregatedPath.put(((DSLRuleExecutor)r).getAnalyzer().getName(), pathAggregated_4.replaceFirst("outAggregated", "inAggregated"));
+                          }
+                        }
+                      }
+                      String aggregated_4 = this.aggregatedPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                      if ((aggregated_4 != null)) {
+                        DSLPlanner _planner_10 = ((DSLRuleExecutor)r).getPlanner();
+                        boolean _tripleNotEquals_92 = (_planner_10 != null);
+                        if (_tripleNotEquals_92) {
+                          String _get_168 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                          String _plus_552 = ((aggregated_4 + "<aggregated from=\'") + _get_168);
+                          String _plus_553 = (_plus_552 + "\' to=\'");
+                          String _get_169 = this.structureElementPath.get(((DSLRuleExecutor)r).getPlanner().getName());
+                          String _plus_554 = (_plus_553 + _get_169);
+                          String _plus_555 = (_plus_554 + "\'");
+                          String _plus_556 = (_plus_555 + relation);
+                          aggregated_4 = _plus_556;
+                        } else {
+                          DSLKnowledge _knowledge_14 = ((DSLRuleExecutor)r).getKnowledge();
+                          boolean _tripleNotEquals_93 = (_knowledge_14 != null);
+                          if (_tripleNotEquals_93) {
+                            String _get_170 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_557 = ((aggregated_4 + "<aggregated from=\'") + _get_170);
+                            String _plus_558 = (_plus_557 + "\' to=\'");
+                            String _get_171 = this.structureElementPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
+                            String _plus_559 = (_plus_558 + _get_171);
+                            String _plus_560 = (_plus_559 + "\'");
+                            String _plus_561 = (_plus_560 + relation);
+                            aggregated_4 = _plus_561;
+                          } else {
+                            DSLEffector _effector_2 = ((DSLRuleExecutor)r).getEffector();
+                            boolean _tripleNotEquals_94 = (_effector_2 != null);
+                            if (_tripleNotEquals_94) {
+                              String _get_172 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                              String _plus_562 = ((aggregated_4 + "<aggregated from=\'") + _get_172);
+                              String _plus_563 = (_plus_562 + "\' to=\'");
+                              String _get_173 = this.structureElementPath.get(((DSLRuleExecutor)r).getEffector().getName());
+                              String _plus_564 = (_plus_563 + _get_173);
+                              String _plus_565 = (_plus_564 + "\'");
+                              String _plus_566 = (_plus_565 + relation);
+                              aggregated_4 = _plus_566;
+                            } else {
+                              DSLExecutor _executor2_2 = ((DSLRuleExecutor)r).getExecutor2();
+                              boolean _tripleNotEquals_95 = (_executor2_2 != null);
+                              if (_tripleNotEquals_95) {
+                                String _get_174 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                String _plus_567 = ((aggregated_4 + "<aggregated from=\'") + _get_174);
+                                String _plus_568 = (_plus_567 + "\' to=\'");
+                                String _get_175 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                                String _plus_569 = (_plus_568 + _get_175);
+                                String _plus_570 = (_plus_569 + "\'");
+                                String _plus_571 = (_plus_570 + relation);
+                                aggregated_4 = _plus_571;
+                              } else {
+                                DSLMonitor _monitor_10 = ((DSLRuleExecutor)r).getMonitor();
+                                boolean _tripleNotEquals_96 = (_monitor_10 != null);
+                                if (_tripleNotEquals_96) {
+                                  String _get_176 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                  String _plus_572 = ((aggregated_4 + "<aggregated from=\'") + _get_176);
+                                  String _plus_573 = (_plus_572 + "\' to=\'");
+                                  String _get_177 = this.structureElementPath.get(((DSLRuleExecutor)r).getMonitor().getName());
+                                  String _plus_574 = (_plus_573 + _get_177);
+                                  String _plus_575 = (_plus_574 + "\'");
+                                  String _plus_576 = (_plus_575 + relation);
+                                  aggregated_4 = _plus_576;
+                                } else {
+                                  DSLAnalyzer _analyzer_10 = ((DSLRuleExecutor)r).getAnalyzer();
+                                  boolean _tripleNotEquals_97 = (_analyzer_10 != null);
+                                  if (_tripleNotEquals_97) {
+                                    String _get_178 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                    String _plus_577 = ((aggregated_4 + "<aggregated from=\'") + _get_178);
+                                    String _plus_578 = (_plus_577 + "\' to=\'");
+                                    String _get_179 = this.structureElementPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
+                                    String _plus_579 = (_plus_578 + _get_179);
+                                    String _plus_580 = (_plus_579 + "\'");
+                                    String _plus_581 = (_plus_580 + relation);
+                                    aggregated_4 = _plus_581;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        this.aggregatedPath.replace(((DSLRuleExecutor)r).getExecutor().getName(), aggregated_4);
+                      } else {
+                        DSLPlanner _planner_11 = ((DSLRuleExecutor)r).getPlanner();
+                        boolean _tripleNotEquals_98 = (_planner_11 != null);
+                        if (_tripleNotEquals_98) {
+                          String _get_180 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                          String _plus_582 = ("<aggregated from=\'" + _get_180);
+                          String _plus_583 = (_plus_582 + "\' to=\'");
+                          String _get_181 = this.structureElementPath.get(((DSLRuleExecutor)r).getPlanner().getName());
+                          String _plus_584 = (_plus_583 + _get_181);
+                          String _plus_585 = (_plus_584 + "\'");
+                          String _plus_586 = (_plus_585 + relation);
+                          aggregated_4 = _plus_586;
+                        } else {
+                          DSLKnowledge _knowledge_15 = ((DSLRuleExecutor)r).getKnowledge();
+                          boolean _tripleNotEquals_99 = (_knowledge_15 != null);
+                          if (_tripleNotEquals_99) {
+                            String _get_182 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                            String _plus_587 = ("<aggregated from=\'" + _get_182);
+                            String _plus_588 = (_plus_587 + "\' to=\'");
+                            String _get_183 = this.structureElementPath.get(((DSLRuleExecutor)r).getKnowledge().getName());
+                            String _plus_589 = (_plus_588 + _get_183);
+                            String _plus_590 = (_plus_589 + "\'");
+                            String _plus_591 = (_plus_590 + relation);
+                            aggregated_4 = _plus_591;
+                          } else {
+                            DSLEffector _effector_3 = ((DSLRuleExecutor)r).getEffector();
+                            boolean _tripleNotEquals_100 = (_effector_3 != null);
+                            if (_tripleNotEquals_100) {
+                              String _get_184 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                              String _plus_592 = ("<aggregated from=\'" + _get_184);
+                              String _plus_593 = (_plus_592 + "\' to=\'");
+                              String _get_185 = this.structureElementPath.get(((DSLRuleExecutor)r).getEffector().getName());
+                              String _plus_594 = (_plus_593 + _get_185);
+                              String _plus_595 = (_plus_594 + "\'");
+                              String _plus_596 = (_plus_595 + relation);
+                              aggregated_4 = _plus_596;
+                            } else {
+                              DSLExecutor _executor2_3 = ((DSLRuleExecutor)r).getExecutor2();
+                              boolean _tripleNotEquals_101 = (_executor2_3 != null);
+                              if (_tripleNotEquals_101) {
+                                String _get_186 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                String _plus_597 = ("<aggregated from=\'" + _get_186);
+                                String _plus_598 = (_plus_597 + "\' to=\'");
+                                String _get_187 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor2().getName());
+                                String _plus_599 = (_plus_598 + _get_187);
+                                String _plus_600 = (_plus_599 + "\'");
+                                String _plus_601 = (_plus_600 + relation);
+                                aggregated_4 = _plus_601;
+                              } else {
+                                DSLMonitor _monitor_11 = ((DSLRuleExecutor)r).getMonitor();
+                                boolean _tripleNotEquals_102 = (_monitor_11 != null);
+                                if (_tripleNotEquals_102) {
+                                  String _get_188 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                  String _plus_602 = ("<aggregated from=\'" + _get_188);
+                                  String _plus_603 = (_plus_602 + "\' to=\'");
+                                  String _get_189 = this.structureElementPath.get(((DSLRuleExecutor)r).getMonitor().getName());
+                                  String _plus_604 = (_plus_603 + _get_189);
+                                  String _plus_605 = (_plus_604 + "\'");
+                                  String _plus_606 = (_plus_605 + relation);
+                                  aggregated_4 = _plus_606;
+                                } else {
+                                  DSLAnalyzer _analyzer_11 = ((DSLRuleExecutor)r).getAnalyzer();
+                                  boolean _tripleNotEquals_103 = (_analyzer_11 != null);
+                                  if (_tripleNotEquals_103) {
+                                    String _get_190 = this.structureElementPath.get(((DSLRuleExecutor)r).getExecutor().getName());
+                                    String _plus_607 = ("<aggregated from=\'" + _get_190);
+                                    String _plus_608 = (_plus_607 + "\' to=\'");
+                                    String _get_191 = this.structureElementPath.get(((DSLRuleExecutor)r).getAnalyzer().getName());
+                                    String _plus_609 = (_plus_608 + _get_191);
+                                    String _plus_610 = (_plus_609 + "\'");
+                                    String _plus_611 = (_plus_610 + relation);
+                                    aggregated_4 = _plus_611;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        this.aggregatedPath.put(((DSLRuleExecutor)r).getExecutor().getName(), aggregated_4);
+                      }
+                    } else {
+                      if ((r instanceof DSLRuleMO)) {
+                        String pathAggregated_5 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
+                        if ((pathAggregated_5 != null)) {
+                          int _length_62 = this.outAggregatedPath.get(((DSLRuleMO)r).getSensor().getName()).split(Pattern.quote("//")).length;
+                          int _minus_62 = (_length_62 - 1);
+                          rMO = _minus_62;
+                          int _length_63 = pathAggregated_5.length();
+                          int _minus_63 = (_length_63 - 1);
+                          pathAggregated_5 = pathAggregated_5.substring(0, _minus_63);
+                          String _get_192 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                          String _plus_612 = (pathAggregated_5 + _get_192);
+                          String _plus_613 = (_plus_612 + "/@aggregated.");
+                          String _plus_614 = (_plus_613 + Integer.valueOf(rMO));
+                          String _plus_615 = (_plus_614 + " \'");
+                          pathAggregated_5 = _plus_615;
+                          this.outAggregatedPath.replace(((DSLRuleMO)r).getSensor().getName(), pathAggregated_5);
+                          DSLMeasuredOutput _measured = ((DSLRuleMO)r).getMeasured();
+                          boolean _tripleNotEquals_104 = (_measured != null);
+                          if (_tripleNotEquals_104) {
+                            String pathInAggregated_52 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
+                            if ((pathInAggregated_52 != null)) {
+                              int _length_64 = pathInAggregated_52.length();
+                              int _minus_64 = (_length_64 - 1);
+                              pathInAggregated_52 = pathInAggregated_52.substring(0, _minus_64);
+                              String _get_193 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                              String _plus_616 = (pathInAggregated_52 + _get_193);
+                              String _plus_617 = (_plus_616 + "/@aggregated.");
+                              String _plus_618 = (_plus_617 + Integer.valueOf(rMO));
+                              String _plus_619 = (_plus_618 + " \'");
+                              pathInAggregated_52 = _plus_619;
+                              this.inAggregatedPath.replace(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_52);
+                            } else {
+                              String _get_194 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                              String _plus_620 = ("inAggregated=\'" + _get_194);
+                              String _plus_621 = (_plus_620 + "/@aggregated.");
+                              String _plus_622 = (_plus_621 + Integer.valueOf(rMO));
+                              String _plus_623 = (_plus_622 + " \'");
+                              pathInAggregated_52 = _plus_623;
+                              this.inAggregatedPath.put(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_52);
+                            }
+                          }
+                        } else {
+                          String _get_195 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                          String _plus_624 = ("outAggregated=\'" + _get_195);
+                          String _plus_625 = (_plus_624 + "/@aggregated.");
+                          String _plus_626 = (_plus_625 + Integer.valueOf(rMO));
+                          String _plus_627 = (_plus_626 + " \'");
+                          pathAggregated_5 = _plus_627;
+                          this.outAggregatedPath.put(((DSLRuleMO)r).getSensor().getName(), pathAggregated_5);
+                          DSLMeasuredOutput _measured_1 = ((DSLRuleMO)r).getMeasured();
+                          boolean _tripleNotEquals_105 = (_measured_1 != null);
+                          if (_tripleNotEquals_105) {
+                            String pathInAggregated_53 = this.inAggregatedPath.get(((DSLRuleMO)r).getMeasured().getName());
+                            if ((pathInAggregated_53 != null)) {
+                              int _length_65 = pathInAggregated_53.length();
+                              int _minus_65 = (_length_65 - 1);
+                              pathInAggregated_53 = pathInAggregated_53.substring(0, _minus_65);
+                              String _get_196 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                              String _plus_628 = (pathInAggregated_53 + _get_196);
+                              String _plus_629 = (_plus_628 + "/@aggregated.");
+                              String _plus_630 = (_plus_629 + Integer.valueOf(rMO));
+                              String _plus_631 = (_plus_630 + " \'");
+                              pathInAggregated_53 = _plus_631;
+                              this.inAggregatedPath.replace(((DSLRuleMO)r).getMeasured().getName(), pathInAggregated_53);
+                            } else {
+                              this.inAggregatedPath.put(((DSLRuleMO)r).getMeasured().getName(), pathAggregated_5.replaceFirst("outAggregated", "inAggregated"));
+                            }
+                          }
+                        }
+                        String aggregated_5 = this.aggregatedPath.get(((DSLRuleMO)r).getSensor().getName());
+                        if ((aggregated_5 != null)) {
+                          DSLSensor _sensor_4 = ((DSLRuleMO)r).getSensor();
+                          boolean _tripleNotEquals_106 = (_sensor_4 != null);
+                          if (_tripleNotEquals_106) {
+                            String _get_197 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                            String _plus_632 = ((aggregated_5 + "<aggregated from=\'") + _get_197);
+                            String _plus_633 = (_plus_632 + "\' to=\'");
+                            String _get_198 = this.structureElementPath.get(((DSLRuleMO)r).getMeasured().getName());
+                            String _plus_634 = (_plus_633 + _get_198);
+                            String _plus_635 = (_plus_634 + "\'");
+                            String _plus_636 = (_plus_635 + relation);
+                            aggregated_5 = _plus_636;
+                          }
+                          this.aggregatedPath.replace(((DSLRuleMO)r).getSensor().getName(), aggregated_5);
+                        } else {
+                          DSLSensor _sensor_5 = ((DSLRuleMO)r).getSensor();
+                          boolean _tripleNotEquals_107 = (_sensor_5 != null);
+                          if (_tripleNotEquals_107) {
+                            String _get_199 = this.structureElementPath.get(((DSLRuleMO)r).getSensor().getName());
+                            String _plus_637 = ("<aggregated from=\'" + _get_199);
+                            String _plus_638 = (_plus_637 + "\' to=\'");
+                            String _get_200 = this.structureElementPath.get(((DSLRuleMO)r).getMeasured().getName());
+                            String _plus_639 = (_plus_638 + _get_200);
+                            String _plus_640 = (_plus_639 + "\'");
+                            String _plus_641 = (_plus_640 + relation);
+                            aggregated_5 = _plus_641;
+                          }
+                          this.aggregatedPath.put(((DSLRuleMO)r).getSensor().getName(), aggregated_5);
+                        }
+                      } else {
+                        if ((r instanceof DSLRuleMController)) {
+                          String pathAggregated_6 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1());
+                          if ((pathAggregated_6 != null)) {
+                            int _length_66 = this.outAggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName()).split(Pattern.quote("//")).length;
+                            int _minus_66 = (_length_66 - 1);
+                            rMController = _minus_66;
+                            int _length_67 = pathAggregated_6.length();
+                            int _minus_67 = (_length_67 - 1);
+                            pathAggregated_6 = pathAggregated_6.substring(0, _minus_67);
+                            String _get_201 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                            String _plus_642 = (pathAggregated_6 + _get_201);
+                            String _plus_643 = (_plus_642 + "/@aggregated.");
+                            String _plus_644 = (_plus_643 + Integer.valueOf(rMController));
+                            String _plus_645 = (_plus_644 + " \'");
+                            pathAggregated_6 = _plus_645;
+                            this.outAggregatedPath.replace(((DSLRuleMController)r).getMcontroller1().getName(), pathAggregated_6);
+                            DSLManagerController _mcontroller2 = ((DSLRuleMController)r).getMcontroller2();
+                            boolean _tripleNotEquals_108 = (_mcontroller2 != null);
+                            if (_tripleNotEquals_108) {
+                              String pathInAggregated_54 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
+                              if ((pathInAggregated_54 != null)) {
+                                int _length_68 = pathInAggregated_54.length();
+                                int _minus_68 = (_length_68 - 1);
+                                pathInAggregated_54 = pathInAggregated_54.substring(0, _minus_68);
+                                String _get_202 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                                String _plus_646 = (pathInAggregated_54 + _get_202);
+                                String _plus_647 = (_plus_646 + "/@aggregated.");
+                                String _plus_648 = (_plus_647 + Integer.valueOf(rMController));
+                                String _plus_649 = (_plus_648 + " \'");
+                                pathInAggregated_54 = _plus_649;
+                                this.inAggregatedPath.replace(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_54);
+                              } else {
+                                String _get_203 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                                String _plus_650 = ("inAggregated=\'" + _get_203);
+                                String _plus_651 = (_plus_650 + "/@aggregated.");
+                                String _plus_652 = (_plus_651 + Integer.valueOf(rMController));
+                                String _plus_653 = (_plus_652 + " \'");
+                                pathInAggregated_54 = _plus_653;
+                                this.inAggregatedPath.put(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_54);
+                              }
+                            }
+                          } else {
+                            String _get_204 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                            String _plus_654 = ("outAggregated=\'" + _get_204);
+                            String _plus_655 = (_plus_654 + "/@aggregated.");
+                            String _plus_656 = (_plus_655 + Integer.valueOf(rMController));
+                            String _plus_657 = (_plus_656 + " \'");
+                            pathAggregated_6 = _plus_657;
+                            this.outAggregatedPath.put(((DSLRuleMController)r).getMcontroller1().getName(), pathAggregated_6);
+                            DSLManagerController _mcontroller2_1 = ((DSLRuleMController)r).getMcontroller2();
+                            boolean _tripleNotEquals_109 = (_mcontroller2_1 != null);
+                            if (_tripleNotEquals_109) {
+                              String pathInAggregated_55 = this.inAggregatedPath.get(((DSLRuleMController)r).getMcontroller2().getName());
+                              if ((pathInAggregated_55 != null)) {
+                                int _length_69 = pathInAggregated_55.length();
+                                int _minus_69 = (_length_69 - 1);
+                                pathInAggregated_55 = pathInAggregated_55.substring(0, _minus_69);
+                                String _get_205 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                                String _plus_658 = (pathInAggregated_55 + _get_205);
+                                String _plus_659 = (_plus_658 + "/@aggregated.");
+                                String _plus_660 = (_plus_659 + Integer.valueOf(rMController));
+                                String _plus_661 = (_plus_660 + " \'");
+                                pathInAggregated_55 = _plus_661;
+                                this.inAggregatedPath.replace(((DSLRuleMController)r).getMcontroller2().getName(), pathInAggregated_55);
+                              } else {
+                                this.inAggregatedPath.put(((DSLRuleMController)r).getMcontroller2().getName(), pathAggregated_6.replaceFirst("outAggregated", "inAggregated"));
+                              }
+                            }
+                          }
+                          String aggregated_6 = this.aggregatedPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                          if ((aggregated_6 != null)) {
+                            DSLManagerController _mcontroller2_2 = ((DSLRuleMController)r).getMcontroller2();
+                            boolean _tripleNotEquals_110 = (_mcontroller2_2 != null);
+                            if (_tripleNotEquals_110) {
+                              String _get_206 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                              String _plus_662 = ((aggregated_6 + "<aggregated from=\'") + _get_206);
+                              String _plus_663 = (_plus_662 + "\' to=\'");
+                              String _get_207 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller2().getName());
+                              String _plus_664 = (_plus_663 + _get_207);
+                              String _plus_665 = (_plus_664 + "\'");
+                              String _plus_666 = (_plus_665 + relation);
+                              aggregated_6 = _plus_666;
+                            }
+                            this.aggregatedPath.replace(((DSLRuleMController)r).getMcontroller1().getName(), aggregated_6);
+                          } else {
+                            DSLManagerController _mcontroller2_3 = ((DSLRuleMController)r).getMcontroller2();
+                            boolean _tripleNotEquals_111 = (_mcontroller2_3 != null);
+                            if (_tripleNotEquals_111) {
+                              String _get_208 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller1().getName());
+                              String _plus_667 = ("<aggregated from=\'" + _get_208);
+                              String _plus_668 = (_plus_667 + "\' to=\'");
+                              String _get_209 = this.structureElementPath.get(((DSLRuleMController)r).getMcontroller2().getName());
+                              String _plus_669 = (_plus_668 + _get_209);
+                              String _plus_670 = (_plus_669 + "\'");
+                              String _plus_671 = (_plus_670 + relation);
+                              aggregated_6 = _plus_671;
+                            }
+                            this.aggregatedPath.put(((DSLRuleMController)r).getMcontroller1().getName(), aggregated_6);
+                          }
                         }
                       }
                     }
@@ -2661,6 +3115,8 @@ public class SasDslGenerator extends AbstractGenerator {
           }
         }
       }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   

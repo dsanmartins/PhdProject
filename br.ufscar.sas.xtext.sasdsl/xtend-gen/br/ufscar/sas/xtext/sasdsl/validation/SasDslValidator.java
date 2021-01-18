@@ -59,21 +59,23 @@ public class SasDslValidator extends AbstractSasDslValidator {
   
   protected static final String ISSUE_CODE_PREFIX_2 = "br.ufscar.abstractions.names.";
   
-  public static final String DUCPLICATE_MCONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMController");
+  public static final String DUPLICATE_MCONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMController");
   
-  public static final String DUCPLICATE_CONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameController");
+  public static final String DUPLICATE_CONTROLLER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameController");
   
-  public static final String DUCPLICATE_MONITOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMonitor");
+  public static final String DUPLICATE_MONITOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameMonitor");
   
-  public static final String DUCPLICATE_ANALYZER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameAnalyzer");
+  public static final String DUPLICATE_ANALYZER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameAnalyzer");
   
-  public static final String DUCPLICATE_PLANNER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSamePlanner");
+  public static final String DUPLICATE_PLANNER_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSamePlanner");
   
-  public static final String DUCPLICATE_EXECUTOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameExecutor");
+  public static final String DUPLICATE_EXECUTOR_ACCESS = (SasDslValidator.ISSUE_CODE_PREFIX + "AccessSameExecutor");
   
-  public static final String DUCPLICATE_RULES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateRules");
+  public static final String DUPLICATE_RULES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateRules");
   
-  public static final String DUCPLICATE_NAMES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateNames");
+  public static final String DUPLICATE_NAMES = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateNames");
+  
+  public static final String DUPLICATE_ELEMENT = (SasDslValidator.ISSUE_CODE_PREFIX + "DuplicateElement");
   
   @Check
   public void checkInMControllerRuleNotAccessTheSame(final DSLRuleMController dslRuleMController) {
@@ -84,7 +86,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLManagerController _mcontroller2_1 = dslRuleMController.getMcontroller2();
       boolean _equals = Objects.equal(_mcontroller1, _mcontroller2_1);
       if (_equals) {
-        this.error("Manager controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUCPLICATE_CONTROLLER_ACCESS);
+        this.error("Manager controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUPLICATE_CONTROLLER_ACCESS);
       }
     }
   }
@@ -98,7 +100,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLController _controller2_1 = dslRuleController.getController2();
       boolean _equals = Objects.equal(_controller1, _controller2_1);
       if (_equals) {
-        this.error("Controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUCPLICATE_CONTROLLER_ACCESS);
+        this.error("Controllers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUPLICATE_CONTROLLER_ACCESS);
       }
     }
   }
@@ -112,7 +114,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLMonitor _monitor2_1 = dslRuleMonitor.getMonitor2();
       boolean _equals = Objects.equal(_monitor, _monitor2_1);
       if (_equals) {
-        this.error("Monitors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUCPLICATE_MONITOR_ACCESS);
+        this.error("Monitors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUPLICATE_MONITOR_ACCESS);
       }
     }
   }
@@ -126,7 +128,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLAnalyzer _analyzer2_1 = dslRuleAnalyzer.getAnalyzer2();
       boolean _equals = Objects.equal(_analyzer, _analyzer2_1);
       if (_equals) {
-        this.error("Analyzers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUCPLICATE_ANALYZER_ACCESS);
+        this.error("Analyzers cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUPLICATE_ANALYZER_ACCESS);
       }
     }
   }
@@ -140,7 +142,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLPlanner _planner2_1 = dslRulePlanner.getPlanner2();
       boolean _equals = Objects.equal(_planner, _planner2_1);
       if (_equals) {
-        this.error("Planners cannot access themselves", SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUCPLICATE_PLANNER_ACCESS);
+        this.error("Planners cannot access themselves", SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUPLICATE_PLANNER_ACCESS);
       }
     }
   }
@@ -154,7 +156,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       DSLExecutor _executor2_1 = dslRuleExecutor.getExecutor2();
       boolean _equals = Objects.equal(_executor, _executor2_1);
       if (_equals) {
-        this.error("Executors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUCPLICATE_EXECUTOR_ACCESS);
+        this.error("Executors cannot access themselves", SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUPLICATE_EXECUTOR_ACCESS);
       }
     }
   }
@@ -197,16 +199,16 @@ public class SasDslValidator extends AbstractSasDslValidator {
         for (final EObject abs : values) {
           {
             if ((abs instanceof DSLManaged)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaged_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaged_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLSensor)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLSensor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLSensor_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLEffector)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLEffector_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLEffector_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLMeasuredOutput)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMeasuredOutput_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMeasuredOutput_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
           }
         }
@@ -308,34 +310,34 @@ public class SasDslValidator extends AbstractSasDslValidator {
         for (final EObject abs : values) {
           {
             if ((abs instanceof DSLMonitor)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMonitor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLMonitor_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLAnalyzer)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAnalyzer_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAnalyzer_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLPlanner)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLPlanner_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLPlanner_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLExecutor)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLExecutor_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLExecutor_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLManaging)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaging_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManaging_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLKnowledge)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLKnowledge_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLKnowledge_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLReferenceInput)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLReferenceInput_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLReferenceInput_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLManagerController)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManagerController_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLManagerController_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLController)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLController_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLController_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
             if ((abs instanceof DSLAlternative)) {
-              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAlternative_Name(), SasDslValidator.DUCPLICATE_NAMES);
+              this.error("Same abstraction name", abs, SasDslPackage.eINSTANCE.getDSLAlternative_Name(), SasDslValidator.DUPLICATE_NAMES);
             }
           }
         }
@@ -611,7 +613,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleController d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleController_Controller2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -624,7 +626,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMController d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMController_Mcontroller2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -637,7 +639,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -650,7 +652,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Planner(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Planner(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -663,7 +665,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Executor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Executor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -676,7 +678,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Analyzer(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Analyzer(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -689,7 +691,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Knowledge(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -702,7 +704,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMonitor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Sensor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Sensor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -715,7 +717,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -728,7 +730,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Knowledge(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -741,7 +743,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Monitor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Monitor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -754,7 +756,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Planner(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Planner(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -767,7 +769,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -780,7 +782,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleAnalyzer d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -793,7 +795,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final EObject d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Rreference(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -806,7 +808,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -819,7 +821,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Monitor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Monitor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -832,7 +834,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Analyzer(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Analyzer(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -845,7 +847,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Knowledge(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -858,7 +860,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Shalt(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Shalt(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -871,7 +873,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRulePlanner d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Executor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRulePlanner_Executor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -884,7 +886,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -897,7 +899,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Monitor(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Monitor(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -910,7 +912,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Analyzer(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Analyzer(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -923,7 +925,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Effector(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Effector(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -936,7 +938,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Knowledge(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Knowledge(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -949,7 +951,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleExecutor d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Planner(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Planner(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -962,7 +964,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
         boolean _greaterThan = (_size > 1);
         if (_greaterThan) {
           for (final DSLRuleMO d : duplicates) {
-            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMO_Measured(), SasDslValidator.DUCPLICATE_RULES);
+            this.error("Duplicated rule", d, SasDslPackage.eINSTANCE.getDSLRuleMO_Measured(), SasDslValidator.DUPLICATE_RULES);
           }
         }
       }
@@ -1462,7 +1464,7 @@ public class SasDslValidator extends AbstractSasDslValidator {
       String _plus_1 = (_plus + " does not have access to ");
       String _name_1 = dslController2.getName();
       String _plus_2 = (_plus_1 + _name_1);
-      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor());
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor2());
     } else {
       final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
         return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
@@ -1486,16 +1488,325 @@ public class SasDslValidator extends AbstractSasDslValidator {
     EObject _eContainer_1 = dslRuleMonitor.getAnalyzer().eContainer();
     final DSLController dslController2 = ((DSLController) _eContainer_1);
     List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleMonitor.eContainer().eContents(), DSLRuleController.class));
-    for (final DSLRuleController r : rules) {
-      if (((r.getController1() != dslController1) || (r.getController2() != dslController2))) {
-        if ((dslController1 != dslController2)) {
-          String _name = dslController1.getName();
-          String _plus = ("The " + _name);
-          String _plus_1 = (_plus + " does not have access to ");
-          String _name_1 = dslController2.getName();
-          String _plus_2 = (_plus_1 + _name_1);
-          this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Monitor());
-        }
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Analyzer());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleMonitor_Analyzer());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessAnalyzer2Analyzer(final DSLRuleAnalyzer dslRuleAnalyzer) {
+    EObject _eContainer = dslRuleAnalyzer.getAnalyzer().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleAnalyzer.getAnalyzer2().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleAnalyzer.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessAnalyzer2PlannerLoop(final DSLRuleAnalyzer dslRuleAnalyzer) {
+    EObject _eContainer = dslRuleAnalyzer.getAnalyzer().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleAnalyzer.getPlanner().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleAnalyzer.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessAnalyzer2ExecutorLoop(final DSLRuleAnalyzer dslRuleAnalyzer) {
+    EObject _eContainer = dslRuleAnalyzer.getAnalyzer().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleAnalyzer.getExecutor().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleAnalyzer.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Analyzer2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessAnalyzer2Monitor(final DSLRuleAnalyzer dslRuleAnalyzer) {
+    EObject _eContainer = dslRuleAnalyzer.getAnalyzer().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleAnalyzer.getMonitor().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleAnalyzer.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Monitor());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleAnalyzer_Monitor());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessPlanner2Planner(final DSLRulePlanner dslRulePlanner) {
+    EObject _eContainer = dslRulePlanner.getPlanner().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRulePlanner.getPlanner2().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRulePlanner.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRulePlanner_Planner2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessPlanner2Analyzer(final DSLRulePlanner dslRulePlanner) {
+    EObject _eContainer = dslRulePlanner.getPlanner().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRulePlanner.getAnalyzer().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRulePlanner.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRulePlanner_Analyzer());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRulePlanner_Analyzer());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessPlanner2ExecutorLoop(final DSLRulePlanner dslRulePlanner) {
+    EObject _eContainer = dslRulePlanner.getPlanner().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRulePlanner.getExecutor().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRulePlanner.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRulePlanner_Executor());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRulePlanner_Executor());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessExecutor2Executor(final DSLRuleExecutor dslRuleExecutor) {
+    EObject _eContainer = dslRuleExecutor.getExecutor().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleExecutor.getExecutor2().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleExecutor.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Executor2());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessExecutor2Analyzer(final DSLRuleExecutor dslRuleExecutor) {
+    EObject _eContainer = dslRuleExecutor.getExecutor().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleExecutor.getAnalyzer().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleExecutor.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Analyzer());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Analyzer());
+      }
+    }
+  }
+  
+  @Check
+  public void checkAccessExecutor2Planner(final DSLRuleExecutor dslRuleExecutor) {
+    EObject _eContainer = dslRuleExecutor.getExecutor().eContainer();
+    final DSLController dslController1 = ((DSLController) _eContainer);
+    EObject _eContainer_1 = dslRuleExecutor.getPlanner().eContainer();
+    final DSLController dslController2 = ((DSLController) _eContainer_1);
+    List<DSLRuleController> rules = IterableExtensions.<DSLRuleController>toList(Iterables.<DSLRuleController>filter(dslRuleExecutor.eContainer().eContents(), DSLRuleController.class));
+    if ((rules.isEmpty() && (dslController1 != dslController2))) {
+      String _name = dslController1.getName();
+      String _plus = ("The " + _name);
+      String _plus_1 = (_plus + " does not have access to ");
+      String _name_1 = dslController2.getName();
+      String _plus_2 = (_plus_1 + _name_1);
+      this.error(_plus_2, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Planner());
+    } else {
+      final Function1<DSLRuleController, Boolean> _function = (DSLRuleController it) -> {
+        return Boolean.valueOf((Objects.equal(it.getController1(), dslController1) && Objects.equal(it.getController2(), dslController2)));
+      };
+      DSLRuleController rule = IterableExtensions.<DSLRuleController>findFirst(rules, _function);
+      if (((rule == null) && (dslController1 != dslController2))) {
+        String _name_2 = dslController1.getName();
+        String _plus_3 = ("The " + _name_2);
+        String _plus_4 = (_plus_3 + " does not have access to ");
+        String _name_3 = dslController2.getName();
+        String _plus_5 = (_plus_4 + _name_3);
+        this.error(_plus_5, SasDslPackage.eINSTANCE.getDSLRuleExecutor_Planner());
       }
     }
   }

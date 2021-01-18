@@ -45,14 +45,16 @@ class SasDslValidator extends AbstractSasDslValidator {
 	
 	protected static val ISSUE_CODE_PREFIX = "br.ufscar.abstractions.rules.";
 	protected static val ISSUE_CODE_PREFIX_2 = "br.ufscar.abstractions.names.";
-	public static val DUCPLICATE_MCONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMController"
-	public static val DUCPLICATE_CONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameController"
-	public static val DUCPLICATE_MONITOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMonitor"
-	public static val DUCPLICATE_ANALYZER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameAnalyzer"
-	public static val DUCPLICATE_PLANNER_ACCESS = ISSUE_CODE_PREFIX + "AccessSamePlanner"
-	public static val DUCPLICATE_EXECUTOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameExecutor"
-	public static val DUCPLICATE_RULES = ISSUE_CODE_PREFIX + "DuplicateRules"
-	public static val DUCPLICATE_NAMES = ISSUE_CODE_PREFIX + "DuplicateNames"
+	public static val DUPLICATE_MCONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMController"
+	public static val DUPLICATE_CONTROLLER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameController"
+	public static val DUPLICATE_MONITOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameMonitor"
+	public static val DUPLICATE_ANALYZER_ACCESS = ISSUE_CODE_PREFIX + "AccessSameAnalyzer"
+	public static val DUPLICATE_PLANNER_ACCESS = ISSUE_CODE_PREFIX + "AccessSamePlanner"
+	public static val DUPLICATE_EXECUTOR_ACCESS = ISSUE_CODE_PREFIX + "AccessSameExecutor"
+	public static val DUPLICATE_RULES = ISSUE_CODE_PREFIX + "DuplicateRules"
+	public static val DUPLICATE_NAMES = ISSUE_CODE_PREFIX + "DuplicateNames"
+	public static val DUPLICATE_ELEMENT = ISSUE_CODE_PREFIX + "DuplicateElement"
+	
 
 
 	@Check
@@ -60,7 +62,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRuleMController.mcontroller2 !== null)
 			if (dslRuleMController.mcontroller1 == dslRuleMController.mcontroller2)
-				error("Manager controllers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleMController_Mcontroller2, DUCPLICATE_CONTROLLER_ACCESS)
+				error("Manager controllers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleMController_Mcontroller2, DUPLICATE_CONTROLLER_ACCESS)
 	}
 
 	@Check
@@ -68,7 +70,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRuleController.controller2 !== null)
 			if (dslRuleController.controller1 == dslRuleController.controller2)
-				error("Controllers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleController_Controller2, DUCPLICATE_CONTROLLER_ACCESS)
+				error("Controllers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleController_Controller2, DUPLICATE_CONTROLLER_ACCESS)
 	}
 	
 	@Check
@@ -76,7 +78,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRuleMonitor.monitor2 !== null)
 			if (dslRuleMonitor.monitor == dslRuleMonitor.monitor2)
-				error("Monitors cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2, DUCPLICATE_MONITOR_ACCESS)
+				error("Monitors cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2, DUPLICATE_MONITOR_ACCESS)
 	}
 	
 	@Check
@@ -84,7 +86,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRuleAnalyzer.analyzer2 !== null)
 			if (dslRuleAnalyzer.analyzer == dslRuleAnalyzer.analyzer2)
-				error("Analyzers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2, DUCPLICATE_ANALYZER_ACCESS)
+				error("Analyzers cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2, DUPLICATE_ANALYZER_ACCESS)
 	}
 	
 	@Check
@@ -92,7 +94,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRulePlanner.planner2 !== null)
 			if (dslRulePlanner.planner == dslRulePlanner.planner2)
-				error("Planners cannot access themselves", SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2, DUCPLICATE_PLANNER_ACCESS)
+				error("Planners cannot access themselves", SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2, DUPLICATE_PLANNER_ACCESS)
 	}
 	
 	@Check
@@ -100,7 +102,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 	{
 		if (dslRuleExecutor.executor2 !== null)
 			if (dslRuleExecutor.executor == dslRuleExecutor.executor2)
-				error("Executors cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUCPLICATE_EXECUTOR_ACCESS)
+				error("Executors cannot access themselves", SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUPLICATE_EXECUTOR_ACCESS)
 	}
 	
 	@Check 
@@ -142,13 +144,13 @@ class SasDslValidator extends AbstractSasDslValidator {
 				for (abs:values)
 				{
 					if (abs instanceof DSLManaged)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaged_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaged_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLSensor)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLSensor_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLSensor_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLEffector)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLEffector_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLEffector_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLMeasuredOutput)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMeasuredOutput_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMeasuredOutput_Name, DUPLICATE_NAMES)
 				}
 			}
 		]	
@@ -233,25 +235,25 @@ class SasDslValidator extends AbstractSasDslValidator {
 				for (abs:values)
 				{
 					if (abs instanceof DSLMonitor)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMonitor_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLMonitor_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLAnalyzer)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAnalyzer_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAnalyzer_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLPlanner)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLPlanner_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLPlanner_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLExecutor)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLExecutor_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLExecutor_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLManaging)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaging_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManaging_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLKnowledge)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLKnowledge_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLKnowledge_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLReferenceInput)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLReferenceInput_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLReferenceInput_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLManagerController)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManagerController_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLManagerController_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLController)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLController_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLController_Name, DUPLICATE_NAMES)
 					if (abs instanceof DSLAlternative)
-						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAlternative_Name, DUCPLICATE_NAMES)
+						error("Same abstraction name",abs, SasDslPackage.eINSTANCE.DSLAlternative_Name, DUPLICATE_NAMES)
 				}
 			}
 		]
@@ -376,7 +378,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleController_Controller2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleController_Controller2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -386,7 +388,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMController_Mcontroller2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMController_Mcontroller2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -396,7 +398,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -406,7 +408,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Planner, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Planner, DUPLICATE_RULES)
 			}
 		}
 		
@@ -416,7 +418,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Executor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Executor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -426,7 +428,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Analyzer, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Analyzer, DUPLICATE_RULES)
 			}
 		}
 		
@@ -436,7 +438,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Knowledge, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Knowledge, DUPLICATE_RULES)
 			}
 		}
 		
@@ -446,7 +448,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Sensor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMonitor_Sensor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -457,7 +459,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -467,7 +469,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Knowledge, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Knowledge, DUPLICATE_RULES)
 			}
 		}
 		
@@ -477,7 +479,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Monitor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Monitor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -487,7 +489,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Planner, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Planner, DUPLICATE_RULES)
 			}
 		}
 		
@@ -497,7 +499,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUPLICATE_RULES)
 			}
 		}
 		
@@ -507,7 +509,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUPLICATE_RULES)
 			}
 		}
 		
@@ -517,7 +519,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Rreference, DUPLICATE_RULES)
 			}
 		}
 		
@@ -528,7 +530,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -538,7 +540,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Monitor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Monitor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -548,7 +550,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Analyzer, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Analyzer, DUPLICATE_RULES)
 			}
 		}
 		
@@ -558,7 +560,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Knowledge, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Knowledge, DUPLICATE_RULES)
 			}
 		}
 		
@@ -568,7 +570,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Shalt, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Shalt, DUPLICATE_RULES)
 			}
 		}
 		
@@ -578,7 +580,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Executor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRulePlanner_Executor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -588,7 +590,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2, DUPLICATE_RULES)
 			}
 		}
 		
@@ -598,7 +600,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Monitor, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Monitor, DUPLICATE_RULES)
 			}
 		}
 		
@@ -608,7 +610,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer, DUPLICATE_RULES)
 			}
 		}
 		
@@ -618,7 +620,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Effector, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Effector, DUPLICATE_RULES)
 			}
 		}
 		
@@ -628,7 +630,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Knowledge, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Knowledge, DUPLICATE_RULES)
 			}
 		}
 		
@@ -638,7 +640,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			if (duplicates.size > 1){
 				
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Planner, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleExecutor_Planner, DUPLICATE_RULES)
 			}
 		}
 		
@@ -647,7 +649,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 			val duplicates = entry.value
 			if (duplicates.size > 1){
 				for (d:duplicates)
-					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMO_Measured, DUCPLICATE_RULES)
+					error("Duplicated rule",d, SasDslPackage.eINSTANCE.DSLRuleMO_Measured, DUPLICATE_RULES)
 			}
 		}
 	}
@@ -962,7 +964,7 @@ class SasDslValidator extends AbstractSasDslValidator {
 		var rules = dslRuleMonitor.eContainer.eContents.filter(DSLRuleController).toList
 		
 		if (rules.empty && dslController1 !== dslController2)
-			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor2)
 		else
 		{	
 			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
@@ -976,12 +978,187 @@ class SasDslValidator extends AbstractSasDslValidator {
 		
 		val dslController1 = dslRuleMonitor.monitor.eContainer as DSLController
 		val dslController2 = dslRuleMonitor.analyzer.eContainer as DSLController
-	
 		var rules = dslRuleMonitor.eContainer.eContents.filter(DSLRuleController).toList
-		for (r : rules)
-			if (r.controller1 !== dslController1 || r.controller2 !== dslController2)
-				if (dslController1 !== dslController2)
-					error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Monitor)
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Analyzer)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleMonitor_Analyzer)	
+		}
 	}
+	
+	@Check
+	def checkAccessAnalyzer2Analyzer(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		val dslController1 = dslRuleAnalyzer.analyzer.eContainer as DSLController
+		val dslController2 = dslRuleAnalyzer.analyzer2.eContainer as DSLController
+		var rules = dslRuleAnalyzer.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)	
+		}
+	}
+	
+	@Check
+	def checkAccessAnalyzer2PlannerLoop(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		val dslController1 = dslRuleAnalyzer.analyzer.eContainer as DSLController
+		val dslController2 = dslRuleAnalyzer.planner.eContainer as DSLController
+		var rules = dslRuleAnalyzer.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)	
+		}
+	}
+	
+	@Check
+	def checkAccessAnalyzer2ExecutorLoop(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		val dslController1 = dslRuleAnalyzer.analyzer.eContainer as DSLController
+		val dslController2 = dslRuleAnalyzer.executor.eContainer as DSLController
+		var rules = dslRuleAnalyzer.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Analyzer2)	
+		}
+	}
+	
+	@Check
+	def checkAccessAnalyzer2Monitor(DSLRuleAnalyzer dslRuleAnalyzer){
+		
+		val dslController1 = dslRuleAnalyzer.analyzer.eContainer as DSLController
+		val dslController2 = dslRuleAnalyzer.monitor.eContainer as DSLController
+		var rules = dslRuleAnalyzer.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Monitor)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleAnalyzer_Monitor)	
+		}
+	}
+	
+	@Check
+	def checkAccessPlanner2Planner(DSLRulePlanner dslRulePlanner){
+		
+		val dslController1 = dslRulePlanner.planner.eContainer as DSLController
+		val dslController2 = dslRulePlanner.planner2.eContainer as DSLController
+		var rules = dslRulePlanner.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Planner2)	
+		}
+	}
+	
+	@Check
+	def checkAccessPlanner2Analyzer(DSLRulePlanner dslRulePlanner){
+		
+		val dslController1 = dslRulePlanner.planner.eContainer as DSLController
+		val dslController2 = dslRulePlanner.analyzer.eContainer as DSLController
+		var rules = dslRulePlanner.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Analyzer)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Analyzer)	
+		}
+	}
+	
+	@Check
+	def checkAccessPlanner2ExecutorLoop(DSLRulePlanner dslRulePlanner){
+		
+		val dslController1 = dslRulePlanner.planner.eContainer as DSLController
+		val dslController2 = dslRulePlanner.executor.eContainer as DSLController
+		var rules = dslRulePlanner.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Executor)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRulePlanner_Executor)	
+		}
+	}
+	
+	@Check
+	def checkAccessExecutor2Executor(DSLRuleExecutor dslRuleExecutor){
+		
+		val dslController1 = dslRuleExecutor.executor.eContainer as DSLController
+		val dslController2 = dslRuleExecutor.executor2.eContainer as DSLController
+		var rules = dslRuleExecutor.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Executor2)	
+		}
+	}
+	
+	@Check
+	def checkAccessExecutor2Analyzer(DSLRuleExecutor dslRuleExecutor){
+		
+		val dslController1 = dslRuleExecutor.executor.eContainer as DSLController
+		val dslController2 = dslRuleExecutor.analyzer.eContainer as DSLController
+		var rules = dslRuleExecutor.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Analyzer)	
+		}
+	}
+	
+	@Check
+	def checkAccessExecutor2Planner(DSLRuleExecutor dslRuleExecutor){
+		
+		val dslController1 = dslRuleExecutor.executor.eContainer as DSLController
+		val dslController2 = dslRuleExecutor.planner.eContainer as DSLController
+		var rules = dslRuleExecutor.eContainer.eContents.filter(DSLRuleController).toList
+		
+		if (rules.empty && dslController1 !== dslController2)
+			error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Planner)
+		else
+		{	
+			var rule = rules.findFirst[it.controller1 == dslController1 && it.controller2 == dslController2];
+			if (rule === null && dslController1 !== dslController2)
+				error("The " + dslController1.name +" does not have access to " + dslController2.name, SasDslPackage.eINSTANCE.DSLRuleExecutor_Planner)	
+		}
+	}
+
 }
 
