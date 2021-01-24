@@ -303,29 +303,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   String rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Analyzer");
                   boolean _equals = rule.equals("true");
                   if (_equals) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
-                      for (final DSLMonitor m : monitor) {
-                        for (final DSLAnalyzer a : analyzer) {
-                          {
-                            DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
-                            final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
-                              String _name = it.getName();
-                              String _name_1 = m.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
-                            final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
-                              String _name = it.getName();
-                              String _name_1 = a.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
-                            ruleMonitor.setMonitor(dslMonitor);
-                            ruleMonitor.setAnalyzer(dslAnalyzer);
-                            ruleMonitor.setAccess("must-use");
-                            this.withDomainRules.add(ruleMonitor);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
+                        for (final DSLMonitor m : monitor) {
+                          for (final DSLAnalyzer a : analyzer) {
+                            {
+                              DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                              final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                                String _name = it.getName();
+                                String _name_1 = m.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                              final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
+                                String _name = it.getName();
+                                String _name_1 = a.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
+                              ruleMonitor.setMonitor(dslMonitor);
+                              ruleMonitor.setAnalyzer(dslAnalyzer);
+                              ruleMonitor.setAccess("must-use");
+                              this.withDomainRules.add(ruleMonitor);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -335,29 +342,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Planner");
                   boolean _equals_1 = rule.equals("true");
                   if (_equals_1) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
-                      for (final DSLAnalyzer a_1 : analyzer) {
-                        for (final DSLPlanner p : planner) {
-                          {
-                            DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
-                            final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
-                              String _name = it.getName();
-                              String _name_1 = a_1.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
-                            final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
-                              String _name = it.getName();
-                              String _name_1 = p.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
-                            ruleAnalyzer.setAnalyzer(dslAnalyzer);
-                            ruleAnalyzer.setPlanner(dslPlanner);
-                            ruleAnalyzer.setAccess("must-use");
-                            this.withDomainRules.add(ruleAnalyzer);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
+                        for (final DSLAnalyzer a : analyzer) {
+                          for (final DSLPlanner p : planner) {
+                            {
+                              DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                              final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                                String _name = it.getName();
+                                String _name_1 = a.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                              final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
+                                String _name = it.getName();
+                                String _name_1 = p.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
+                              ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                              ruleAnalyzer.setPlanner(dslPlanner);
+                              ruleAnalyzer.setAccess("must-use");
+                              this.withDomainRules.add(ruleAnalyzer);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -367,29 +381,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Executor");
                   boolean _equals_2 = rule.equals("true");
                   if (_equals_2) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
-                      for (final DSLPlanner p_1 : planner) {
-                        for (final DSLExecutor e : executor) {
-                          {
-                            DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
-                            final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
-                              String _name = it.getName();
-                              String _name_1 = p_1.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
-                            final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
-                              String _name = it.getName();
-                              String _name_1 = e.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
-                            rulePlanner.setPlanner(dslPlanner);
-                            rulePlanner.setExecutor(dslExecutor);
-                            rulePlanner.setAccess("must-use");
-                            this.withDomainRules.add(rulePlanner);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
+                        for (final DSLPlanner p : planner) {
+                          for (final DSLExecutor e : executor) {
+                            {
+                              DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                              final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                                String _name = it.getName();
+                                String _name_1 = p.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                              final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
+                                String _name = it.getName();
+                                String _name_1 = e.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
+                              rulePlanner.setPlanner(dslPlanner);
+                              rulePlanner.setExecutor(dslExecutor);
+                              rulePlanner.setAccess("must-use");
+                              this.withDomainRules.add(rulePlanner);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -399,29 +420,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Knowledge");
                   boolean _equals_3 = rule.equals("true");
                   if (_equals_3) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
-                      for (final DSLMonitor m_1 : monitor) {
-                        for (final DSLKnowledge kn : knowledge) {
-                          {
-                            DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
-                            final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
-                              String _name = it.getName();
-                              String _name_1 = m_1.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
-                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                              String _name = it.getName();
-                              String _name_1 = kn.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                            ruleMonitor.setMonitor(dslMonitor);
-                            ruleMonitor.setKnowledge(dslKnowledge);
-                            ruleMonitor.setAccess("must-use");
-                            this.withDomainRules.add(ruleMonitor);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
+                        for (final DSLMonitor m : monitor) {
+                          for (final DSLKnowledge kn : knowledge) {
+                            {
+                              DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                              final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                                String _name = it.getName();
+                                String _name_1 = m.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                              final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                                String _name = it.getName();
+                                String _name_1 = kn.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                              ruleMonitor.setMonitor(dslMonitor);
+                              ruleMonitor.setKnowledge(dslKnowledge);
+                              ruleMonitor.setAccess("must-use");
+                              this.withDomainRules.add(ruleMonitor);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -432,19 +460,19 @@ public class SasDslGenerator extends AbstractGenerator {
                   boolean _equals_4 = rule.equals("true");
                   if (_equals_4) {
                     if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (knowledge.size() != 0))) {
-                      for (final DSLAnalyzer a_2 : analyzer) {
-                        for (final DSLKnowledge kn_1 : knowledge) {
+                      for (final DSLAnalyzer a : analyzer) {
+                        for (final DSLKnowledge kn : knowledge) {
                           {
                             DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
                             final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
                               String _name = it.getName();
-                              String _name_1 = a_2.getName();
+                              String _name_1 = a.getName();
                               return Boolean.valueOf((_name == _name_1));
                             };
                             DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
                             final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
                               String _name = it.getName();
-                              String _name_1 = kn_1.getName();
+                              String _name_1 = kn.getName();
                               return Boolean.valueOf((_name == _name_1));
                             };
                             DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
@@ -463,29 +491,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Knowledge");
                   boolean _equals_5 = rule.equals("true");
                   if (_equals_5) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
-                      for (final DSLPlanner p_2 : planner) {
-                        for (final DSLKnowledge kn_2 : knowledge) {
-                          {
-                            DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
-                            final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
-                              String _name = it.getName();
-                              String _name_1 = p_2.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
-                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                              String _name = it.getName();
-                              String _name_1 = kn_2.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                            rulePlanner.setPlanner(dslPlanner);
-                            rulePlanner.setKnowledge(dslKnowledge);
-                            rulePlanner.setAccess("must-use");
-                            this.withDomainRules.add(rulePlanner);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
+                        for (final DSLPlanner p : planner) {
+                          for (final DSLKnowledge kn_1 : knowledge) {
+                            {
+                              DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                              final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                                String _name = it.getName();
+                                String _name_1 = p.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                              final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                                String _name = it.getName();
+                                String _name_1 = kn_1.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                              rulePlanner.setPlanner(dslPlanner);
+                              rulePlanner.setKnowledge(dslKnowledge);
+                              rulePlanner.setAccess("must-use");
+                              this.withDomainRules.add(rulePlanner);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -495,29 +530,36 @@ public class SasDslGenerator extends AbstractGenerator {
                   rule = queryClass.getRuleIsActiveForGeneration("Executor", 8594, "Knowledge");
                   boolean _equals_6 = rule.equals("true");
                   if (_equals_6) {
-                    if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
-                      for (final DSLExecutor e_1 : executor) {
-                        for (final DSLKnowledge kn_3 : knowledge) {
-                          {
-                            DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
-                            final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
-                              String _name = it.getName();
-                              String _name_1 = e_1.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
-                            final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                              String _name = it.getName();
-                              String _name_1 = kn_3.getName();
-                              return Boolean.valueOf((_name == _name_1));
-                            };
-                            DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                            ruleExecutor.setExecutor(dslExecutor);
-                            ruleExecutor.setKnowledge(dslKnowledge);
-                            ruleExecutor.setAccess("must-use");
-                            this.withDomainRules.add(ruleExecutor);
+                    try {
+                      if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
+                        for (final DSLExecutor e : executor) {
+                          for (final DSLKnowledge kn_1 : knowledge) {
+                            {
+                              DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
+                              final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
+                                String _name = it.getName();
+                                String _name_1 = e.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
+                              final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                                String _name = it.getName();
+                                String _name_1 = kn_1.getName();
+                                return Boolean.valueOf((_name == _name_1));
+                              };
+                              DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                              ruleExecutor.setExecutor(dslExecutor);
+                              ruleExecutor.setKnowledge(dslKnowledge);
+                              ruleExecutor.setAccess("must-use");
+                              this.withDomainRules.add(ruleExecutor);
+                            }
                           }
                         }
+                      }
+                    } catch (final Throwable _t) {
+                      if (_t instanceof NullPointerException) {
+                      } else {
+                        throw Exceptions.sneakyThrow(_t);
                       }
                     }
                   }
@@ -636,29 +678,36 @@ public class SasDslGenerator extends AbstractGenerator {
               String rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Analyzer");
               boolean _equals = rule.equals("true");
               if (_equals) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
-                  for (final DSLMonitor m : monitor) {
-                    for (final DSLAnalyzer a : analyzer) {
-                      {
-                        DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
-                        final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
-                          String _name = it.getName();
-                          String _name_1 = m.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
-                        final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
-                          String _name = it.getName();
-                          String _name_1 = a.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
-                        ruleMonitor.setMonitor(dslMonitor);
-                        ruleMonitor.setAnalyzer(dslAnalyzer);
-                        ruleMonitor.setAccess("must-use");
-                        this.withDomainRules.add(ruleMonitor);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (analyzer.size() != 0))) {
+                    for (final DSLMonitor m : monitor) {
+                      for (final DSLAnalyzer a : analyzer) {
+                        {
+                          DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                          final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                            String _name = it.getName();
+                            String _name_1 = m.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                          final Function1<DSLAnalyzer, Boolean> _function_1 = (DSLAnalyzer it) -> {
+                            String _name = it.getName();
+                            String _name_1 = a.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function_1);
+                          ruleMonitor.setMonitor(dslMonitor);
+                          ruleMonitor.setAnalyzer(dslAnalyzer);
+                          ruleMonitor.setAccess("must-use");
+                          this.withDomainRules.add(ruleMonitor);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -668,29 +717,36 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Planner");
               boolean _equals_1 = rule.equals("true");
               if (_equals_1) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
-                  for (final DSLAnalyzer a_1 : analyzer) {
-                    for (final DSLPlanner p : planner) {
-                      {
-                        DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
-                        final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
-                          String _name = it.getName();
-                          String _name_1 = a_1.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
-                        final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
-                          String _name = it.getName();
-                          String _name_1 = p.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
-                        ruleAnalyzer.setAnalyzer(dslAnalyzer);
-                        ruleAnalyzer.setPlanner(dslPlanner);
-                        ruleAnalyzer.setAccess("must-use");
-                        this.withDomainRules.add(ruleAnalyzer);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (planner.size() != 0))) {
+                    for (final DSLAnalyzer a : analyzer) {
+                      for (final DSLPlanner p : planner) {
+                        {
+                          DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                          final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                            String _name = it.getName();
+                            String _name_1 = a.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                          final Function1<DSLPlanner, Boolean> _function_1 = (DSLPlanner it) -> {
+                            String _name = it.getName();
+                            String _name_1 = p.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function_1);
+                          ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                          ruleAnalyzer.setPlanner(dslPlanner);
+                          ruleAnalyzer.setAccess("must-use");
+                          this.withDomainRules.add(ruleAnalyzer);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -700,29 +756,36 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Executor");
               boolean _equals_2 = rule.equals("true");
               if (_equals_2) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
-                  for (final DSLPlanner p_1 : planner) {
-                    for (final DSLExecutor e : executor) {
-                      {
-                        DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
-                        final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
-                          String _name = it.getName();
-                          String _name_1 = p_1.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
-                        final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
-                          String _name = it.getName();
-                          String _name_1 = e.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
-                        rulePlanner.setPlanner(dslPlanner);
-                        rulePlanner.setExecutor(dslExecutor);
-                        rulePlanner.setAccess("must-use");
-                        this.withDomainRules.add(rulePlanner);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (executor.size() != 0))) {
+                    for (final DSLPlanner p : planner) {
+                      for (final DSLExecutor e : executor) {
+                        {
+                          DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                          final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                            String _name = it.getName();
+                            String _name_1 = p.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                          final Function1<DSLExecutor, Boolean> _function_1 = (DSLExecutor it) -> {
+                            String _name = it.getName();
+                            String _name_1 = e.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function_1);
+                          rulePlanner.setPlanner(dslPlanner);
+                          rulePlanner.setExecutor(dslExecutor);
+                          rulePlanner.setAccess("must-use");
+                          this.withDomainRules.add(rulePlanner);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -732,29 +795,36 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Monitor", 8594, "Knowledge");
               boolean _equals_3 = rule.equals("true");
               if (_equals_3) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
-                  for (final DSLMonitor m_1 : monitor) {
-                    for (final DSLKnowledge kn : knowledge) {
-                      {
-                        DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
-                        final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
-                          String _name = it.getName();
-                          String _name_1 = m_1.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
-                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                          String _name = it.getName();
-                          String _name_1 = kn.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                        ruleMonitor.setMonitor(dslMonitor);
-                        ruleMonitor.setKnowledge(dslKnowledge);
-                        ruleMonitor.setAccess("must-use");
-                        this.withDomainRules.add(ruleMonitor);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (monitor.size() != 0)) && (knowledge.size() != 0))) {
+                    for (final DSLMonitor m : monitor) {
+                      for (final DSLKnowledge kn : knowledge) {
+                        {
+                          DSLRuleMonitor ruleMonitor = SasDslFactory.eINSTANCE.createDSLRuleMonitor();
+                          final Function1<DSLMonitor, Boolean> _function = (DSLMonitor it) -> {
+                            String _name = it.getName();
+                            String _name_1 = m.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLMonitor dslMonitor = IterableExtensions.<DSLMonitor>findFirst(EcoreUtil2.<DSLMonitor>getAllContentsOfType(architecture, DSLMonitor.class), _function);
+                          final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                            String _name = it.getName();
+                            String _name_1 = kn.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                          ruleMonitor.setMonitor(dslMonitor);
+                          ruleMonitor.setKnowledge(dslKnowledge);
+                          ruleMonitor.setAccess("must-use");
+                          this.withDomainRules.add(ruleMonitor);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -764,29 +834,36 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Analyzer", 8594, "Knowledge");
               boolean _equals_4 = rule.equals("true");
               if (_equals_4) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (knowledge.size() != 0))) {
-                  for (final DSLAnalyzer a_2 : analyzer) {
-                    for (final DSLKnowledge kn_1 : knowledge) {
-                      {
-                        DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
-                        final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
-                          String _name = it.getName();
-                          String _name_1 = a_2.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
-                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                          String _name = it.getName();
-                          String _name_1 = kn_1.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                        ruleAnalyzer.setAnalyzer(dslAnalyzer);
-                        ruleAnalyzer.setKnowledge(dslKnowledge);
-                        ruleAnalyzer.setAccess("must-use");
-                        this.withDomainRules.add(ruleAnalyzer);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (analyzer.size() != 0)) && (knowledge.size() != 0))) {
+                    for (final DSLAnalyzer a : analyzer) {
+                      for (final DSLKnowledge kn : knowledge) {
+                        {
+                          DSLRuleAnalyzer ruleAnalyzer = SasDslFactory.eINSTANCE.createDSLRuleAnalyzer();
+                          final Function1<DSLAnalyzer, Boolean> _function = (DSLAnalyzer it) -> {
+                            String _name = it.getName();
+                            String _name_1 = a.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLAnalyzer dslAnalyzer = IterableExtensions.<DSLAnalyzer>findFirst(EcoreUtil2.<DSLAnalyzer>getAllContentsOfType(architecture, DSLAnalyzer.class), _function);
+                          final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                            String _name = it.getName();
+                            String _name_1 = kn.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                          ruleAnalyzer.setAnalyzer(dslAnalyzer);
+                          ruleAnalyzer.setKnowledge(dslKnowledge);
+                          ruleAnalyzer.setAccess("must-use");
+                          this.withDomainRules.add(ruleAnalyzer);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -796,29 +873,36 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Planner", 8594, "Knowledge");
               boolean _equals_5 = rule.equals("true");
               if (_equals_5) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
-                  for (final DSLPlanner p_2 : planner) {
-                    for (final DSLKnowledge kn_2 : knowledge) {
-                      {
-                        DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
-                        final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
-                          String _name = it.getName();
-                          String _name_1 = p_2.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
-                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                          String _name = it.getName();
-                          String _name_1 = kn_2.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                        rulePlanner.setPlanner(dslPlanner);
-                        rulePlanner.setKnowledge(dslKnowledge);
-                        rulePlanner.setAccess("must-use");
-                        this.withDomainRules.add(rulePlanner);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (planner.size() != 0)) && (knowledge.size() != 0))) {
+                    for (final DSLPlanner p : planner) {
+                      for (final DSLKnowledge kn : knowledge) {
+                        {
+                          DSLRulePlanner rulePlanner = SasDslFactory.eINSTANCE.createDSLRulePlanner();
+                          final Function1<DSLPlanner, Boolean> _function = (DSLPlanner it) -> {
+                            String _name = it.getName();
+                            String _name_1 = p.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLPlanner dslPlanner = IterableExtensions.<DSLPlanner>findFirst(EcoreUtil2.<DSLPlanner>getAllContentsOfType(architecture, DSLPlanner.class), _function);
+                          final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                            String _name = it.getName();
+                            String _name_1 = kn.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                          rulePlanner.setPlanner(dslPlanner);
+                          rulePlanner.setKnowledge(dslKnowledge);
+                          rulePlanner.setAccess("must-use");
+                          this.withDomainRules.add(rulePlanner);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
@@ -828,34 +912,44 @@ public class SasDslGenerator extends AbstractGenerator {
               rule = queryClass.getRuleIsActiveForGeneration("Executor", 8594, "Knowledge");
               boolean _equals_6 = rule.equals("true");
               if (_equals_6) {
-                if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
-                  for (final DSLExecutor e_1 : executor) {
-                    for (final DSLKnowledge kn_3 : knowledge) {
-                      {
-                        DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
-                        final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
-                          String _name = it.getName();
-                          String _name_1 = e_1.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
-                        final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
-                          String _name = it.getName();
-                          String _name_1 = kn_3.getName();
-                          return Boolean.valueOf((_name == _name_1));
-                        };
-                        DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
-                        ruleExecutor.setExecutor(dslExecutor);
-                        ruleExecutor.setKnowledge(dslKnowledge);
-                        ruleExecutor.setAccess("must-use");
-                        this.withDomainRules.add(ruleExecutor);
+                try {
+                  if (((con.getDomain().getValue().equals("withDomainRules") && (executor.size() != 0)) && (knowledge.size() != 0))) {
+                    for (final DSLExecutor e : executor) {
+                      for (final DSLKnowledge kn : knowledge) {
+                        {
+                          DSLRuleExecutor ruleExecutor = SasDslFactory.eINSTANCE.createDSLRuleExecutor();
+                          final Function1<DSLExecutor, Boolean> _function = (DSLExecutor it) -> {
+                            String _name = it.getName();
+                            String _name_1 = e.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLExecutor dslExecutor = IterableExtensions.<DSLExecutor>findFirst(EcoreUtil2.<DSLExecutor>getAllContentsOfType(architecture, DSLExecutor.class), _function);
+                          final Function1<DSLKnowledge, Boolean> _function_1 = (DSLKnowledge it) -> {
+                            String _name = it.getName();
+                            String _name_1 = kn.getName();
+                            return Boolean.valueOf((_name == _name_1));
+                          };
+                          DSLKnowledge dslKnowledge = IterableExtensions.<DSLKnowledge>findFirst(EcoreUtil2.<DSLKnowledge>getAllContentsOfType(architecture, DSLKnowledge.class), _function_1);
+                          ruleExecutor.setExecutor(dslExecutor);
+                          ruleExecutor.setKnowledge(dslKnowledge);
+                          ruleExecutor.setAccess("must-use");
+                          this.withDomainRules.add(ruleExecutor);
+                        }
                       }
                     }
+                  }
+                } catch (final Throwable _t) {
+                  if (_t instanceof NullPointerException) {
+                  } else {
+                    throw Exceptions.sneakyThrow(_t);
                   }
                 }
               }
               level1++;
               this.depth.set(1, level1);
+              this.depth.set(2, Integer.valueOf(0));
+              this.depth.set(3, Integer.valueOf(0));
+              this.depth.set(4, Integer.valueOf(0));
             }
           }
           level0++;
