@@ -1015,13 +1015,20 @@ public class SasDslGenerator extends AbstractGenerator {
       int rPlanner = 0;
       int rExecutor = 0;
       int rMO = 0;
-      String relation = ((((((" relation=\'//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
+      String relation = (((((((((((((" relation=\'//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
         "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.1 ") + 
         "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.2 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.3 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.4 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.5 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.6 ") + 
+        "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.7 ") + 
         "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 ") + 
         "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 ") + 
         "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2\' ") + 
-        "density=\'6\'/> \n");
+        "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.3\' ") + 
+        "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.4\' ") + 
+        "density=\'13\'/> \n");
       rule.addAll(this.withDomainRules);
       this.withDomainRules.clear();
       for (int i = 0; (i < rule.size()); i++) {
@@ -3247,6 +3254,12 @@ public class SasDslGenerator extends AbstractGenerator {
     _builder.append("\t        \t");
     _builder.append("<codeRelation xsi:type=\"code:HasValue\"/>");
     _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<codeRelation xsi:type=\"code:Imports\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<codeRelation xsi:type=\"code:HasType\"/>");
+    _builder.newLine();
     _builder.append("\t      \t");
     _builder.append("</codeElement>");
     _builder.newLine();
@@ -3261,6 +3274,21 @@ public class SasDslGenerator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("\t        \t");
     _builder.append("<actionRelation xsi:type=\"action:Creates\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<actionRelation xsi:type=\"action:ExceptionFlow\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<actionRelation xsi:type=\"action:Throws\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<actionRelation xsi:type=\"action:Addresses\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<actionRelation xsi:type=\"action:Writes\"/>");
+    _builder.newLine();
+    _builder.append("\t        \t");
+    _builder.append("<actionRelation xsi:type=\"action:Reads\"/>");
     _builder.newLine();
     _builder.append("\t    \t");
     _builder.append("</codeElement>");

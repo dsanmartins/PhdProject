@@ -827,10 +827,17 @@ class SasDslGenerator extends AbstractGenerator {
 		var relation = " relation='//@model.0/@codeElement.0/@codeElement.1/@actionRelation.0 " + 
 							      "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.1 " +
 								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.2 " + 
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.3 " + 
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.4 " + 
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.5 " + 
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.6 " + 
+								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.7 " +
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 " + 
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 " +
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2' " +
-								  "density='6'/> \n"
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.3' " +
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.4' " +
+								  "density='13'/> \n"
 		rule.addAll(withDomainRules)
 		withDomainRules.clear
 		for (var i=0; i< rule.size ; i++){
@@ -2032,11 +2039,18 @@ class SasDslGenerator extends AbstractGenerator {
 			       		<codeRelation xsi:type="code:Extends"/>
 			       		<codeRelation xsi:type="code:Implements"/>
 			        	<codeRelation xsi:type="code:HasValue"/>
+			        	<codeRelation xsi:type="code:Imports"/>
+			        	<codeRelation xsi:type="code:HasType"/>
 			      	</codeElement>
 					<codeElement xsi:type="action:ActionElement" name="actionElement Instance">
 			        	<actionRelation xsi:type="action:Calls"/>
 			        	<actionRelation xsi:type="action:UsesType"/>
 			        	<actionRelation xsi:type="action:Creates"/>
+			        	<actionRelation xsi:type="action:ExceptionFlow"/>
+			        	<actionRelation xsi:type="action:Throws"/>
+			        	<actionRelation xsi:type="action:Addresses"/>
+			        	<actionRelation xsi:type="action:Writes"/>
+			        	<actionRelation xsi:type="action:Reads"/>
 			    	</codeElement>
 				</codeElement>
 			</model>

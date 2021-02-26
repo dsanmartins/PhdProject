@@ -4,10 +4,12 @@ Bundle-Name: Annotations
 Bundle-SymbolicName: br.ufscar.sas.annotations
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: br.ufscar.sas.annotations.Activator
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.modisco.omg.kdm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: br.ufscar.SaS.annotations
 Bundle-ActivationPolicy: lazy
-Export-Package: br.ufscar.sas.database
+Export-Package: br.ufscar.sas.database,
+ br.ufscar.sas.model
 Bundle-ClassPath: lib/sqlite-jdbc-3.23.1.jar,
  .

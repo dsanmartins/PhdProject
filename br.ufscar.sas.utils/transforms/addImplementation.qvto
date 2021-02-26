@@ -1,0 +1,250 @@
+modeltype kdm "strict" uses kdm('http://www.eclipse.org/MoDisco/kdm/kdm');
+modeltype code "strict" uses code('http://www.eclipse.org/MoDisco/kdm/code');
+modeltype core "strict" uses core('http://www.eclipse.org/MoDisco/kdm/core');
+modeltype action "strict" uses action('http://www.eclipse.org/MoDisco/kdm/action');
+modeltype source "strict" uses source('http://www.eclipse.org/MoDisco/kdm/source');
+modeltype structure "strict" uses structure('http://www.eclipse.org/MoDisco/kdm/structure');
+
+transformation addImplement(inout sourceModel:kdm);
+
+configuration property abstraction: String;  
+configuration property abstractionType: String; 
+configuration property codeElement: String;  
+configuration property elementType: String; 
+configuration property elementPath: String; 
+
+main() {
+
+	 --code Elements
+	 if (abstractionType.equalsIgnoreCase("component"))
+	 {
+	 	sourceModel.objectsOfType(Component)-> map addImplementationComponent();
+	 }
+	 elif (abstractionType.equalsIgnoreCase("subsystem")){
+	 	
+	 	sourceModel.objectsOfType(Subsystem)-> map addImplementationSubsystem();
+	 }
+}
+
+mapping Component::addImplementationComponent():Component when {self.name = abstraction}{
+	init{
+	
+		if (elementType.equalsIgnoreCase("package")) {
+		
+			var pk : Package := getPackage(codeElement);
+			var path: String := getCompletePath(pk);
+			path := path + codeElement;
+			
+			
+			
+			if (path.equalsIgnoreCase(elementPath))
+			{
+				result := self->forOne(r){
+					r.implementation +=getPackage(codeElement);
+				}
+			}
+		}
+		elif (elementType.equalsIgnoreCase("class")){
+			
+			var class_:ClassUnit := getClass(codeElement);
+			var path:String := getCompletePath(class_);
+			path := path + codeElement;
+			
+			if (path.equalsIgnoreCase(elementPath))
+			{
+				result := self->forOne(r){
+					r.implementation +=getClass(codeElement);
+				}
+			}
+		}
+		elif (elementType.equalsIgnoreCase("interface")){
+			
+			var class_:InterfaceUnit := getInterface(codeElement);
+			var path:String := getCompletePath(class_);
+			path := path + codeElement;
+			
+			if (path.equalsIgnoreCase(elementPath))
+			{
+				result := self->forOne(r){
+					r.implementation +=getInterface(codeElement);
+				}
+			}
+		}
+		elif (elementType.equalsIgnoreCase("method")){
+			
+			var method:MethodUnit := getMethod(codeElement);
+			var path:String := getCompletePath(method);
+			path := path + codeElement;
+			
+			if (path.equalsIgnoreCase(elementPath))
+			{
+				result := self->forOne(r){
+					r.implementation +=getMethod(codeElement);
+				}
+			}
+		}
+		elif (elementType.equalsIgnoreCase("variable") or elementType.equalsIgnoreCase("field")){
+			
+			var varOrField:StorableUnit := getVariable(codeElement);
+			var path:String := getCompletePath(varOrField);
+			path := path + codeElement;
+			
+			if (path.equalsIgnoreCase(elementPath))
+			{
+				result := self->forOne(r){
+					r.implementation +=getVariable(codeElement);
+				}
+			}
+		}
+	}
+}
+
+mapping Subsystem::addImplementationSubsystem():Subsystem when {self.name = abstraction}{
+	init{
+	
+		if (elementType.equalsIgnoreCase("package")) {
+			result := self->forOne(r){
+				r.implementation +=getPackage(codeElement);
+			}
+		}
+		elif (elementType.equalsIgnoreCase("class")){
+			
+			result := self->forOne(r){
+				r.implementation +=getClass(codeElement);
+			}
+		}
+		elif (elementType.equalsIgnoreCase("interface")){
+			
+			result := self->forOne(r){
+				r.implementation +=getInterface(codeElement);
+			}
+		}
+		elif (elementType.equalsIgnoreCase("method")){
+			
+			result := self->forOne(r){
+				r.implementation +=getMethod(codeElement);
+			}
+		}
+		elif (elementType.equalsIgnoreCase("variable") or elementType.equalsIgnoreCase("field")){
+			
+			result := self->forOne(r){
+				r.implementation +=getVariable(codeElement);
+			}
+		}
+	}
+}
+
+query getPackage(name:String):Package {
+	
+	var packageName : String := name;
+	var pkg:Package:= null;
+	
+	sourceModel.objectsOfType(Package) -> forEach(r){
+			
+			if (packageName.equalsIgnoreCase(r.name))
+			{
+				pkg := r;
+				break;
+			};	
+	};
+	return pkg;
+} 
+
+query getClass(name:String):ClassUnit {
+	
+	var className : String := name;
+	var class_:ClassUnit:= null;
+	
+	sourceModel.objectsOfType(ClassUnit) -> forEach(r){
+			
+			if (className.equalsIgnoreCase(r.name))
+			{
+				class_ := r;
+				break;
+			};	
+	};
+	return class_;
+} 
+
+query getInterface(name:String):InterfaceUnit {
+	
+	var interfaceName : String := name;
+	var class_:InterfaceUnit:= null;
+	
+	sourceModel.objectsOfType(InterfaceUnit) -> forEach(r){
+			
+			if (interfaceName.equalsIgnoreCase(r.name))
+			{
+				class_ := r;
+				break;
+			};	
+	};
+	return class_;
+} 
+
+query getMethod(name:String):MethodUnit {
+	
+	var methodName : String := name;
+	var method:MethodUnit:= null;
+	
+	sourceModel.objectsOfType(MethodUnit) -> forEach(r){
+			
+			if (methodName.equalsIgnoreCase(r.name))
+			{
+				method := r;
+				break;
+			};	
+	};
+	return method;
+} 
+
+
+query getVariable(name:String):StorableUnit {
+	
+	var variableName : String := name;
+	var variable:StorableUnit:= null;
+	
+	sourceModel.objectsOfType(StorableUnit) -> forEach(r){
+			
+			if (variableName.equalsIgnoreCase(r.name))
+			{
+				variable := r;
+				break;
+			};	
+	};
+	return variable;
+} 
+
+query getCompletePath(elementInput:Element): String{
+	
+	var name_:String := "";
+	var element:Element := elementInput;
+	
+	while (not element.oclIsTypeOf(CodeModel)){
+		
+		element := element.container().oclAsType(Element);
+		if (element.oclIsTypeOf(MethodUnit)){
+				
+			name_:= element.oclAsType(MethodUnit).name + "." + name_;	
+			
+		}
+		elif (element.oclIsTypeOf(ClassUnit)){
+			
+			name_:= element.oclAsType(ClassUnit).name + "." + name_;	
+		}
+		elif (element.oclIsTypeOf(InterfaceUnit)){
+			
+			name_:= element.oclAsType(InterfaceUnit).name + "." + name_;	
+		}
+		elif (element.oclIsTypeOf(Package)){
+			
+			name_:= element.oclAsType(Package).name + "." + name_;	
+		}
+		elif (element.oclAsType(StorableUnit))
+		{
+			name_:= element.oclAsType(StorableUnit).name + "." + name_;	
+		}
+	};
+	return name_;
+}
+

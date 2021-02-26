@@ -7,10 +7,21 @@ Bundle-Activator: br.ufscar.sas.utils.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.aspectj.runtime,
+ org.eclipse.m2m.qvt.oml,
  org.eclipse.emf.ecore
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: br.ufscar.sas.database, br.ufscar.sas.view
+Import-Package: br.ufscar.sas.database,
+ br.ufscar.sas.model,
+ br.ufscar.sas.view,
+ org.eclipse.core.commands,
+ org.eclipse.modisco.omg.kdm.action,
+ org.eclipse.modisco.omg.kdm.code,
+ org.eclipse.modisco.omg.kdm.core,
+ org.eclipse.modisco.omg.kdm.kdm,
+ org.eclipse.modisco.omg.kdm.structure,
+ org.eclipse.modisco.omg.kdm.structure.impl,
+ org.eclipse.ui.plugin
 Export-Package: br.ufscar.sas.aspects;aspects="UtilsKDM"
 Eclipse-SupplementBundle: br.ufscar.sas.re
 Bundle-ClassPath: lib/BaseX853.jar, lib/javaparser-core-3.6.2.jar, lib/guava-23.0.jar,

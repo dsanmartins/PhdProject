@@ -1,0 +1,108 @@
+modeltype kdm "strict" uses kdm('http://www.eclipse.org/MoDisco/kdm/kdm');
+modeltype code "strict" uses code('http://www.eclipse.org/MoDisco/kdm/code');
+modeltype core "strict" uses core('http://www.eclipse.org/MoDisco/kdm/core');
+modeltype action "strict" uses action('http://www.eclipse.org/MoDisco/kdm/action');
+modeltype source "strict" uses source('http://www.eclipse.org/MoDisco/kdm/source');
+modeltype structure "strict" uses structure('http://www.eclipse.org/MoDisco/kdm/structure');
+
+transformation addAggregated(inout sourceModel:kdm);
+
+configuration property relationship: Set(KDMRelationship);   
+configuration property abstractionType: String; 
+configuration property abstractionFrom: String;
+configuration property abstractionTo: String;  
+
+main() {
+
+	if (abstractionType.equalsIgnoreCase("component"))
+	{
+	 	sourceModel.objectsOfType(Component)-> map aggregatedComponent();
+	 }
+	elif (abstractionType.equalsIgnoreCase("subsystem")){
+		sourceModel.objectsOfType(Subsystem)-> map aggregatedSubsystem();
+	}
+}
+
+mapping Component::aggregatedComponent():Component when {self.name = abstractionFrom }{
+	
+	init{
+	
+		var found:Boolean = false; 
+		result := self->forEach(a){
+		
+			a.aggregated -> forEach(b){
+				
+				if (b._from.name.equalsIgnoreCase(abstractionFrom) and b.to.name.equalsIgnoreCase(abstractionTo)){
+					b.relation += relationship;
+					b.density := b.relation->size();
+					found := true;
+				};
+			};	
+		
+			if (found = false){
+				
+				a.aggregated +=object AggregatedRelationship{
+					_from:=getKDMEntity(abstractionFrom);
+					to:=getKDMEntity(abstractionTo);
+					relation += relationship;
+					density := relation->size();
+				};
+			}
+		}
+	}
+}
+
+mapping Subsystem::aggregatedSubsystem():Subsystem when {self.name = abstractionFrom }{
+	
+	init{
+	
+		var found:Boolean = false; 
+		result := self->forEach(a){
+		
+			a.aggregated -> forEach(b){
+				
+				if (b._from.name.equalsIgnoreCase(abstractionFrom) and b.to.name.equalsIgnoreCase(abstractionTo)){
+					b.relation += relationship;
+					b.density := b.relation->size();
+					found := true;
+				};
+			};	
+		
+			if (found = false){
+				
+				a.aggregated +=object AggregatedRelationship{
+					_from:=getKDMEntity(abstractionFrom);
+					to:=getKDMEntity(abstractionTo);
+					relation += relationship;
+					density := relation->size();
+				};
+			}
+		}
+	}
+}
+
+query getKDMEntity(name:String):KDMEntity {
+	
+	var abstractionName : String := name;
+	var abstraction:KDMEntity:= null;
+	
+	sourceModel.objectsOfType(Component) -> forEach(r){
+			
+			if (abstractionName.equalsIgnoreCase(r.name))
+			{
+				abstraction := r;
+				break;
+			};	
+	};
+	
+	sourceModel.objectsOfType(Subsystem) -> forEach(r){
+			
+			if (abstractionName.equalsIgnoreCase(r.name))
+			{
+				abstraction := r;
+				break;
+			};	
+	};
+	
+	return abstraction;
+}  

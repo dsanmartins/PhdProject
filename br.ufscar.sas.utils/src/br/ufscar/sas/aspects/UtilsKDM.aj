@@ -6,12 +6,15 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ocl.ParserException;
 import org.xml.sax.SAXException;
 
-import br.ufscar.sas.modisco.AddAbstractionTag;
 import br.ufscar.sas.modisco.AddNamespaces;
 import br.ufscar.sas.modisco.GenerateStereotype;
 import br.ufscar.sas.modisco.GenerateStructure;
@@ -30,6 +33,11 @@ public aspect UtilsKDM {
 		String path = folder + "/" + javaProjectName +"/";
 		String file = javaProjectName + "_KDM" + ".xmi";
 		String dbName = javaProjectName + "_KDM";
+		IWorkspaceRoot root = workspace.getRoot();
+		IProject project  = root.getProject(javaProjectName);
+		IFile kdmCurrent = project.getFile(javaProjectName + "_KDM.xmi");
+		
+		
 		//String fileRefactored = javaProjectName + "_REFACTORED_KDM" + ".xmi";
 		//String dbNameRefactored = javaProjectName + "_REFACTORED_KDM";
 		
@@ -42,15 +50,6 @@ public aspect UtilsKDM {
 		//gr.generator(path, file, dbName);
 		//gr.generator(path, fileRefactored, dbNameRefactored);
 		//System.out.println("************* END ADDING RETURN TO KDM *************");
-		System.out.println("************* START ADD ABSTRACTION CODE ELEMENT *************");
-		AddAbstractionTag addAbsTag = new AddAbstractionTag();
-		addAbsTag.generator(path,file,dbName);
-		try {addAbsTag.updatePackageWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
-		try {addAbsTag.updateClassWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
-		try {addAbsTag.updateFieldWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
-		try {addAbsTag.updateMethodWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
-		try {addAbsTag.updateVariableMethodWithAbstraction(path,file,dbName);} catch (Exception e1) {e1.printStackTrace();}
-		System.out.println("************* END ADD ABSTRACTION CODE ELEMENT *************");
 		System.out.println("************* START EDITING SOURCE REGION *************");
 		//SourceRegion sourceRegion = new SourceRegion();
 		//sourceRegion.statementsByLine(new File(path));
@@ -64,14 +63,9 @@ public aspect UtilsKDM {
 		generateStructure.createModel(new File(path),file,dbName, path);
 		System.out.println("************* END GENERATE STRUCTURE *************");
 		System.out.println("************* START GENERATE STRUCTURE ELEMENTS *************");
-		try {generateStructure.discoverRelationShip(new File(path), path);} catch (Exception e) {e.printStackTrace();}
-		generateStructure.annotationPackage(new File(path), path);
-		generateStructure.annotationClass(new File(path),path);
-		generateStructure.annotationFieldClass(new File(path),path);
-		generateStructure.annotationMethod(new File(path),path);
-		generateStructure.annotationVariable(new File(path),path);
-		try {generateStructure.addAggregatedRelationShip(new File(path),path);} catch (Exception e) {e.printStackTrace();} 
-		System.out.println("************* END GENERATE STRUCTURE ELEMENTS *************");
-				
+		generateStructure.mapping(kdmCurrent,path);
+		try {generateStructure.relationshipsSubsystem(kdmCurrent,path);} catch (ParserException e1) {e1.printStackTrace();} catch (IOException e1) {e1.printStackTrace();} catch (Exception e) {e.printStackTrace();}
+		try {generateStructure.relationshipsComponent(kdmCurrent,path);} catch (ParserException e1) {e1.printStackTrace();} catch (IOException e1) {e1.printStackTrace();} catch (Exception e) {e.printStackTrace();}
+		System.out.println("************* END GENERATE STRUCTURE ELEMENTS *************");	
 	}
 }

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import br.ufscar.sas.model.CodeClass;
+import br.ufscar.sas.model.CodeField;
+import br.ufscar.sas.model.CodeMethod;
+import br.ufscar.sas.model.CodePackage;
+import br.ufscar.sas.model.CodeVariable;
+
 public class QueryClass {
 
 	String projectName;
@@ -401,61 +407,137 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
-	public List<String> getPackageAnnotations() throws Exception
+	public List<CodePackage> getPackageAnnotations() throws Exception
 	{
-		List<String> lst = new ArrayList<String>();
+		List<CodePackage> lst = new ArrayList<CodePackage>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select * from package_annotation ;");		
+		ResultSet rs = mydb.executeQry("select a.project_name, a.name, a.file, a.annotation, b.abstraction_id "
+				+ "from package_annotation a inner join instances b on a.annotation = b.annotation;\n" + 
+				" ;");		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString());
+			
+			String packages[] = rs.getObject(2).toString().split(Pattern.quote("."));
+			CodePackage codePackage = new CodePackage(rs.getObject(1).toString(), 
+													  rs.getObject(2).toString(),
+													  packages[packages.length-1], 
+													  rs.getObject(4).toString(),
+													  (Integer) rs.getObject(5));
+					
+			
+			lst.add(codePackage);
 		}
 		mydb.closeConnection();
 		return lst;
 	}
 
-	public List<String> getClassAnnotations() throws Exception
+	public List<CodeClass> getClassAnnotations() throws Exception
 	{
-		List<String> lst = new ArrayList<String>();
+		List<CodeClass> lst = new ArrayList<CodeClass>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select * from class_annotation ;");		
+		ResultSet rs = mydb.executeQry("select a.project_name, a.package_name, a.name, a.file, a.annotation, a.belongs, b.abstraction_id "
+				+ "from class_annotation a inner join instances b on a.annotation = b.annotation;\n");		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
+			
+			CodeClass codeClass = new CodeClass(rs.getObject(1).toString(),
+												rs.getObject(2).toString(),
+												rs.getObject(3).toString(),
+												rs.getObject(5).toString(),
+												(Integer) rs.getObject(7));
+			
+			lst.add(codeClass);
 		}
 		mydb.closeConnection();
 		return lst;
 	}
 
-	public List<String> getFieldClassAnnotations() throws Exception
+	public List<CodeField> getFieldClassAnnotations() throws Exception
 	{
-		List<String> lst = new ArrayList<String>();
+		List<CodeField> lst = new ArrayList<CodeField>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select * from field_annotation ;");		
+		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.field_name, a.file, a.annotation, a.belongs, b.abstraction_id "
+				+ "from field_annotation a inner join instances b on a.annotation = b.annotation;\n" );		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
+			
+			String packages = rs.getObject(4).toString().split("\\/src/")[1];
+			String packageCode[] = packages.split("\\/");
+			String fieldPath = "";
+			for (int i=0; i<packageCode.length-1; i++)
+			{
+				if (i==0)
+					fieldPath = fieldPath + packageCode[i] ;
+				else 
+					fieldPath = fieldPath + "." + packageCode[i] ;
+			}
+
+			CodeField codeField = new CodeField(rs.getObject(1).toString(),
+												fieldPath, 
+												rs.getObject(2).toString(), 
+												rs.getObject(3).toString(), 
+												rs.getObject(5).toString(), 
+												(Integer) rs.getObject(7));
+			lst.add(codeField);
 		}
 		mydb.closeConnection();
 		return lst;
 	}
 
-	public List<String> getMethodAnnotations() throws Exception
+	public List<CodeMethod> getMethodAnnotations() throws Exception
 	{
-		List<String> lst = new ArrayList<String>();
+		List<CodeMethod> lst = new ArrayList<CodeMethod>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select * from method_annotation ;");		
+		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.method_name, a.file, a.annotation, a.belongs, b.abstraction_id "
+				+ "from method_annotation a inner join instances b on a.annotation = b.annotation;\n");		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
+			
+			String packages = rs.getObject(4).toString().split("\\/src/")[1];
+			String packageCode[] = packages.split("\\/");
+			String fieldPath = "";
+			for (int i=0; i<packageCode.length-1; i++)
+			{
+				if (i==0)
+					fieldPath = fieldPath + packageCode[i] ;
+				else 
+					fieldPath = fieldPath + "." + packageCode[i] ;
+			}
+
+			CodeMethod codeMethod = new CodeMethod(rs.getObject(1).toString(),
+												fieldPath, 
+												rs.getObject(2).toString(), 
+												rs.getObject(3).toString(), 
+												rs.getObject(5).toString(), 
+												(Integer) rs.getObject(7));
+			lst.add(codeMethod);
 		}
 		mydb.closeConnection();
 		return lst;
 	}
 
-	public List<String> getVariableAnnotations() throws Exception
+	public List<CodeVariable> getVariableAnnotations() throws Exception
 	{
-		List<String> lst = new ArrayList<String>();
+		List<CodeVariable> lst = new ArrayList<CodeVariable>();
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select * from variable_annotation ;");		
+		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.method_name, a.variable_name, a.file, a.annotation, a.belongs, b.abstraction_id "
+				+ "from variable_annotation a inner join instances b on a.annotation = b.annotation;");		
 		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString()+"|"+rs.getObject(6).toString());
+			
+			String packages = rs.getObject(5).toString().split("\\/src/")[1];
+			String packageCode[] = packages.split("\\/");
+			String fieldPath = "";
+			for (int i=0; i<packageCode.length-1; i++)
+			{
+				if (i==0)
+					fieldPath = fieldPath + packageCode[i] ;
+				else 
+					fieldPath = fieldPath + "." + packageCode[i] ;
+			}
+			
+			CodeVariable codeVariable = new CodeVariable(rs.getObject(1).toString(),
+														 fieldPath, rs.getObject(2).toString(),
+														 rs.getObject(3).toString(), 
+														 rs.getObject(4).toString(), 
+														 rs.getObject(6).toString(), 
+														 (Integer) rs.getObject(8));
+			lst.add(codeVariable);
 		}
 		mydb.closeConnection();
 		return lst;
