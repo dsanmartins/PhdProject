@@ -298,6 +298,35 @@ public class GenerateStructure {
 				}
 			}
 			lst5.clear();
+			
+			//Interface 
+			List<CodeClass> lst6 = queryClass.getInterfaceAnnotations();
+
+			for (CodeClass data: lst6)
+			{
+
+				String abstraction = data.getMapping();
+				String abstractionType = "";
+				String codeElement = data.getName();
+				String elementType = "interface";
+				String packages = data.getPackage_();
+				String classPath = "";
+
+				classPath = packages + "." + codeElement;
+
+				if (data.getIdAbstraction() ==1 || data.getIdAbstraction() ==2)
+					abstractionType = "subsystem";
+				else
+					abstractionType = "component";
+
+				if (!abstraction.equals("None"))
+				{
+					AddImplementation addImplementation = new AddImplementation(abstraction, abstractionType, codeElement, elementType, classPath);
+					addImplementation.createStructureModel(kdm);
+				}
+			}
+			lst5.clear();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -580,8 +609,8 @@ public class GenerateStructure {
 									List<Imports> toImports 				= this.getImports(interfaceUnit);
 									List<HasType> toHasType 				= this.getHasType(interfaceUnit);
 
-									//this.createRelationShip(toCalls,toUsesType,toCreates,toExceptionFlow,toThrows,toAddresses,toWrites,			
-									//		toReads,toHasValue,toExtends,toImplements,toImports,toHasType,component.get(i),interfaceUnit,databasePath,kdm);
+									this.createRelationShip(toCalls,toUsesType,toCreates,toExceptionFlow,toThrows,toAddresses,toWrites,			
+											toReads,toHasValue,toExtends,toImplements,toImports,toHasType,c,interfaceUnit,databasePath,kdm);
 								}
 							}
 						}
@@ -807,6 +836,7 @@ public class GenerateStructure {
 		QueryClass query = new QueryClass(databasePath);
 		List<CodePackage> package_ = query.getPackageAnnotations();
 		List<CodeClass> class_ = query.getClassAnnotations();
+		class_.addAll(query.getInterfaceAnnotations());
 		List<CodeField> field = query.getFieldClassAnnotations();
 		List<CodeMethod> method = query.getMethodAnnotations();
 		List<CodeVariable> variable = query.getVariableAnnotations();
@@ -2166,6 +2196,7 @@ public class GenerateStructure {
 			AddAggregated aggregated = new AddAggregated(abstraction, filteredPackage.get(i).getMapping(), filteredPackage.get(i).getKdmType());
 			aggregated.aggregated(kdm);
 		}
+
 
 		for (int i=0; i< filteredClass.size(); i++){
 

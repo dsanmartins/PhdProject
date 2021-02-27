@@ -1,9 +1,11 @@
 package br.ufscar.sas.view;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -335,18 +337,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 				QueryClass queryClass = null;
 
-				try {
-					queryClass = new QueryClass(databaseUrl);
-					queryClass.deleteInstance();
-				}
-				catch(Exception exception)
-				{
-					exception.printStackTrace();
-				}
-
-
 				if(Files.exists(Paths.get(architecture.getLocationURI()))) { 
 					try {
+						queryClass = new QueryClass(databaseUrl);
+						queryClass.deleteInstance();
 						List<String> specification = Files.readAllLines(Paths.get(architecture.getLocationURI()));
 						specification.remove(0);
 						for (String line : specification) {
@@ -402,14 +396,13 @@ public class MainView extends ViewPart implements IPartListener2 {
 							int totalUnitsOfWork = IProgressMonitor.UNKNOWN;
 
 							try {
-								QueryClass queryClass1 = new QueryClass(databaseUrl);
-								queryClass1.variableBelongsTo();
-								QueryClass queryClass2 = new QueryClass(databaseUrl);
-								queryClass2.fieldBelongsTo();
-								QueryClass queryClass3 = new QueryClass(databaseUrl);
-								queryClass3.methodBelongsTo();
-								QueryClass queryClass4 = new QueryClass(databaseUrl);
-								queryClass4.classBelongsTo();
+								QueryClass queryClass = new QueryClass(databaseUrl);
+								queryClass.deleteBelongsTo();
+								queryClass.variableBelongsTo();
+								queryClass.fieldBelongsTo();
+								queryClass.methodBelongsTo();
+								queryClass.classBelongsTo();
+								queryClass.interfaceBelongsTo();
 
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
@@ -1362,6 +1355,25 @@ public class MainView extends ViewPart implements IPartListener2 {
 			if (resource != null) {
 				if (resource.getLocation().toOSString().split("\\.")[1].equals("java")) {
 
+					
+					Pattern patternInterface = Pattern.compile("(?:((?:public|protected|private|abstract|static|strictfp|@[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)(?:[ \\t\\f\\r\\n]*+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))(?:public|protected|private|abstract|static|strictfp|@[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))*+)[ \\t\\f\\r\\n]*+)?+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))interface[ \\t\\f\\r\\n]++(\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)[ \\t\\f\\r\\n]*+(?:(<[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]++extends[ \\t\\f\\r\\n]++(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+|\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))?+(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]++extends[ \\t\\f\\r\\n]++(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+|\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))?+)*+[ \\t\\f\\r\\n]*+>)[ \\t\\f\\r\\n]*+)?+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))(?:(extends[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+)*+)[ \\t\\f\\r\\n]*+)?+[{]");
+					String content= "";
+					try {
+							content = this.readFile(resource.getLocation().toOSString());
+						} catch (IOException e2) {
+						
+						e2.printStackTrace();
+					}
+					
+					boolean b = false;
+					Matcher m = patternInterface.matcher(content);
+					while (m.find())
+					{
+						if (m.group(0).contains("interface"))
+							b = true;
+							
+					}
+					
 					//Package Name
 					CriptoBase64 criptoBase64 = new CriptoBase64();
 					String pathCode = criptoBase64.codeBase64Path(resource.getLocation().toOSString().split("\\.")[0]);
@@ -1403,7 +1415,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 						queryClass = new QueryClass(databaseUrl);
 						String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
 						String realPath = criptoBase64.decodeBase64Path(pathCode);
-						lstAnnotation = queryClass.selectAnnotationClass(projectName, className, realPath);
+						if (b==false)
+							lstAnnotation = queryClass.selectAnnotationClass(projectName, className, realPath);
+						else
+							lstAnnotation = queryClass.selectAnnotationInterface(projectName, className, realPath);
 
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -1411,9 +1426,19 @@ public class MainView extends ViewPart implements IPartListener2 {
 					}
 
 					if (lstAnnotation.isEmpty())
-						arrData.add(new Data("Class Name", className, pathCode,  rs.get(0), realPackage, "", rs.get(0)));
+					{	
+						if (b == false)
+							arrData.add(new Data("Class", className, pathCode,  rs.get(0), realPackage, "", rs.get(0)));
+						else
+							arrData.add(new Data("Interface", className, pathCode,  rs.get(0), realPackage, "", rs.get(0)));
+					}
 					else
-						arrData.add(new Data("Class Name", className, pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], realPackage, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+					{
+						if (b == false)
+							arrData.add(new Data("Class", className, pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], realPackage, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+						else
+							arrData.add(new Data("Interface", className, pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], realPackage, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+					}
 
 					// Class fields
 					try 
@@ -1427,9 +1452,9 @@ public class MainView extends ViewPart implements IPartListener2 {
 						{
 							lstAnnotation = queryClass.selectAnnotationFieldClass(projectName, className, nl.get(j).getNameAsString().toString(), realPath);
 							if (lstAnnotation.isEmpty())
-								arrData.add(new Data("Field Class", nl.get(j).getNameAsString().toString(),  pathCode, rs.get(0), className, "", rs.get(0)));
+								arrData.add(new Data("Field", nl.get(j).getNameAsString().toString(),  pathCode, rs.get(0), className, "", rs.get(0)));
 							else
-								arrData.add(new Data("Field Class", nl.get(j).getNameAsString().toString(),  pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], className, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+								arrData.add(new Data("Field", nl.get(j).getNameAsString().toString(),  pathCode,  lstAnnotation.get(0).split(Pattern.quote("|"))[0], className, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
 						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -1453,14 +1478,17 @@ public class MainView extends ViewPart implements IPartListener2 {
 								else
 									arrData.add(new Data("Method", mv[0],  pathCode, lstAnnotation.get(0).split(Pattern.quote("|"))[0], className, "", lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
 
-								for (int k = 1; k < mv.length; k++)
+								if (b == false)
 								{
-									pathCode = criptoBase64.codeBase64Path(resource.getLocation().toOSString().split("\\.")[0]);
-									lstAnnotation = queryClass.selectAnnotationVariable(projectName, className, mv[0], mv[k], realPath);
-									if (lstAnnotation.isEmpty())
-										arrData.add(new Data("Variable", mv[k], pathCode, rs.get(0), className, mv[0], rs.get(0)));
-									else
-										arrData.add(new Data("Variable", mv[k], pathCode, lstAnnotation.get(0).split(Pattern.quote("|"))[0], className, mv[0], lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+									for (int k = 1; k < mv.length; k++)
+									{
+										pathCode = criptoBase64.codeBase64Path(resource.getLocation().toOSString().split("\\.")[0]);
+										lstAnnotation = queryClass.selectAnnotationVariable(projectName, className, mv[0], mv[k], realPath);
+										if (lstAnnotation.isEmpty())
+											arrData.add(new Data("Variable", mv[k], pathCode, rs.get(0), className, mv[0], rs.get(0)));
+										else
+											arrData.add(new Data("Variable", mv[k], pathCode, lstAnnotation.get(0).split(Pattern.quote("|"))[0], className, mv[0], lstAnnotation.get(0).split(Pattern.quote("|"))[1]));
+									}
 								}
 							} 
 							else
@@ -1582,4 +1610,18 @@ public class MainView extends ViewPart implements IPartListener2 {
 		return databaseUrl;
 	}
 
+	public String readFile(String filename) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(filename));
+	    String nextLine = "";
+	    StringBuffer sb = new StringBuffer();
+	    while ((nextLine = br.readLine()) != null) {
+	        sb.append(nextLine);
+	    }
+	    br.close();
+	    //remove newlines
+	    String newString = sb.toString().replace('\n', ' ');
+	 
+	    return newString;
+	}
+	
 }

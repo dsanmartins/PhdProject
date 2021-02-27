@@ -33,95 +33,34 @@ public class QueryClass {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("create table IF NOT EXISTS package_annotation (project_name text, name text, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS class_annotation (project_name text, package_name text, name text, file text, annotation text, belongs text) ");
+		mydb.executeStmt("create table IF NOT EXISTS interface_annotation (project_name text, package_name text, name text, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS field_annotation (project_name text, class_name text, field_name text, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS method_annotation (project_name text, class_name text, method_name text,file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS variable_annotation (project_name text, class_name text, method_name text, variable_name, file text, annotation text, belongs text) ");
-		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text, quantity integer) ");
+		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");	
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
-		mydb.executeStmt("create table IF NOT EXISTS relation (package_from text, class_from text, field_from text, method_from text, variable_from text, "
-				+ "package_to text, class_to text, field_to text, method_to text, variable_to text, modisco_path text, type_relation text) ");
 		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch text)");
-		mydb.executeStmt("CREATE VIEW IF NOT EXISTS annotations(annotation,belongs)  AS " +
-				"    select T.A, T.B from (\n" + 
-				"        select annotation A ,belongs B from package_annotation \n" + 
-				"        UNION ALL\n" + 
-				"        select annotation A ,belongs B from class_annotation\n" + 
-				"        UNION ALL\n" + 
-				"        select annotation A ,belongs B from field_annotation \n" + 
-				"        UNION ALL \n" + 
-				"        select annotation A ,belongs B from method_annotation\n" + 
-				"        UNION ALL \n" + 
-				"        select annotation A ,belongs B from variable_annotation ) \n" + 
-				" T where T.A <> 'None' and T.B <> 'None' ;");
-
-		mydb.executeStmt("CREATE VIEW IF NOT EXISTS relation_class (abstraction_from, from_, abstraction_to, to_, modisco_path)\n" + 
-				"AS \n" + 
-				"select abstraction1, package_from || '.' ||  class_from, abstraction2, package_to || '.' ||class_to, a.modisco_path  \n" + 
-				"from (\n" + 
-				"        select DISTINCT (select annotation from summary_annotation where class = a.class_from) abstraction1,\n" + 
-				"			           a.package_from, \n" + 
-				"			           a.class_from, \n" + 
-				"			           (select annotation from summary_annotation where class = a.class_to) abstraction2,\n" + 
-				"				           a.package_to, \n" + 
-				"				           a.class_to,\n" + 
-				"				           a.modisco_path\n" + 
-				"				    from relation a inner join summary_annotation  b on  a.class_to = b.class                                                 \n" + 
-				"				    where a.class_from <> a.class_to \n" + 
-				"				    ) a\n" + 
-				"where a.class_from in (select class from summary_annotation)\n" + 
-				"Order by abstraction1;");
-		mydb.executeStmt("CREATE VIEW IF NOT EXISTS relation_method (abstraction_from, from_, abstraction_to, to_, modisco_path) AS \n" + 
-				"select abstraction1, package_from || '.' ||  class_from || '.' || method_from , abstraction2, package_to || '.' ||class_to || '.' || method_to, modisco_path  \n" + 
-				"from ( 				\n" + 
-				"select DISTINCT (select annotation \n" + 
-				"                 from summary_annotation \n" + 
-				"                 where class = a.class_from and\n" + 
-				"                       package = a.package_from) abstraction1,  \n" + 
-				"                    a.package_from,   \n" + 
-				"					a.class_from,\n" + 
-				"					a.field_from,\n" + 
-				"					a.method_from,\n" + 
-				"					a.variable_from,\n" + 
-				"					(select annotation \n" + 
-				"					 from summary_annotation \n" + 
-				"					 where method = a.method_to and \n" + 
-				"                           class = a.class_to and\n" + 
-				"                           package = a.package_to) abstraction2,  \n" + 
-				"                    a.package_to,   \n" + 
-				"					a.class_to, \n" + 
-				"					a.field_to,\n" + 
-				"					a.method_to,\n" + 
-				"					'',\n" + 
-				"					a.modisco_path  \n" + 
-				"from relation a inner join summary_annotation  b on  a.method_to = b.method and\n" + 
-				"                                                     a.class_to = b.class and\n" + 
-				"                                                     a.package_to = b.package\n" + 
-				"where abstraction1 <> abstraction2\n" + 
-				");");
-		mydb.executeStmt("create table IF NOT EXISTS summary_annotation(package text,class text, field text ,method text,variable text,annotation text) ");	
 		mydb.executeStmt("delete from abstractions"); 
-		mydb.executeStmt("delete from relation"); 
-		mydb.executeStmt("delete from summary_annotation"); 
 		mydb.closeConnection();
 	}
 
 	public void populateAbstractions() throws SQLException, Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('1','Managed', 0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('2','Managing',0 );");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('3','LoopManager',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('4','Loop',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('5','Monitor',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('6','Analyzer',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('7','Planner',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('8','Executor',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('9','Knowledge',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('10','Sensor',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('11','Effector',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('12','MeasuredOutput',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('13','ReferenceInput',0);");
-		mydb.executeStmt("insert into abstractions(id,annotation,quantity) values ('14','Alternative',0);");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('1','Managed');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('2','Managing' );");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('3','LoopManager');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('4','Loop');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('5','Monitor');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('6','Analyzer');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('7','Planner');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('8','Executor');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('9','Knowledge');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('10','Sensor');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('11','Effector');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','MeasuredOutput');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','ReferenceInput');");
+		mydb.executeStmt("insert into abstractions(id,annotation) values ('14','Alternative');");
 		mydb.closeConnection();
 	}
 
@@ -161,63 +100,6 @@ public class QueryClass {
 				list.add(rs.getObject(1).toString());
 			}
 		return list;
-	}
-
-	public List<String> getAbstractions() throws Exception {
-
-		List<String> lst = new ArrayList<String>();
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select c.id, c.annotation, ifnull(d.quantity,c.quantity), c.quantity \n" + 
-				"from abstractions c left join \n" + 
-				"\n" + 
-				"    (\n" + 
-				"        select (select annotation \n" + 
-				"                from abstractions \n" + 
-				"                where id = a.abstraction_id) as annotation, \n" + 
-				"            count(*) as quantity\n" + 
-				"        from instances a left join abstractions b on a.abstraction_id  = b.id \n" + 
-				"        group by a.abstraction_id \n" + 
-				"    ) d\n" + 
-				"    on c.annotation = d.annotation\n" + 
-				"order by c.id;");
-		while (rs.next()) {
-			lst.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() + "|" + rs.getObject(3).toString()+ "|" + rs.getObject(4).toString());
-		}
-		mydb.closeConnection();
-		return lst;
-	}
-
-	public void updateAbstraction(String abstraction, String quantity) throws Exception {
-
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("update abstractions set  quantity= " + Integer.valueOf(quantity) + 
-				" where annotation = '" + abstraction + "';");		
-		mydb.closeConnection();
-	}
-
-	public boolean checkAbstractionExist(String abs) throws Exception {
-
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select annotation from instances where annotation='" + abs + "';");	
-		if (rs.next() == false) {
-
-			mydb.closeConnection();
-			return false;
-		}
-
-		else {
-
-			mydb.closeConnection();
-			return true;
-		}
-	}
-
-	public void UpdateInstance(String newValue, String oldValue) throws Exception {
-
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("update instances set  annotation= '" + newValue + 
-				"' where annotation = '" + oldValue + "';");		
-		mydb.closeConnection();
 	}
 
 	public List<String> selectAnnotationPackage(String projectName, String name, String file) throws Exception {
@@ -286,6 +168,41 @@ public class QueryClass {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("update class_annotation set  belongs= '" + annotation + 
+				"' where project_name = '" + projectName + "' and package_name = '" + package_name + "' and name = '" + name + "' and file = '" + file + "';");		
+		mydb.closeConnection();
+	}
+
+	public List<String> selectAnnotationInterface(String projectName, String name, String file) throws Exception {
+
+		List<String> lst = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select annotation || '|' || belongs from interface_annotation  where project_name= '" +
+				projectName + "' and name = '" + name + "' and file = '" + file + "';");		
+		lst = this.resultSetToArrayList1(rs);
+		mydb.closeConnection();
+		return lst;
+	}
+
+	public void insertAnnotationInterface(String projectName, String package_name ,String name, String file, String annotation) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("insert into interface_annotation(project_name, package_name, name, file, annotation, belongs) values"
+				+ " ('" + projectName + "','" +  package_name + "','" +   name + "','"  + file + "','" + annotation + "','None');"); 
+		mydb.closeConnection();
+	}
+
+	public void updateAnnotationInterface(String projectName, String package_name, String name, String file, String annotation) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update interface_annotation set  annotation= '" + annotation + 
+				"' where project_name = '" + projectName + "' and package_name = '" + package_name + "' and name = '" + name + "' and file = '" + file + "';");		
+		mydb.closeConnection();
+	}
+
+	public void updateBelongInterface(String projectName, String package_name, String name, String file, String annotation) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update interface_annotation set  belongs= '" + annotation + 
 				"' where project_name = '" + projectName + "' and package_name = '" + package_name + "' and name = '" + name + "' and file = '" + file + "';");		
 		mydb.closeConnection();
 	}
@@ -415,15 +332,15 @@ public class QueryClass {
 				+ "from package_annotation a inner join instances b on a.annotation = b.annotation;\n" + 
 				" ;");		
 		while (rs.next()) {
-			
+
 			String packages[] = rs.getObject(2).toString().split(Pattern.quote("."));
 			CodePackage codePackage = new CodePackage(rs.getObject(1).toString(), 
-													  rs.getObject(2).toString(),
-													  packages[packages.length-1], 
-													  rs.getObject(4).toString(),
-													  (Integer) rs.getObject(5));
-					
-			
+					rs.getObject(2).toString(),
+					packages[packages.length-1], 
+					rs.getObject(4).toString(),
+					(Integer) rs.getObject(5));
+
+
 			lst.add(codePackage);
 		}
 		mydb.closeConnection();
@@ -437,13 +354,33 @@ public class QueryClass {
 		ResultSet rs = mydb.executeQry("select a.project_name, a.package_name, a.name, a.file, a.annotation, a.belongs, b.abstraction_id "
 				+ "from class_annotation a inner join instances b on a.annotation = b.annotation;\n");		
 		while (rs.next()) {
-			
+
 			CodeClass codeClass = new CodeClass(rs.getObject(1).toString(),
-												rs.getObject(2).toString(),
-												rs.getObject(3).toString(),
-												rs.getObject(5).toString(),
-												(Integer) rs.getObject(7));
-			
+					rs.getObject(2).toString(),
+					rs.getObject(3).toString(),
+					rs.getObject(5).toString(),
+					(Integer) rs.getObject(7));
+
+			lst.add(codeClass);
+		}
+		mydb.closeConnection();
+		return lst;
+	}
+
+	public List<CodeClass> getInterfaceAnnotations() throws Exception
+	{
+		List<CodeClass> lst = new ArrayList<CodeClass>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select a.project_name, a.package_name, a.name, a.file, a.annotation, a.belongs, b.abstraction_id "
+				+ "from interface_annotation a inner join instances b on a.annotation = b.annotation;\n");		
+		while (rs.next()) {
+
+			CodeClass codeClass = new CodeClass(rs.getObject(1).toString(),
+					rs.getObject(2).toString(),
+					rs.getObject(3).toString(),
+					rs.getObject(5).toString(),
+					(Integer) rs.getObject(7));
+
 			lst.add(codeClass);
 		}
 		mydb.closeConnection();
@@ -457,7 +394,7 @@ public class QueryClass {
 		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.field_name, a.file, a.annotation, a.belongs, b.abstraction_id "
 				+ "from field_annotation a inner join instances b on a.annotation = b.annotation;\n" );		
 		while (rs.next()) {
-			
+
 			String packages = rs.getObject(4).toString().split("\\/src/")[1];
 			String packageCode[] = packages.split("\\/");
 			String fieldPath = "";
@@ -470,11 +407,11 @@ public class QueryClass {
 			}
 
 			CodeField codeField = new CodeField(rs.getObject(1).toString(),
-												fieldPath, 
-												rs.getObject(2).toString(), 
-												rs.getObject(3).toString(), 
-												rs.getObject(5).toString(), 
-												(Integer) rs.getObject(7));
+					fieldPath, 
+					rs.getObject(2).toString(), 
+					rs.getObject(3).toString(), 
+					rs.getObject(5).toString(), 
+					(Integer) rs.getObject(7));
 			lst.add(codeField);
 		}
 		mydb.closeConnection();
@@ -488,7 +425,7 @@ public class QueryClass {
 		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.method_name, a.file, a.annotation, a.belongs, b.abstraction_id "
 				+ "from method_annotation a inner join instances b on a.annotation = b.annotation;\n");		
 		while (rs.next()) {
-			
+
 			String packages = rs.getObject(4).toString().split("\\/src/")[1];
 			String packageCode[] = packages.split("\\/");
 			String fieldPath = "";
@@ -501,11 +438,11 @@ public class QueryClass {
 			}
 
 			CodeMethod codeMethod = new CodeMethod(rs.getObject(1).toString(),
-												fieldPath, 
-												rs.getObject(2).toString(), 
-												rs.getObject(3).toString(), 
-												rs.getObject(5).toString(), 
-												(Integer) rs.getObject(7));
+					fieldPath, 
+					rs.getObject(2).toString(), 
+					rs.getObject(3).toString(), 
+					rs.getObject(5).toString(), 
+					(Integer) rs.getObject(7));
 			lst.add(codeMethod);
 		}
 		mydb.closeConnection();
@@ -519,7 +456,7 @@ public class QueryClass {
 		ResultSet rs = mydb.executeQry("select a.project_name, a.class_name, a.method_name, a.variable_name, a.file, a.annotation, a.belongs, b.abstraction_id "
 				+ "from variable_annotation a inner join instances b on a.annotation = b.annotation;");		
 		while (rs.next()) {
-			
+
 			String packages = rs.getObject(5).toString().split("\\/src/")[1];
 			String packageCode[] = packages.split("\\/");
 			String fieldPath = "";
@@ -530,58 +467,17 @@ public class QueryClass {
 				else 
 					fieldPath = fieldPath + "." + packageCode[i] ;
 			}
-			
+
 			CodeVariable codeVariable = new CodeVariable(rs.getObject(1).toString(),
-														 fieldPath, rs.getObject(2).toString(),
-														 rs.getObject(3).toString(), 
-														 rs.getObject(4).toString(), 
-														 rs.getObject(6).toString(), 
-														 (Integer) rs.getObject(8));
+					fieldPath, rs.getObject(2).toString(),
+					rs.getObject(3).toString(), 
+					rs.getObject(4).toString(), 
+					rs.getObject(6).toString(), 
+					(Integer) rs.getObject(8));
 			lst.add(codeVariable);
 		}
 		mydb.closeConnection();
 		return lst;
-	}
-
-	public void insertRelations(List<String> relations) throws Exception
-	{
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		for (int i=0; i < relations.size(); i++) {
-
-			mydb.executeStmt("insert into relation (package_from, class_from, field_from, method_from, variable_from, " + 
-					" package_to, class_to, field_to, method_to, variable_to, modisco_path, type_relation) values (" +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[0] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[0] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[1] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[1] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[2] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[2] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[3] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[3] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[4] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[4] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[5] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[5] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[6] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[6] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[7] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[7] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[8] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[8] + "' END," +
-					"CASE WHEN LENGTH('" + relations.get(i).split(Pattern.quote("|"))[9] + "') = 0 THEN NULL ELSE '" + relations.get(i).split(Pattern.quote("|"))[9] + "' END," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[10] + "'," +
-					"'" + relations.get(i).split(Pattern.quote("|"))[11] + "');");
-		}
-		mydb.closeConnection();
-	}
-
-	public void insertSummaryAnnotation(List<String> summary) throws Exception
-	{
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		for (int i=0; i < summary.size(); i++) {
-
-			String query = "insert into summary_annotation (package, class, field, method, variable, annotation) values (" +
-					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[0] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[0] + "' END," +
-					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[1] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[1] + "' END," +
-					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[2] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[2] + "' END," +
-					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[3] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[3] + "' END," +
-					"CASE WHEN LENGTH('" + summary.get(i).split(Pattern.quote("|"))[4] + "') = 0 THEN NULL ELSE '" + summary.get(i).split(Pattern.quote("|"))[4] + "' END," +
-					"'" + summary.get(i).split(Pattern.quote("|"))[5]+ "');";
-
-			mydb.executeStmt(query);
-		}
-		mydb.closeConnection();
 	}
 
 	public String selectAbstraction (String abstraction, String instance) throws Exception {
@@ -614,15 +510,6 @@ public class QueryClass {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("delete from instances;"); 
-		mydb.executeStmt("update abstractions set quantity = 0;"); 
-		mydb.closeConnection();
-	}
-
-	public void deleteInstance(String instance, int id) throws Exception {
-
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("delete from instances where annotation = '" + instance + "';"); 
-		mydb.executeStmt("update abstractions set quantity = (select count(*)-1 from abstractions where id=" + id + ") where id =" + id + ";"); 
 		mydb.closeConnection();
 	}
 
@@ -670,28 +557,6 @@ public class QueryClass {
 		return lst;
 	}
 
-	public boolean isUsingData(String instance) throws Exception
-	{
-		boolean rtn = false;
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select annotation from package_annotation where annotation = '" + instance + 
-				"' UNION ALL \n" + 
-				"select annotation from class_annotation where annotation = '" + instance + 
-				"' UNION ALL \n" + 
-				"select annotation from field_annotation where annotation = '" + instance + 
-				"' UNION ALL \n" + 
-				"select annotation from method_annotation where annotation = '" + instance + 
-				"' UNION ALL\n" + 
-				"select annotation from variable_annotation where annotation = '" + instance +  "';");		
-
-		if (!rs.next())
-			rtn = false; 
-		else
-			rtn = true;
-		mydb.closeConnection();
-		return rtn;
-	}
-
 	public List<String> selectAnnotationBelong() throws Exception
 	{
 		List<String> rtn = new ArrayList<String>();
@@ -700,6 +565,8 @@ public class QueryClass {
 				+ "select (annotation || '|' || belongs) A from package_annotation where annotation <> 'None' " + 
 				" UNION ALL\n" + 
 				"select (annotation || '|' || belongs) A from class_annotation where annotation <> 'None' " +
+				" UNION ALL\n" + 
+				"select (annotation || '|' || belongs) A from interface_annotation where annotation <> 'None' " +
 				" UNION ALL\n" + 
 				"select (annotation || '|' || belongs) from field_annotation where annotation <> 'None' " +
 				" UNION ALL\n" + 
@@ -717,37 +584,6 @@ public class QueryClass {
 
 		mydb.closeConnection();
 		return rtn;
-	}
-
-	public void deleteRelation() throws Exception {
-
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("delete from relation;"); 
-		mydb.closeConnection();
-	}
-
-	public List<String> getActionRelationClass() throws Exception {
-
-		List<String> lst = new ArrayList<String>();
-		SqliteDb mydb = new SqliteDb(dbDriver,url);	
-		ResultSet rs = mydb.executeQry("select * from relation_class;");		
-		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
-		}
-		mydb.closeConnection();
-		return lst;	
-	}
-	
-	public List<String> getActionRelationMethod() throws Exception {
-
-		List<String> lst = new ArrayList<String>();
-		SqliteDb mydb = new SqliteDb(dbDriver,url);	
-		ResultSet rs = mydb.executeQry("select * from relation_method;");		
-		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2).toString()+"|"+rs.getObject(3).toString()+"|"+rs.getObject(4).toString()+"|"+rs.getObject(5).toString());
-		}
-		mydb.closeConnection();
-		return lst;	
 	}
 
 	public void variableBelongsTo() throws Exception {
@@ -803,15 +639,20 @@ public class QueryClass {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
 		ResultSet rs = mydb.executeQry("select DISTINCT A.*, \n" + 
 				"       ifnull(CLASS.annotation,'None') As Class, \n" + 
+				"       ifnull(INTER.annotation,'None') As Interface, \n" + 
 				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
 				"from field_annotation A \n" + 
 				"left join class_annotation CLASS on CLASS.project_name = A.project_name AND\n" + 
 				"                                                             CLASS.name =  A.class_name AND\n" + 
 				"                                                             CLASS.file = A.file \n" + 
+				"left join interface_annotation INTER on INTER.project_name = A.project_name AND\n" + 
+				"                                                             INTER.name =  A.class_name AND\n" + 
+				"                                                             INTER.file = A.file \n" + 
 				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
 				"                                                        REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';");		
 		while (rs.next()) 
-			values.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() +"|" + rs.getObject(3).toString() + "|" + rs.getObject(4).toString() + "|"+ rs.getObject(7).toString() + "|" + rs.getObject(8).toString());
+			values.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() +"|" + rs.getObject(3).toString() + "|" + 
+					rs.getObject(4).toString() + "|"+ rs.getObject(7).toString() + "|" + rs.getObject(8).toString()+ "|" + rs.getObject(9).toString());
 
 		for (String line: values)
 		{
@@ -826,6 +667,13 @@ public class QueryClass {
 					mydb.executeStmt("update field_annotation set belongs= '" + line.split(Pattern.quote("|"))[5] + 
 							"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and class_name = '" + line.split(Pattern.quote("|"))[1] + "' and field_name = '" + line.split(Pattern.quote("|"))[2] + "' and file = '" + line.split(Pattern.quote("|"))[3] +"';");		
 				}
+				else {
+					if (!line.split(Pattern.quote("|"))[6].equals("None")) {
+
+						mydb.executeStmt("update field_annotation set belongs= '" + line.split(Pattern.quote("|"))[6] + 
+								"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and class_name = '" + line.split(Pattern.quote("|"))[1] + "' and field_name = '" + line.split(Pattern.quote("|"))[2] + "' and file = '" + line.split(Pattern.quote("|"))[3] +"';");		
+					}
+				}
 			}
 		}
 
@@ -839,19 +687,25 @@ public class QueryClass {
 		SqliteDb mydb = new SqliteDb(dbDriver,url);	
 		ResultSet rs = mydb.executeQry("select DISTINCT A.*, \n" + 
 				"       ifnull(CLASS.annotation,'None') As Class, \n" + 
+				"       ifnull(INTER.annotation,'None') As Interface, \n" + 
 				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
 				"from method_annotation A \n" + 
 				"left join class_annotation CLASS on CLASS.project_name = A.project_name  AND\n" + 
 				"                                                         CLASS.name  = A.class_name AND\n" + 
 				"                                                         CLASS.file  = A.file \n" + 
+				"left join interface_annotation INTER on INTER.project_name = A.project_name  AND\n" + 
+				"                                                         INTER.name  = A.class_name AND\n" + 
+				"                                                         INTER.file  = A.file \n" + 
 				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
 				"                                                        REPLACE(A.file,'/','.') like '%' || PACKAGE.name || '%';");		
 		while (rs.next()) 
-			values.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() +"|" + rs.getObject(3).toString() + "|" + rs.getObject(4).toString() + "|"+ rs.getObject(7).toString() + "|" + rs.getObject(8).toString());
+			values.add(rs.getObject(1).toString() + "|" + rs.getObject(2).toString() +"|" + rs.getObject(3).toString() + "|" 
+					+ rs.getObject(4).toString() + "|"+ rs.getObject(7).toString() + "|" + rs.getObject(8).toString() +  "|" + rs.getObject(9).toString());
 
 
 		for (String line: values)
 		{
+
 			if (!line.split(Pattern.quote("|"))[4].equals("None")) {
 
 				mydb.executeStmt("update method_annotation set belongs= '" + line.split(Pattern.quote("|"))[4] + 
@@ -862,6 +716,14 @@ public class QueryClass {
 
 					mydb.executeStmt("update method_annotation set belongs= '" + line.split(Pattern.quote("|"))[5] + 
 							"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and class_name = '" + line.split(Pattern.quote("|"))[1] + "' and method_name = '" + line.split(Pattern.quote("|"))[2] + "' and file = '" + line.split(Pattern.quote("|"))[3] +"';");		
+				}
+				else
+				{
+					if (!line.split(Pattern.quote("|"))[6].equals("None")) {
+
+						mydb.executeStmt("update method_annotation set belongs= '" + line.split(Pattern.quote("|"))[6] + 
+								"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and class_name = '" + line.split(Pattern.quote("|"))[1] + "' and method_name = '" + line.split(Pattern.quote("|"))[2] + "' and file = '" + line.split(Pattern.quote("|"))[3] +"';");		
+					}
 				}
 			}
 		}
@@ -888,6 +750,32 @@ public class QueryClass {
 			if (!line.split(Pattern.quote("|"))[3].equals("None")) {
 
 				mydb.executeStmt("update class_annotation set belongs= '" + line.split(Pattern.quote("|"))[3] + 
+						"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and name = '" + line.split(Pattern.quote("|"))[2] + "' and package_name = '" + line.split(Pattern.quote("|"))[1] +"';");		
+			}
+		}
+
+		mydb.closeConnection();
+	}
+
+	public void interfaceBelongsTo() throws Exception {
+
+		List<String> values = new ArrayList<String>();
+		SqliteDb mydb = new SqliteDb(dbDriver,url);	
+		ResultSet rs = mydb.executeQry("select A.*, \n" + 
+				"       ifnull(PACKAGE.annotation,'None') As Package\n" + 
+				"from interface_annotation A \n" + 
+				"left join package_annotation PACKAGE on PACKAGE.project_name = A.project_name  AND\n" + 
+				"                                        PACKAGE.name = A.package_name;");
+
+		while (rs.next()) 
+			values.add(rs.getObject(1).toString()+ "|" + rs.getObject(2).toString() + "|" + rs.getObject(3).toString() + "|" +rs.getObject(7).toString());
+
+
+		for (String line: values)
+		{
+			if (!line.split(Pattern.quote("|"))[3].equals("None")) {
+
+				mydb.executeStmt("update interface_annotation set belongs= '" + line.split(Pattern.quote("|"))[3] + 
 						"' where project_name = '" + line.split(Pattern.quote("|"))[0] + "' and name = '" + line.split(Pattern.quote("|"))[2] + "' and package_name = '" + line.split(Pattern.quote("|"))[1] +"';");		
 			}
 		}
@@ -934,69 +822,6 @@ public class QueryClass {
 
 	}
 
-	public List<String> getSummaryAnnotation() throws Exception{
-
-		List<String> lst = new ArrayList<String>();
-		SqliteDb mydb = new SqliteDb(dbDriver,url);	
-		ResultSet rs = mydb.executeQry("select name AS name, annotation from package_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') name, annotation from class_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || field_name) name, annotation from field_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name) name, annotation from method_annotation where annotation <> 'None'\n" + 
-				"UNION ALL\n" + 
-				"select (REPLACE(SUBSTR(file,INSTR(file,'src/')+4),'/','.') || '.' || method_name || '.' ||variable_name) name, annotation from variable_annotation where annotation <> 'None';");		
-
-		while (rs.next()) {
-			lst.add(rs.getObject(1).toString()+"|"+rs.getObject(2));
-		}
-		mydb.closeConnection();
-		return lst;	
-	}
-
-	public int getMaxValueInstance(int abstraction, String annotation) throws Exception {
-
-		int max = 0;
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
-				"    from(\n" + 
-				"        select annotation, instr(annotation,'_') as pos\n" + 
-				"        from instances where abstraction_id = " + abstraction + " and annotation like '" + annotation +"%' );");	
-		while (rs.next()) {
-			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
-		}
-		mydb.closeConnection();
-		return max;
-	}
-
-	public int getQuantityAbstraction(String instance) throws Exception {
-
-		int max = 0;
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry("select ifnull(count(*),0) from instances where annotation like '" + instance + "%';");	
-		while (rs.next()) {
-			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
-		}
-		mydb.closeConnection();
-		return max;
-	}
-
-	public int getMaxValueInstance(String annotation) throws Exception {
-
-		int max = 0;
-		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		ResultSet rs = mydb.executeQry(" select ifnull(max(cast(substr(annotation,pos+1) as integer)),0)\n" + 
-				"    from(\n" + 
-				"        select annotation, instr(annotation,'_') as pos\n" + 
-				"        from instances where annotation like '" + annotation +"%' );");	
-		while (rs.next()) {
-			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
-		}
-		mydb.closeConnection();
-		return max;
-	}
-
 	public int getInnerAnnotationClass(String package_name, String class_name, String path , String annotation) throws Exception{
 
 		int max = 0;
@@ -1014,6 +839,28 @@ public class QueryClass {
 				"UNION ALL\n" + 
 				"select count(*) as cantidad\n" + 
 				"from variable_annotation a where a.file = '" +  path +"' and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				");");	
+		while (rs.next()) {
+			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
+		}
+		mydb.closeConnection();
+		return max;
+	}
+
+	public int getInnerAnnotationInterface(String package_name, String class_name, String path , String annotation) throws Exception{
+
+		int max = 0;
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry(" select sum(cantidad)\n" + 
+				"from (\n" + 
+				"select count(*) as cantidad\n" + 
+				"from package_annotation a where a.name = '" + package_name + "' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad \n" + 
+				"from field_annotation a where a.file = '" +  path +"'  and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
+				"UNION ALL\n" + 
+				"select count(*) as cantidad\n" + 
+				"from method_annotation a where a.file = '" +  path +"' and a.class_name = '" +  class_name +"' and a.annotation = '" + annotation + "' and a.annotation <> 'None' \n" + 
 				");");	
 		while (rs.next()) {
 			max = Integer.valueOf(String.valueOf(rs.getObject(1)));
@@ -1064,7 +911,7 @@ public class QueryClass {
 		mydb.closeConnection();
 		return max;
 	}
-	
+
 	public int getInnerAnnotationVariable(String class_name, String method_name, String variable_name, String newRealPath, String path , String annotation) throws Exception{
 
 		int max = 0;
@@ -1087,7 +934,7 @@ public class QueryClass {
 		mydb.closeConnection();
 		return max;
 	}
-	
+
 	public int getInnerAnnotationPackage(String package_name, String annotation) throws Exception{
 
 		int max = 0;
@@ -1116,4 +963,16 @@ public class QueryClass {
 		return max;
 	}
 
+	public void deleteBelongsTo() throws Exception {
+		
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		mydb.executeStmt("update package_annotation set belongs='None';");	
+		mydb.executeStmt("update class_annotation set belongs='None';");	
+		mydb.executeStmt("update interface_annotation set belongs='None';");	
+		mydb.executeStmt("update field_annotation set belongs='None';");	
+		mydb.executeStmt("update method_annotation set belongs='None';");	
+		mydb.executeStmt("update variable_annotation set belongs='None';");		
+		mydb.closeConnection();
+	}
+	
 }

@@ -75,7 +75,7 @@ public class EditingAnnotationInstance extends EditingSupport {
 			if (!data.getAnnotation().equals(newValue)) {
 				data.setAnnotation(newValue);
 				this.getViewer().update(element, null);
-				if (data.getCodeType().equals("Class Name"))
+				if (data.getCodeType().equals("Class"))
 				{
 					try {
 						QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
@@ -114,7 +114,7 @@ public class EditingAnnotationInstance extends EditingSupport {
 				}
 				else
 				{
-					if (data.getCodeType().equals("Field Class"))
+					if (data.getCodeType().equals("Field"))
 					{
 						try {
 							QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
@@ -292,7 +292,47 @@ public class EditingAnnotationInstance extends EditingSupport {
 										e.printStackTrace();
 									}
 								}
-							}
+								else
+								{
+									if (data.getCodeType().equals("Interface"))
+									{
+										try {
+											QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
+											String projectName = MainView.getDatabaseUrl().split("\\/")[MainView.getDatabaseUrl().split("\\/").length-1];
+											CriptoBase64 criptoBase64 = new CriptoBase64();
+											String path = criptoBase64.decodeBase64Path(data.getPathCode());
+											List <String> rs = queryClass.selectAnnotationInterface(projectName, data.getName(), path);
+											int inner = queryClass.getInnerAnnotationInterface(data.getClassName(), data.getName(), path, newValue);
+
+											if (inner == 0) {
+
+												if (rs.isEmpty())
+												{
+
+													queryClass.insertAnnotationInterface(projectName, data.getClassName(), data.getName(), path, newValue);
+													if (newValue.equals("None"))
+														queryClass.updateBelongInterface(projectName,  data.getClassName(), data.getName(), path, "None");
+												}
+												else
+												{
+
+													queryClass.updateAnnotationInterface(projectName,  data.getClassName(), data.getName(), path, newValue);
+													if (newValue.equals("None"))
+														queryClass.updateBelongInterface(projectName,  data.getClassName(), data.getName(), path, "None");
+												}
+											}
+											else
+												MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Information", "It is forbidden compose annotations with the same name.");
+
+
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+
+									}
+								}
+							}	
 						}
 					}
 				}

@@ -38,10 +38,10 @@ public final class TableLabelProvider extends LabelProvider implements ITableLab
 		Color colorMethod = new Color(Display.getCurrent(), 153, 204, 255);
 		Color colorVariable = new Color(Display.getCurrent(), 224, 224, 224);
 
-		if (data.getCodeType().equals("Class Name"))
+		if (data.getCodeType().equals("Class") || data.getCodeType().equals("Interface") )
 			return colorClass;
 		else {
-			if (data.getCodeType().equals("Field Class"))
+			if (data.getCodeType().equals("Field"))
 				return colorField;
 			else {
 				if (data.getCodeType().equals("Method"))
