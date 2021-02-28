@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -16,9 +17,8 @@ import org.eclipse.ocl.ParserException;
 import org.xml.sax.SAXException;
 
 import br.ufscar.sas.modisco.AddNamespaces;
-import br.ufscar.sas.modisco.GenerateStereotype;
 import br.ufscar.sas.modisco.GenerateStructure;
-import br.ufscar.sas.parser.SourceRegion;
+import br.ufscar.sas.transformation.AddASModel;
 
 public aspect UtilsKDM {
 	
@@ -37,31 +37,22 @@ public aspect UtilsKDM {
 		IProject project  = root.getProject(javaProjectName);
 		IFile kdmCurrent = project.getFile(javaProjectName + "_KDM.xmi");
 		
-		
 		//String fileRefactored = javaProjectName + "_REFACTORED_KDM" + ".xmi";
 		//String dbNameRefactored = javaProjectName + "_REFACTORED_KDM";
 		
-		System.out.println("************* START ADDING NAMESPACES *************");
-		AddNamespaces an = new AddNamespaces();
-		try {an.parser(path + file);} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {e.printStackTrace();}
-		System.out.println("************* STOP ADDING NAMESPACES *************");
-		//System.out.println("************* START ADDING RETURN TO KDM *************");
-		//GenerateReturn gr = new GenerateReturn();
-		//gr.generator(path, file, dbName);
-		//gr.generator(path, fileRefactored, dbNameRefactored);
-		//System.out.println("************* END ADDING RETURN TO KDM *************");
-		System.out.println("************* START EDITING SOURCE REGION *************");
-		//SourceRegion sourceRegion = new SourceRegion();
-		//sourceRegion.statementsByLine(new File(path));
-		System.out.println("************* END EDITING SOURCE REGION *************");
+		
 		System.out.println("************* GENERATE STEREOTYPE OF SAS *************");
-		GenerateStereotype generateStereotype = new GenerateStereotype();
-		generateStereotype.createModel(new File(path), file, dbName);
+		AddASModel addASModel = new AddASModel();
+		try {addASModel.addStereotype(kdmCurrent);} catch (ExecutionException e2) {e2.printStackTrace();}
 		System.out.println("************* END STEREOTYPE OF SAS *************");
 		System.out.println("************* START GENERATE STRUCTURE *************");
 		GenerateStructure generateStructure = new GenerateStructure();
 		generateStructure.createModel(new File(path),file,dbName, path);
 		System.out.println("************* END GENERATE STRUCTURE *************");
+		
+		
+		AddNamespaces an = new AddNamespaces();
+		try {an.parser(path + file);} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {e.printStackTrace();}
 		System.out.println("************* START GENERATE STRUCTURE ELEMENTS *************");
 		generateStructure.mapping(kdmCurrent,path);
 		try {generateStructure.relationshipsSubsystem(kdmCurrent,path);} catch (ParserException e1) {e1.printStackTrace();} catch (IOException e1) {e1.printStackTrace();} catch (Exception e) {e.printStackTrace();}

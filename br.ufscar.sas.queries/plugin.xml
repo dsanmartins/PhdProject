@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?eclipse version="3.4"?><plugin>
-
-   <extension point="org.eclipse.modisco.infra.query.registration">
-      <modelqueryset file="Query.querySet"/>
-   </extension>
-</plugin>

@@ -1,0 +1,82 @@
+modeltype kdm "strict" uses kdm('http://www.eclipse.org/MoDisco/kdm/kdm');
+modeltype code "strict" uses code('http://www.eclipse.org/MoDisco/kdm/code');
+modeltype core "strict" uses core('http://www.eclipse.org/MoDisco/kdm/core');
+modeltype action "strict" uses action('http://www.eclipse.org/MoDisco/kdm/action');
+modeltype source "strict" uses source('http://www.eclipse.org/MoDisco/kdm/source');
+modeltype structure "strict" uses structure('http://www.eclipse.org/MoDisco/kdm/structure');
+
+transformation addASModel(inout sourceModel:kdm);
+
+
+main() {
+		sourceModel.objectsOfType(Segment)-> map addExtensionFamily();
+}
+
+mapping Segment::addExtensionFamily():Segment{
+	
+	init{
+		result:= self->forEach(s){
+			
+			s.extension += object ExtensionFamily{
+			
+				name := "Adaptive System Domain";
+				stereotype += object Stereotype {
+					name:="Monitor";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Analyzer";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Planner";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Executor";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Knowledge";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Reference Input";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Measured Output";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Loop Manager";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Loop";
+					type:="structure:Component";
+				};	
+				stereotype += object Stereotype {
+					name:="Sensor";
+					type:="structure:Component";
+				};
+				stereotype += object Stereotype {
+					name:="Effector";
+					type:="structure:Component";
+				};
+				stereotype += object Stereotype {
+					name:="Managing Subsystem";
+					type:="structure:Subsystem";
+				};
+				stereotype += object Stereotype {
+					name:="Managed Subsystem";
+					type:="structure:Subsystem";
+				};
+				stereotype += object Stereotype {
+					name:="Alternative";
+					type:="structure:Component";
+				};
+			};
+		}; 
+	}
+}

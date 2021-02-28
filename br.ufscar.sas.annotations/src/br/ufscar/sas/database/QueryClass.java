@@ -513,6 +513,21 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
+	public String selectAbstractionByInstance(String annotation) throws Exception {
+		
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+	
+		ResultSet rs = null;
+		rs = mydb.executeQry("select a.annotation "
+				+ "from abstractions a inner join instances b "
+				+ "where b.abstraction_id = a.id and b.annotation='"+ annotation + "';");
+		
+		while (rs.next())
+			return rs.getObject(1).toString();
+		
+		return null;
+	}
+	
 	public List<String> selectInstance(int op) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);

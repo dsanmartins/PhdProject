@@ -105,7 +105,7 @@ public class GenerateStructure {
 
 	}
 
-	public void createStructureElementFromTree(Manager baseXManager, String path_) throws BaseXException, QueryException, SQLException
+	public void createStructureElementFromTree(Manager baseXManager, String path_) throws Exception
 	{
 		List<String> memory1 = new ArrayList<String>();
 		List<String> memory2 = new ArrayList<String>();
@@ -3067,7 +3067,7 @@ public class GenerateStructure {
 		}
 	}
 
-	public void createStructureElement(Manager baseXManager, String parent, String componentName, String path_) throws QueryException, SQLException, BaseXException {
+	public void createStructureElement(Manager baseXManager, String parent, String componentName, String path_) throws Exception {
 
 		boolean check = baseXManager.checkComponentExist(componentName);
 		if (!check)
@@ -3076,14 +3076,14 @@ public class GenerateStructure {
 			if (parent == null)
 			{
 				//Create Structure element with name
-				baseXManager.createStructureElement(componentName, "parent");
+				baseXManager.createStructureElement(componentName, "parent", path_);
 				//Export DB
 				baseXManager.exportDB();
 			}
 			else
 			{
 				//Create Structure element with name for children
-				baseXManager.createStructureElement(componentName, parent);
+				baseXManager.createStructureElement(componentName, parent, path_);
 				//Export DB
 				baseXManager.exportDB();
 			}

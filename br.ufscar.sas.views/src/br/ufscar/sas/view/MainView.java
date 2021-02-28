@@ -675,11 +675,10 @@ public class MainView extends ViewPart implements IPartListener2 {
 		controlGroup9.setText("Pie Chart with All Rules");
 		controlGroup9.setBounds(930, 560, 450, 260);
 
-
-		Button generateRecommendation = new Button(controlGroup3, SWT.NONE);
+		Button generateRecommendation = new Button(group, SWT.NONE);
 		generateRecommendation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-		generateRecommendation.setBounds(10, 400, 120, 25);
-		generateRecommendation.setText("Refactoring Recommendation");
+		generateRecommendation.setBounds(230, 10, 128, 25);
+		generateRecommendation.setText("Recommendations");
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
