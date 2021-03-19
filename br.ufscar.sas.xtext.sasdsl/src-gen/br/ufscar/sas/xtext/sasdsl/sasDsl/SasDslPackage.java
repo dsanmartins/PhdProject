@@ -1168,13 +1168,31 @@ public interface SasDslPackage extends EPackage
   int DSL_SENSOR__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_SENSOR__LAYER = 1;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_SENSOR__SUB_SYSTEM = 2;
+
+  /**
    * The number of structural features of the '<em>DSL Sensor</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_SENSOR_FEATURE_COUNT = 1;
+  int DSL_SENSOR_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLEffectorImpl <em>DSL Effector</em>}' class.
@@ -1196,13 +1214,31 @@ public interface SasDslPackage extends EPackage
   int DSL_EFFECTOR__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_EFFECTOR__LAYER = 1;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_EFFECTOR__SUB_SYSTEM = 2;
+
+  /**
    * The number of structural features of the '<em>DSL Effector</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_EFFECTOR_FEATURE_COUNT = 1;
+  int DSL_EFFECTOR_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLReferenceInputImpl <em>DSL Reference Input</em>}' class.
@@ -1252,13 +1288,31 @@ public interface SasDslPackage extends EPackage
   int DSL_MEASURED_OUTPUT__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_MEASURED_OUTPUT__LAYER = 1;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_MEASURED_OUTPUT__SUB_SYSTEM = 2;
+
+  /**
    * The number of structural features of the '<em>DSL Measured Output</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_MEASURED_OUTPUT_FEATURE_COUNT = 1;
+  int DSL_MEASURED_OUTPUT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLAlternativeImpl <em>DSL Alternative</em>}' class.
@@ -2884,6 +2938,28 @@ public interface SasDslPackage extends EPackage
   EAttribute getDSLSensor_Name();
 
   /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor#getLayer <em>Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor#getLayer()
+   * @see #getDSLSensor()
+   * @generated
+   */
+  EReference getDSLSensor_Layer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor#getSubSystem()
+   * @see #getDSLSensor()
+   * @generated
+   */
+  EReference getDSLSensor_SubSystem();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector <em>DSL Effector</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2903,6 +2979,28 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EAttribute getDSLEffector_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getLayer <em>Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getLayer()
+   * @see #getDSLEffector()
+   * @generated
+   */
+  EReference getDSLEffector_Layer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getSubSystem()
+   * @see #getDSLEffector()
+   * @generated
+   */
+  EReference getDSLEffector_SubSystem();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput <em>DSL Reference Input</em>}'.
@@ -2945,6 +3043,28 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EAttribute getDSLMeasuredOutput_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput#getLayer <em>Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput#getLayer()
+   * @see #getDSLMeasuredOutput()
+   * @generated
+   */
+  EReference getDSLMeasuredOutput_Layer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput#getSubSystem()
+   * @see #getDSLMeasuredOutput()
+   * @generated
+   */
+  EReference getDSLMeasuredOutput_SubSystem();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative <em>DSL Alternative</em>}'.
@@ -4234,6 +4354,22 @@ public interface SasDslPackage extends EPackage
     EAttribute DSL_SENSOR__NAME = eINSTANCE.getDSLSensor_Name();
 
     /**
+     * The meta object literal for the '<em><b>Layer</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_SENSOR__LAYER = eINSTANCE.getDSLSensor_Layer();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_SENSOR__SUB_SYSTEM = eINSTANCE.getDSLSensor_SubSystem();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLEffectorImpl <em>DSL Effector</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4250,6 +4386,22 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EAttribute DSL_EFFECTOR__NAME = eINSTANCE.getDSLEffector_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Layer</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_EFFECTOR__LAYER = eINSTANCE.getDSLEffector_Layer();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_EFFECTOR__SUB_SYSTEM = eINSTANCE.getDSLEffector_SubSystem();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLReferenceInputImpl <em>DSL Reference Input</em>}' class.
@@ -4286,6 +4438,22 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EAttribute DSL_MEASURED_OUTPUT__NAME = eINSTANCE.getDSLMeasuredOutput_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Layer</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_MEASURED_OUTPUT__LAYER = eINSTANCE.getDSLMeasuredOutput_Layer();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_MEASURED_OUTPUT__SUB_SYSTEM = eINSTANCE.getDSLMeasuredOutput_SubSystem();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLAlternativeImpl <em>DSL Alternative</em>}' class.

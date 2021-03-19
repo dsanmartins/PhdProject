@@ -119,15 +119,21 @@
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLSensor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLSensor/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLSensor/layer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLSensor/subSystem"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLEffector">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLEffector/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLEffector/layer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLEffector/subSystem"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLReferenceInput">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLReferenceInput/name"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLMeasuredOutput">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLMeasuredOutput/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLMeasuredOutput/layer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLMeasuredOutput/subSystem"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLAlternative">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLAlternative/name"/>

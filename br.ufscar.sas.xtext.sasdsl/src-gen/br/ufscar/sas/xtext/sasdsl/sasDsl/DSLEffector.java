@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getName <em>Name</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getLayer <em>Layer</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getSubSystem <em>Sub System</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLEffector()
@@ -44,5 +46,49 @@ public interface DSLEffector extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Layer</em>' reference.
+   * @see #setLayer(DCLStructureElement)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLEffector_Layer()
+   * @model
+   * @generated
+   */
+  DCLStructureElement getLayer();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getLayer <em>Layer</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Layer</em>' reference.
+   * @see #getLayer()
+   * @generated
+   */
+  void setLayer(DCLStructureElement value);
+
+  /**
+   * Returns the value of the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Sub System</em>' reference.
+   * @see #setSubSystem(DCLStructureElement)
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLEffector_SubSystem()
+   * @model
+   * @generated
+   */
+  DCLStructureElement getSubSystem();
+
+  /**
+   * Sets the value of the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector#getSubSystem <em>Sub System</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Sub System</em>' reference.
+   * @see #getSubSystem()
+   * @generated
+   */
+  void setSubSystem(DCLStructureElement value);
 
 } // DSLEffector

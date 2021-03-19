@@ -134,15 +134,21 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLSensor">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLEffector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLReferenceInput">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLMeasuredOutput">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLAlternative">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

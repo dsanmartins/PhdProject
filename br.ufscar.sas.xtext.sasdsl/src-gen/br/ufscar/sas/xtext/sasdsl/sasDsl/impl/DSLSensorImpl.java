@@ -3,12 +3,14 @@
  */
 package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -22,6 +24,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSensorImpl#getName <em>Name</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSensorImpl#getLayer <em>Layer</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLSensorImpl#getSubSystem <em>Sub System</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,6 +51,26 @@ public class DSLSensorImpl extends MinimalEObjectImpl.Container implements DSLSe
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getLayer() <em>Layer</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLayer()
+   * @generated
+   * @ordered
+   */
+  protected DCLStructureElement layer;
+
+  /**
+   * The cached value of the '{@link #getSubSystem() <em>Sub System</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubSystem()
+   * @generated
+   * @ordered
+   */
+  protected DCLStructureElement subSystem;
 
   /**
    * <!-- begin-user-doc -->
@@ -100,12 +124,108 @@ public class DSLSensorImpl extends MinimalEObjectImpl.Container implements DSLSe
    * @generated
    */
   @Override
+  public DCLStructureElement getLayer()
+  {
+    if (layer != null && layer.eIsProxy())
+    {
+      InternalEObject oldLayer = (InternalEObject)layer;
+      layer = (DCLStructureElement)eResolveProxy(oldLayer);
+      if (layer != oldLayer)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_SENSOR__LAYER, oldLayer, layer));
+      }
+    }
+    return layer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DCLStructureElement basicGetLayer()
+  {
+    return layer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setLayer(DCLStructureElement newLayer)
+  {
+    DCLStructureElement oldLayer = layer;
+    layer = newLayer;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_SENSOR__LAYER, oldLayer, layer));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLStructureElement getSubSystem()
+  {
+    if (subSystem != null && subSystem.eIsProxy())
+    {
+      InternalEObject oldSubSystem = (InternalEObject)subSystem;
+      subSystem = (DCLStructureElement)eResolveProxy(oldSubSystem);
+      if (subSystem != oldSubSystem)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SasDslPackage.DSL_SENSOR__SUB_SYSTEM, oldSubSystem, subSystem));
+      }
+    }
+    return subSystem;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DCLStructureElement basicGetSubSystem()
+  {
+    return subSystem;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setSubSystem(DCLStructureElement newSubSystem)
+  {
+    DCLStructureElement oldSubSystem = subSystem;
+    subSystem = newSubSystem;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SasDslPackage.DSL_SENSOR__SUB_SYSTEM, oldSubSystem, subSystem));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case SasDslPackage.DSL_SENSOR__NAME:
         return getName();
+      case SasDslPackage.DSL_SENSOR__LAYER:
+        if (resolve) return getLayer();
+        return basicGetLayer();
+      case SasDslPackage.DSL_SENSOR__SUB_SYSTEM:
+        if (resolve) return getSubSystem();
+        return basicGetSubSystem();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -122,6 +242,12 @@ public class DSLSensorImpl extends MinimalEObjectImpl.Container implements DSLSe
     {
       case SasDslPackage.DSL_SENSOR__NAME:
         setName((String)newValue);
+        return;
+      case SasDslPackage.DSL_SENSOR__LAYER:
+        setLayer((DCLStructureElement)newValue);
+        return;
+      case SasDslPackage.DSL_SENSOR__SUB_SYSTEM:
+        setSubSystem((DCLStructureElement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -140,6 +266,12 @@ public class DSLSensorImpl extends MinimalEObjectImpl.Container implements DSLSe
       case SasDslPackage.DSL_SENSOR__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case SasDslPackage.DSL_SENSOR__LAYER:
+        setLayer((DCLStructureElement)null);
+        return;
+      case SasDslPackage.DSL_SENSOR__SUB_SYSTEM:
+        setSubSystem((DCLStructureElement)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -156,6 +288,10 @@ public class DSLSensorImpl extends MinimalEObjectImpl.Container implements DSLSe
     {
       case SasDslPackage.DSL_SENSOR__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SasDslPackage.DSL_SENSOR__LAYER:
+        return layer != null;
+      case SasDslPackage.DSL_SENSOR__SUB_SYSTEM:
+        return subSystem != null;
     }
     return super.eIsSet(featureID);
   }

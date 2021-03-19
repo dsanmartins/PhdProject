@@ -2503,13 +2503,27 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSensorKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cCommaKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Keyword cInLayerKeyword_2_0_1 = (Keyword)cGroup_2_0.eContents().get(1);
+		private final Assignment cLayerAssignment_2_0_2 = (Assignment)cGroup_2_0.eContents().get(2);
+		private final CrossReference cLayerDCLStructureElementCrossReference_2_0_2_0 = (CrossReference)cLayerAssignment_2_0_2.eContents().get(0);
+		private final RuleCall cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1 = (RuleCall)cLayerDCLStructureElementCrossReference_2_0_2_0.eContents().get(1);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Keyword cInSubSystemKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Assignment cSubSystemAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final CrossReference cSubSystemDCLStructureElementCrossReference_2_1_2_0 = (CrossReference)cSubSystemAssignment_2_1_2.eContents().get(0);
+		private final RuleCall cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1 = (RuleCall)cSubSystemDCLStructureElementCrossReference_2_1_2_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//DSLSensor:
-		//	'Sensor' name=ID ';';
+		//	'Sensor' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Sensor' name=ID ';'
+		//'Sensor' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'Sensor'
@@ -2521,8 +2535,47 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
+		//(',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//',' 'inLayer:' layer=[DCLStructureElement]
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0_0() { return cCommaKeyword_2_0_0; }
+		
+		//'inLayer:'
+		public Keyword getInLayerKeyword_2_0_1() { return cInLayerKeyword_2_0_1; }
+		
+		//layer=[DCLStructureElement]
+		public Assignment getLayerAssignment_2_0_2() { return cLayerAssignment_2_0_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getLayerDCLStructureElementCrossReference_2_0_2_0() { return cLayerDCLStructureElementCrossReference_2_0_2_0; }
+		
+		//ID
+		public RuleCall getLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1() { return cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1; }
+		
+		//',' 'inSubSystem:' subSystem=[DCLStructureElement]
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
+		
+		//'inSubSystem:'
+		public Keyword getInSubSystemKeyword_2_1_1() { return cInSubSystemKeyword_2_1_1; }
+		
+		//subSystem=[DCLStructureElement]
+		public Assignment getSubSystemAssignment_2_1_2() { return cSubSystemAssignment_2_1_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getSubSystemDCLStructureElementCrossReference_2_1_2_0() { return cSubSystemDCLStructureElementCrossReference_2_1_2_0; }
+		
+		//ID
+		public RuleCall getSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1() { return cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1; }
+		
 		//';'
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 	public class DSLEffectorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLEffector");
@@ -2530,13 +2583,28 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEffectorKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cCommaKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Keyword cInLayerKeyword_2_0_1 = (Keyword)cGroup_2_0.eContents().get(1);
+		private final Assignment cLayerAssignment_2_0_2 = (Assignment)cGroup_2_0.eContents().get(2);
+		private final CrossReference cLayerDCLStructureElementCrossReference_2_0_2_0 = (CrossReference)cLayerAssignment_2_0_2.eContents().get(0);
+		private final RuleCall cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1 = (RuleCall)cLayerDCLStructureElementCrossReference_2_0_2_0.eContents().get(1);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Keyword cInSubSystemKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Assignment cSubSystemAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final CrossReference cSubSystemDCLStructureElementCrossReference_2_1_2_0 = (CrossReference)cSubSystemAssignment_2_1_2.eContents().get(0);
+		private final RuleCall cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1 = (RuleCall)cSubSystemDCLStructureElementCrossReference_2_1_2_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//DSLEffector:
-		//	'Effector' name=ID ';';
+		//	'Effector' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Effector' name=ID ';'
+		//'Effector' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		//';'
 		public Group getGroup() { return cGroup; }
 		
 		//'Effector'
@@ -2548,8 +2616,47 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
+		//(',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//',' 'inLayer:' layer=[DCLStructureElement]
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0_0() { return cCommaKeyword_2_0_0; }
+		
+		//'inLayer:'
+		public Keyword getInLayerKeyword_2_0_1() { return cInLayerKeyword_2_0_1; }
+		
+		//layer=[DCLStructureElement]
+		public Assignment getLayerAssignment_2_0_2() { return cLayerAssignment_2_0_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getLayerDCLStructureElementCrossReference_2_0_2_0() { return cLayerDCLStructureElementCrossReference_2_0_2_0; }
+		
+		//ID
+		public RuleCall getLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1() { return cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1; }
+		
+		//',' 'inSubSystem:' subSystem=[DCLStructureElement]
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
+		
+		//'inSubSystem:'
+		public Keyword getInSubSystemKeyword_2_1_1() { return cInSubSystemKeyword_2_1_1; }
+		
+		//subSystem=[DCLStructureElement]
+		public Assignment getSubSystemAssignment_2_1_2() { return cSubSystemAssignment_2_1_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getSubSystemDCLStructureElementCrossReference_2_1_2_0() { return cSubSystemDCLStructureElementCrossReference_2_1_2_0; }
+		
+		//ID
+		public RuleCall getSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1() { return cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1; }
+		
 		//';'
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 	public class DSLReferenceInputElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLReferenceInput");
@@ -2584,13 +2691,28 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cMeasuredOutputKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cCommaKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Keyword cInLayerKeyword_2_0_1 = (Keyword)cGroup_2_0.eContents().get(1);
+		private final Assignment cLayerAssignment_2_0_2 = (Assignment)cGroup_2_0.eContents().get(2);
+		private final CrossReference cLayerDCLStructureElementCrossReference_2_0_2_0 = (CrossReference)cLayerAssignment_2_0_2.eContents().get(0);
+		private final RuleCall cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1 = (RuleCall)cLayerDCLStructureElementCrossReference_2_0_2_0.eContents().get(1);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Keyword cInSubSystemKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Assignment cSubSystemAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final CrossReference cSubSystemDCLStructureElementCrossReference_2_1_2_0 = (CrossReference)cSubSystemAssignment_2_1_2.eContents().get(0);
+		private final RuleCall cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1 = (RuleCall)cSubSystemDCLStructureElementCrossReference_2_1_2_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//DSLMeasuredOutput:
-		//	'MeasuredOutput' name=ID ';';
+		//	'MeasuredOutput' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+		//	subSystem=[DCLStructureElement])? ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'MeasuredOutput' name=ID ';'
+		//'MeasuredOutput' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+		//subSystem=[DCLStructureElement])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'MeasuredOutput'
@@ -2602,8 +2724,47 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
+		//(',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//',' 'inLayer:' layer=[DCLStructureElement]
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0_0() { return cCommaKeyword_2_0_0; }
+		
+		//'inLayer:'
+		public Keyword getInLayerKeyword_2_0_1() { return cInLayerKeyword_2_0_1; }
+		
+		//layer=[DCLStructureElement]
+		public Assignment getLayerAssignment_2_0_2() { return cLayerAssignment_2_0_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getLayerDCLStructureElementCrossReference_2_0_2_0() { return cLayerDCLStructureElementCrossReference_2_0_2_0; }
+		
+		//ID
+		public RuleCall getLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1() { return cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1; }
+		
+		//',' 'inSubSystem:' subSystem=[DCLStructureElement]
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//','
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
+		
+		//'inSubSystem:'
+		public Keyword getInSubSystemKeyword_2_1_1() { return cInSubSystemKeyword_2_1_1; }
+		
+		//subSystem=[DCLStructureElement]
+		public Assignment getSubSystemAssignment_2_1_2() { return cSubSystemAssignment_2_1_2; }
+		
+		//[DCLStructureElement]
+		public CrossReference getSubSystemDCLStructureElementCrossReference_2_1_2_0() { return cSubSystemDCLStructureElementCrossReference_2_1_2_0; }
+		
+		//ID
+		public RuleCall getSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1() { return cSubSystemDCLStructureElementIDTerminalRuleCall_2_1_2_0_1; }
+		
 		//';'
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 	public class DSLAlternativeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLAlternative");
@@ -2695,12 +2856,12 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//DCLLayer:
-		//	'layer' name=ID ',' 'level' level=INT (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: '
-		//	subSystem=[DCLStructureElement] | ',' 'inComponent: ' component=[DCLStructureElement])? ';';
+		//	'layer' name=ID ',' 'level' level=INT (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+		//	subSystem=[DCLStructureElement] | ',' 'inComponent:' component=[DCLStructureElement])? ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'layer' name=ID ',' 'level' level=INT (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: '
-		//subSystem=[DCLStructureElement] | ',' 'inComponent: ' component=[DCLStructureElement])? ';'
+		//'layer' name=ID ',' 'level' level=INT (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+		//subSystem=[DCLStructureElement] | ',' 'inComponent:' component=[DCLStructureElement])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'layer'
@@ -2724,17 +2885,17 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getLevelINTTerminalRuleCall_4_0() { return cLevelINTTerminalRuleCall_4_0; }
 		
-		//(',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: ' subSystem=[DCLStructureElement] | ',' 'inComponent: '
+		//(',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement] | ',' 'inComponent:'
 		//component=[DCLStructureElement])?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
-		//',' 'inLayer: ' layer=[DCLStructureElement]
+		//',' 'inLayer:' layer=[DCLStructureElement]
 		public Group getGroup_5_0() { return cGroup_5_0; }
 		
 		//','
 		public Keyword getCommaKeyword_5_0_0() { return cCommaKeyword_5_0_0; }
 		
-		//'inLayer: '
+		//'inLayer:'
 		public Keyword getInLayerKeyword_5_0_1() { return cInLayerKeyword_5_0_1; }
 		
 		//layer=[DCLStructureElement]
@@ -2746,13 +2907,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getLayerDCLStructureElementIDTerminalRuleCall_5_0_2_0_1() { return cLayerDCLStructureElementIDTerminalRuleCall_5_0_2_0_1; }
 		
-		//',' 'inSubSystem: ' subSystem=[DCLStructureElement]
+		//',' 'inSubSystem:' subSystem=[DCLStructureElement]
 		public Group getGroup_5_1() { return cGroup_5_1; }
 		
 		//','
 		public Keyword getCommaKeyword_5_1_0() { return cCommaKeyword_5_1_0; }
 		
-		//'inSubSystem: '
+		//'inSubSystem:'
 		public Keyword getInSubSystemKeyword_5_1_1() { return cInSubSystemKeyword_5_1_1; }
 		
 		//subSystem=[DCLStructureElement]
@@ -2764,13 +2925,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getSubSystemDCLStructureElementIDTerminalRuleCall_5_1_2_0_1() { return cSubSystemDCLStructureElementIDTerminalRuleCall_5_1_2_0_1; }
 		
-		//',' 'inComponent: ' component=[DCLStructureElement]
+		//',' 'inComponent:' component=[DCLStructureElement]
 		public Group getGroup_5_2() { return cGroup_5_2; }
 		
 		//','
 		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
 		
-		//'inComponent: '
+		//'inComponent:'
 		public Keyword getInComponentKeyword_5_2_1() { return cInComponentKeyword_5_2_1; }
 		
 		//component=[DCLStructureElement]
@@ -2807,11 +2968,11 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//DCLComponent:
-		//	'component' name=ID (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: '
-		//	subSystem=[DCLStructureElement])? ';';
+		//	'component' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'component' name=ID (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: ' subSystem=[DCLStructureElement])?
+		//'component' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
 		//';'
 		public Group getGroup() { return cGroup; }
 		
@@ -2824,16 +2985,16 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//(',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: ' subSystem=[DCLStructureElement])?
+		//(',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
-		//',' 'inLayer: ' layer=[DCLStructureElement]
+		//',' 'inLayer:' layer=[DCLStructureElement]
 		public Group getGroup_2_0() { return cGroup_2_0; }
 		
 		//','
 		public Keyword getCommaKeyword_2_0_0() { return cCommaKeyword_2_0_0; }
 		
-		//'inLayer: '
+		//'inLayer:'
 		public Keyword getInLayerKeyword_2_0_1() { return cInLayerKeyword_2_0_1; }
 		
 		//layer=[DCLStructureElement]
@@ -2845,13 +3006,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1() { return cLayerDCLStructureElementIDTerminalRuleCall_2_0_2_0_1; }
 		
-		//',' 'inSubSystem: ' subSystem=[DCLStructureElement]
+		//',' 'inSubSystem:' subSystem=[DCLStructureElement]
 		public Group getGroup_2_1() { return cGroup_2_1; }
 		
 		//','
 		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
 		
-		//'inSubSystem: '
+		//'inSubSystem:'
 		public Keyword getInSubSystemKeyword_2_1_1() { return cInSubSystemKeyword_2_1_1; }
 		
 		//subSystem=[DCLStructureElement]
@@ -2884,10 +3045,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DCLComponentInterface:
-		//	'interface' name=ID 'ofComponent ' component=[DCLStructureElement] (',' 'type: ' interfaceType=InterfaceType) ';';
+		//	'interface' name=ID 'ofComponent' component=[DCLStructureElement] (',' 'type:' interfaceType=InterfaceType) ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'interface' name=ID 'ofComponent ' component=[DCLStructureElement] (',' 'type: ' interfaceType=InterfaceType) ';'
+		//'interface' name=ID 'ofComponent' component=[DCLStructureElement] (',' 'type:' interfaceType=InterfaceType) ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'interface'
@@ -2899,7 +3060,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//'ofComponent '
+		//'ofComponent'
 		public Keyword getOfComponentKeyword_2() { return cOfComponentKeyword_2; }
 		
 		//component=[DCLStructureElement]
@@ -2911,13 +3072,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getComponentDCLStructureElementIDTerminalRuleCall_3_0_1() { return cComponentDCLStructureElementIDTerminalRuleCall_3_0_1; }
 		
-		//(',' 'type: ' interfaceType=InterfaceType)
+		//(',' 'type:' interfaceType=InterfaceType)
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//','
 		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
 		
-		//'type: '
+		//'type:'
 		public Keyword getTypeKeyword_4_1() { return cTypeKeyword_4_1; }
 		
 		//interfaceType=InterfaceType
@@ -2967,10 +3128,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//DCLSubSystem:
-		//	'subSystem' name=ID (',' 'inSubSystem: ' subSystem=[DCLStructureElement])? ';';
+		//	'subSystem' name=ID (',' 'inSubSystem:' subSystem=[DCLStructureElement])? ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'subSystem' name=ID (',' 'inSubSystem: ' subSystem=[DCLStructureElement])? ';'
+		//'subSystem' name=ID (',' 'inSubSystem:' subSystem=[DCLStructureElement])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'subSystem'
@@ -2982,13 +3143,13 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//(',' 'inSubSystem: ' subSystem=[DCLStructureElement])?
+		//(',' 'inSubSystem:' subSystem=[DCLStructureElement])?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//','
 		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
 		
-		//'inSubSystem: '
+		//'inSubSystem:'
 		public Keyword getInSubSystemKeyword_2_1() { return cInSubSystemKeyword_2_1; }
 		
 		//subSystem=[DCLStructureElement]
@@ -3874,7 +4035,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLSensor:
-	//	'Sensor' name=ID ';';
+	//	'Sensor' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+	//	';';
 	public DSLSensorElements getDSLSensorAccess() {
 		return pDSLSensor;
 	}
@@ -3884,7 +4046,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLEffector:
-	//	'Effector' name=ID ';';
+	//	'Effector' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+	//	';';
 	public DSLEffectorElements getDSLEffectorAccess() {
 		return pDSLEffector;
 	}
@@ -3904,7 +4067,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DSLMeasuredOutput:
-	//	'MeasuredOutput' name=ID ';';
+	//	'MeasuredOutput' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+	//	subSystem=[DCLStructureElement])? ';';
 	public DSLMeasuredOutputElements getDSLMeasuredOutputAccess() {
 		return pDSLMeasuredOutput;
 	}
@@ -3934,8 +4098,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DCLLayer:
-	//	'layer' name=ID ',' 'level' level=INT (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: '
-	//	subSystem=[DCLStructureElement] | ',' 'inComponent: ' component=[DCLStructureElement])? ';';
+	//	'layer' name=ID ',' 'level' level=INT (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:'
+	//	subSystem=[DCLStructureElement] | ',' 'inComponent:' component=[DCLStructureElement])? ';';
 	public DCLLayerElements getDCLLayerAccess() {
 		return pDCLLayer;
 	}
@@ -3945,8 +4109,8 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DCLComponent:
-	//	'component' name=ID (',' 'inLayer: ' layer=[DCLStructureElement] | ',' 'inSubSystem: '
-	//	subSystem=[DCLStructureElement])? ';';
+	//	'component' name=ID (',' 'inLayer:' layer=[DCLStructureElement] | ',' 'inSubSystem:' subSystem=[DCLStructureElement])?
+	//	';';
 	public DCLComponentElements getDCLComponentAccess() {
 		return pDCLComponent;
 	}
@@ -3956,7 +4120,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DCLComponentInterface:
-	//	'interface' name=ID 'ofComponent ' component=[DCLStructureElement] (',' 'type: ' interfaceType=InterfaceType) ';';
+	//	'interface' name=ID 'ofComponent' component=[DCLStructureElement] (',' 'type:' interfaceType=InterfaceType) ';';
 	public DCLComponentInterfaceElements getDCLComponentInterfaceAccess() {
 		return pDCLComponentInterface;
 	}
@@ -3976,7 +4140,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DCLSubSystem:
-	//	'subSystem' name=ID (',' 'inSubSystem: ' subSystem=[DCLStructureElement])? ';';
+	//	'subSystem' name=ID (',' 'inSubSystem:' subSystem=[DCLStructureElement])? ';';
 	public DCLSubSystemElements getDCLSubSystemAccess() {
 		return pDCLSubSystem;
 	}

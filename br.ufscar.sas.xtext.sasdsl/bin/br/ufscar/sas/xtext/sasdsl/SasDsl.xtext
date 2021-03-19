@@ -164,12 +164,12 @@ DSLKnowledge:
 
 DSLSensor: 
 	
-	'Sensor' name=ID ';'
+	'Sensor' name=ID ((',' 'inLayer:' layer=[DCLStructureElement]) | (',''inSubSystem:' subSystem=[DCLStructureElement]))? ';'
 ;
 
 DSLEffector: 
 	
-	'Effector' name=ID ';'
+	'Effector' name=ID ((',' 'inLayer:' layer=[DCLStructureElement]) | (',''inSubSystem:' subSystem=[DCLStructureElement]))? ';'
 ;
   
 DSLReferenceInput:
@@ -179,7 +179,7 @@ DSLReferenceInput:
 
 DSLMeasuredOutput:
 	
-	'MeasuredOutput' name=ID ';'
+	'MeasuredOutput' name=ID ((',' 'inLayer:' layer=[DCLStructureElement]) | (',''inSubSystem:' subSystem=[DCLStructureElement]))? ';'
 ;
 
 DSLAlternative:
@@ -193,17 +193,17 @@ DCLStructureElement: DCLLayer | DCLComponent | DCLSubSystem | DCLModule | DCLCom
  
 DCLLayer:
 
- 	'layer' name=ID ',' 'level' level=INT ((',' 'inLayer: ' layer=[DCLStructureElement]) | (',''inSubSystem: ' subSystem=[DCLStructureElement])| (',''inComponent: ' component=[DCLStructureElement]))? ';'
+ 	'layer' name=ID ',' 'level' level=INT ((',' 'inLayer:' layer=[DCLStructureElement]) | (',''inSubSystem:' subSystem=[DCLStructureElement])| (',''inComponent:' component=[DCLStructureElement]))? ';'
 ;
  
 DCLComponent:
 
-	'component' name=ID ((',' 'inLayer: ' layer=[DCLStructureElement]) | (',''inSubSystem: ' subSystem=[DCLStructureElement]))? ';'
+	'component' name=ID ((',' 'inLayer:' layer=[DCLStructureElement]) | (',''inSubSystem:' subSystem=[DCLStructureElement]))? ';'
 ;
  	
 DCLComponentInterface:
  	
- 	'interface' name=ID 'ofComponent ' component=[DCLStructureElement] (',' 'type: ' interfaceType=InterfaceType ) ';'
+ 	'interface' name=ID 'ofComponent' component=[DCLStructureElement] (',' 'type:' interfaceType=InterfaceType ) ';'
 ;
  
 InterfaceType:
@@ -213,7 +213,7 @@ InterfaceType:
  
 DCLSubSystem:
 
- 	'subSystem' name=ID (',' 'inSubSystem: ' subSystem=[DCLStructureElement])? ';' 
+ 	'subSystem' name=ID (',' 'inSubSystem:' subSystem=[DCLStructureElement])? ';' 
 ;
  
 DCLModule:
