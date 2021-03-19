@@ -3,6 +3,7 @@
  */
 package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLEffector;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLMeasuredOutput;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getSensor <em>Sensor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getEffector <em>Effector</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getMeasuredOutput <em>Measured Output</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getStructureElements <em>Structure Elements</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +94,16 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @ordered
    */
   protected EList<DSLMeasuredOutput> measuredOutput;
+
+  /**
+   * The cached value of the '{@link #getStructureElements() <em>Structure Elements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStructureElements()
+   * @generated
+   * @ordered
+   */
+  protected EList<DCLStructureElement> structureElements;
 
   /**
    * <!-- begin-user-doc -->
@@ -190,6 +202,21 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @generated
    */
   @Override
+  public EList<DCLStructureElement> getStructureElements()
+  {
+    if (structureElements == null)
+    {
+      structureElements = new EObjectContainmentEList<DCLStructureElement>(DCLStructureElement.class, this, SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS);
+    }
+    return structureElements;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -200,6 +227,8 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
         return ((InternalEList<?>)getEffector()).basicRemove(otherEnd, msgs);
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return ((InternalEList<?>)getMeasuredOutput()).basicRemove(otherEnd, msgs);
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return ((InternalEList<?>)getStructureElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -222,6 +251,8 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
         return getEffector();
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return getMeasuredOutput();
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return getStructureElements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -252,6 +283,10 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
         getMeasuredOutput().clear();
         getMeasuredOutput().addAll((Collection<? extends DSLMeasuredOutput>)newValue);
         return;
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        getStructureElements().clear();
+        getStructureElements().addAll((Collection<? extends DCLStructureElement>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -278,6 +313,9 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         getMeasuredOutput().clear();
         return;
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        getStructureElements().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -300,6 +338,8 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
         return effector != null && !effector.isEmpty();
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return measuredOutput != null && !measuredOutput.isEmpty();
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return structureElements != null && !structureElements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

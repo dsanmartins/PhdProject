@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getSensor <em>Sensor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getEffector <em>Effector</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getMeasuredOutput <em>Measured Output</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements <em>Structure Elements</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLManaged()
@@ -85,5 +86,17 @@ public interface DSLManaged extends EObject
    * @generated
    */
   EList<DSLMeasuredOutput> getMeasuredOutput();
+
+  /**
+   * Returns the value of the '<em><b>Structure Elements</b></em>' containment reference list.
+   * The list contents are of type {@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Structure Elements</em>' containment reference list.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getDSLManaged_StructureElements()
+   * @model containment="true"
+   * @generated
+   */
+  EList<DCLStructureElement> getStructureElements();
 
 } // DSLManaged

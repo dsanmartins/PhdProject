@@ -249,6 +249,150 @@ public interface SasDslFactory extends EFactory
   DSLAlternative createDSLAlternative();
 
   /**
+   * Returns a new object of class '<em>DCL Structure Element</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Structure Element</em>'.
+   * @generated
+   */
+  DCLStructureElement createDCLStructureElement();
+
+  /**
+   * Returns a new object of class '<em>DCL Layer</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Layer</em>'.
+   * @generated
+   */
+  DCLLayer createDCLLayer();
+
+  /**
+   * Returns a new object of class '<em>DCL Component</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Component</em>'.
+   * @generated
+   */
+  DCLComponent createDCLComponent();
+
+  /**
+   * Returns a new object of class '<em>DCL Component Interface</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Component Interface</em>'.
+   * @generated
+   */
+  DCLComponentInterface createDCLComponentInterface();
+
+  /**
+   * Returns a new object of class '<em>Interface Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Interface Type</em>'.
+   * @generated
+   */
+  InterfaceType createInterfaceType();
+
+  /**
+   * Returns a new object of class '<em>DCL Sub System</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Sub System</em>'.
+   * @generated
+   */
+  DCLSubSystem createDCLSubSystem();
+
+  /**
+   * Returns a new object of class '<em>DCL Module</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DCL Module</em>'.
+   * @generated
+   */
+  DCLModule createDCLModule();
+
+  /**
+   * Returns a new object of class '<em>DC Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DC Decl</em>'.
+   * @generated
+   */
+  DCDecl createDCDecl();
+
+  /**
+   * Returns a new object of class '<em>Only</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Only</em>'.
+   * @generated
+   */
+  Only createOnly();
+
+  /**
+   * Returns a new object of class '<em>Can</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Can</em>'.
+   * @generated
+   */
+  Can createCan();
+
+  /**
+   * Returns a new object of class '<em>Cannot</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Cannot</em>'.
+   * @generated
+   */
+  Cannot createCannot();
+
+  /**
+   * Returns a new object of class '<em>Only2</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Only2</em>'.
+   * @generated
+   */
+  Only2 createOnly2();
+
+  /**
+   * Returns a new object of class '<em>Must</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Must</em>'.
+   * @generated
+   */
+  Must createMust();
+
+  /**
+   * Returns a new object of class '<em>Element Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Element Type</em>'.
+   * @generated
+   */
+  ElementType createElementType();
+
+  /**
+   * Returns a new object of class '<em>Basic Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Basic Type</em>'.
+   * @generated
+   */
+  BasicType createBasicType();
+
+  /**
+   * Returns a new object of class '<em>Entity Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Entity Type</em>'.
+   * @generated
+   */
+  EntityType createEntityType();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

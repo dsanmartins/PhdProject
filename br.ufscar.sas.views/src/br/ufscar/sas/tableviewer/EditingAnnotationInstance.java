@@ -23,7 +23,7 @@ public class EditingAnnotationInstance extends EditingSupport {
 	private ComboBoxViewerCellEditor cellEditor = null;
 	private ColumnViewer viewer = null;
 
-	public EditingAnnotationInstance(ColumnViewer viewer) {
+	public EditingAnnotationInstance(ColumnViewer viewer, int op) {
 		super(viewer);
 		this.viewer = viewer;
 		cellEditor = new ComboBoxViewerCellEditor((Composite) getViewer().getControl(), SWT.READ_ONLY);
@@ -35,7 +35,11 @@ public class EditingAnnotationInstance extends EditingSupport {
 		try 
 		{	
 			QueryClass queryClass = new QueryClass(MainView.getDatabaseUrl());
-			rs = queryClass.selectInstance(2);
+			if (op == 1)
+				rs = queryClass.selectInstance(2);
+			else
+				if (op == 2)
+					rs = queryClass.selectGenericInstance();
 
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

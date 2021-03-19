@@ -4,6 +4,7 @@
 package br.ufscar.sas.xtext.sasdsl.sasDsl.impl;
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ArchitectureDefinitionImpl#getManaging <em>Managing</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ArchitectureDefinitionImpl#getManaged <em>Managed</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ArchitectureDefinitionImpl#getRules <em>Rules</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ArchitectureDefinitionImpl#getDCDecl <em>DC Decl</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +94,16 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
    * @ordered
    */
   protected EList<DSLRules> rules;
+
+  /**
+   * The cached value of the '{@link #getDCDecl() <em>DC Decl</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDCDecl()
+   * @generated
+   * @ordered
+   */
+  protected EList<DCDecl> dCDecl;
 
   /**
    * <!-- begin-user-doc -->
@@ -190,6 +202,21 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
    * @generated
    */
   @Override
+  public EList<DCDecl> getDCDecl()
+  {
+    if (dCDecl == null)
+    {
+      dCDecl = new EObjectContainmentEList<DCDecl>(DCDecl.class, this, SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL);
+    }
+    return dCDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -200,6 +227,8 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
         return ((InternalEList<?>)getManaged()).basicRemove(otherEnd, msgs);
       case SasDslPackage.ARCHITECTURE_DEFINITION__RULES:
         return ((InternalEList<?>)getRules()).basicRemove(otherEnd, msgs);
+      case SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL:
+        return ((InternalEList<?>)getDCDecl()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -222,6 +251,8 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
         return getManaged();
       case SasDslPackage.ARCHITECTURE_DEFINITION__RULES:
         return getRules();
+      case SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL:
+        return getDCDecl();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -252,6 +283,10 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
         getRules().clear();
         getRules().addAll((Collection<? extends DSLRules>)newValue);
         return;
+      case SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL:
+        getDCDecl().clear();
+        getDCDecl().addAll((Collection<? extends DCDecl>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -278,6 +313,9 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
       case SasDslPackage.ARCHITECTURE_DEFINITION__RULES:
         getRules().clear();
         return;
+      case SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL:
+        getDCDecl().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -300,6 +338,8 @@ public class ArchitectureDefinitionImpl extends MinimalEObjectImpl.Container imp
         return managed != null && !managed.isEmpty();
       case SasDslPackage.ARCHITECTURE_DEFINITION__RULES:
         return rules != null && !rules.isEmpty();
+      case SasDslPackage.ARCHITECTURE_DEFINITION__DC_DECL:
+        return dCDecl != null && !dCDecl.isEmpty();
     }
     return super.eIsSet(featureID);
   }

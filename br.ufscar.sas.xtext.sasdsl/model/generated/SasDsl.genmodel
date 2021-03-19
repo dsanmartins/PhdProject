@@ -11,6 +11,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//ArchitectureDefinition/managing"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//ArchitectureDefinition/managed"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//ArchitectureDefinition/rules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//ArchitectureDefinition/dCDecl"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLRules">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLRules/access"/>
@@ -81,6 +82,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/sensor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/effector"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/measuredOutput"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/structureElements"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLManagerController">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLManagerController/name"/>
@@ -129,6 +131,63 @@
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLAlternative">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLAlternative/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLStructureElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DCLStructureElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLLayer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DCLLayer/level"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLLayer/layer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLLayer/subSystem"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLLayer/component"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLComponent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLComponent/layer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLComponent/subSystem"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLComponentInterface">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLComponentInterface/component"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLComponentInterface/interfaceType"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//InterfaceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//InterfaceType/interfaceTypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLSubSystem">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCLSubSystem/subSystem"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DCLModule"/>
+    <genClasses ecoreClass="SasDsl.ecore#//DCDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/only"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/t"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/can"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/elementType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/cannot"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/only2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/must"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DCDecl/entityType"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//Only">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//Only/only"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//Can">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//Can/can"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//Cannot">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//Cannot/cannot"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//Only2">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//Only2/only2"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//Must">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//Must/must"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//ElementType"/>
+    <genClasses ecoreClass="SasDsl.ecore#//BasicType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//BasicType/typeName"/>
+    </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//EntityType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//EntityType/entity"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

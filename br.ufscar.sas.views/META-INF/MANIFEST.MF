@@ -32,7 +32,8 @@ Import-Package: br.ufscar.sas.checkconstraint,
  org.eclipse.zest.core.widgets.internal,
  org.eclipse.zest.layouts,
  org.eclipse.zest.layouts.algorithms,
- org.eclipse.zest.layouts.dataStructures
+ org.eclipse.zest.layouts.dataStructures,
+ org.eclipse.nebula.widgets.ctreecombo
 Export-Package: br.ufscar.sas.view
 Bundle-ClassPath: lib/javaparser-core-3.6.2.jar,
  lib/hamcrest-core-1.3.jar,

@@ -10,6 +10,8 @@
         eType="#//DSLManaged" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//DSLRules" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dCDecl" upperBound="-1"
+        eType="#//DCDecl" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLRules">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -85,6 +87,8 @@
         eType="#//DSLEffector" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="measuredOutput" upperBound="-1"
         eType="#//DSLMeasuredOutput" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="structureElements" upperBound="-1"
+        eType="#//DCLStructureElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLManagerController">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -142,5 +146,67 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DSLAlternative">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLStructureElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLLayer" eSuperTypes="#//DCLStructureElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//DCLStructureElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLComponent" eSuperTypes="#//DCLStructureElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layer" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLComponentInterface" eSuperTypes="#//DCLStructureElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceType" eType="#//InterfaceType"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="interfaceTypeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLSubSystem" eSuperTypes="#//DCLStructureElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" eType="#//DCLStructureElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DCLModule" eSuperTypes="#//DCLStructureElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DCDecl">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="only" eType="#//Only" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="can" eType="#//Can" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" eType="#//ElementType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//DCLStructureElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cannot" eType="#//Cannot"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="only2" eType="#//Only2"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="must" eType="#//Must" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entityType" eType="#//EntityType"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Only">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="only" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Can">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="can" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cannot">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cannot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Only2">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="only2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Must">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="must" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicType" eSuperTypes="#//ElementType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EntityType" eSuperTypes="#//ElementType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="entity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -6,8 +6,11 @@ ArchitectureDefinition:
 	'Architecture' name=ID '{' 
 					   managing += DSLManaging+
 					   managed += DSLManaged+ 
-				   '}'  
-	'Rules' '{' rules += DSLRules* '}'  
+	'}'  
+	'Rules' '{' 
+				rules += DSLRules*
+				dCDecl += DCDecl*
+	'}'  
 ;
 	
 DSLRules:
@@ -98,7 +101,7 @@ DSLManaged:
 		sensor += DSLSensor*
 		effector += DSLEffector*
 		measuredOutput +=DSLMeasuredOutput*
-		
+		structureElements += DCLStructureElement* 
 	'}'
 ;
 
@@ -183,5 +186,88 @@ DSLAlternative:
 	
 	'Alternative' name= ID ';'
 ;
+
+DCLStructureElement: DCLLayer | DCLComponent | DCLSubSystem | DCLModule | DCLComponentInterface
+	
+;
+ 
+DCLLayer:
+
+ 	'layer' name=ID ',' 'level' level=INT ((',' 'inLayer: ' layer=[DCLStructureElement]) | (',''inSubSystem: ' subSystem=[DCLStructureElement])| (',''inComponent: ' component=[DCLStructureElement]))? ';'
+;
+ 
+DCLComponent:
+
+	'component' name=ID ((',' 'inLayer: ' layer=[DCLStructureElement]) | (',''inSubSystem: ' subSystem=[DCLStructureElement]))? ';'
+;
+ 	
+DCLComponentInterface:
+ 	
+ 	'interface' name=ID 'ofComponent ' component=[DCLStructureElement] (',' 'type: ' interfaceType=InterfaceType ) ';'
+;
+ 
+InterfaceType:
+
+ 	interfaceTypeName = ('provided' | 'required')
+;
+ 
+DCLSubSystem:
+
+ 	'subSystem' name=ID (',' 'inSubSystem: ' subSystem=[DCLStructureElement])? ';' 
+;
+ 
+DCLModule:
+ 	
+ 	'module' name=ID ';'
+;
+ 
+DCDecl: (only=Only t=[DCLStructureElement|FQN] can=Can elementType=ElementType type = [DCLStructureElement|FQN] ';') | 
+ 	     (t=[DCLStructureElement|FQN] cannot=Cannot elementType=ElementType type = [DCLStructureElement|FQN] ';') |
+ 	     (t=[DCLStructureElement|FQN] can=Can elementType=ElementType type = [DCLStructureElement|FQN] ';') |
+ 	     (t=[DCLStructureElement|FQN] can=Can elementType=ElementType only2=Only2 type = [DCLStructureElement|FQN] ';') |
+ 	     (t=[DCLStructureElement|FQN] must=Must entityType=EntityType type = [DCLStructureElement|FQN] ';');
+
+FQN: ID ("." ID)*; 
+ 
+Only:
+	
+ 	only='only'
+;
+ 
+Can:
+
+ 	can='can-'
+;
+ 
+Cannot:
+	
+ 	cannot='cannot-'
+;
+
+Only2:
+	
+ 	only2='-only'
+;	
+
+Must:
+	
+  	must='must-'
+;
+
+ElementType: 
+        
+    BasicType | EntityType
+;
+   
+BasicType:
+
+   typeName= ('access' | 'declare' | 'handle' | 'create' | 'depend')
+;
+     
+EntityType: 
+	
+	entity=('extend' | 'implement' | 'derive' | 'throw' | 'useannotation')
+;
+
 
 

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getManaging <em>Managing</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getManaged <em>Managed</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getRules <em>Rules</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getDCDecl <em>DC Decl</em>}</li>
  * </ul>
  *
  * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getArchitectureDefinition()
@@ -85,5 +86,17 @@ public interface ArchitectureDefinition extends EObject
    * @generated
    */
   EList<DSLRules> getRules();
+
+  /**
+   * Returns the value of the '<em><b>DC Decl</b></em>' containment reference list.
+   * The list contents are of type {@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>DC Decl</em>' containment reference list.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage#getArchitectureDefinition_DCDecl()
+   * @model containment="true"
+   * @generated
+   */
+  EList<DCDecl> getDCDecl();
 
 } // ArchitectureDefinition

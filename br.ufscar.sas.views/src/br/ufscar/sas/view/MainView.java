@@ -193,7 +193,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		// this.UICodeGenerator(tabFolder, projectName);
 		// Tab5
 		this.UIDomainRules(tabFolder, projectName);
-
+		// Tab4
 		tabFolder.setSelection(0);
 	}
 
@@ -263,19 +263,30 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Group controlGroup = new Group(group, SWT.NONE);
 		controlGroup.setText("Control");
-		controlGroup.setBounds(10, 0, 500, 50);
+		controlGroup.setBounds(10, 0, 550, 50);
 
 		Label label1 = new Label(controlGroup, SWT.NONE);
 		label1.setText("Project Name: " + projectName);
 		label1.setBounds(15, 3, 300, 20);
 
-		Button loadAbstractions = new Button(group, SWT.NONE);
-		loadAbstractions.setBounds(10, 60, 140, 25);
-		loadAbstractions.setText("Load Abstractions");
+		Group controlGroupAbs = new Group(group, SWT.NONE);
+		controlGroupAbs.setText("Type of Abstractions");
+		controlGroupAbs.setBounds(10, 60, 550, 50);
+
+		Button[] radios = new Button[2];
+		radios[0] = new Button(controlGroupAbs, SWT.RADIO);
+		radios[0].setText("Adaptive System");
+		radios[0].setBounds(100, 5, 140, 30);
+		radios[0].setSelection(false);
+
+		radios[1] = new Button(controlGroupAbs, SWT.RADIO);
+		radios[1].setText("Generic");
+		radios[1].setBounds(300, 5, 140, 30);
+		radios[1].setSelection(false);
 
 		Group tableViewGroup = new Group(group, SWT.NONE);
 		tableViewGroup.setText("Mapping Code Elements with Abstractions");
-		tableViewGroup.setBounds(10, 95, 550, 450);
+		tableViewGroup.setBounds(10, 115, 550, 450);
 		tableViewGroup.setLayout(new FillLayout());
 		tab1.setControl(group);
 
@@ -299,7 +310,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 		column2.getColumn().setResizable(false);
 
 
-		EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
+		EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer(),1);
 		column2.setEditingSupport(editingAnnotation);
 
 		table.setHeaderVisible(true);
@@ -312,7 +323,7 @@ public class MainView extends ViewPart implements IPartListener2 {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
 				if (tabFolder.getSelection()[0].getText().equals("Code Elements Mapping"))
 				{
-					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
+					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer(),1);
 					column2.setEditingSupport(editingAnnotation);
 				}
 			}
@@ -320,11 +331,11 @@ public class MainView extends ViewPart implements IPartListener2 {
 
 		Button processAnnotation = new Button(controlGroup, SWT.NONE);
 		processAnnotation.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-		processAnnotation.setBounds(350, 0, 140, 25);
+		processAnnotation.setBounds(400, 0, 140, 25);
 		processAnnotation.setText("Mapping Process");
 
 
-		loadAbstractions.addSelectionListener(new SelectionListener() {
+		radios[0].addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -357,7 +368,12 @@ public class MainView extends ViewPart implements IPartListener2 {
 									{
 										String abstraction = element.split(Pattern.quote(" "))[0].trim();
 										String instance = element.split(Pattern.quote(" "))[1].trim();
-										queryClass.insertInstance(abstraction, instance);
+										if (!abstraction.equals("subSystem") ||
+												!abstraction.equals("component") ||
+												!abstraction.equals("interface") ||
+												!abstraction.equals("layer") ||	
+												!abstraction.equals("module"))
+											queryClass.insertInstance(abstraction, instance);
 									}
 								} 
 							}
@@ -368,7 +384,71 @@ public class MainView extends ViewPart implements IPartListener2 {
 						ex.printStackTrace();
 					}
 
-					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer());
+					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer(),1);
+					column2.setEditingSupport(editingAnnotation);	
+				}
+				else
+					MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "The PlannedArchitecture/architecture.sas file does not exist!");
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		radios[1].addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+				IWorkspace workspace = ResourcesPlugin.getWorkspace();
+				IWorkspaceRoot root = workspace.getRoot();
+				IProject project  = root.getProject(projectName);
+				IFile architecture = project.getFile("PlannedArchitecture/architecture.sas");
+
+				QueryClass queryClass = null;
+
+				if(Files.exists(Paths.get(architecture.getLocationURI()))) { 
+					try {
+						queryClass = new QueryClass(databaseUrl);
+						queryClass.deleteGenericInstance();
+						List<String> specification = Files.readAllLines(Paths.get(architecture.getLocationURI()));
+						specification.remove(0);
+						for (String line : specification) {
+
+							if (line.contains("Rules") || line.contains("rules"))
+								break;
+							else
+							{
+								Matcher m = Pattern.compile("\\w+\\s+\\w+").matcher(line);
+								while(m.find())
+								{
+									String elements[] = m.group(0).split(Pattern.quote("\n"));
+									for (String element:elements)
+									{
+										String abstraction = element.split(Pattern.quote(" "))[0].trim();
+										String instance = element.split(Pattern.quote(" "))[1].trim();
+										if (abstraction.equals("subSystem") ||
+												abstraction.equals("component") ||
+												abstraction.equals("interface") ||
+												abstraction.equals("layer") ||	
+												abstraction.equals("module"))
+											queryClass.insertGenericInstance(abstraction, instance);
+									}
+								} 
+							}
+						}
+
+					} catch (Exception ex) {
+						// TODO Auto-generated catch block
+						ex.printStackTrace();
+					}
+
+					EditingAnnotationInstance editingAnnotation = new EditingAnnotationInstance(column2.getViewer(), 2);
 					column2.setEditingSupport(editingAnnotation);	
 				}
 				else
@@ -1354,25 +1434,25 @@ public class MainView extends ViewPart implements IPartListener2 {
 			if (resource != null) {
 				if (resource.getLocation().toOSString().split("\\.")[1].equals("java")) {
 
-					
+
 					Pattern patternInterface = Pattern.compile("(?:((?:public|protected|private|abstract|static|strictfp|@[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)(?:[ \\t\\f\\r\\n]*+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))(?:public|protected|private|abstract|static|strictfp|@[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))*+)[ \\t\\f\\r\\n]*+)?+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))interface[ \\t\\f\\r\\n]++(\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)[ \\t\\f\\r\\n]*+(?:(<[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]++extends[ \\t\\f\\r\\n]++(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+|\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))?+(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]++extends[ \\t\\f\\r\\n]++(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+|\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+))?+)*+[ \\t\\f\\r\\n]*+>)[ \\t\\f\\r\\n]*+)?+(?:(?<!\\p{javaJavaIdentifierPart})|(?!\\p{javaJavaIdentifierPart}))(?:(extends[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+(?:[ \\t\\f\\r\\n]*+[.][ \\t\\f\\r\\n]*+\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+(?:[ \\t\\f\\r\\n]*+<[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+)(?:[ \\t\\f\\r\\n]*+,[ \\t\\f\\r\\n]*+(?:\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+|[?][ \\t\\f\\r\\n]*+(?:(?:extends|super)[ \\t\\f\\r\\n]++\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*+)?+))*+[ \\t\\f\\r\\n]*+>)?+)*+)*+)[ \\t\\f\\r\\n]*+)?+[{]");
 					String content= "";
 					try {
-							content = this.readFile(resource.getLocation().toOSString());
-						} catch (IOException e2) {
-						
+						content = this.readFile(resource.getLocation().toOSString());
+					} catch (IOException e2) {
+
 						e2.printStackTrace();
 					}
-					
+
 					boolean b = false;
 					Matcher m = patternInterface.matcher(content);
 					while (m.find())
 					{
 						if (m.group(0).contains("interface"))
 							b = true;
-							
+
 					}
-					
+
 					//Package Name
 					CriptoBase64 criptoBase64 = new CriptoBase64();
 					String pathCode = criptoBase64.codeBase64Path(resource.getLocation().toOSString().split("\\.")[0]);
@@ -1610,17 +1690,17 @@ public class MainView extends ViewPart implements IPartListener2 {
 	}
 
 	public String readFile(String filename) throws IOException {
-	    BufferedReader br = new BufferedReader(new FileReader(filename));
-	    String nextLine = "";
-	    StringBuffer sb = new StringBuffer();
-	    while ((nextLine = br.readLine()) != null) {
-	        sb.append(nextLine);
-	    }
-	    br.close();
-	    //remove newlines
-	    String newString = sb.toString().replace('\n', ' ');
-	 
-	    return newString;
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		String nextLine = "";
+		StringBuffer sb = new StringBuffer();
+		while ((nextLine = br.readLine()) != null) {
+			sb.append(nextLine);
+		}
+		br.close();
+		//remove newlines
+		String newString = sb.toString().replace('\n', ' ');
+
+		return newString;
 	}
-	
+
 }

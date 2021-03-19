@@ -90,6 +90,22 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
       case SasDslPackage.DSL_REFERENCE_INPUT: return createDSLReferenceInput();
       case SasDslPackage.DSL_MEASURED_OUTPUT: return createDSLMeasuredOutput();
       case SasDslPackage.DSL_ALTERNATIVE: return createDSLAlternative();
+      case SasDslPackage.DCL_STRUCTURE_ELEMENT: return createDCLStructureElement();
+      case SasDslPackage.DCL_LAYER: return createDCLLayer();
+      case SasDslPackage.DCL_COMPONENT: return createDCLComponent();
+      case SasDslPackage.DCL_COMPONENT_INTERFACE: return createDCLComponentInterface();
+      case SasDslPackage.INTERFACE_TYPE: return createInterfaceType();
+      case SasDslPackage.DCL_SUB_SYSTEM: return createDCLSubSystem();
+      case SasDslPackage.DCL_MODULE: return createDCLModule();
+      case SasDslPackage.DC_DECL: return createDCDecl();
+      case SasDslPackage.ONLY: return createOnly();
+      case SasDslPackage.CAN: return createCan();
+      case SasDslPackage.CANNOT: return createCannot();
+      case SasDslPackage.ONLY2: return createOnly2();
+      case SasDslPackage.MUST: return createMust();
+      case SasDslPackage.ELEMENT_TYPE: return createElementType();
+      case SasDslPackage.BASIC_TYPE: return createBasicType();
+      case SasDslPackage.ENTITY_TYPE: return createEntityType();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -393,6 +409,198 @@ public class SasDslFactoryImpl extends EFactoryImpl implements SasDslFactory
   {
     DSLAlternativeImpl dslAlternative = new DSLAlternativeImpl();
     return dslAlternative;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLStructureElement createDCLStructureElement()
+  {
+    DCLStructureElementImpl dclStructureElement = new DCLStructureElementImpl();
+    return dclStructureElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLLayer createDCLLayer()
+  {
+    DCLLayerImpl dclLayer = new DCLLayerImpl();
+    return dclLayer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLComponent createDCLComponent()
+  {
+    DCLComponentImpl dclComponent = new DCLComponentImpl();
+    return dclComponent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLComponentInterface createDCLComponentInterface()
+  {
+    DCLComponentInterfaceImpl dclComponentInterface = new DCLComponentInterfaceImpl();
+    return dclComponentInterface;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public InterfaceType createInterfaceType()
+  {
+    InterfaceTypeImpl interfaceType = new InterfaceTypeImpl();
+    return interfaceType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLSubSystem createDCLSubSystem()
+  {
+    DCLSubSystemImpl dclSubSystem = new DCLSubSystemImpl();
+    return dclSubSystem;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCLModule createDCLModule()
+  {
+    DCLModuleImpl dclModule = new DCLModuleImpl();
+    return dclModule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DCDecl createDCDecl()
+  {
+    DCDeclImpl dcDecl = new DCDeclImpl();
+    return dcDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Only createOnly()
+  {
+    OnlyImpl only = new OnlyImpl();
+    return only;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Can createCan()
+  {
+    CanImpl can = new CanImpl();
+    return can;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Cannot createCannot()
+  {
+    CannotImpl cannot = new CannotImpl();
+    return cannot;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Only2 createOnly2()
+  {
+    Only2Impl only2 = new Only2Impl();
+    return only2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Must createMust()
+  {
+    MustImpl must = new MustImpl();
+    return must;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ElementType createElementType()
+  {
+    ElementTypeImpl elementType = new ElementTypeImpl();
+    return elementType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BasicType createBasicType()
+  {
+    BasicTypeImpl basicType = new BasicTypeImpl();
+    return basicType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EntityType createEntityType()
+  {
+    EntityTypeImpl entityType = new EntityTypeImpl();
+    return entityType;
   }
 
   /**

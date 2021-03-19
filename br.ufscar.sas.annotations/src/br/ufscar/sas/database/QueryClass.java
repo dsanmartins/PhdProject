@@ -37,30 +37,42 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS field_annotation (project_name text, class_name text, field_name text, file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS method_annotation (project_name text, class_name text, method_name text,file text, annotation text, belongs text) ");
 		mydb.executeStmt("create table IF NOT EXISTS variable_annotation (project_name text, class_name text, method_name text, variable_name, file text, annotation text, belongs text) ");
-		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text) ");	
+		mydb.executeStmt("create table IF NOT EXISTS abstraction_type (id integer primary key, type text)");
+		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text, abstraction_type integer, FOREIGN KEY(abstraction_type) REFERENCES abstraction_type(id)) ");
+		mydb.executeStmt("create table IF NOT EXISTS generic_abstractions (id integer primary key, annotation text, abstraction_type integer, FOREIGN KEY(abstraction_type) REFERENCES abstraction_type(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
+		mydb.executeStmt("create table IF NOT EXISTS generic_instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch text)");
-		mydb.executeStmt("delete from abstractions"); 
+		mydb.executeStmt("delete from abstractions");
+		mydb.executeStmt("delete from generic_abstractions");
+		mydb.executeStmt("delete from abstraction_type"); 
 		mydb.closeConnection();
 	}
 
 	public void populateAbstractions() throws SQLException, Exception
 	{
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('1','Managed');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('2','Managing' );");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('3','LoopManager');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('4','Loop');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('5','Monitor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('6','Analyzer');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('7','Planner');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('8','Executor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('9','Knowledge');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('10','Sensor');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('11','Effector');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('12','MeasuredOutput');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('13','ReferenceInput');");
-		mydb.executeStmt("insert into abstractions(id,annotation) values ('14','Alternative');");
+		mydb.executeStmt("insert into abstraction_type(id,type) values ('1','Adaptive System');");
+		mydb.executeStmt("insert into abstraction_type(id,type) values ('2','Generic');");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('1','Managed',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('2','Managing',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('3','LoopManager',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('4','Loop',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('5','Monitor',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('6','Analyzer',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('7','Planner',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('8','Executor',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('9','Knowledge',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('10','Sensor',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('11','Effector',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('12','MeasuredOutput',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('13','ReferenceInput',1);");
+		mydb.executeStmt("insert into abstractions(id,annotation,abstraction_type) values ('14','Alternative',1);");
+		mydb.executeStmt("insert into generic_abstractions(id,annotation,abstraction_type) values ('1','subSystem',2);");
+		mydb.executeStmt("insert into generic_abstractions(id,annotation,abstraction_type) values ('2','component',2);");
+		mydb.executeStmt("insert into generic_abstractions(id,annotation,abstraction_type) values ('3','layer',2);");
+		mydb.executeStmt("insert into generic_abstractions(id,annotation,abstraction_type) values ('4','module',2);");
+		mydb.executeStmt("insert into generic_abstractions(id,annotation,abstraction_type) values ('5','interface',2);");
 		mydb.closeConnection();
 	}
 
@@ -493,6 +505,20 @@ public class QueryClass {
 		mydb.closeConnection();
 		return str;
 	}
+	
+	public String selectGenericAbstraction (String abstraction, String instance) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		ResultSet rs = mydb.executeQry("select id from generic_abstractions where annotation= '" + abstraction + "';");	
+		String str = "";
+
+		while (rs.next()) {
+
+			str = rs.getObject(1).toString();
+		}
+		mydb.closeConnection();
+		return str;
+	}
 
 	public void insertInstance(String abstraction, String instance) throws Exception {
 
@@ -506,6 +532,18 @@ public class QueryClass {
 		}
 	}
 
+	public void insertGenericInstance(String abstraction, String instance) throws Exception {
+
+		String value = this.selectGenericAbstraction(abstraction, instance);
+		if (!value.equals(""))
+		{
+			SqliteDb mydb = new SqliteDb(dbDriver,url);
+			mydb.executeStmt("insert into generic_instances (abstraction_id, annotation) values"
+					+ " ('" + value + "','" +   instance + "');"); 
+			mydb.closeConnection();
+		}
+	}
+
 	public void deleteInstance() throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -513,21 +551,28 @@ public class QueryClass {
 		mydb.closeConnection();
 	}
 
-	public String selectAbstractionByInstance(String annotation) throws Exception {
-		
+	public void deleteGenericInstance() throws Exception {
+
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
-	
+		mydb.executeStmt("delete from generic_instances;"); 
+		mydb.closeConnection();
+	}
+
+	public String selectAbstractionByInstance(String annotation) throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+
 		ResultSet rs = null;
 		rs = mydb.executeQry("select a.annotation "
 				+ "from abstractions a inner join instances b "
 				+ "where b.abstraction_id = a.id and b.annotation='"+ annotation + "';");
-		
+
 		while (rs.next())
 			return rs.getObject(1).toString();
-		
+
 		return null;
 	}
-	
+
 	public List<String> selectInstance(int op) throws Exception {
 
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
@@ -568,6 +613,24 @@ public class QueryClass {
 				}
 			}
 		}
+		mydb.closeConnection();
+		return lst;
+	}
+
+	public List<String> selectGenericInstance() throws Exception {
+
+		SqliteDb mydb = new SqliteDb(dbDriver,url);
+		List<String> lst = new ArrayList<String>();
+		ResultSet rs = mydb.executeQry("select b.annotation "
+				+ "from generic_abstractions a inner join generic_instances b on "
+				+ "a.id = b.abstraction_id "
+				+ "order by a.id;");
+
+		while (rs.next())
+			lst.add(rs.getObject(1).toString());
+
+		lst.add(0,"None");
+
 		mydb.closeConnection();
 		return lst;
 	}
@@ -979,7 +1042,7 @@ public class QueryClass {
 	}
 
 	public void deleteBelongsTo() throws Exception {
-		
+
 		SqliteDb mydb = new SqliteDb(dbDriver,url);
 		mydb.executeStmt("update package_annotation set belongs='None';");	
 		mydb.executeStmt("update class_annotation set belongs='None';");	
@@ -989,5 +1052,5 @@ public class QueryClass {
 		mydb.executeStmt("update variable_annotation set belongs='None';");		
 		mydb.closeConnection();
 	}
-	
+
 }

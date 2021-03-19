@@ -104,13 +104,22 @@ public interface SasDslPackage extends EPackage
   int ARCHITECTURE_DEFINITION__RULES = 3;
 
   /**
+   * The feature id for the '<em><b>DC Decl</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARCHITECTURE_DEFINITION__DC_DECL = 4;
+
+  /**
    * The number of structural features of the '<em>Architecture Definition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ARCHITECTURE_DEFINITION_FEATURE_COUNT = 4;
+  int ARCHITECTURE_DEFINITION_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulesImpl <em>DSL Rules</em>}' class.
@@ -817,13 +826,22 @@ public interface SasDslPackage extends EPackage
   int DSL_MANAGED__MEASURED_OUTPUT = 3;
 
   /**
+   * The feature id for the '<em><b>Structure Elements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_MANAGED__STRUCTURE_ELEMENTS = 4;
+
+  /**
    * The number of structural features of the '<em>DSL Managed</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_MANAGED_FEATURE_COUNT = 4;
+  int DSL_MANAGED_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl <em>DSL Manager Controller</em>}' class.
@@ -1270,6 +1288,598 @@ public interface SasDslPackage extends EPackage
    */
   int DSL_ALTERNATIVE_FEATURE_COUNT = 1;
 
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLStructureElementImpl <em>DCL Structure Element</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLStructureElementImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLStructureElement()
+   * @generated
+   */
+  int DCL_STRUCTURE_ELEMENT = 25;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_STRUCTURE_ELEMENT__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>DCL Structure Element</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_STRUCTURE_ELEMENT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLLayerImpl <em>DCL Layer</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLLayerImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLLayer()
+   * @generated
+   */
+  int DCL_LAYER = 26;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER__NAME = DCL_STRUCTURE_ELEMENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Level</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER__LEVEL = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER__LAYER = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER__SUB_SYSTEM = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Component</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER__COMPONENT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
+   * The number of structural features of the '<em>DCL Layer</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_LAYER_FEATURE_COUNT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentImpl <em>DCL Component</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponent()
+   * @generated
+   */
+  int DCL_COMPONENT = 27;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT__NAME = DCL_STRUCTURE_ELEMENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Layer</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT__LAYER = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT__SUB_SYSTEM = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>DCL Component</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT_FEATURE_COUNT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentInterfaceImpl <em>DCL Component Interface</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentInterfaceImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponentInterface()
+   * @generated
+   */
+  int DCL_COMPONENT_INTERFACE = 28;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT_INTERFACE__NAME = DCL_STRUCTURE_ELEMENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Component</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT_INTERFACE__COMPONENT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Interface Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT_INTERFACE__INTERFACE_TYPE = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>DCL Component Interface</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_COMPONENT_INTERFACE_FEATURE_COUNT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.InterfaceTypeImpl <em>Interface Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.InterfaceTypeImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getInterfaceType()
+   * @generated
+   */
+  int INTERFACE_TYPE = 29;
+
+  /**
+   * The feature id for the '<em><b>Interface Type Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERFACE_TYPE__INTERFACE_TYPE_NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Interface Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERFACE_TYPE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLSubSystemImpl <em>DCL Sub System</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLSubSystemImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLSubSystem()
+   * @generated
+   */
+  int DCL_SUB_SYSTEM = 30;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_SUB_SYSTEM__NAME = DCL_STRUCTURE_ELEMENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Sub System</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_SUB_SYSTEM__SUB_SYSTEM = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>DCL Sub System</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_SUB_SYSTEM_FEATURE_COUNT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLModuleImpl <em>DCL Module</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLModuleImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLModule()
+   * @generated
+   */
+  int DCL_MODULE = 31;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_MODULE__NAME = DCL_STRUCTURE_ELEMENT__NAME;
+
+  /**
+   * The number of structural features of the '<em>DCL Module</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DCL_MODULE_FEATURE_COUNT = DCL_STRUCTURE_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCDeclImpl <em>DC Decl</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCDeclImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCDecl()
+   * @generated
+   */
+  int DC_DECL = 32;
+
+  /**
+   * The feature id for the '<em><b>Only</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__ONLY = 0;
+
+  /**
+   * The feature id for the '<em><b>T</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__T = 1;
+
+  /**
+   * The feature id for the '<em><b>Can</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__CAN = 2;
+
+  /**
+   * The feature id for the '<em><b>Element Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__ELEMENT_TYPE = 3;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__TYPE = 4;
+
+  /**
+   * The feature id for the '<em><b>Cannot</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__CANNOT = 5;
+
+  /**
+   * The feature id for the '<em><b>Only2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__ONLY2 = 6;
+
+  /**
+   * The feature id for the '<em><b>Must</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__MUST = 7;
+
+  /**
+   * The feature id for the '<em><b>Entity Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL__ENTITY_TYPE = 8;
+
+  /**
+   * The number of structural features of the '<em>DC Decl</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DC_DECL_FEATURE_COUNT = 9;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.OnlyImpl <em>Only</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.OnlyImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly()
+   * @generated
+   */
+  int ONLY = 33;
+
+  /**
+   * The feature id for the '<em><b>Only</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONLY__ONLY = 0;
+
+  /**
+   * The number of structural features of the '<em>Only</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONLY_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CanImpl <em>Can</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CanImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCan()
+   * @generated
+   */
+  int CAN = 34;
+
+  /**
+   * The feature id for the '<em><b>Can</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CAN__CAN = 0;
+
+  /**
+   * The number of structural features of the '<em>Can</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CAN_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CannotImpl <em>Cannot</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CannotImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCannot()
+   * @generated
+   */
+  int CANNOT = 35;
+
+  /**
+   * The feature id for the '<em><b>Cannot</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CANNOT__CANNOT = 0;
+
+  /**
+   * The number of structural features of the '<em>Cannot</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CANNOT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.Only2Impl <em>Only2</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.Only2Impl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly2()
+   * @generated
+   */
+  int ONLY2 = 36;
+
+  /**
+   * The feature id for the '<em><b>Only2</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONLY2__ONLY2 = 0;
+
+  /**
+   * The number of structural features of the '<em>Only2</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ONLY2_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.MustImpl <em>Must</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.MustImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getMust()
+   * @generated
+   */
+  int MUST = 37;
+
+  /**
+   * The feature id for the '<em><b>Must</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUST__MUST = 0;
+
+  /**
+   * The number of structural features of the '<em>Must</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUST_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ElementTypeImpl <em>Element Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ElementTypeImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getElementType()
+   * @generated
+   */
+  int ELEMENT_TYPE = 38;
+
+  /**
+   * The number of structural features of the '<em>Element Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ELEMENT_TYPE_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.BasicTypeImpl <em>Basic Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.BasicTypeImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getBasicType()
+   * @generated
+   */
+  int BASIC_TYPE = 39;
+
+  /**
+   * The feature id for the '<em><b>Type Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BASIC_TYPE__TYPE_NAME = ELEMENT_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Basic Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BASIC_TYPE_FEATURE_COUNT = ELEMENT_TYPE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.EntityTypeImpl <em>Entity Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.EntityTypeImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getEntityType()
+   * @generated
+   */
+  int ENTITY_TYPE = 40;
+
+  /**
+   * The feature id for the '<em><b>Entity</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY_TYPE__ENTITY = ELEMENT_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Entity Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY_TYPE_FEATURE_COUNT = ELEMENT_TYPE_FEATURE_COUNT + 1;
+
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition <em>Architecture Definition</em>}'.
@@ -1324,6 +1934,17 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EReference getArchitectureDefinition_Rules();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getDCDecl <em>DC Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>DC Decl</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition#getDCDecl()
+   * @see #getArchitectureDefinition()
+   * @generated
+   */
+  EReference getArchitectureDefinition_DCDecl();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRules <em>DSL Rules</em>}'.
@@ -1964,6 +2585,17 @@ public interface SasDslPackage extends EPackage
   EReference getDSLManaged_MeasuredOutput();
 
   /**
+   * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements <em>Structure Elements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Structure Elements</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements()
+   * @see #getDSLManaged()
+   * @generated
+   */
+  EReference getDSLManaged_StructureElements();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController <em>DSL Manager Controller</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2336,6 +2968,463 @@ public interface SasDslPackage extends EPackage
   EAttribute getDSLAlternative_Name();
 
   /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement <em>DCL Structure Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Structure Element</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement
+   * @generated
+   */
+  EClass getDCLStructureElement();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLStructureElement#getName()
+   * @see #getDCLStructureElement()
+   * @generated
+   */
+  EAttribute getDCLStructureElement_Name();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer <em>DCL Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer
+   * @generated
+   */
+  EClass getDCLLayer();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getLevel <em>Level</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Level</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getLevel()
+   * @see #getDCLLayer()
+   * @generated
+   */
+  EAttribute getDCLLayer_Level();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getLayer <em>Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getLayer()
+   * @see #getDCLLayer()
+   * @generated
+   */
+  EReference getDCLLayer_Layer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getSubSystem()
+   * @see #getDCLLayer()
+   * @generated
+   */
+  EReference getDCLLayer_SubSystem();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getComponent <em>Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Component</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer#getComponent()
+   * @see #getDCLLayer()
+   * @generated
+   */
+  EReference getDCLLayer_Component();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent <em>DCL Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Component</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent
+   * @generated
+   */
+  EClass getDCLComponent();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent#getLayer <em>Layer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Layer</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent#getLayer()
+   * @see #getDCLComponent()
+   * @generated
+   */
+  EReference getDCLComponent_Layer();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent#getSubSystem()
+   * @see #getDCLComponent()
+   * @generated
+   */
+  EReference getDCLComponent_SubSystem();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface <em>DCL Component Interface</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Component Interface</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface
+   * @generated
+   */
+  EClass getDCLComponentInterface();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface#getComponent <em>Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Component</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface#getComponent()
+   * @see #getDCLComponentInterface()
+   * @generated
+   */
+  EReference getDCLComponentInterface_Component();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface#getInterfaceType <em>Interface Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Interface Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface#getInterfaceType()
+   * @see #getDCLComponentInterface()
+   * @generated
+   */
+  EReference getDCLComponentInterface_InterfaceType();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.InterfaceType <em>Interface Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Interface Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.InterfaceType
+   * @generated
+   */
+  EClass getInterfaceType();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.InterfaceType#getInterfaceTypeName <em>Interface Type Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Interface Type Name</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.InterfaceType#getInterfaceTypeName()
+   * @see #getInterfaceType()
+   * @generated
+   */
+  EAttribute getInterfaceType_InterfaceTypeName();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLSubSystem <em>DCL Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLSubSystem
+   * @generated
+   */
+  EClass getDCLSubSystem();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLSubSystem#getSubSystem <em>Sub System</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Sub System</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLSubSystem#getSubSystem()
+   * @see #getDCLSubSystem()
+   * @generated
+   */
+  EReference getDCLSubSystem_SubSystem();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCLModule <em>DCL Module</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DCL Module</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCLModule
+   * @generated
+   */
+  EClass getDCLModule();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl <em>DC Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DC Decl</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl
+   * @generated
+   */
+  EClass getDCDecl();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getOnly <em>Only</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Only</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getOnly()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Only();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getT <em>T</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>T</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getT()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_T();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getCan <em>Can</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Can</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getCan()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Can();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getElementType <em>Element Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Element Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getElementType()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_ElementType();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getType()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Type();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getCannot <em>Cannot</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Cannot</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getCannot()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Cannot();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getOnly2 <em>Only2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Only2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getOnly2()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Only2();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getMust <em>Must</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Must</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getMust()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_Must();
+
+  /**
+   * Returns the meta object for the containment reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getEntityType <em>Entity Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Entity Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl#getEntityType()
+   * @see #getDCDecl()
+   * @generated
+   */
+  EReference getDCDecl_EntityType();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Only <em>Only</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Only</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Only
+   * @generated
+   */
+  EClass getOnly();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Only#getOnly <em>Only</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Only</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Only#getOnly()
+   * @see #getOnly()
+   * @generated
+   */
+  EAttribute getOnly_Only();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Can <em>Can</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Can</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Can
+   * @generated
+   */
+  EClass getCan();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Can#getCan <em>Can</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Can</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Can#getCan()
+   * @see #getCan()
+   * @generated
+   */
+  EAttribute getCan_Can();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Cannot <em>Cannot</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Cannot</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Cannot
+   * @generated
+   */
+  EClass getCannot();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Cannot#getCannot <em>Cannot</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Cannot</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Cannot#getCannot()
+   * @see #getCannot()
+   * @generated
+   */
+  EAttribute getCannot_Cannot();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Only2 <em>Only2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Only2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Only2
+   * @generated
+   */
+  EClass getOnly2();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Only2#getOnly2 <em>Only2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Only2</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Only2#getOnly2()
+   * @see #getOnly2()
+   * @generated
+   */
+  EAttribute getOnly2_Only2();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Must <em>Must</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Must</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Must
+   * @generated
+   */
+  EClass getMust();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.Must#getMust <em>Must</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Must</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.Must#getMust()
+   * @see #getMust()
+   * @generated
+   */
+  EAttribute getMust_Must();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.ElementType <em>Element Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Element Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.ElementType
+   * @generated
+   */
+  EClass getElementType();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.BasicType <em>Basic Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Basic Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.BasicType
+   * @generated
+   */
+  EClass getBasicType();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.BasicType#getTypeName <em>Type Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type Name</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.BasicType#getTypeName()
+   * @see #getBasicType()
+   * @generated
+   */
+  EAttribute getBasicType_TypeName();
+
+  /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.EntityType <em>Entity Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Entity Type</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.EntityType
+   * @generated
+   */
+  EClass getEntityType();
+
+  /**
+   * Returns the meta object for the attribute '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.EntityType#getEntity <em>Entity</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Entity</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.EntityType#getEntity()
+   * @see #getEntityType()
+   * @generated
+   */
+  EAttribute getEntityType_Entity();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2399,6 +3488,14 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EReference ARCHITECTURE_DEFINITION__RULES = eINSTANCE.getArchitectureDefinition_Rules();
+
+    /**
+     * The meta object literal for the '<em><b>DC Decl</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARCHITECTURE_DEFINITION__DC_DECL = eINSTANCE.getArchitectureDefinition_DCDecl();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRulesImpl <em>DSL Rules</em>}' class.
@@ -2895,6 +3992,14 @@ public interface SasDslPackage extends EPackage
     EReference DSL_MANAGED__MEASURED_OUTPUT = eINSTANCE.getDSLManaged_MeasuredOutput();
 
     /**
+     * The meta object literal for the '<em><b>Structure Elements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_MANAGED__STRUCTURE_ELEMENTS = eINSTANCE.getDSLManaged_StructureElements();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl <em>DSL Manager Controller</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3199,6 +4304,382 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EAttribute DSL_ALTERNATIVE__NAME = eINSTANCE.getDSLAlternative_Name();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLStructureElementImpl <em>DCL Structure Element</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLStructureElementImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLStructureElement()
+     * @generated
+     */
+    EClass DCL_STRUCTURE_ELEMENT = eINSTANCE.getDCLStructureElement();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DCL_STRUCTURE_ELEMENT__NAME = eINSTANCE.getDCLStructureElement_Name();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLLayerImpl <em>DCL Layer</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLLayerImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLLayer()
+     * @generated
+     */
+    EClass DCL_LAYER = eINSTANCE.getDCLLayer();
+
+    /**
+     * The meta object literal for the '<em><b>Level</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DCL_LAYER__LEVEL = eINSTANCE.getDCLLayer_Level();
+
+    /**
+     * The meta object literal for the '<em><b>Layer</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_LAYER__LAYER = eINSTANCE.getDCLLayer_Layer();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_LAYER__SUB_SYSTEM = eINSTANCE.getDCLLayer_SubSystem();
+
+    /**
+     * The meta object literal for the '<em><b>Component</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_LAYER__COMPONENT = eINSTANCE.getDCLLayer_Component();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentImpl <em>DCL Component</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponent()
+     * @generated
+     */
+    EClass DCL_COMPONENT = eINSTANCE.getDCLComponent();
+
+    /**
+     * The meta object literal for the '<em><b>Layer</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_COMPONENT__LAYER = eINSTANCE.getDCLComponent_Layer();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_COMPONENT__SUB_SYSTEM = eINSTANCE.getDCLComponent_SubSystem();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentInterfaceImpl <em>DCL Component Interface</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLComponentInterfaceImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponentInterface()
+     * @generated
+     */
+    EClass DCL_COMPONENT_INTERFACE = eINSTANCE.getDCLComponentInterface();
+
+    /**
+     * The meta object literal for the '<em><b>Component</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_COMPONENT_INTERFACE__COMPONENT = eINSTANCE.getDCLComponentInterface_Component();
+
+    /**
+     * The meta object literal for the '<em><b>Interface Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_COMPONENT_INTERFACE__INTERFACE_TYPE = eINSTANCE.getDCLComponentInterface_InterfaceType();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.InterfaceTypeImpl <em>Interface Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.InterfaceTypeImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getInterfaceType()
+     * @generated
+     */
+    EClass INTERFACE_TYPE = eINSTANCE.getInterfaceType();
+
+    /**
+     * The meta object literal for the '<em><b>Interface Type Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INTERFACE_TYPE__INTERFACE_TYPE_NAME = eINSTANCE.getInterfaceType_InterfaceTypeName();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLSubSystemImpl <em>DCL Sub System</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLSubSystemImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLSubSystem()
+     * @generated
+     */
+    EClass DCL_SUB_SYSTEM = eINSTANCE.getDCLSubSystem();
+
+    /**
+     * The meta object literal for the '<em><b>Sub System</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DCL_SUB_SYSTEM__SUB_SYSTEM = eINSTANCE.getDCLSubSystem_SubSystem();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLModuleImpl <em>DCL Module</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCLModuleImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLModule()
+     * @generated
+     */
+    EClass DCL_MODULE = eINSTANCE.getDCLModule();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCDeclImpl <em>DC Decl</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DCDeclImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCDecl()
+     * @generated
+     */
+    EClass DC_DECL = eINSTANCE.getDCDecl();
+
+    /**
+     * The meta object literal for the '<em><b>Only</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__ONLY = eINSTANCE.getDCDecl_Only();
+
+    /**
+     * The meta object literal for the '<em><b>T</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__T = eINSTANCE.getDCDecl_T();
+
+    /**
+     * The meta object literal for the '<em><b>Can</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__CAN = eINSTANCE.getDCDecl_Can();
+
+    /**
+     * The meta object literal for the '<em><b>Element Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__ELEMENT_TYPE = eINSTANCE.getDCDecl_ElementType();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__TYPE = eINSTANCE.getDCDecl_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Cannot</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__CANNOT = eINSTANCE.getDCDecl_Cannot();
+
+    /**
+     * The meta object literal for the '<em><b>Only2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__ONLY2 = eINSTANCE.getDCDecl_Only2();
+
+    /**
+     * The meta object literal for the '<em><b>Must</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__MUST = eINSTANCE.getDCDecl_Must();
+
+    /**
+     * The meta object literal for the '<em><b>Entity Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DC_DECL__ENTITY_TYPE = eINSTANCE.getDCDecl_EntityType();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.OnlyImpl <em>Only</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.OnlyImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly()
+     * @generated
+     */
+    EClass ONLY = eINSTANCE.getOnly();
+
+    /**
+     * The meta object literal for the '<em><b>Only</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ONLY__ONLY = eINSTANCE.getOnly_Only();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CanImpl <em>Can</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CanImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCan()
+     * @generated
+     */
+    EClass CAN = eINSTANCE.getCan();
+
+    /**
+     * The meta object literal for the '<em><b>Can</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CAN__CAN = eINSTANCE.getCan_Can();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CannotImpl <em>Cannot</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.CannotImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCannot()
+     * @generated
+     */
+    EClass CANNOT = eINSTANCE.getCannot();
+
+    /**
+     * The meta object literal for the '<em><b>Cannot</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CANNOT__CANNOT = eINSTANCE.getCannot_Cannot();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.Only2Impl <em>Only2</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.Only2Impl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly2()
+     * @generated
+     */
+    EClass ONLY2 = eINSTANCE.getOnly2();
+
+    /**
+     * The meta object literal for the '<em><b>Only2</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ONLY2__ONLY2 = eINSTANCE.getOnly2_Only2();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.MustImpl <em>Must</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.MustImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getMust()
+     * @generated
+     */
+    EClass MUST = eINSTANCE.getMust();
+
+    /**
+     * The meta object literal for the '<em><b>Must</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MUST__MUST = eINSTANCE.getMust_Must();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ElementTypeImpl <em>Element Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.ElementTypeImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getElementType()
+     * @generated
+     */
+    EClass ELEMENT_TYPE = eINSTANCE.getElementType();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.BasicTypeImpl <em>Basic Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.BasicTypeImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getBasicType()
+     * @generated
+     */
+    EClass BASIC_TYPE = eINSTANCE.getBasicType();
+
+    /**
+     * The meta object literal for the '<em><b>Type Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BASIC_TYPE__TYPE_NAME = eINSTANCE.getBasicType_TypeName();
+
+    /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.EntityTypeImpl <em>Entity Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.EntityTypeImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getEntityType()
+     * @generated
+     */
+    EClass ENTITY_TYPE = eINSTANCE.getEntityType();
+
+    /**
+     * The meta object literal for the '<em><b>Entity</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENTITY_TYPE__ENTITY = eINSTANCE.getEntityType_Entity();
 
   }
 

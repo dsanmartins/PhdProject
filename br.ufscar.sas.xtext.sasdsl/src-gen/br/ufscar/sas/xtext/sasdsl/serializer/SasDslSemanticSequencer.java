@@ -4,6 +4,15 @@
 package br.ufscar.sas.xtext.sasdsl.serializer;
 
 import br.ufscar.sas.xtext.sasdsl.sasDsl.ArchitectureDefinition;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.BasicType;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.Can;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.Cannot;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCDecl;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponent;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLComponentInterface;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLLayer;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLModule;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DCLSubSystem;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAlternative;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLController;
@@ -27,6 +36,11 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMonitor;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRulePlanner;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLSensor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.EntityType;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.InterfaceType;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.Must;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.Only;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.Only2;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.SasDslPackage;
 import br.ufscar.sas.xtext.sasdsl.services.SasDslGrammarAccess;
 import com.google.inject.Inject;
@@ -57,6 +71,33 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SasDslPackage.ARCHITECTURE_DEFINITION:
 				sequence_ArchitectureDefinition(context, (ArchitectureDefinition) semanticObject); 
+				return; 
+			case SasDslPackage.BASIC_TYPE:
+				sequence_BasicType(context, (BasicType) semanticObject); 
+				return; 
+			case SasDslPackage.CAN:
+				sequence_Can(context, (Can) semanticObject); 
+				return; 
+			case SasDslPackage.CANNOT:
+				sequence_Cannot(context, (Cannot) semanticObject); 
+				return; 
+			case SasDslPackage.DC_DECL:
+				sequence_DCDecl(context, (DCDecl) semanticObject); 
+				return; 
+			case SasDslPackage.DCL_COMPONENT:
+				sequence_DCLComponent(context, (DCLComponent) semanticObject); 
+				return; 
+			case SasDslPackage.DCL_COMPONENT_INTERFACE:
+				sequence_DCLComponentInterface(context, (DCLComponentInterface) semanticObject); 
+				return; 
+			case SasDslPackage.DCL_LAYER:
+				sequence_DCLLayer(context, (DCLLayer) semanticObject); 
+				return; 
+			case SasDslPackage.DCL_MODULE:
+				sequence_DCLModule(context, (DCLModule) semanticObject); 
+				return; 
+			case SasDslPackage.DCL_SUB_SYSTEM:
+				sequence_DCLSubSystem(context, (DCLSubSystem) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_ALTERNATIVE:
 				sequence_DSLAlternative(context, (DSLAlternative) semanticObject); 
@@ -127,6 +168,21 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case SasDslPackage.DSL_SENSOR:
 				sequence_DSLSensor(context, (DSLSensor) semanticObject); 
 				return; 
+			case SasDslPackage.ENTITY_TYPE:
+				sequence_EntityType(context, (EntityType) semanticObject); 
+				return; 
+			case SasDslPackage.INTERFACE_TYPE:
+				sequence_InterfaceType(context, (InterfaceType) semanticObject); 
+				return; 
+			case SasDslPackage.MUST:
+				sequence_Must(context, (Must) semanticObject); 
+				return; 
+			case SasDslPackage.ONLY:
+				sequence_Only(context, (Only) semanticObject); 
+				return; 
+			case SasDslPackage.ONLY2:
+				sequence_Only2(context, (Only2) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -137,9 +193,159 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ArchitectureDefinition returns ArchitectureDefinition
 	 *
 	 * Constraint:
-	 *     (name=ID managing+=DSLManaging+ managed+=DSLManaged+ rules+=DSLRules*)
+	 *     (name=ID managing+=DSLManaging+ managed+=DSLManaged+ rules+=DSLRules* dCDecl+=DCDecl*)
 	 */
 	protected void sequence_ArchitectureDefinition(ISerializationContext context, ArchitectureDefinition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ElementType returns BasicType
+	 *     BasicType returns BasicType
+	 *
+	 * Constraint:
+	 *     (typeName='access' | typeName='declare' | typeName='handle' | typeName='create' | typeName='depend')
+	 */
+	protected void sequence_BasicType(ISerializationContext context, BasicType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Can returns Can
+	 *
+	 * Constraint:
+	 *     can='can-'
+	 */
+	protected void sequence_Can(ISerializationContext context, Can semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.CAN__CAN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.CAN__CAN));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCanAccess().getCanCanKeyword_0(), semanticObject.getCan());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Cannot returns Cannot
+	 *
+	 * Constraint:
+	 *     cannot='cannot-'
+	 */
+	protected void sequence_Cannot(ISerializationContext context, Cannot semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.CANNOT__CANNOT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.CANNOT__CANNOT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCannotAccess().getCannotCannotKeyword_0(), semanticObject.getCannot());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCDecl returns DCDecl
+	 *
+	 * Constraint:
+	 *     (
+	 *         (only=Only t=[DCLStructureElement|FQN] can=Can elementType=ElementType type=[DCLStructureElement|FQN]) | 
+	 *         (t=[DCLStructureElement|FQN] cannot=Cannot elementType=ElementType type=[DCLStructureElement|FQN]) | 
+	 *         (t=[DCLStructureElement|FQN] can=Can elementType=ElementType type=[DCLStructureElement|FQN]) | 
+	 *         (t=[DCLStructureElement|FQN] can=Can elementType=ElementType only2=Only2 type=[DCLStructureElement|FQN]) | 
+	 *         (t=[DCLStructureElement|FQN] must=Must entityType=EntityType type=[DCLStructureElement|FQN])
+	 *     )
+	 */
+	protected void sequence_DCDecl(ISerializationContext context, DCDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCLStructureElement returns DCLComponentInterface
+	 *     DCLComponentInterface returns DCLComponentInterface
+	 *
+	 * Constraint:
+	 *     (name=ID component=[DCLStructureElement|ID] interfaceType=InterfaceType)
+	 */
+	protected void sequence_DCLComponentInterface(ISerializationContext context, DCLComponentInterface semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DCL_STRUCTURE_ELEMENT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DCL_STRUCTURE_ELEMENT__NAME));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DCL_COMPONENT_INTERFACE__COMPONENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DCL_COMPONENT_INTERFACE__COMPONENT));
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DCL_COMPONENT_INTERFACE__INTERFACE_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DCL_COMPONENT_INTERFACE__INTERFACE_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDCLComponentInterfaceAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getDCLComponentInterfaceAccess().getComponentDCLStructureElementIDTerminalRuleCall_3_0_1(), semanticObject.eGet(SasDslPackage.Literals.DCL_COMPONENT_INTERFACE__COMPONENT, false));
+		feeder.accept(grammarAccess.getDCLComponentInterfaceAccess().getInterfaceTypeInterfaceTypeParserRuleCall_4_2_0(), semanticObject.getInterfaceType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCLStructureElement returns DCLComponent
+	 *     DCLComponent returns DCLComponent
+	 *
+	 * Constraint:
+	 *     (name=ID (layer=[DCLStructureElement|ID] | subSystem=[DCLStructureElement|ID])?)
+	 */
+	protected void sequence_DCLComponent(ISerializationContext context, DCLComponent semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCLStructureElement returns DCLLayer
+	 *     DCLLayer returns DCLLayer
+	 *
+	 * Constraint:
+	 *     (name=ID level=INT (layer=[DCLStructureElement|ID] | subSystem=[DCLStructureElement|ID] | component=[DCLStructureElement|ID])?)
+	 */
+	protected void sequence_DCLLayer(ISerializationContext context, DCLLayer semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCLStructureElement returns DCLModule
+	 *     DCLModule returns DCLModule
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_DCLModule(ISerializationContext context, DCLModule semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.DCL_STRUCTURE_ELEMENT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.DCL_STRUCTURE_ELEMENT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDCLModuleAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DCLStructureElement returns DCLSubSystem
+	 *     DCLSubSystem returns DCLSubSystem
+	 *
+	 * Constraint:
+	 *     (name=ID subSystem=[DCLStructureElement|ID]?)
+	 */
+	protected void sequence_DCLSubSystem(ISerializationContext context, DCLSubSystem semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -265,7 +471,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLManaged returns DSLManaged
 	 *
 	 * Constraint:
-	 *     (name=ID sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput*)
+	 *     (name=ID sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput* structureElements+=DCLStructureElement*)
 	 */
 	protected void sequence_DSLManaged(ISerializationContext context, DSLManaged semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -520,6 +726,85 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getDSLSensorAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ElementType returns EntityType
+	 *     EntityType returns EntityType
+	 *
+	 * Constraint:
+	 *     (entity='extend' | entity='implement' | entity='derive' | entity='throw' | entity='useannotation')
+	 */
+	protected void sequence_EntityType(ISerializationContext context, EntityType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InterfaceType returns InterfaceType
+	 *
+	 * Constraint:
+	 *     (interfaceTypeName='provided' | interfaceTypeName='required')
+	 */
+	protected void sequence_InterfaceType(ISerializationContext context, InterfaceType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Must returns Must
+	 *
+	 * Constraint:
+	 *     must='must-'
+	 */
+	protected void sequence_Must(ISerializationContext context, Must semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.MUST__MUST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.MUST__MUST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMustAccess().getMustMustKeyword_0(), semanticObject.getMust());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Only2 returns Only2
+	 *
+	 * Constraint:
+	 *     only2='-only'
+	 */
+	protected void sequence_Only2(ISerializationContext context, Only2 semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.ONLY2__ONLY2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.ONLY2__ONLY2));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getOnly2Access().getOnly2OnlyKeyword_0(), semanticObject.getOnly2());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Only returns Only
+	 *
+	 * Constraint:
+	 *     only='only'
+	 */
+	protected void sequence_Only(ISerializationContext context, Only semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SasDslPackage.Literals.ONLY__ONLY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SasDslPackage.Literals.ONLY__ONLY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getOnlyAccess().getOnlyOnlyKeyword_0(), semanticObject.getOnly());
 		feeder.finish();
 	}
 	
