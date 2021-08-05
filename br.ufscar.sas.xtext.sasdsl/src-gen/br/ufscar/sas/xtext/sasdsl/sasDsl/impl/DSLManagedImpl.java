@@ -35,10 +35,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getName <em>Name</em>}</li>
+ *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getStructureElements <em>Structure Elements</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getSensor <em>Sensor</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getEffector <em>Effector</em>}</li>
  *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getMeasuredOutput <em>Measured Output</em>}</li>
- *   <li>{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagedImpl#getStructureElements <em>Structure Elements</em>}</li>
  * </ul>
  *
  * @generated
@@ -64,6 +64,16 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getStructureElements() <em>Structure Elements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStructureElements()
+   * @generated
+   * @ordered
+   */
+  protected EList<DCLStructureElement> structureElements;
 
   /**
    * The cached value of the '{@link #getSensor() <em>Sensor</em>}' containment reference list.
@@ -94,16 +104,6 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @ordered
    */
   protected EList<DSLMeasuredOutput> measuredOutput;
-
-  /**
-   * The cached value of the '{@link #getStructureElements() <em>Structure Elements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStructureElements()
-   * @generated
-   * @ordered
-   */
-  protected EList<DCLStructureElement> structureElements;
 
   /**
    * <!-- begin-user-doc -->
@@ -157,6 +157,21 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @generated
    */
   @Override
+  public EList<DCLStructureElement> getStructureElements()
+  {
+    if (structureElements == null)
+    {
+      structureElements = new EObjectContainmentEList<DCLStructureElement>(DCLStructureElement.class, this, SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS);
+    }
+    return structureElements;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<DSLSensor> getSensor()
   {
     if (sensor == null)
@@ -202,33 +217,18 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
    * @generated
    */
   @Override
-  public EList<DCLStructureElement> getStructureElements()
-  {
-    if (structureElements == null)
-    {
-      structureElements = new EObjectContainmentEList<DCLStructureElement>(DCLStructureElement.class, this, SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS);
-    }
-    return structureElements;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return ((InternalEList<?>)getStructureElements()).basicRemove(otherEnd, msgs);
       case SasDslPackage.DSL_MANAGED__SENSOR:
         return ((InternalEList<?>)getSensor()).basicRemove(otherEnd, msgs);
       case SasDslPackage.DSL_MANAGED__EFFECTOR:
         return ((InternalEList<?>)getEffector()).basicRemove(otherEnd, msgs);
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return ((InternalEList<?>)getMeasuredOutput()).basicRemove(otherEnd, msgs);
-      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
-        return ((InternalEList<?>)getStructureElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -245,14 +245,14 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
     {
       case SasDslPackage.DSL_MANAGED__NAME:
         return getName();
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return getStructureElements();
       case SasDslPackage.DSL_MANAGED__SENSOR:
         return getSensor();
       case SasDslPackage.DSL_MANAGED__EFFECTOR:
         return getEffector();
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return getMeasuredOutput();
-      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
-        return getStructureElements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -271,6 +271,10 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
       case SasDslPackage.DSL_MANAGED__NAME:
         setName((String)newValue);
         return;
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        getStructureElements().clear();
+        getStructureElements().addAll((Collection<? extends DCLStructureElement>)newValue);
+        return;
       case SasDslPackage.DSL_MANAGED__SENSOR:
         getSensor().clear();
         getSensor().addAll((Collection<? extends DSLSensor>)newValue);
@@ -282,10 +286,6 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         getMeasuredOutput().clear();
         getMeasuredOutput().addAll((Collection<? extends DSLMeasuredOutput>)newValue);
-        return;
-      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
-        getStructureElements().clear();
-        getStructureElements().addAll((Collection<? extends DCLStructureElement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -304,6 +304,9 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
       case SasDslPackage.DSL_MANAGED__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        getStructureElements().clear();
+        return;
       case SasDslPackage.DSL_MANAGED__SENSOR:
         getSensor().clear();
         return;
@@ -312,9 +315,6 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
         return;
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         getMeasuredOutput().clear();
-        return;
-      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
-        getStructureElements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -332,14 +332,14 @@ public class DSLManagedImpl extends MinimalEObjectImpl.Container implements DSLM
     {
       case SasDslPackage.DSL_MANAGED__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
+        return structureElements != null && !structureElements.isEmpty();
       case SasDslPackage.DSL_MANAGED__SENSOR:
         return sensor != null && !sensor.isEmpty();
       case SasDslPackage.DSL_MANAGED__EFFECTOR:
         return effector != null && !effector.isEmpty();
       case SasDslPackage.DSL_MANAGED__MEASURED_OUTPUT:
         return measuredOutput != null && !measuredOutput.isEmpty();
-      case SasDslPackage.DSL_MANAGED__STRUCTURE_ELEMENTS:
-        return structureElements != null && !structureElements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

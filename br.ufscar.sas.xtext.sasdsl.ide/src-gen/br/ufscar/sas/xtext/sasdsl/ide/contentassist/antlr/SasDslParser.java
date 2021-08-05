@@ -69,6 +69,7 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLRuleKnowledgeAccess().getAccessAlternatives_2_2_0(), "rule__DSLRuleKnowledge__AccessAlternatives_2_2_0");
 			builder.put(grammarAccess.getDSLRuleKnowledgeAccess().getAccessAlternatives_3_2_0(), "rule__DSLRuleKnowledge__AccessAlternatives_3_2_0");
 			builder.put(grammarAccess.getDSLRuleMOAccess().getAccessAlternatives_2_0(), "rule__DSLRuleMO__AccessAlternatives_2_0");
+			builder.put(grammarAccess.getDSLRuleGenericAccess().getAccessAlternatives_2_0(), "rule__DSLRuleGeneric__AccessAlternatives_2_0");
 			builder.put(grammarAccess.getDSLDomainRuleAccess().getValueAlternatives_0(), "rule__DSLDomainRule__ValueAlternatives_0");
 			builder.put(grammarAccess.getDSLSensorAccess().getAlternatives_2(), "rule__DSLSensor__Alternatives_2");
 			builder.put(grammarAccess.getDSLEffectorAccess().getAlternatives_2(), "rule__DSLEffector__Alternatives_2");
@@ -114,6 +115,7 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLRuleKnowledgeAccess().getGroup_2(), "rule__DSLRuleKnowledge__Group_2__0");
 			builder.put(grammarAccess.getDSLRuleKnowledgeAccess().getGroup_3(), "rule__DSLRuleKnowledge__Group_3__0");
 			builder.put(grammarAccess.getDSLRuleMOAccess().getGroup(), "rule__DSLRuleMO__Group__0");
+			builder.put(grammarAccess.getDSLRuleGenericAccess().getGroup(), "rule__DSLRuleGeneric__Group__0");
 			builder.put(grammarAccess.getDSLManagingAccess().getGroup(), "rule__DSLManaging__Group__0");
 			builder.put(grammarAccess.getDSLManagedAccess().getGroup(), "rule__DSLManaged__Group__0");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getGroup(), "rule__DSLManagerController__Group__0");
@@ -254,14 +256,17 @@ public class SasDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDSLRuleMOAccess().getSensorAssignment_1(), "rule__DSLRuleMO__SensorAssignment_1");
 			builder.put(grammarAccess.getDSLRuleMOAccess().getAccessAssignment_2(), "rule__DSLRuleMO__AccessAssignment_2");
 			builder.put(grammarAccess.getDSLRuleMOAccess().getMeasuredAssignment_4(), "rule__DSLRuleMO__MeasuredAssignment_4");
+			builder.put(grammarAccess.getDSLRuleGenericAccess().getEffectorAssignment_1(), "rule__DSLRuleGeneric__EffectorAssignment_1");
+			builder.put(grammarAccess.getDSLRuleGenericAccess().getAccessAssignment_2(), "rule__DSLRuleGeneric__AccessAssignment_2");
+			builder.put(grammarAccess.getDSLRuleGenericAccess().getComponentAssignment_4(), "rule__DSLRuleGeneric__ComponentAssignment_4");
 			builder.put(grammarAccess.getDSLManagingAccess().getNameAssignment_1(), "rule__DSLManaging__NameAssignment_1");
 			builder.put(grammarAccess.getDSLManagingAccess().getManagerControllerAssignment_3(), "rule__DSLManaging__ManagerControllerAssignment_3");
 			builder.put(grammarAccess.getDSLManagingAccess().getControllerAssignment_4(), "rule__DSLManaging__ControllerAssignment_4");
 			builder.put(grammarAccess.getDSLManagedAccess().getNameAssignment_1(), "rule__DSLManaged__NameAssignment_1");
-			builder.put(grammarAccess.getDSLManagedAccess().getSensorAssignment_3(), "rule__DSLManaged__SensorAssignment_3");
-			builder.put(grammarAccess.getDSLManagedAccess().getEffectorAssignment_4(), "rule__DSLManaged__EffectorAssignment_4");
-			builder.put(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_5(), "rule__DSLManaged__MeasuredOutputAssignment_5");
-			builder.put(grammarAccess.getDSLManagedAccess().getStructureElementsAssignment_6(), "rule__DSLManaged__StructureElementsAssignment_6");
+			builder.put(grammarAccess.getDSLManagedAccess().getStructureElementsAssignment_3(), "rule__DSLManaged__StructureElementsAssignment_3");
+			builder.put(grammarAccess.getDSLManagedAccess().getSensorAssignment_4(), "rule__DSLManaged__SensorAssignment_4");
+			builder.put(grammarAccess.getDSLManagedAccess().getEffectorAssignment_5(), "rule__DSLManaged__EffectorAssignment_5");
+			builder.put(grammarAccess.getDSLManagedAccess().getMeasuredOutputAssignment_6(), "rule__DSLManaged__MeasuredOutputAssignment_6");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getNameAssignment_1(), "rule__DSLManagerController__NameAssignment_1");
 			builder.put(grammarAccess.getDSLManagerControllerAccess().getControllerAssignment_3(), "rule__DSLManagerController__ControllerAssignment_3");
 			builder.put(grammarAccess.getDSLControllerAccess().getNameAssignment_1(), "rule__DSLController__NameAssignment_1");

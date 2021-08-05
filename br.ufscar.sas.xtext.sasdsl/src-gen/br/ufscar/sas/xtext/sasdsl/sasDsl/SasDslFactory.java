@@ -114,6 +114,15 @@ public interface SasDslFactory extends EFactory
   DSLRuleMO createDSLRuleMO();
 
   /**
+   * Returns a new object of class '<em>DSL Rule Generic</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>DSL Rule Generic</em>'.
+   * @generated
+   */
+  DSLRuleGeneric createDSLRuleGeneric();
+
+  /**
    * Returns a new object of class '<em>DSL Managing</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

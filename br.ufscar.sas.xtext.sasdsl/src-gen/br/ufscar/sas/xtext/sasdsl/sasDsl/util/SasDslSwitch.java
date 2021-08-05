@@ -151,6 +151,14 @@ public class SasDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SasDslPackage.DSL_RULE_GENERIC:
+      {
+        DSLRuleGeneric dslRuleGeneric = (DSLRuleGeneric)theEObject;
+        T result = caseDSLRuleGeneric(dslRuleGeneric);
+        if (result == null) result = caseDSLRules(dslRuleGeneric);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SasDslPackage.DSL_MANAGING:
       {
         DSLManaging dslManaging = (DSLManaging)theEObject;
@@ -535,6 +543,22 @@ public class SasDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDSLRuleMO(DSLRuleMO object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>DSL Rule Generic</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>DSL Rule Generic</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDSLRuleGeneric(DSLRuleGeneric object)
   {
     return null;
   }

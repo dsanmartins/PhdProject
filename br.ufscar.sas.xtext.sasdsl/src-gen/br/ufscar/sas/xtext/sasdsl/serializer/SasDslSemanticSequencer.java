@@ -30,6 +30,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
@@ -149,6 +150,9 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case SasDslPackage.DSL_RULE_EXECUTOR:
 				sequence_DSLRuleExecutor(context, (DSLRuleExecutor) semanticObject); 
+				return; 
+			case SasDslPackage.DSL_RULE_GENERIC:
+				sequence_DSLRuleGeneric(context, (DSLRuleGeneric) semanticObject); 
 				return; 
 			case SasDslPackage.DSL_RULE_KNOWLEDGE:
 				sequence_DSLRuleKnowledge(context, (DSLRuleKnowledge) semanticObject); 
@@ -465,7 +469,7 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     DSLManaged returns DSLManaged
 	 *
 	 * Constraint:
-	 *     (name=ID sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput* structureElements+=DCLStructureElement*)
+	 *     (name=ID structureElements+=DCLStructureElement* sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput*)
 	 */
 	protected void sequence_DSLManaged(ISerializationContext context, DSLManaged semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -612,6 +616,19 @@ public class SasDslSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_DSLRuleExecutor(ISerializationContext context, DSLRuleExecutor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DSLRules returns DSLRuleGeneric
+	 *     DSLRuleGeneric returns DSLRuleGeneric
+	 *
+	 * Constraint:
+	 *     (effector=[DSLEffector|ID] (access='must-use' | access='must-not-use') component=[DCLComponent|ID])
+	 */
+	protected void sequence_DSLRuleGeneric(ISerializationContext context, DSLRuleGeneric semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

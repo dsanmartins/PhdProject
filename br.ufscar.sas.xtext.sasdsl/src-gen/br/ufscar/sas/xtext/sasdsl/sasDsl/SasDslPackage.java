@@ -734,6 +734,52 @@ public interface SasDslPackage extends EPackage
   int DSL_RULE_MO_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleGenericImpl <em>DSL Rule Generic</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleGenericImpl
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleGeneric()
+   * @generated
+   */
+  int DSL_RULE_GENERIC = 10;
+
+  /**
+   * The feature id for the '<em><b>Access</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_GENERIC__ACCESS = DSL_RULES__ACCESS;
+
+  /**
+   * The feature id for the '<em><b>Effector</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_GENERIC__EFFECTOR = DSL_RULES_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Component</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_GENERIC__COMPONENT = DSL_RULES_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>DSL Rule Generic</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_RULE_GENERIC_FEATURE_COUNT = DSL_RULES_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagingImpl <em>DSL Managing</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -741,7 +787,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManaging()
    * @generated
    */
-  int DSL_MANAGING = 10;
+  int DSL_MANAGING = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -787,7 +833,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManaged()
    * @generated
    */
-  int DSL_MANAGED = 11;
+  int DSL_MANAGED = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -799,13 +845,22 @@ public interface SasDslPackage extends EPackage
   int DSL_MANAGED__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Structure Elements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DSL_MANAGED__STRUCTURE_ELEMENTS = 1;
+
+  /**
    * The feature id for the '<em><b>Sensor</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DSL_MANAGED__SENSOR = 1;
+  int DSL_MANAGED__SENSOR = 2;
 
   /**
    * The feature id for the '<em><b>Effector</b></em>' containment reference list.
@@ -814,7 +869,7 @@ public interface SasDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DSL_MANAGED__EFFECTOR = 2;
+  int DSL_MANAGED__EFFECTOR = 3;
 
   /**
    * The feature id for the '<em><b>Measured Output</b></em>' containment reference list.
@@ -823,16 +878,7 @@ public interface SasDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DSL_MANAGED__MEASURED_OUTPUT = 3;
-
-  /**
-   * The feature id for the '<em><b>Structure Elements</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DSL_MANAGED__STRUCTURE_ELEMENTS = 4;
+  int DSL_MANAGED__MEASURED_OUTPUT = 4;
 
   /**
    * The number of structural features of the '<em>DSL Managed</em>' class.
@@ -851,7 +897,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLManagerController()
    * @generated
    */
-  int DSL_MANAGER_CONTROLLER = 12;
+  int DSL_MANAGER_CONTROLLER = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -888,7 +934,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLController()
    * @generated
    */
-  int DSL_CONTROLLER = 13;
+  int DSL_CONTROLLER = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -970,7 +1016,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLDomainRule()
    * @generated
    */
-  int DSL_DOMAIN_RULE = 14;
+  int DSL_DOMAIN_RULE = 15;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -998,7 +1044,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLMonitor()
    * @generated
    */
-  int DSL_MONITOR = 15;
+  int DSL_MONITOR = 16;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1026,7 +1072,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLAnalyzer()
    * @generated
    */
-  int DSL_ANALYZER = 16;
+  int DSL_ANALYZER = 17;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1054,7 +1100,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLPlanner()
    * @generated
    */
-  int DSL_PLANNER = 17;
+  int DSL_PLANNER = 18;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1082,7 +1128,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLExecutor()
    * @generated
    */
-  int DSL_EXECUTOR = 18;
+  int DSL_EXECUTOR = 19;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1110,7 +1156,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLKnowledge()
    * @generated
    */
-  int DSL_KNOWLEDGE = 19;
+  int DSL_KNOWLEDGE = 20;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1156,7 +1202,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLSensor()
    * @generated
    */
-  int DSL_SENSOR = 20;
+  int DSL_SENSOR = 21;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1202,7 +1248,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLEffector()
    * @generated
    */
-  int DSL_EFFECTOR = 21;
+  int DSL_EFFECTOR = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1248,7 +1294,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLReferenceInput()
    * @generated
    */
-  int DSL_REFERENCE_INPUT = 22;
+  int DSL_REFERENCE_INPUT = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1276,7 +1322,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLMeasuredOutput()
    * @generated
    */
-  int DSL_MEASURED_OUTPUT = 23;
+  int DSL_MEASURED_OUTPUT = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1322,7 +1368,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLAlternative()
    * @generated
    */
-  int DSL_ALTERNATIVE = 24;
+  int DSL_ALTERNATIVE = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1350,7 +1396,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLStructureElement()
    * @generated
    */
-  int DCL_STRUCTURE_ELEMENT = 25;
+  int DCL_STRUCTURE_ELEMENT = 26;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1378,7 +1424,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLLayer()
    * @generated
    */
-  int DCL_LAYER = 26;
+  int DCL_LAYER = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1442,7 +1488,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponent()
    * @generated
    */
-  int DCL_COMPONENT = 27;
+  int DCL_COMPONENT = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1488,7 +1534,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLComponentInterface()
    * @generated
    */
-  int DCL_COMPONENT_INTERFACE = 28;
+  int DCL_COMPONENT_INTERFACE = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1534,7 +1580,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getInterfaceType()
    * @generated
    */
-  int INTERFACE_TYPE = 29;
+  int INTERFACE_TYPE = 30;
 
   /**
    * The feature id for the '<em><b>Interface Type Name</b></em>' attribute.
@@ -1562,7 +1608,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLSubSystem()
    * @generated
    */
-  int DCL_SUB_SYSTEM = 30;
+  int DCL_SUB_SYSTEM = 31;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1599,7 +1645,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCLModule()
    * @generated
    */
-  int DCL_MODULE = 31;
+  int DCL_MODULE = 32;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1627,7 +1673,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDCDecl()
    * @generated
    */
-  int DC_DECL = 32;
+  int DC_DECL = 33;
 
   /**
    * The feature id for the '<em><b>Only</b></em>' containment reference.
@@ -1727,7 +1773,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly()
    * @generated
    */
-  int ONLY = 33;
+  int ONLY = 34;
 
   /**
    * The feature id for the '<em><b>Only</b></em>' attribute.
@@ -1755,7 +1801,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCan()
    * @generated
    */
-  int CAN = 34;
+  int CAN = 35;
 
   /**
    * The feature id for the '<em><b>Can</b></em>' attribute.
@@ -1783,7 +1829,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getCannot()
    * @generated
    */
-  int CANNOT = 35;
+  int CANNOT = 36;
 
   /**
    * The feature id for the '<em><b>Cannot</b></em>' attribute.
@@ -1811,7 +1857,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getOnly2()
    * @generated
    */
-  int ONLY2 = 36;
+  int ONLY2 = 37;
 
   /**
    * The feature id for the '<em><b>Only2</b></em>' attribute.
@@ -1839,7 +1885,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getMust()
    * @generated
    */
-  int MUST = 37;
+  int MUST = 38;
 
   /**
    * The feature id for the '<em><b>Must</b></em>' attribute.
@@ -1867,7 +1913,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getElementType()
    * @generated
    */
-  int ELEMENT_TYPE = 38;
+  int ELEMENT_TYPE = 39;
 
   /**
    * The number of structural features of the '<em>Element Type</em>' class.
@@ -1886,7 +1932,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getBasicType()
    * @generated
    */
-  int BASIC_TYPE = 39;
+  int BASIC_TYPE = 40;
 
   /**
    * The feature id for the '<em><b>Type Name</b></em>' attribute.
@@ -1914,7 +1960,7 @@ public interface SasDslPackage extends EPackage
    * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getEntityType()
    * @generated
    */
-  int ENTITY_TYPE = 40;
+  int ENTITY_TYPE = 41;
 
   /**
    * The feature id for the '<em><b>Entity</b></em>' attribute.
@@ -2542,6 +2588,38 @@ public interface SasDslPackage extends EPackage
   EReference getDSLRuleMO_Measured();
 
   /**
+   * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric <em>DSL Rule Generic</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>DSL Rule Generic</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric
+   * @generated
+   */
+  EClass getDSLRuleGeneric();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric#getEffector <em>Effector</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Effector</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric#getEffector()
+   * @see #getDSLRuleGeneric()
+   * @generated
+   */
+  EReference getDSLRuleGeneric_Effector();
+
+  /**
+   * Returns the meta object for the reference '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric#getComponent <em>Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Component</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric#getComponent()
+   * @see #getDSLRuleGeneric()
+   * @generated
+   */
+  EReference getDSLRuleGeneric_Component();
+
+  /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaging <em>DSL Managing</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2606,6 +2684,17 @@ public interface SasDslPackage extends EPackage
   EAttribute getDSLManaged_Name();
 
   /**
+   * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements <em>Structure Elements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Structure Elements</em>'.
+   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements()
+   * @see #getDSLManaged()
+   * @generated
+   */
+  EReference getDSLManaged_StructureElements();
+
+  /**
    * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getSensor <em>Sensor</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2637,17 +2726,6 @@ public interface SasDslPackage extends EPackage
    * @generated
    */
   EReference getDSLManaged_MeasuredOutput();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements <em>Structure Elements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Structure Elements</em>'.
-   * @see br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManaged#getStructureElements()
-   * @see #getDSLManaged()
-   * @generated
-   */
-  EReference getDSLManaged_StructureElements();
 
   /**
    * Returns the meta object for class '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.DSLManagerController <em>DSL Manager Controller</em>}'.
@@ -4036,6 +4114,32 @@ public interface SasDslPackage extends EPackage
     EReference DSL_RULE_MO__MEASURED = eINSTANCE.getDSLRuleMO_Measured();
 
     /**
+     * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleGenericImpl <em>DSL Rule Generic</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLRuleGenericImpl
+     * @see br.ufscar.sas.xtext.sasdsl.sasDsl.impl.SasDslPackageImpl#getDSLRuleGeneric()
+     * @generated
+     */
+    EClass DSL_RULE_GENERIC = eINSTANCE.getDSLRuleGeneric();
+
+    /**
+     * The meta object literal for the '<em><b>Effector</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_GENERIC__EFFECTOR = eINSTANCE.getDSLRuleGeneric_Effector();
+
+    /**
+     * The meta object literal for the '<em><b>Component</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_RULE_GENERIC__COMPONENT = eINSTANCE.getDSLRuleGeneric_Component();
+
+    /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagingImpl <em>DSL Managing</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4088,6 +4192,14 @@ public interface SasDslPackage extends EPackage
     EAttribute DSL_MANAGED__NAME = eINSTANCE.getDSLManaged_Name();
 
     /**
+     * The meta object literal for the '<em><b>Structure Elements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DSL_MANAGED__STRUCTURE_ELEMENTS = eINSTANCE.getDSLManaged_StructureElements();
+
+    /**
      * The meta object literal for the '<em><b>Sensor</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4110,14 +4222,6 @@ public interface SasDslPackage extends EPackage
      * @generated
      */
     EReference DSL_MANAGED__MEASURED_OUTPUT = eINSTANCE.getDSLManaged_MeasuredOutput();
-
-    /**
-     * The meta object literal for the '<em><b>Structure Elements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DSL_MANAGED__STRUCTURE_ELEMENTS = eINSTANCE.getDSLManaged_StructureElements();
 
     /**
      * The meta object literal for the '{@link br.ufscar.sas.xtext.sasdsl.sasDsl.impl.DSLManagerControllerImpl <em>DSL Manager Controller</em>}' class.

@@ -72,6 +72,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleMO/sensor"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleMO/measured"/>
     </genClasses>
+    <genClasses ecoreClass="SasDsl.ecore#//DSLRuleGeneric">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleGeneric/effector"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLRuleGeneric/component"/>
+    </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLManaging">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLManaging/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaging/managerController"/>
@@ -79,10 +83,10 @@
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLManaged">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLManaged/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/structureElements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/sensor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/effector"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/measuredOutput"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SasDsl.ecore#//DSLManaged/structureElements"/>
     </genClasses>
     <genClasses ecoreClass="SasDsl.ecore#//DSLManagerController">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SasDsl.ecore#//DSLManagerController/name"/>

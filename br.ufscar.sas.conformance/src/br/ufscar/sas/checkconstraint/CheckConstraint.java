@@ -475,7 +475,6 @@ public class CheckConstraint {
 		return list;
 	}
 	
-	
 	public List<Integer> getUntestedValues() throws Exception{
 
 		DataConstraint dataConstraint = new DataConstraint(workspacePath + projectName);

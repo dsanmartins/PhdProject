@@ -41,7 +41,7 @@ public class QueryClass {
 		mydb.executeStmt("create table IF NOT EXISTS abstractions (id integer primary key, annotation text, abstraction_type integer, FOREIGN KEY(abstraction_type) REFERENCES abstraction_type(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS generic_abstractions (id integer primary key, annotation text, abstraction_type integer, FOREIGN KEY(abstraction_type) REFERENCES abstraction_type(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
-		mydb.executeStmt("create table IF NOT EXISTS generic_instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES abstractions(id)) ");
+		mydb.executeStmt("create table IF NOT EXISTS generic_instances (abstraction_id integer, annotation text, FOREIGN KEY(abstraction_id) REFERENCES generic_abstractions(id)) ");
 		mydb.executeStmt("create table IF NOT EXISTS domain_rules(abstraction1 text, access_type text, abstraction2 text, switch text)");
 		mydb.executeStmt("delete from abstractions");
 		mydb.executeStmt("delete from generic_abstractions");

@@ -31,6 +31,7 @@ import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLReferenceInput;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleAnalyzer;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleExecutor;
+import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleGeneric;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleKnowledge;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMController;
 import br.ufscar.sas.xtext.sasdsl.sasDsl.DSLRuleMO;
@@ -131,6 +132,13 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   private EClass dslRuleMOEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass dslRuleGenericEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1034,6 +1042,39 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
+  public EClass getDSLRuleGeneric()
+  {
+    return dslRuleGenericEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDSLRuleGeneric_Effector()
+  {
+    return (EReference)dslRuleGenericEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDSLRuleGeneric_Component()
+  {
+    return (EReference)dslRuleGenericEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getDSLManaging()
   {
     return dslManagingEClass;
@@ -1100,7 +1141,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLManaged_Sensor()
+  public EReference getDSLManaged_StructureElements()
   {
     return (EReference)dslManagedEClass.getEStructuralFeatures().get(1);
   }
@@ -1111,7 +1152,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLManaged_Effector()
+  public EReference getDSLManaged_Sensor()
   {
     return (EReference)dslManagedEClass.getEStructuralFeatures().get(2);
   }
@@ -1122,7 +1163,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLManaged_MeasuredOutput()
+  public EReference getDSLManaged_Effector()
   {
     return (EReference)dslManagedEClass.getEStructuralFeatures().get(3);
   }
@@ -1133,7 +1174,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
    * @generated
    */
   @Override
-  public EReference getDSLManaged_StructureElements()
+  public EReference getDSLManaged_MeasuredOutput()
   {
     return (EReference)dslManagedEClass.getEStructuralFeatures().get(4);
   }
@@ -2159,6 +2200,10 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     createEReference(dslRuleMOEClass, DSL_RULE_MO__SENSOR);
     createEReference(dslRuleMOEClass, DSL_RULE_MO__MEASURED);
 
+    dslRuleGenericEClass = createEClass(DSL_RULE_GENERIC);
+    createEReference(dslRuleGenericEClass, DSL_RULE_GENERIC__EFFECTOR);
+    createEReference(dslRuleGenericEClass, DSL_RULE_GENERIC__COMPONENT);
+
     dslManagingEClass = createEClass(DSL_MANAGING);
     createEAttribute(dslManagingEClass, DSL_MANAGING__NAME);
     createEReference(dslManagingEClass, DSL_MANAGING__MANAGER_CONTROLLER);
@@ -2166,10 +2211,10 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     dslManagedEClass = createEClass(DSL_MANAGED);
     createEAttribute(dslManagedEClass, DSL_MANAGED__NAME);
+    createEReference(dslManagedEClass, DSL_MANAGED__STRUCTURE_ELEMENTS);
     createEReference(dslManagedEClass, DSL_MANAGED__SENSOR);
     createEReference(dslManagedEClass, DSL_MANAGED__EFFECTOR);
     createEReference(dslManagedEClass, DSL_MANAGED__MEASURED_OUTPUT);
-    createEReference(dslManagedEClass, DSL_MANAGED__STRUCTURE_ELEMENTS);
 
     dslManagerControllerEClass = createEClass(DSL_MANAGER_CONTROLLER);
     createEAttribute(dslManagerControllerEClass, DSL_MANAGER_CONTROLLER__NAME);
@@ -2322,6 +2367,7 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     dslRuleExecutorEClass.getESuperTypes().add(this.getDSLRules());
     dslRuleKnowledgeEClass.getESuperTypes().add(this.getDSLRules());
     dslRuleMOEClass.getESuperTypes().add(this.getDSLRules());
+    dslRuleGenericEClass.getESuperTypes().add(this.getDSLRules());
     dclLayerEClass.getESuperTypes().add(this.getDCLStructureElement());
     dclComponentEClass.getESuperTypes().add(this.getDCLStructureElement());
     dclComponentInterfaceEClass.getESuperTypes().add(this.getDCLStructureElement());
@@ -2397,6 +2443,10 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
     initEReference(getDSLRuleMO_Sensor(), this.getDSLSensor(), null, "sensor", null, 0, 1, DSLRuleMO.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLRuleMO_Measured(), this.getDSLMeasuredOutput(), null, "measured", null, 0, 1, DSLRuleMO.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(dslRuleGenericEClass, DSLRuleGeneric.class, "DSLRuleGeneric", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDSLRuleGeneric_Effector(), this.getDSLEffector(), null, "effector", null, 0, 1, DSLRuleGeneric.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLRuleGeneric_Component(), this.getDCLComponent(), null, "component", null, 0, 1, DSLRuleGeneric.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(dslManagingEClass, DSLManaging.class, "DSLManaging", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLManaging_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLManaging.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLManaging_ManagerController(), this.getDSLManagerController(), null, "managerController", null, 0, -1, DSLManaging.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2404,10 +2454,10 @@ public class SasDslPackageImpl extends EPackageImpl implements SasDslPackage
 
     initEClass(dslManagedEClass, DSLManaged.class, "DSLManaged", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLManaged_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDSLManaged_StructureElements(), this.getDCLStructureElement(), null, "structureElements", null, 0, -1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLManaged_Sensor(), this.getDSLSensor(), null, "sensor", null, 0, -1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLManaged_Effector(), this.getDSLEffector(), null, "effector", null, 0, -1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDSLManaged_MeasuredOutput(), this.getDSLMeasuredOutput(), null, "measuredOutput", null, 0, -1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDSLManaged_StructureElements(), this.getDCLStructureElement(), null, "structureElements", null, 0, -1, DSLManaged.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dslManagerControllerEClass, DSLManagerController.class, "DSLManagerController", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDSLManagerController_Name(), ecorePackage.getEString(), "name", null, 0, 1, DSLManagerController.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

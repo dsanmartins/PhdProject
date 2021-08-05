@@ -284,6 +284,15 @@ ruleDSLRules returns [EObject current=null]
 			$current = $this_DSLRuleKnowledge_7.current;
 			afterParserOrEnumRuleCall();
 		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getDSLRulesAccess().getDSLRuleGenericParserRuleCall_8());
+		}
+		this_DSLRuleGeneric_8=ruleDSLRuleGeneric
+		{
+			$current = $this_DSLRuleGeneric_8.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -2601,6 +2610,90 @@ ruleDSLRuleMO returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleDSLRuleGeneric
+entryRuleDSLRuleGeneric returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDSLRuleGenericRule()); }
+	iv_ruleDSLRuleGeneric=ruleDSLRuleGeneric
+	{ $current=$iv_ruleDSLRuleGeneric.current; }
+	EOF;
+
+// Rule DSLRuleGeneric
+ruleDSLRuleGeneric returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='effector'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getDSLRuleGenericAccess().getEffectorKeyword_0());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDSLRuleGenericRule());
+					}
+				}
+				otherlv_1=RULE_ID
+				{
+					newLeafNode(otherlv_1, grammarAccess.getDSLRuleGenericAccess().getEffectorDSLEffectorCrossReference_1_0());
+				}
+			)
+		)
+		(
+			(
+				(
+					lv_access_2_1='must-use'
+					{
+						newLeafNode(lv_access_2_1, grammarAccess.getDSLRuleGenericAccess().getAccessMustUseKeyword_2_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleGenericRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_1, null);
+					}
+					    |
+					lv_access_2_2='must-not-use'
+					{
+						newLeafNode(lv_access_2_2, grammarAccess.getDSLRuleGenericAccess().getAccessMustNotUseKeyword_2_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDSLRuleGenericRule());
+						}
+						setWithLastConsumed($current, "access", lv_access_2_2, null);
+					}
+				)
+			)
+		)
+		otherlv_3='component'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getDSLRuleGenericAccess().getComponentKeyword_3());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDSLRuleGenericRule());
+					}
+				}
+				otherlv_4=RULE_ID
+				{
+					newLeafNode(otherlv_4, grammarAccess.getDSLRuleGenericAccess().getComponentDCLComponentCrossReference_4_0());
+				}
+			)
+		)
+		otherlv_5=';'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getDSLRuleGenericAccess().getSemicolonKeyword_5());
+		}
+	)
+;
+
 // Entry rule entryRuleDSLManaging
 entryRuleDSLManaging returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getDSLManagingRule()); }
@@ -2733,9 +2826,28 @@ ruleDSLManaged returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLManagedAccess().getSensorDSLSensorParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getDSLManagedAccess().getStructureElementsDCLStructureElementParserRuleCall_3_0());
 				}
-				lv_sensor_3_0=ruleDSLSensor
+				lv_structureElements_3_0=ruleDCLStructureElement
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDSLManagedRule());
+					}
+					add(
+						$current,
+						"structureElements",
+						lv_structureElements_3_0,
+						"br.ufscar.sas.xtext.sasdsl.SasDsl.DCLStructureElement");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDSLManagedAccess().getSensorDSLSensorParserRuleCall_4_0());
+				}
+				lv_sensor_4_0=ruleDSLSensor
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLManagedRule());
@@ -2743,7 +2855,7 @@ ruleDSLManaged returns [EObject current=null]
 					add(
 						$current,
 						"sensor",
-						lv_sensor_3_0,
+						lv_sensor_4_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLSensor");
 					afterParserOrEnumRuleCall();
 				}
@@ -2752,9 +2864,9 @@ ruleDSLManaged returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLManagedAccess().getEffectorDSLEffectorParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getDSLManagedAccess().getEffectorDSLEffectorParserRuleCall_5_0());
 				}
-				lv_effector_4_0=ruleDSLEffector
+				lv_effector_5_0=ruleDSLEffector
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLManagedRule());
@@ -2762,7 +2874,7 @@ ruleDSLManaged returns [EObject current=null]
 					add(
 						$current,
 						"effector",
-						lv_effector_4_0,
+						lv_effector_5_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLEffector");
 					afterParserOrEnumRuleCall();
 				}
@@ -2771,9 +2883,9 @@ ruleDSLManaged returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDSLManagedAccess().getMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getDSLManagedAccess().getMeasuredOutputDSLMeasuredOutputParserRuleCall_6_0());
 				}
-				lv_measuredOutput_5_0=ruleDSLMeasuredOutput
+				lv_measuredOutput_6_0=ruleDSLMeasuredOutput
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDSLManagedRule());
@@ -2781,27 +2893,8 @@ ruleDSLManaged returns [EObject current=null]
 					add(
 						$current,
 						"measuredOutput",
-						lv_measuredOutput_5_0,
+						lv_measuredOutput_6_0,
 						"br.ufscar.sas.xtext.sasdsl.SasDsl.DSLMeasuredOutput");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getDSLManagedAccess().getStructureElementsDCLStructureElementParserRuleCall_6_0());
-				}
-				lv_structureElements_6_0=ruleDCLStructureElement
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getDSLManagedRule());
-					}
-					add(
-						$current,
-						"structureElements",
-						lv_structureElements_6_0,
-						"br.ufscar.sas.xtext.sasdsl.SasDsl.DCLStructureElement");
 					afterParserOrEnumRuleCall();
 				}
 			)

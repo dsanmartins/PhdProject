@@ -117,14 +117,15 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDSLRuleMOParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cDSLRuleMControllerParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cDSLRuleKnowledgeParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cDSLRuleGenericParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//DSLRules:
 		//	DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer | DSLRulePlanner | DSLRuleExecutor | DSLRuleMO |
-		//	DSLRuleMController | DSLRuleKnowledge;
+		//	DSLRuleMController | DSLRuleKnowledge | DSLRuleGeneric;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer | DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController
-		//| DSLRuleKnowledge
+		//| DSLRuleKnowledge | DSLRuleGeneric
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DSLRuleController
@@ -150,6 +151,9 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DSLRuleKnowledge
 		public RuleCall getDSLRuleKnowledgeParserRuleCall_7() { return cDSLRuleKnowledgeParserRuleCall_7; }
+		
+		//DSLRuleGeneric
+		public RuleCall getDSLRuleGenericParserRuleCall_8() { return cDSLRuleGenericParserRuleCall_8; }
 	}
 	public class DSLRuleMControllerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLRuleMController");
@@ -2070,6 +2074,69 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
+	public class DSLRuleGenericElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLRuleGeneric");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cEffectorKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cEffectorAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cEffectorDSLEffectorCrossReference_1_0 = (CrossReference)cEffectorAssignment_1.eContents().get(0);
+		private final RuleCall cEffectorDSLEffectorIDTerminalRuleCall_1_0_1 = (RuleCall)cEffectorDSLEffectorCrossReference_1_0.eContents().get(1);
+		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Alternatives cAccessAlternatives_2_0 = (Alternatives)cAccessAssignment_2.eContents().get(0);
+		private final Keyword cAccessMustUseKeyword_2_0_0 = (Keyword)cAccessAlternatives_2_0.eContents().get(0);
+		private final Keyword cAccessMustNotUseKeyword_2_0_1 = (Keyword)cAccessAlternatives_2_0.eContents().get(1);
+		private final Keyword cComponentKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cComponentAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cComponentDCLComponentCrossReference_4_0 = (CrossReference)cComponentAssignment_4.eContents().get(0);
+		private final RuleCall cComponentDCLComponentIDTerminalRuleCall_4_0_1 = (RuleCall)cComponentDCLComponentCrossReference_4_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//DSLRuleGeneric:
+		//	'effector' effector=[DSLEffector] access=('must-use' | 'must-not-use') 'component' component=[DCLComponent] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'effector' effector=[DSLEffector] access=('must-use' | 'must-not-use') 'component' component=[DCLComponent] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'effector'
+		public Keyword getEffectorKeyword_0() { return cEffectorKeyword_0; }
+		
+		//effector=[DSLEffector]
+		public Assignment getEffectorAssignment_1() { return cEffectorAssignment_1; }
+		
+		//[DSLEffector]
+		public CrossReference getEffectorDSLEffectorCrossReference_1_0() { return cEffectorDSLEffectorCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getEffectorDSLEffectorIDTerminalRuleCall_1_0_1() { return cEffectorDSLEffectorIDTerminalRuleCall_1_0_1; }
+		
+		//access=('must-use' | 'must-not-use')
+		public Assignment getAccessAssignment_2() { return cAccessAssignment_2; }
+		
+		//('must-use' | 'must-not-use')
+		public Alternatives getAccessAlternatives_2_0() { return cAccessAlternatives_2_0; }
+		
+		//'must-use'
+		public Keyword getAccessMustUseKeyword_2_0_0() { return cAccessMustUseKeyword_2_0_0; }
+		
+		//'must-not-use'
+		public Keyword getAccessMustNotUseKeyword_2_0_1() { return cAccessMustNotUseKeyword_2_0_1; }
+		
+		//'component'
+		public Keyword getComponentKeyword_3() { return cComponentKeyword_3; }
+		
+		//component=[DCLComponent]
+		public Assignment getComponentAssignment_4() { return cComponentAssignment_4; }
+		
+		//[DCLComponent]
+		public CrossReference getComponentDCLComponentCrossReference_4_0() { return cComponentDCLComponentCrossReference_4_0; }
+		
+		//ID
+		public RuleCall getComponentDCLComponentIDTerminalRuleCall_4_0_1() { return cComponentDCLComponentIDTerminalRuleCall_4_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
 	public class DSLManagingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "br.ufscar.sas.xtext.sasdsl.SasDsl.DSLManaging");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2127,27 +2194,27 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cSensorAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cSensorDSLSensorParserRuleCall_3_0 = (RuleCall)cSensorAssignment_3.eContents().get(0);
-		private final Assignment cEffectorAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cEffectorDSLEffectorParserRuleCall_4_0 = (RuleCall)cEffectorAssignment_4.eContents().get(0);
-		private final Assignment cMeasuredOutputAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0 = (RuleCall)cMeasuredOutputAssignment_5.eContents().get(0);
-		private final Assignment cStructureElementsAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cStructureElementsDCLStructureElementParserRuleCall_6_0 = (RuleCall)cStructureElementsAssignment_6.eContents().get(0);
+		private final Assignment cStructureElementsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cStructureElementsDCLStructureElementParserRuleCall_3_0 = (RuleCall)cStructureElementsAssignment_3.eContents().get(0);
+		private final Assignment cSensorAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cSensorDSLSensorParserRuleCall_4_0 = (RuleCall)cSensorAssignment_4.eContents().get(0);
+		private final Assignment cEffectorAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cEffectorDSLEffectorParserRuleCall_5_0 = (RuleCall)cEffectorAssignment_5.eContents().get(0);
+		private final Assignment cMeasuredOutputAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cMeasuredOutputDSLMeasuredOutputParserRuleCall_6_0 = (RuleCall)cMeasuredOutputAssignment_6.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//DSLManaged:
 		//	'Managed' name=ID '{'
+		//	structureElements+=DCLStructureElement*
 		//	sensor+=DSLSensor*
 		//	effector+=DSLEffector*
 		//	measuredOutput+=DSLMeasuredOutput*
-		//	structureElements+=DCLStructureElement*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Managed' name=ID '{' sensor+=DSLSensor* effector+=DSLEffector* measuredOutput+=DSLMeasuredOutput*
-		//structureElements+=DCLStructureElement* '}'
+		//'Managed' name=ID '{' structureElements+=DCLStructureElement* sensor+=DSLSensor* effector+=DSLEffector*
+		//measuredOutput+=DSLMeasuredOutput* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'Managed'
@@ -2162,29 +2229,29 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 		
-		//sensor+=DSLSensor*
-		public Assignment getSensorAssignment_3() { return cSensorAssignment_3; }
-		
-		//DSLSensor
-		public RuleCall getSensorDSLSensorParserRuleCall_3_0() { return cSensorDSLSensorParserRuleCall_3_0; }
-		
-		//effector+=DSLEffector*
-		public Assignment getEffectorAssignment_4() { return cEffectorAssignment_4; }
-		
-		//DSLEffector
-		public RuleCall getEffectorDSLEffectorParserRuleCall_4_0() { return cEffectorDSLEffectorParserRuleCall_4_0; }
-		
-		//measuredOutput+=DSLMeasuredOutput*
-		public Assignment getMeasuredOutputAssignment_5() { return cMeasuredOutputAssignment_5; }
-		
-		//DSLMeasuredOutput
-		public RuleCall getMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0() { return cMeasuredOutputDSLMeasuredOutputParserRuleCall_5_0; }
-		
 		//structureElements+=DCLStructureElement*
-		public Assignment getStructureElementsAssignment_6() { return cStructureElementsAssignment_6; }
+		public Assignment getStructureElementsAssignment_3() { return cStructureElementsAssignment_3; }
 		
 		//DCLStructureElement
-		public RuleCall getStructureElementsDCLStructureElementParserRuleCall_6_0() { return cStructureElementsDCLStructureElementParserRuleCall_6_0; }
+		public RuleCall getStructureElementsDCLStructureElementParserRuleCall_3_0() { return cStructureElementsDCLStructureElementParserRuleCall_3_0; }
+		
+		//sensor+=DSLSensor*
+		public Assignment getSensorAssignment_4() { return cSensorAssignment_4; }
+		
+		//DSLSensor
+		public RuleCall getSensorDSLSensorParserRuleCall_4_0() { return cSensorDSLSensorParserRuleCall_4_0; }
+		
+		//effector+=DSLEffector*
+		public Assignment getEffectorAssignment_5() { return cEffectorAssignment_5; }
+		
+		//DSLEffector
+		public RuleCall getEffectorDSLEffectorParserRuleCall_5_0() { return cEffectorDSLEffectorParserRuleCall_5_0; }
+		
+		//measuredOutput+=DSLMeasuredOutput*
+		public Assignment getMeasuredOutputAssignment_6() { return cMeasuredOutputAssignment_6; }
+		
+		//DSLMeasuredOutput
+		public RuleCall getMeasuredOutputDSLMeasuredOutputParserRuleCall_6_0() { return cMeasuredOutputDSLMeasuredOutputParserRuleCall_6_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
@@ -3669,6 +3736,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final DSLRuleExecutorElements pDSLRuleExecutor;
 	private final DSLRuleKnowledgeElements pDSLRuleKnowledge;
 	private final DSLRuleMOElements pDSLRuleMO;
+	private final DSLRuleGenericElements pDSLRuleGeneric;
 	private final DSLManagingElements pDSLManaging;
 	private final DSLManagedElements pDSLManaged;
 	private final DSLManagerControllerElements pDSLManagerController;
@@ -3721,6 +3789,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDSLRuleExecutor = new DSLRuleExecutorElements();
 		this.pDSLRuleKnowledge = new DSLRuleKnowledgeElements();
 		this.pDSLRuleMO = new DSLRuleMOElements();
+		this.pDSLRuleGeneric = new DSLRuleGenericElements();
 		this.pDSLManaging = new DSLManagingElements();
 		this.pDSLManaged = new DSLManagedElements();
 		this.pDSLManagerController = new DSLManagerControllerElements();
@@ -3801,7 +3870,7 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DSLRules:
 	//	DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer | DSLRulePlanner | DSLRuleExecutor | DSLRuleMO |
-	//	DSLRuleMController | DSLRuleKnowledge;
+	//	DSLRuleMController | DSLRuleKnowledge | DSLRuleGeneric;
 	public DSLRulesElements getDSLRulesAccess() {
 		return pDSLRules;
 	}
@@ -3915,6 +3984,16 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getDSLRuleMOAccess().getRule();
 	}
 	
+	//DSLRuleGeneric:
+	//	'effector' effector=[DSLEffector] access=('must-use' | 'must-not-use') 'component' component=[DCLComponent] ';';
+	public DSLRuleGenericElements getDSLRuleGenericAccess() {
+		return pDSLRuleGeneric;
+	}
+	
+	public ParserRule getDSLRuleGenericRule() {
+		return getDSLRuleGenericAccess().getRule();
+	}
+	
 	//DSLManaging:
 	//	'Managing' name=ID '{'
 	//	managerController+=DSLManagerController*
@@ -3930,10 +4009,10 @@ public class SasDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DSLManaged:
 	//	'Managed' name=ID '{'
+	//	structureElements+=DCLStructureElement*
 	//	sensor+=DSLSensor*
 	//	effector+=DSLEffector*
 	//	measuredOutput+=DSLMeasuredOutput*
-	//	structureElements+=DCLStructureElement*
 	//	'}';
 	public DSLManagedElements getDSLManagedAccess() {
 		return pDSLManaged;

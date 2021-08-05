@@ -834,8 +834,8 @@ class SasDslGenerator extends AbstractGenerator {
 								  "//@model.0/@codeElement.0/@codeElement.1/@actionRelation.7 " +
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.0 " + 
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.1 " +
-								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2' " +
-								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.3' " +
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.2 " +
+								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.3 " +
 								  "//@model.0/@codeElement.0/@codeElement.0/@codeRelation.4' " +
 								  "density='13'/> \n"
 		rule.addAll(withDomainRules)

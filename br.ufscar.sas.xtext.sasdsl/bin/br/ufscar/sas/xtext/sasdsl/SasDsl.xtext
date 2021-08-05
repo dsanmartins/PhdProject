@@ -15,7 +15,7 @@ ArchitectureDefinition:
 	
 DSLRules:
 	
-	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController | DSLRuleKnowledge
+	 DSLRuleController | DSLRuleMonitor | DSLRuleAnalyzer |  DSLRulePlanner | DSLRuleExecutor | DSLRuleMO | DSLRuleMController | DSLRuleKnowledge | DSLRuleGeneric
 ;
 
 DSLRuleMController:
@@ -84,6 +84,13 @@ DSLRuleMO:
 ;
 
 
+DSLRuleGeneric:
+	
+	('effector' effector=[DSLEffector] access=('must-use' | 'must-not-use') 'component' component = [DCLComponent] ';') 
+;
+
+
+
 DSLManaging: 
 	
 	'Managing' name=ID '{' 
@@ -98,10 +105,11 @@ DSLManaged:
 	
 	'Managed' name=ID '{'
 	
+		structureElements += DCLStructureElement* 
 		sensor += DSLSensor*
 		effector += DSLEffector*
 		measuredOutput +=DSLMeasuredOutput*
-		structureElements += DCLStructureElement* 
+		
 	'}'
 ;
 
